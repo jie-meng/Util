@@ -1,0 +1,21 @@
+cfg.o: cfg.cpp cfg.hpp base.hpp base/base.hpp base/memory.hpp base/in.hpp \
+ base/out.hpp base/baseclass.hpp base/lexicalcast.hpp string.hpp file.hpp
+cmdline.o: cmdline.cpp cmdline.hpp base.hpp base/base.hpp base/memory.hpp \
+ base/in.hpp base/out.hpp base/baseclass.hpp base/lexicalcast.hpp \
+ string.hpp collection.hpp regex.hpp
+file.o: file.cpp file.hpp base.hpp base/base.hpp base/memory.hpp \
+ base/in.hpp base/out.hpp base/baseclass.hpp base/lexicalcast.hpp
+regex.o: regex.cpp regex.hpp base.hpp base/base.hpp base/memory.hpp \
+ base/in.hpp base/out.hpp base/baseclass.hpp base/lexicalcast.hpp \
+ regex/deelx.h
+string.o: string.cpp string.hpp base.hpp base/base.hpp base/memory.hpp \
+ base/in.hpp base/out.hpp base/baseclass.hpp base/lexicalcast.hpp
+thread.o: thread.cpp thread.hpp base.hpp base/base.hpp base/memory.hpp \
+ base/in.hpp base/out.hpp base/baseclass.hpp base/lexicalcast.hpp
+time.o: time.cpp time.hpp base.hpp base/base.hpp base/memory.hpp \
+ base/in.hpp base/out.hpp base/baseclass.hpp base/lexicalcast.hpp
+lexicalcast.o: base/lexicalcast.cpp base/base.hpp base/memory.hpp \
+ base/in.hpp base/out.hpp base/baseclass.hpp base/lexicalcast.hpp
+out.o: base/out.cpp base/base.hpp base/memory.hpp base/in.hpp \
+ base/out.hpp base/baseclass.hpp base/lexicalcast.hpp base/../string.hpp \
+ base/../base.hpp base/../base/base.hpp base/../time.hpp

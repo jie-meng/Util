@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Util" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/Util" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D_PLATFORM_WINDOWS_" />
+					<Add directory="src" />
+				</Compiler>
+				<Linker>
+					<Add option="-lws2_32" />
+					<Add option="-lShlwapi" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/Util" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-D_PLATFORM_LINUX_" />
+					<Add directory="src" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lpthread" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="src/main.cpp" />
+		<Unit filename="src/util/any.hpp" />
+		<Unit filename="src/util/base.hpp" />
+		<Unit filename="src/util/base/base.hpp" />
+		<Unit filename="src/util/base/baseclass.hpp" />
+		<Unit filename="src/util/base/in.hpp" />
+		<Unit filename="src/util/base/memory.hpp" />
+		<Unit filename="src/util/base/out.cpp" />
+		<Unit filename="src/util/base/out.hpp" />
+		<Unit filename="src/util/cfg.cpp" />
+		<Unit filename="src/util/cfg.hpp" />
+		<Unit filename="src/util/cmdline.cpp" />
+		<Unit filename="src/util/cmdline.hpp" />
+		<Unit filename="src/util/collection.hpp" />
+		<Unit filename="src/util/factory.hpp" />
+		<Unit filename="src/util/file.cpp" />
+		<Unit filename="src/util/file.hpp" />
+		<Unit filename="src/util/iterator.hpp" />
+		<Unit filename="src/util/lexicalcast.cpp" />
+		<Unit filename="src/util/lexicalcast.hpp" />
+		<Unit filename="src/util/lua.cpp" />
+		<Unit filename="src/util/lua.hpp" />
+		<Unit filename="src/util/lua/extend/lfilelib.cpp" />
+		<Unit filename="src/util/lua/extend/lfilelib.hpp" />
+		<Unit filename="src/util/lua/extend/lmemorylib.cpp" />
+		<Unit filename="src/util/lua/extend/lmemorylib.hpp" />
+		<Unit filename="src/util/lua/extend/lnetlib.cpp" />
+		<Unit filename="src/util/lua/extend/lnetlib.hpp" />
+		<Unit filename="src/util/lua/extend/lprocesslib.cpp" />
+		<Unit filename="src/util/lua/extend/lprocesslib.hpp" />
+		<Unit filename="src/util/lua/extend/lregexlib.cpp" />
+		<Unit filename="src/util/lua/extend/lregexlib.hpp" />
+		<Unit filename="src/util/lua/extend/lthreadlib.cpp" />
+		<Unit filename="src/util/lua/extend/lthreadlib.hpp" />
+		<Unit filename="src/util/lua/src/lapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lapi.h" />
+		<Unit filename="src/util/lua/src/lauxlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lauxlib.h" />
+		<Unit filename="src/util/lua/src/lbaselib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lbitlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lcode.h" />
+		<Unit filename="src/util/lua/src/lcorolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lctype.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lctype.h" />
+		<Unit filename="src/util/lua/src/ldblib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/ldebug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/ldebug.h" />
+		<Unit filename="src/util/lua/src/ldo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/ldo.h" />
+		<Unit filename="src/util/lua/src/ldump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lfunc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lfunc.h" />
+		<Unit filename="src/util/lua/src/lgc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lgc.h" />
+		<Unit filename="src/util/lua/src/linit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/liolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/llex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/llex.h" />
+		<Unit filename="src/util/lua/src/llimits.h" />
+		<Unit filename="src/util/lua/src/lmathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lmem.h" />
+		<Unit filename="src/util/lua/src/loadlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lobject.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lobject.h" />
+		<Unit filename="src/util/lua/src/lopcodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lopcodes.h" />
+		<Unit filename="src/util/lua/src/loslib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lparser.h" />
+		<Unit filename="src/util/lua/src/lstate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lstate.h" />
+		<Unit filename="src/util/lua/src/lstring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lstring.h" />
+		<Unit filename="src/util/lua/src/lstrlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/ltable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/ltable.h" />
+		<Unit filename="src/util/lua/src/ltablib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/ltm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/ltm.h" />
+		<Unit filename="src/util/lua/src/lua.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lua.h" />
+		<Unit filename="src/util/lua/src/lua.hpp" />
+		<Unit filename="src/util/lua/src/luac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/luaconf.h" />
+		<Unit filename="src/util/lua/src/lualib.h" />
+		<Unit filename="src/util/lua/src/lundump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lundump.h" />
+		<Unit filename="src/util/lua/src/lvm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lvm.h" />
+		<Unit filename="src/util/lua/src/lzio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/util/lua/src/lzio.h" />
+		<Unit filename="src/util/luaextend.cpp" />
+		<Unit filename="src/util/luaextend.hpp" />
+		<Unit filename="src/util/net.cpp" />
+		<Unit filename="src/util/net.hpp" />
+		<Unit filename="src/util/process.cpp" />
+		<Unit filename="src/util/process.hpp" />
+		<Unit filename="src/util/regex.cpp" />
+		<Unit filename="src/util/regex.hpp" />
+		<Unit filename="src/util/regex/deelx.h" />
+		<Unit filename="src/util/strategy.hpp" />
+		<Unit filename="src/util/string.cpp" />
+		<Unit filename="src/util/string.hpp" />
+		<Unit filename="src/util/thread.cpp" />
+		<Unit filename="src/util/thread.hpp" />
+		<Unit filename="src/util/time.cpp" />
+		<Unit filename="src/util/time.hpp" />
+		<Unit filename="src/util/timer.hpp" />
+		<Unit filename="src/util/trace.hpp" />
+		<Unit filename="src/util/trace/information.cpp" />
+		<Unit filename="src/util/trace/information.hpp" />
+		<Unit filename="src/util/trace/informationthread.cpp" />
+		<Unit filename="src/util/trace/informationthread.hpp" />
+		<Unit filename="src/util/trace/listener/filelistener.cpp" />
+		<Unit filename="src/util/trace/listener/filelistener.hpp" />
+		<Unit filename="src/util/trace/listener/stdoutlistener.cpp" />
+		<Unit filename="src/util/trace/listener/stdoutlistener.hpp" />
+		<Unit filename="src/util/trace/listener/tcplistener.cpp" />
+		<Unit filename="src/util/trace/listener/tcplistener.hpp" />
+		<Unit filename="src/util/trace/listener/udplistener.cpp" />
+		<Unit filename="src/util/trace/listener/udplistener.hpp" />
+		<Unit filename="src/util/trace/tracemgr.cpp" />
+		<Unit filename="src/util/trace/tracemgr.hpp" />
+		<Unit filename="src/util/typeinfo.hpp" />
+		<Unit filename="src/util/unittest.cpp" />
+		<Unit filename="src/util/unittest.hpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
