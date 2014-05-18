@@ -28,7 +28,6 @@ void TextCfg::load(const std::string& cfg_file)
             strSplit(*it, "=", vec, 2);
             if (2 == vec.size())
                 cfg_map_[strTrim(vec[0])] = strTrim(vec[1]);
-
         }
     }
 }

@@ -360,12 +360,6 @@ bool SocketStartup::isOk() const
     return pimpl_->is_ok_;
 }
 
-int getLastError()
-{
-    //return WSAGetLastError();
-    return 0;
-}
-
 int getFamilyCode(Family family)
 {
     if (Family_IPv4 == family)

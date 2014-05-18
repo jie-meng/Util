@@ -218,10 +218,8 @@ public:
     virtual void processMsgConn(char* pmsg, size_t len, size_t conn, TConnSocket* ptconn_socket) {}
 };
 
-int main(int argc, char* argv[])
+int Trace()
 {
-    //luaExecutor(argc, argv);
-
     TraceMgr tracemgr;
     if (!tracemgr.start())
     {
@@ -254,6 +252,15 @@ int main(int argc, char* argv[])
         tracemgr.trace("os", Information::verbose, "msg %d", i);
 
     getLine();
+
+}
+
+int main(int argc, char* argv[])
+{
+    //luaExecutor(argc, argv);
+    DgramSocket ds(Family_IPv4);
+    int rc = ds.sendTo("asdfsdf", 5, "10.93.42.31", 5060);
+    printLine(rc);
 
     return 0;
 }

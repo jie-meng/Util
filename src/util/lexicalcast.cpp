@@ -1,67 +1,86 @@
 #include "lexicalcast.hpp"
+#include "string.hpp"
 #include <cmath>
 
 namespace util
 {
 
-bool isFloat(const std::string& str)
+const std::string kIntChars = "0123456789";
+const std::string kFloatChars = "0123456789.";
+
+size_t getCharCnt(const std::string& str, char c)
 {
-    size_t point_cnt = 0;
-    size_t e_cnt = 0;
-    size_t plus_cnt = 0;
-
-    size_t point_pos = 0;
-    size_t e_pos = 0;
-    size_t plus_pos = 0;
-
+    size_t cnt = 0;
     for (size_t i=0; i<str.length(); ++i)
     {
-        char ch = str.at(i);
-        if('-' == ch && 0 == i)
-        {
-            ;
-        }
-        if ('.' == ch)
-        {
-            point_pos = i;
-            if (++point_cnt > 1)
-                return false;
-        }
-        else if ('e' == ch || 'E' == ch)
-        {
-            e_pos = i;
-            if (0 == i || str.length() == i+1)
-                return false;
-            if (++e_cnt > 1)
-                return false;
-        }
-        else if ('+' == ch)
-        {
-            plus_pos = i;
-            if (i < 2 || str.length() == i+1)
-                return false;
-            if ('e' != str.at(i-1) && 'E' != str.at(i-1))
-                return false;
-            if (++plus_cnt > 1)
-                return false;
-        }
-        else if (ch >= '0' && ch <= '9')
-        {
-            ;
-        }
-        else
-        {
-            return false;
-        }
+        if (c == str[i])
+            ++cnt;
     }
+    return cnt;
+}
 
-    if (e_cnt > 0 || plus_cnt > 0)
-    {
-        if (point_pos > e_pos || point_pos > plus_pos)
-            return false;
-    }
+bool isInt(const std::string& str)
+{
+    if (str.empty())
+        return false;
+
+    std::string format_str = str;
+    if ('-' == str[0] || '+' == str[0])
+        format_str = strRight(str, str.length()-1);
+
+    if (format_str.empty())
+        return false;
+
+    std::string::size_type found = format_str.find_first_not_of(kIntChars);
+    if (found != std::string::npos)
+        return false;
 
     return true;
+}
+
+bool isFloat(const std::string& str)
+{
+    if (str.empty())
+        return false;
+
+    std::string format_str = str;
+    if ('-' == str[0] || '+' == str[0])
+        format_str = strRight(str, str.length()-1);
+
+    if (format_str.empty())
+        return false;
+
+    if (getCharCnt(format_str, '.') > 1)
+        return false;
+
+    std::string::size_type found = format_str.find_first_not_of(kFloatChars);
+    if (found != std::string::npos)
+        return false;
+
+    return true;
+}
+
+bool isFloatEx(const std::string& str)
+{
+    std::string str_format = strToLower(str);
+    if (!strContains(str_format, "e"))
+    {
+        return isFloat(str_format);
+    }
+    else
+    {
+        if (getCharCnt(str_format, 'e')> 1)
+            return false;
+
+        std::string::size_type pos = 0;
+        pos = str_format.find("e", pos);
+        if (!isFloat(strLeft(str_format, pos)))
+            return false;
+        if (!isInt(strRight(str_format, str_format.length() - (pos+1))))
+            return false;
+    }
+
+   return true;
 }
 
 template<>
@@ -74,7 +93,7 @@ bool lexicalCast<std::string>(const std::string& str, std::string& out)
 template<typename Float>
 bool lexicalCastFloat(const std::string& str, Float& out)
 {
-    if (!isFloat(str))
+    if (!isFloatEx(str))
         return false;
 
 //    std::stringstream ss;
