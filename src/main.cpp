@@ -16,7 +16,7 @@
 #include "util/factory.hpp"
 #include "util/unittest.hpp"
 #include "util/lua.hpp"
-#include "util/luaextend.hpp"
+#include "util/luaextend.hp"
 #include "util/any.hpp"
 #include "util/trace.hpp"
 
