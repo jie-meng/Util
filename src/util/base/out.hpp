@@ -36,22 +36,46 @@ inline void setPrintFunc(PrintFunc func) { print_func = func; }
 inline void resetPrintFunc() { print_func = util::stdPrint; }
 
 //trace
-enum TraceLv {
-    Verbose = 0,
-    Debug,
-    Info,
-    Warn,
-    Error,
-    Fatal,
-    Assert,
-    MaxLv
+const std::string kTraceVerbose = "verbose";
+const std::string kTraceDebug = "debug";
+const std::string kTraceInfo = "info";
+const std::string kTraceWarn = "warn";
+const std::string kTraceError = "error";
+const std::string kTraceFatal = "fatal";
+const std::string kTraceAssert = "assert";
+const std::string kTraceSilent = "silent";
+
+class Trace
+{
+public:
+    SINGLETON(Trace)
+    enum Level {
+        Verbose = 0,
+        Debug,
+        Info,
+        Warn,
+        Error,
+        Fatal,
+        Assert,
+        Silent
+    };
+    inline void setTraceLevel(Level lv) { trace_level_ = lv; }
+    inline Trace::Level getTraceLevel() const { return trace_level_; }
+private:
+    Trace() : trace_level_(Info) {}
+    ~Trace() {}
+private:
+    Level trace_level_;
+private:
+    DISALLOW_COPY_AND_ASSIGN(Trace)
 };
 
-void setTraceLv(TraceLv lv, bool enable);
-inline void disableTraceLv(TraceLv lv) { setTraceLv(lv, 0); }
-inline void enableTraceLv(TraceLv lv) { setTraceLv(lv, 1); }
-bool isTraceLvEnable(TraceLv lv);
-void trace(TraceLv lv, const char* fmt, ...);
+std::string traceLvStr(Trace::Level lv);
+Trace::Level getTraceLv();
+void setTraceLevel(Trace::Level lv);
+std::string getTraceLevelStr();
+void setTraceLevelStr(const std::string& str);
+void trace(Trace::Level lv, const char* fmt, ...);
 
 } // namespace util
 

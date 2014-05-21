@@ -733,7 +733,7 @@ struct StreamSocket::StreamSocketImpl
             else
             {
                 util::closeSocket(connection);
-                trace(Error, "<util::net> setConnection failed, listen queue is full.");
+                trace(Trace::Error, "<util::net> setConnection failed, listen queue is full.");
             }
         }
 
@@ -978,7 +978,7 @@ size_t StreamSocket::getMsgLenFromHeader(char* buf, const MsgInfo& msg_info)
                 return msg_info.header_len_ + *(uint32_t*)(buf + msg_info.body_len_field_offset_);
         }
     default:
-        trace(Error, "<util::net> body_len_field_type_size = %d.", msg_info.body_len_field_type_size_);
+        trace(Trace::Error, "<util::net> body_len_field_type_size = %d.", msg_info.body_len_field_type_size_);
         return 0;
     }
 

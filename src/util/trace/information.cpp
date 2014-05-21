@@ -46,6 +46,8 @@ std::string Information::getLevelStr() const
         return "fatal";
     case assert:
         return "assert";
+    case silent:
+        return "silent";
     default:
         return "unknown_infomation_level";
     }

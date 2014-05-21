@@ -18,6 +18,7 @@ public:
         error,
         fatal,
         assert,
+        silent,
         maxlevel
     };
 
