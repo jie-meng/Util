@@ -15,8 +15,8 @@
 #include "util/cfg.hpp"
 #include "util/factory.hpp"
 #include "util/unittest.hpp"
-#include "util/lua.hpp"
-#include "util/luaextend.hp"
+#include "util/luax.hpp"
+#include "util/luaextend.hpp"
 #include "util/any.hpp"
 #include "util/trace.hpp"
 
@@ -253,6 +253,7 @@ int Trace()
 
     getLine();
 
+    return 0;
 }
 
 int main(int argc, char* argv[])

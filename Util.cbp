@@ -61,8 +61,6 @@
 		<Unit filename="src/util/iterator.hpp" />
 		<Unit filename="src/util/lexicalcast.cpp" />
 		<Unit filename="src/util/lexicalcast.hpp" />
-		<Unit filename="src/util/lua.cpp" />
-		<Unit filename="src/util/lua.hpp" />
 		<Unit filename="src/util/lua/extend/lfilelib.cpp" />
 		<Unit filename="src/util/lua/extend/lfilelib.hpp" />
 		<Unit filename="src/util/lua/extend/lmemorylib.cpp" />
@@ -204,6 +202,8 @@
 		<Unit filename="src/util/lua/src/lzio.h" />
 		<Unit filename="src/util/luaextend.cpp" />
 		<Unit filename="src/util/luaextend.hpp" />
+		<Unit filename="src/util/luax.cpp" />
+		<Unit filename="src/util/luax.hpp" />
 		<Unit filename="src/util/net.cpp" />
 		<Unit filename="src/util/net.hpp" />
 		<Unit filename="src/util/process.cpp" />

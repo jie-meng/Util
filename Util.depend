@@ -37411,3 +37411,878 @@
 	"trace/listener/udplistener.hpp"
 	"trace/listener/filelistener.hpp"
 
+1401969702 source:d:\projects\git\util\src\main.cpp
+	<iostream>
+	<map>
+	<list>
+	"util/thread.hpp"
+	"util/file.hpp"
+	"util/net.hpp"
+	"util/iterator.hpp"
+	"util/collection.hpp"
+	"util/cmdline.hpp"
+	"util/process.hpp"
+	"util/regex.hpp"
+	"util/time.hpp"
+	"util/timer.hpp"
+	"util/strategy.hpp"
+	"util/cfg.hpp"
+	"util/factory.hpp"
+	"util/unittest.hpp"
+	"util/luax.hpp"
+	"util/luaextend.hpp"
+	"util/any.hpp"
+	"util/trace.hpp"
+
+1397544420 d:\projects\git\util\src\util\thread.hpp
+	"base.hpp"
+	<vector>
+	<deque>
+
+1385645884 d:\projects\git\util\src\util\base.hpp
+	"base/base.hpp"
+
+1401969892 d:\projects\git\util\src\util\base\base.hpp
+	<cstdlib>
+	<cstring>
+	<iostream>
+	<string>
+	<sstream>
+	<utility>
+	<exception>
+	<stdint.h>
+	<memory>
+	<boost/function.hpp>
+	<boost/bind.hpp>
+	<boost/shared_ptr.hpp>
+	<tr1/memory>
+	<tr1/functional>
+	"memory.hpp"
+	"in.hpp"
+	"out.hpp"
+	"baseclass.hpp"
+
+1384527252 d:\projects\git\util\src\util\base\memory.hpp
+
+1361451418 d:\projects\git\util\src\util\base\in.hpp
+
+1400651777 d:\projects\git\util\src\util\base\out.hpp
+
+1370437158 d:\projects\git\util\src\util\base\baseclass.hpp
+
+1393330448 d:\projects\git\util\src\util\file.hpp
+	"string.hpp"
+	<vector>
+	<list>
+	<ctime>
+
+1372159726 d:\projects\git\util\src\util\string.hpp
+	"base.hpp"
+
+1397549168 d:\projects\git\util\src\util\net.hpp
+	"base.hpp"
+
+1384527742 d:\projects\git\util\src\util\iterator.hpp
+	"base.hpp"
+
+1365917306 d:\projects\git\util\src\util\collection.hpp
+	"base.hpp"
+	<map>
+
+1384527712 d:\projects\git\util\src\util\cmdline.hpp
+	<list>
+	<map>
+	<iterator>
+	"base.hpp"
+	"string.hpp"
+	"lexicalcast.hpp"
+
+1370437802 d:\projects\git\util\src\util\lexicalcast.hpp
+	"base.hpp"
+
+1394691086 d:\projects\git\util\src\util\process.hpp
+	"base.hpp"
+
+1368249708 d:\projects\git\util\src\util\regex.hpp
+	"base.hpp"
+
+1365691642 d:\projects\git\util\src\util\time.hpp
+	"base.hpp"
+	<ctime>
+
+1365772564 d:\projects\git\util\src\util\timer.hpp
+	"thread.hpp"
+
+1365041160 d:\projects\git\util\src\util\strategy.hpp
+	"base.hpp"
+
+1365092210 d:\projects\git\util\src\util\cfg.hpp
+	<map>
+	"string.hpp"
+	"lexicalcast.hpp"
+
+1366724950 d:\projects\git\util\src\util\factory.hpp
+	"base.hpp"
+	<map>
+	"typeinfo.hpp"
+
+1365092556 d:\projects\git\util\src\util\typeinfo.hpp
+	"base.hpp"
+	<typeinfo>
+	<cassert>
+
+1365772282 d:\projects\git\util\src\util\unittest.hpp
+	<exception>
+	<vector>
+	<map>
+	<typeinfo>
+	"iterator.hpp"
+
+1401969679 d:\projects\git\util\src\util\luax.hpp
+	<vector>
+	"cmdline.hpp"
+	"any.hpp"
+
+1369275278 d:\projects\git\util\src\util\any.hpp
+	<algorithm>
+	<typeinfo>
+	"base.hpp"
+
+1401969661 d:\projects\git\util\src\util\luaextend.hpp
+	"luax.hpp"
+
+1397696106 d:\projects\git\util\src\util\trace.hpp
+	"trace/tracemgr.hpp"
+	"trace/listener/stdoutlistener.hpp"
+	"trace/listener/tcplistener.hpp"
+	"trace/listener/udplistener.hpp"
+	"trace/listener/filelistener.hpp"
+
+1397696238 d:\projects\git\util\src\util\trace\tracemgr.hpp
+	"util/base.hpp"
+	"information.hpp"
+
+1400651037 d:\projects\git\util\src\util\trace\information.hpp
+	"util/time.hpp"
+
+1397696178 d:\projects\git\util\src\util\trace\listener\stdoutlistener.hpp
+	"../information.hpp"
+
+1397696186 d:\projects\git\util\src\util\trace\listener\tcplistener.hpp
+	"util/net.hpp"
+	"../information.hpp"
+
+1397696195 d:\projects\git\util\src\util\trace\listener\udplistener.hpp
+	"util/net.hpp"
+	"../information.hpp"
+
+1397696171 d:\projects\git\util\src\util\trace\listener\filelistener.hpp
+	<fstream>
+	"util/time.hpp"
+	"../information.hpp"
+
+1400651875 source:d:\projects\git\util\src\util\base\out.cpp
+	<cstdio>
+	<cstdarg>
+	<cstring>
+	"base.hpp"
+	"out.hpp"
+	"util/string.hpp"
+	"util/time.hpp"
+
+1397704782 source:d:\projects\git\util\src\util\cfg.cpp
+	"cfg.hpp"
+	<vector>
+	<list>
+	<algorithm>
+	"file.hpp"
+
+1365042972 source:d:\projects\git\util\src\util\cmdline.cpp
+	"cmdline.hpp"
+	<vector>
+	"collection.hpp"
+	"regex.hpp"
+
+1393330478 source:d:\projects\git\util\src\util\file.cpp
+	"file.hpp"
+	<fstream>
+	<io.h>
+	<direct.h>
+	<Shlwapi.h>
+	<unistd.h>
+	<dirent.h>
+	<sys/types.h>
+	<sys/stat.h>
+
+1400226351 source:d:\projects\git\util\src\util\lexicalcast.cpp
+	"lexicalcast.hpp"
+	"string.hpp"
+	<cmath>
+
+1369053028 source:d:\projects\git\util\src\util\lua\extend\lfilelib.cpp
+	"lfilelib.hpp"
+	"util/luaextend.hpp"
+	"util/file.hpp"
+
+1368924754 d:\projects\git\util\src\util\lua\extend\lfilelib.hpp
+	<string>
+
+1384527206 source:d:\projects\git\util\src\util\lua\extend\lmemorylib.cpp
+	"lmemorylib.hpp"
+	"util/luaextend.hpp"
+
+1368621196 d:\projects\git\util\src\util\lua\extend\lmemorylib.hpp
+	<string>
+
+1385646282 source:d:\projects\git\util\src\util\lua\extend\lnetlib.cpp
+	"lnetlib.hpp"
+	"util/luaextend.hpp"
+	"util/net.hpp"
+
+1368621204 d:\projects\git\util\src\util\lua\extend\lnetlib.hpp
+	<string>
+
+1375465274 source:d:\projects\git\util\src\util\lua\extend\lprocesslib.cpp
+	"lprocesslib.hpp"
+	"util/luaextend.hpp"
+	"util/process.hpp"
+	"util/any.hpp"
+
+1368928900 d:\projects\git\util\src\util\lua\extend\lprocesslib.hpp
+	<string>
+
+1368928058 source:d:\projects\git\util\src\util\lua\extend\lregexlib.cpp
+	"lregexlib.hpp"
+	"util/luaextend.hpp"
+	"util/regex.hpp"
+
+1368621206 d:\projects\git\util\src\util\lua\extend\lregexlib.hpp
+	<string>
+
+1396263432 source:d:\projects\git\util\src\util\lua\extend\lthreadlib.cpp
+	"lthreadlib.hpp"
+	<vector>
+	"util/luaextend.hpp"
+	"util/thread.hpp"
+	"util/any.hpp"
+
+1368877600 d:\projects\git\util\src\util\lua\extend\lthreadlib.hpp
+	<string>
+
+1363468218 source:d:\projects\git\util\src\util\lua\src\lapi.c
+	<stdarg.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+
+1363352662 d:\projects\git\util\src\util\lua\src\lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1363468218 d:\projects\git\util\src\util\lua\src\luaconf.h
+	<limits.h>
+	<stddef.h>
+	<stdio.h>
+	<math.h>
+
+1259336280 d:\projects\git\util\src\util\lua\src\lapi.h
+	"llimits.h"
+	"lstate.h"
+
+1361369336 d:\projects\git\util\src\util\lua\src\llimits.h
+	<limits.h>
+	<stddef.h>
+	"lua.h"
+	<assert.h>
+	<math.h>
+	<float.h>
+	<math.h>
+
+1341236224 d:\projects\git\util\src\util\lua\src\lstate.h
+	"lua.h"
+	"lobject.h"
+	"ltm.h"
+	"lzio.h"
+
+1347387704 d:\projects\git\util\src\util\lua\src\lobject.h
+	<stdarg.h>
+	"llimits.h"
+	"lua.h"
+
+1298914330 d:\projects\git\util\src\util\lua\src\ltm.h
+	"lobject.h"
+
+1310734084 d:\projects\git\util\src\util\lua\src\lzio.h
+	"lua.h"
+	"lmem.h"
+
+1361369302 d:\projects\git\util\src\util\lua\src\lmem.h
+	<stddef.h>
+	"llimits.h"
+	"lua.h"
+
+1318020320 d:\projects\git\util\src\util\lua\src\ldebug.h
+	"lstate.h"
+
+1322582108 d:\projects\git\util\src\util\lua\src\ldo.h
+	"lobject.h"
+	"lstate.h"
+	"lzio.h"
+
+1336485214 d:\projects\git\util\src\util\lua\src\lfunc.h
+	"lobject.h"
+
+1347367988 d:\projects\git\util\src\util\lua\src\lgc.h
+	"lobject.h"
+	"lstate.h"
+
+1328133436 d:\projects\git\util\src\util\lua\src\lstring.h
+	"lgc.h"
+	"lobject.h"
+	"lstate.h"
+
+1313612808 d:\projects\git\util\src\util\lua\src\ltable.h
+	"lobject.h"
+
+1336485214 d:\projects\git\util\src\util\lua\src\lundump.h
+	"lobject.h"
+	"lzio.h"
+
+1357654016 d:\projects\git\util\src\util\lua\src\lvm.h
+	"ldo.h"
+	"lobject.h"
+	"ltm.h"
+
+1363874098 source:d:\projects\git\util\src\util\lua\src\lauxlib.c
+	<errno.h>
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	<sys/wait.h>
+
+1368803984 d:\projects\git\util\src\util\lua\src\lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1368804002 source:d:\projects\git\util\src\util\lua\src\lbaselib.c
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1323346298 d:\projects\git\util\src\util\lua\src\lualib.h
+	"lua.h"
+
+1363699152 source:d:\projects\git\util\src\util\lua\src\lbitlib.c
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1345138468 source:d:\projects\git\util\src\util\lua\src\lcode.c
+	<stdlib.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstring.h"
+	"ltable.h"
+	"lvm.h"
+
+1314721602 d:\projects\git\util\src\util\lua\src\lcode.h
+	"llex.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+
+1322657032 d:\projects\git\util\src\util\lua\src\llex.h
+	"lobject.h"
+	"lzio.h"
+
+1310734230 d:\projects\git\util\src\util\lua\src\lopcodes.h
+	"llimits.h"
+
+1336485214 d:\projects\git\util\src\util\lua\src\lparser.h
+	"llimits.h"
+	"lobject.h"
+	"lzio.h"
+
+1361454294 source:d:\projects\git\util\src\util\lua\src\lcorolib.c
+	<stdlib.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1317658764 source:d:\projects\git\util\src\util\lua\src\lctype.c
+	"lctype.h"
+	<limits.h>
+
+1310734230 d:\projects\git\util\src\util\lua\src\lctype.h
+	"lua.h"
+	<limits.h>
+	"llimits.h"
+	<ctype.h>
+
+1327004084 source:d:\projects\git\util\src\util\lua\src\ldblib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1345138468 source:d:\projects\git\util\src\util\lua\src\ldebug.c
+	<stdarg.h>
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1349100304 source:d:\projects\git\util\src\util\lua\src\ldo.c
+	<setjmp.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+	"lzio.h"
+
+1327359730 source:d:\projects\git\util\src\util\lua\src\ldump.c
+	<stddef.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lundump.h"
+
+1349267806 source:d:\projects\git\util\src\util\lua\src\lfunc.c
+	<stddef.h>
+	"lua.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1363468218 source:d:\projects\git\util\src\util\lua\src\lgc.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1302290256 source:d:\projects\git\util\src\util\lua\src\linit.c
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1363874248 source:d:\projects\git\util\src\util\lua\src\liolib.c
+	<errno.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1363468218 source:d:\projects\git\util\src\util\lua\src\llex.c
+	<locale.h>
+	<string.h>
+	"lua.h"
+	"lctype.h"
+	"ldo.h"
+	"llex.h"
+	"lobject.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lzio.h"
+
+1362680492 source:d:\projects\git\util\src\util\lua\src\lmathlib.c
+	<stdlib.h>
+	<math.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1337787714 source:d:\projects\git\util\src\util\lua\src\lmem.c
+	<stddef.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1338381224 source:d:\projects\git\util\src\util\lua\src\loadlib.c
+	<windows.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<dlfcn.h>
+
+1361369336 source:d:\projects\git\util\src\util\lua\src\lobject.c
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lctype.h"
+	"ldebug.h"
+	"ldo.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"lvm.h"
+	<math.h>
+
+1337002458 source:d:\projects\git\util\src\util\lua\src\lopcodes.c
+	"lopcodes.h"
+
+1350662042 source:d:\projects\git\util\src\util\lua\src\loslib.c
+	<errno.h>
+	<locale.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<unistd.h>
+
+1360157860 source:d:\projects\git\util\src\util\lua\src\lparser.c
+	<string.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+
+1349199654 source:d:\projects\git\util\src\util\lua\src\lstate.c
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	<time.h>
+
+1357653010 source:d:\projects\git\util\src\util\lua\src\lstring.c
+	<string.h>
+	"lua.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+
+1344967954 source:d:\projects\git\util\src\util\lua\src\lstrlib.c
+	<ctype.h>
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1347392236 source:d:\projects\git\util\src\util\lua\src\ltable.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lvm.h"
+
+1362680244 source:d:\projects\git\util\src\util\lua\src\ltablib.c
+	<stddef.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1307043100 source:d:\projects\git\util\src\util\lua\src\ltm.c
+	<string.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1368193990 source:d:\projects\git\util\src\util\lua\src\lua.c
+	<signal.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<unistd.h>
+	<io.h>
+	<stdio.h>
+	<stdio.h>
+	<readline/readline.h>
+	<readline/history.h>
+
+1368194002 source:d:\projects\git\util\src\util\lua\src\luac.c
+	<errno.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lobject.h"
+	"lstate.h"
+	"lundump.h"
+	<ctype.h>
+	<stdio.h>
+	"ldebug.h"
+	"lobject.h"
+	"lopcodes.h"
+
+1336485214 source:d:\projects\git\util\src\util\lua\src\lundump.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstring.h"
+	"lundump.h"
+	"lzio.h"
+
+1363468218 source:d:\projects\git\util\src\util\lua\src\lvm.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1337002458 source:d:\projects\git\util\src\util\lua\src\lzio.c
+	<string.h>
+	"lua.h"
+	"llimits.h"
+	"lmem.h"
+	"lstate.h"
+	"lzio.h"
+
+1395145820 source:d:\projects\git\util\src\util\luaextend.cpp
+	"luaextend.hpp"
+	"lua/src/lua.hpp"
+	"lexicalcast.hpp"
+	"thread.hpp"
+	"net.hpp"
+	"lua/extend/lmemorylib.hpp"
+	"lua/extend/lregexlib.hpp"
+	"lua/extend/lnetlib.hpp"
+	"lua/extend/lthreadlib.hpp"
+	"lua/extend/lfilelib.hpp"
+	"lua/extend/lprocesslib.hpp"
+
+1103763184 d:\projects\git\util\src\util\lua\src\lua.hpp
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1401969670 source:d:\projects\git\util\src\util\luax.cpp
+	"luax.hpp"
+	<map>
+	<set>
+	"string.hpp"
+	"thread.hpp"
+	"lua/src/lua.hpp"
+	"luaextend.hpp"
+
+1400650918 source:d:\projects\git\util\src\util\net.cpp
+	"net.hpp"
+	<vector>
+	<list>
+	"string.hpp"
+	"lexicalcast.hpp"
+	"regex.hpp"
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<arpa/inet.h>
+	<unistd.h>
+	<fcntl.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netdb.h>
+	<sys/un.h>
+
+1396263502 source:d:\projects\git\util\src\util\process.cpp
+	"process.hpp"
+	<vector>
+	"string.hpp"
+	"thread.hpp"
+	<windows.h>
+	<unistd.h>
+	<sys/types.h>
+	<sys/wait.h>
+
+1368622834 source:d:\projects\git\util\src\util\regex.cpp
+	"regex.hpp"
+	"regex/deelx.h"
+
+1365042270 d:\projects\git\util\src\util\regex\deelx.h
+	<memory.h>
+	<ctype.h>
+	<limits.h>
+	<string.h>
+	<stdlib.h>
+
+1394027812 source:d:\projects\git\util\src\util\string.cpp
+	"string.hpp"
+	<algorithm>
+	<iterator>
+	<cstdio>
+	<cstdarg>
+	<ctype.h>
+
+1396263432 source:d:\projects\git\util\src\util\thread.cpp
+	"thread.hpp"
+	<process.h>
+	<windows.h>
+	<unistd.h>
+	<pthread.h>
+	<semaphore.h>
+	<thread_db.h>
+
+1365691764 source:d:\projects\git\util\src\util\time.cpp
+	"time.hpp"
+
+1400651031 source:d:\projects\git\util\src\util\trace\information.cpp
+	"information.hpp"
+	"util/string.hpp"
+
+1397696467 source:d:\projects\git\util\src\util\trace\informationthread.cpp
+	"informationthread.hpp"
+	<algorithm>
+
+1397696456 d:\projects\git\util\src\util\trace\informationthread.hpp
+	<list>
+	<deque>
+	"util/thread.hpp"
+	"information.hpp"
+
+1397696029 source:d:\projects\git\util\src\util\trace\listener\filelistener.cpp
+	"filelistener.hpp"
+	"util/string.hpp"
+
+1397696014 source:d:\projects\git\util\src\util\trace\listener\stdoutlistener.cpp
+	"stdoutlistener.hpp"
+
+1397696004 source:d:\projects\git\util\src\util\trace\listener\tcplistener.cpp
+	"tcplistener.hpp"
+
+1397695992 source:d:\projects\git\util\src\util\trace\listener\udplistener.cpp
+	"udplistener.hpp"
+
+1397695941 source:d:\projects\git\util\src\util\trace\tracemgr.cpp
+	"tracemgr.hpp"
+	<cstdio>
+	<cstdarg>
+	"informationthread.hpp"
+
+1365906842 source:d:\projects\git\util\src\util\unittest.cpp
+	"unittest.hpp"
+	<cstdio>
+	<cstdarg>
+	<cstring>
+	"string.hpp"
+	"time.hpp"
+	"net.hpp"
+

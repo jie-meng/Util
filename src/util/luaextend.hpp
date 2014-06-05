@@ -1,7 +1,7 @@
 #ifndef UTIL_LUAEXTEND_HPP
 #define UTIL_LUAEXTEND_HPP
 
-#include "lua.hpp"
+#include "luax.hpp"
 
 namespace util
 {
