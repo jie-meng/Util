@@ -36,6 +36,7 @@ time_t fileTime(const std::string& file, E_FileTime ft);
 
 //path
 std::string currentPath();
+bool setCurrentPath(const std::string& dir);
 bool isPathExists(const std::string& path);
 bool isPathDir(const std::string& path);
 bool isPathFile(const std::string& path);

@@ -280,6 +280,11 @@ std::string currentPath()
     }
 }
 
+bool setCurrentPath(const std::string& dir)
+{
+    return 0 == ::chdir(dir.c_str());
+}
+
 bool isPathExists(const std::string& path)
 {
 #ifdef _PLATFORM_WINDOWS_

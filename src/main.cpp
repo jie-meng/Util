@@ -19,6 +19,7 @@
 #include "util/luaextend.hpp"
 #include "util/any.hpp"
 #include "util/trace.hpp"
+#include <io.h>
 
 using namespace std;
 using namespace util;
@@ -259,9 +260,9 @@ int Trace()
 int main(int argc, char* argv[])
 {
     //luaExecutor(argc, argv);
-    DgramSocket ds(Family_IPv4);
-    int rc = ds.sendTo("asdfsdf", 5, "10.93.42.31", 5060);
-    printLine(rc);
+    printLine(currentPath());
+    printLine(setCurrentPath("C:/Users/jmeng/workspace"));
+    printLine(currentPath());
 
     return 0;
 }

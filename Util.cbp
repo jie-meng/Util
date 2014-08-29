@@ -28,12 +28,13 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-D_PLATFORM_LINUX_" />
+					<Add option="-D_PLATFORM_WINDOWS_" />
 					<Add directory="src" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lpthread" />
+					<Add option="-lws2_32" />
+					<Add option="-lShlwapi" />
 				</Linker>
 			</Target>
 		</Build>

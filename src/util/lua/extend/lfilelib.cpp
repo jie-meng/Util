@@ -107,6 +107,12 @@ static int currentPath(lua_State* plua_state)
     return 1;
 }
 
+static int setCurrentPath(lua_State* plua_state)
+{
+    luaPushBoolean(plua_state, setCurrentPath(luaGetString(plua_state, 1, "")));
+    return 1;
+}
+
 static int isPathExists(lua_State* plua_state)
 {
     luaPushBoolean(plua_state, isPathExists(luaGetString(plua_state, 1, "")));
@@ -190,6 +196,7 @@ static const u_luaL_Reg file_lib[] =
     {"splitPathname", splitPathname},
 
     {"currentPath", currentPath},
+    {"setCurrentPath", setCurrentPath},
     {"isPathExists", isPathExists},
     {"isPathDir", isPathDir},
     {"isPathFile", isPathFile},
