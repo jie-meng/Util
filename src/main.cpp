@@ -259,10 +259,12 @@ int Trace()
 
 int main(int argc, char* argv[])
 {
-    //luaExecutor(argc, argv);
-    printLine(currentPath());
-    printLine(setCurrentPath("C:/Users/jmeng/workspace"));
-    printLine(currentPath());
+    luaExecutor(argc, argv);
+//    printLine(currentPath());
+//    printLine(setCurrentPath("C:/Users/jmeng/workspace"));
+//    printLine(currentPath());
+//    string str = readluaGetString(plua_state, 1, "")TextFile("readme.txt");
+//    printLine(str);
 
     return 0;
 }

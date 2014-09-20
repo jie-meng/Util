@@ -1,5 +1,5 @@
 /*
-** $Id: lua.c,v 1.206 2012/09/29 20:07:06 roberto Exp $
+** $Id: lua.c,v 1.206.1.1 2013/04/12 18:48:47 roberto Exp $
 ** Lua stand-alone interpreter
 ** See Copyright Notice in lua.h
 */
@@ -477,21 +477,21 @@ static int pmain (lua_State *L) {
 }
 
 
-//int main (int argc, char **argv) {
-//  int status, result;
-//  lua_State *L = luaL_newstate();  /* create state */
-//  if (L == NULL) {
-//    l_message(argv[0], "cannot create state: not enough memory");
-//    return EXIT_FAILURE;
-//  }
-//  /* call 'pmain' in protected mode */
-//  lua_pushcfunction(L, &pmain);
-//  lua_pushinteger(L, argc);  /* 1st argument */
-//  lua_pushlightuserdata(L, argv); /* 2nd argument */
-//  status = lua_pcall(L, 2, 1, 0);
-//  result = lua_toboolean(L, -1);  /* get result */
-//  finalreport(L, status);
-//  lua_close(L);
-//  return (result && status == LUA_OK) ? EXIT_SUCCESS : EXIT_FAILURE;
-//}
+int lua_main (int argc, char **argv) {
+  int status, result;
+  lua_State *L = luaL_newstate();  /* create state */
+  if (L == NULL) {
+    l_message(argv[0], "cannot create state: not enough memory");
+    return EXIT_FAILURE;
+  }
+  /* call 'pmain' in protected mode */
+  lua_pushcfunction(L, &pmain);
+  lua_pushinteger(L, argc);  /* 1st argument */
+  lua_pushlightuserdata(L, argv); /* 2nd argument */
+  status = lua_pcall(L, 2, 1, 0);
+  result = lua_toboolean(L, -1);  /* get result */
+  finalreport(L, status);
+  lua_close(L);
+  return (result && status == LUA_OK) ? EXIT_SUCCESS : EXIT_FAILURE;
+}
 

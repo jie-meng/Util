@@ -1,5 +1,5 @@
 /*
-** $Id: lbaselib.c,v 1.276 2013/02/21 13:44:53 roberto Exp $
+** $Id: lbaselib.c,v 1.276.1.1 2013/04/12 18:48:47 roberto Exp $
 ** Basic library
 ** See Copyright Notice in lua.h
 */
@@ -456,7 +456,7 @@ LUAMOD_API int luaopen_base (lua_State *L) {
   return 1;
 }
 
-//mj
+//joshua
 int lua_dofile_export (lua_State *L)
 {
     return luaB_dofile(L);

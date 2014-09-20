@@ -1,5 +1,5 @@
 /*
-** $Id: lauxlib.h,v 1.120 2011/11/29 15:55:08 roberto Exp $
+** $Id: lauxlib.h,v 1.120.1.1 2013/04/12 18:48:47 roberto Exp $
 ** Auxiliary functions for building Lua libraries
 ** See Copyright Notice in lua.h
 */
@@ -98,9 +98,9 @@ LUALIB_API void (luaL_traceback) (lua_State *L, lua_State *L1,
 LUALIB_API void (luaL_requiref) (lua_State *L, const char *modname,
                                  lua_CFunction openf, int glb);
 
-//mj
+//joshua
 int lua_dofile_export (lua_State *L);
-
+								 
 /*
 ** ===============================================================
 ** some useful macros
