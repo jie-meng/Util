@@ -271,7 +271,7 @@ std::string appPath()
 #ifdef _PLATFORM_WINDOWS_
     char szFullPath[MAX_PATH];
     ZeroMemory(szFullPath, MAX_PATH);
-    ::GetModuleFileName(NULL, szFullPath, MAX_PATH);
+    ::GetModuleFileNameA(NULL, szFullPath, MAX_PATH);
     return std::string(szFullPath);
 #endif
 #ifdef _PLATFORM_LINUX_
