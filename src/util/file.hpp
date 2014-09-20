@@ -35,6 +35,7 @@ enum E_FileTime
 time_t fileTime(const std::string& file, E_FileTime ft);
 
 //path
+std::string appPath();
 std::string currentPath();
 bool setCurrentPath(const std::string& dir);
 bool isPathExists(const std::string& path);
