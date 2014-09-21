@@ -259,8 +259,8 @@ int Trace()
 
 int main(int argc, char* argv[])
 {
-    luaExecutor(argc, argv);
-//    printLine(appPath());
+    //luaExecutor(argc, argv);
+    printLine(currentPath());
 
     return 0;
 }

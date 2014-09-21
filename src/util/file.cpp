@@ -274,9 +274,14 @@ std::string currentPath()
         Memory<char> m(i * kMaxPathLen);
         char* p = ::getcwd(m.buf(), m.size());
         if (p)
-            return std::string(p);
+        {
+            std::string cwd = std::string(p);
+            return strReplaceAll(cwd, "\\", "/");
+        }
         else
+        {
             ++i;
+        }
     }
 }
 
