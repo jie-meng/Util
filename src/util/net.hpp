@@ -64,7 +64,7 @@ struct TIpAddr
         memset(ipaddr, 0, sizeof(ipaddr));
     }
     int ipaddr_ver;
-    char ipaddr[16];
+    unsigned char ipaddr[16];
 };
 
 struct TIpAddrInfo
@@ -97,7 +97,7 @@ public:
     //common
     bool init();
     bool isOk() const;
-    bool bind(const std::string& ip, unsigned short port);
+    bool bind(const std::string& ip, unsigned short port, unsigned short* pport_out = NULL);
     bool closeSocket();
     int setBlock(unsigned long block = 0);
     int setSockopt(int level, int optname, const void* optval, int optlen);
@@ -136,7 +136,7 @@ public:
     inline char* getRecvBuf() const { return recv_buf_; }
     inline bool isOk() const { return socket_.isOk(); }
     bool init();
-    inline bool bind(const std::string& ip, unsigned short port) { return socket_.bind(ip, port); }
+    inline bool bind(const std::string& ip, unsigned short port, unsigned short* pport_out = NULL) { return socket_.bind(ip, port, pport_out); }
     inline int sendTo(const char* buf, size_t len, const std::string& ip, unsigned short port, int flag = 0)
     { return socket_.sendTo(buf, len, ip, port, flag); }
     inline int recvFrom(std::string* pout_peer_ip, unsigned short* pout_peer_port, int flag = 0)
@@ -214,7 +214,7 @@ public:
     //common
     bool isOk() const;
     bool init();
-    bool bind(const std::string& ip, unsigned short port);
+    bool bind(const std::string& ip, unsigned short port, unsigned short* pport_out = NULL);
     bool closeSocket();
     int setBlock(unsigned long block = 0);
     int setSockopt(int level, int optname, const void* optval, int optlen);

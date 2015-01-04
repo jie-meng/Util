@@ -474,14 +474,39 @@ int Socket::getSocket() const
 }
 
 //common
-bool Socket::bind(const std::string& ip, unsigned short port)
+bool Socket::bind(const std::string& ip, unsigned short port, unsigned short* pport_out)
 {
     if(!getAddrInfo(ip, port))
         return false;
-    return (0 == ::bind(pdata_->socket_,
+
+    bool ret = (0 == ::bind(pdata_->socket_,
                   pdata_->paddrinfo_res0_->ai_addr,
                   pdata_->paddrinfo_res0_->ai_addrlen))
                   ? true : false;
+
+    if (NULL != pport_out && ret)
+    {
+        if (Family_IPv4 == pdata_->family_)
+        {
+            sockaddr_in sin;
+            int len = sizeof(sin);
+            if (getsockname(pdata_->socket_, (struct sockaddr *)&sin, &len) != 0)
+                return ret;
+
+            *pport_out = u_ntohs(sin.sin_port);
+        }
+        else if (Family_IPv6 == pdata_->family_)
+        {
+            sockaddr_in6 sin6;
+            int len = sizeof(sin6);
+            if (getsockname(pdata_->socket_, (struct sockaddr *)&sin6, &len) != 0)
+                return ret;
+
+            *pport_out = u_ntohs(sin6.sin6_port);
+        }
+    }
+
+    return ret;
 }
 
 bool Socket::closeSocket()
@@ -1007,8 +1032,8 @@ bool StreamSocket::isOk() const
 bool StreamSocket::init()
 { return pimpl_->socket_.init(); }
 
-bool StreamSocket::bind(const std::string& ip, unsigned short port)
-{ return pimpl_->socket_.bind(ip, port); }
+bool StreamSocket::bind(const std::string& ip, unsigned short port, unsigned short* pport_out)
+{ return pimpl_->socket_.bind(ip, port, pport_out); }
 
 bool StreamSocket::closeSocket()
 {
