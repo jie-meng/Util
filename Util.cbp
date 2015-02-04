@@ -60,6 +60,8 @@
 		<Unit filename="src/util/collection.hpp" />
 		<Unit filename="src/util/csv.cpp" />
 		<Unit filename="src/util/csv.hpp" />
+		<Unit filename="src/util/csv/csv_parser.cpp" />
+		<Unit filename="src/util/csv/csv_parser.hpp" />
 		<Unit filename="src/util/factory.hpp" />
 		<Unit filename="src/util/file.cpp" />
 		<Unit filename="src/util/file.hpp" />

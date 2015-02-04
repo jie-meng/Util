@@ -4,6 +4,7 @@
 #include <sstream>
 #include <istream>
 #include "string.hpp"
+#include "file.hpp"
 
 using namespace std;
 
@@ -12,45 +13,86 @@ namespace util
 
 typedef UtilSharedPtr< vector<string> > SpStrVec;
 
-//from http://www.zedwood.com/article/cpp-csv-parser
-void csv_read_row(std::istream &in, char delimiter, std::vector<std::string>* pout_strvec);
-void csv_read_row(std::string &in, char delimiter, std::vector<std::string>* pout_strvec);
-
-const char kDelimeter = ',';
-
 struct Csv::CsvImpl
 {
-    CsvImpl()
+    CsvImpl(char delimeter, char enclosure) :
+        delimeter_(delimeter),
+        enclosure_(enclosure)
     {}
 
-    CsvImpl(const std::string& file)
-    { read(file); }
+    CsvImpl(const std::string& file, char delimeter, char enclosure) :
+        delimeter_(delimeter),
+        enclosure_(enclosure)
+    {
+        read(file);
+    }
+
+    void clear()
+    {
+        file_name_ = "";
+        matrix_.clear();
+    }
 
     bool read(const std::string& file)
     {
-        matrix_.clear();
+        clear();
 
-        std::ifstream ifs(file.c_str());
-        if (ifs.is_open())
+        string text = readTextFile(file);
+        if (text == "")
+            return false;
+
+        std::stringstream in(text);
+
+        std::stringstream ss;
+        bool inquotes = false;
+
+        SpStrVec spstrvec(new vector<string>());
+
+        while(in.good())
         {
-            std::string line;
-            while(!ifs.eof())
+            char c = in.get();
+            if (!inquotes && c==enclosure_) //beginquotechar
             {
-                std::getline(ifs, line);
-
-                SpStrVec spstrvec(new std::vector<std::string>());
-                csv_read_row(line, kDelimeter, spstrvec.get());
-                if (getTotalRows() != 0 && spstrvec->size() != getTotalCols())
+                inquotes=true;
+            }
+            else if (inquotes && c==enclosure_) //quotechar
+            {
+                if ( in.peek() == enclosure_)//2 consecutive quotes resolve to 1
                 {
-                    matrix_.clear();
+                    ss << (char)in.get();
+                }
+                else //endquotechar
+                {
+                    inquotes=false;
+                }
+            }
+            else if (!inquotes && c==delimeter_) //end of field
+            {
+                spstrvec->push_back( ss.str() );
+                ss.str("");
+            }
+            else if (!inquotes && (c=='\r' || c=='\n') )
+            {
+                if(in.peek()=='\n') { in.get(); }
+                spstrvec->push_back( ss.str() );
+                ss.str("");
+
+                if (!empty() && spstrvec->size() != getTotalCols())
+                {
+                    clear();
                     return false;
                 }
 
                 matrix_.push_back(spstrvec);
+                spstrvec.reset(new vector<string>());
             }
-            ifs.close();
+            else
+            {
+                ss << c;
+            }
         }
 
+        file_name_ = file;
         return true;
     }
 
@@ -60,12 +102,34 @@ struct Csv::CsvImpl
         ofs.open(file.c_str());
         if (ofs.is_open())
         {
-            vector<SpStrVec>::iterator it;
-            for (it = matrix_.begin(); it != matrix_.end(); ++it)
-            {
+            string delemiter = strFormat("%c", delimeter_);
+            string enclosure = strFormat("%c", enclosure_);
 
-                ofs<<"";
+            for (size_t i = 0; i < matrix_.size(); ++i)
+            {
+                std::string str_join = "";
+                SpStrVec spstrvec = matrix_[i];
+                vector<string>::iterator c_it;
+                for (c_it = spstrvec->begin(); c_it != spstrvec->end(); ++c_it)
+                {
+                    string str = *c_it;
+                    str = strReplaceAll(str, enclosure, enclosure+enclosure);
+
+                    if (strContains(str, delemiter) ||
+                        strContains(str, enclosure) ||
+                        strContains(str, "\r") ||
+                        strContains(str, "\n"))
+                        str_join += "\"" + str + "\"" + delemiter;
+                    else
+                        str_join += *c_it + delemiter;
+                }
+
+                if (strEndWith(str_join, delemiter))
+                    str_join = str_join.substr(0, str_join.length() - 1);
+
+                ofs<<str_join + "\n";
             }
+
             ofs.close();
             return true;
         }
@@ -77,7 +141,12 @@ struct Csv::CsvImpl
 
     bool write()
     {
-        return false;
+        return (file_name_ == "") ? false : write(file_name_);
+    }
+
+    bool empty() const
+    {
+        return matrix_.empty();
     }
 
     size_t getTotalRows() const
@@ -93,17 +162,94 @@ struct Csv::CsvImpl
         return matrix_[0]->size();
     }
 
+    std::string getCellValue(size_t row, size_t col) const
+    {
+        if (row < getTotalRows() && col < getTotalCols())
+            return matrix_[row]->at(col);
+        else
+            return "";
+    }
+
+    bool setCellValue(size_t row, size_t col, const std::string& value)
+    {
+        if (row < getTotalRows() && col < getTotalCols())
+        {
+            matrix_[row]->at(col) = value;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+//    void csvReadRow(std::string &line, char delimiter, std::vector<std::string>* pout_strvec)
+//    {
+//        if (!pout_strvec)
+//            return;
+//
+//        std::stringstream ss(line);
+//        csvReadRow(ss, delimiter, pout_strvec);
+//    }
+//
+//    void csvReadRow(std::istream &in, char delimiter, std::vector<std::string>* pout_strvec)
+//    {
+//        std::stringstream ss;
+//        bool inquotes = false;
+//        //std::vector<std::string> row;//relying on RVO
+//        while(in.good())
+//        {
+//            char c = in.get();
+//            if (!inquotes && c=='"') //beginquotechar
+//            {
+//                inquotes=true;
+//            }
+//            else if (inquotes && c=='"') //quotechar
+//            {
+//                if ( in.peek() == '"')//2 consecutive quotes resolve to 1
+//                {
+//                    ss << (char)in.get();
+//                }
+//                else //endquotechar
+//                {
+//                    inquotes=false;
+//                }
+//            }
+//            else if (!inquotes && c==delimiter) //end of field
+//            {
+//                pout_strvec->push_back( ss.str() );
+//                ss.str("");
+//            }
+//            else if (!inquotes && (c=='\r' || c=='\n') )
+//            {
+//                if(in.peek()=='\n') { in.get(); }
+//                pout_strvec->push_back( ss.str() );
+//                //return row;
+//            }
+//            else
+//            {
+//                ss << c;
+//            }
+//        }
+//    }
+
+    std::string file_name_;
     vector<SpStrVec> matrix_;
+    char delimeter_;
+    char enclosure_;
 };
 
-Csv::Csv() :
-    pimpl_(new CsvImpl())
+Csv::Csv(char delimeter,
+         char enclosure) :
+    pimpl_(new CsvImpl(delimeter, enclosure))
 {
     //ctor
 }
 
-Csv::Csv(const std::string& file) :
-    pimpl_(new CsvImpl(file))
+Csv::Csv(const std::string& file,
+         char delimeter,
+         char enclosure) :
+    pimpl_(new CsvImpl(file, delimeter, enclosure))
 {
 
 }
@@ -128,6 +274,11 @@ bool Csv::write()
     return pimpl_->write();
 }
 
+bool Csv::empty() const
+{
+    return pimpl_->empty();
+}
+
 size_t Csv::getTotalRows() const
 {
     return pimpl_->getTotalRows();
@@ -138,54 +289,14 @@ size_t Csv::getTotalCols() const
     return pimpl_->getTotalCols();
 }
 
-void csv_read_row(std::string &line, char delimiter, std::vector<std::string>* pout_strvec)
+std::string Csv::getCellValue(size_t row, size_t col) const
 {
-    if (!pout_strvec)
-        return;
-
-    std::stringstream ss(line);
-    csv_read_row(ss, delimiter, pout_strvec);
+    return pimpl_->getCellValue(row, col);
 }
 
-void csv_read_row(std::istream &in, char delimiter, std::vector<std::string>* pout_strvec)
+bool Csv::setCellValue(size_t row, size_t col, const std::string& value)
 {
-    std::stringstream ss;
-    bool inquotes = false;
-    //std::vector<std::string> row;//relying on RVO
-    while(in.good())
-    {
-        char c = in.get();
-        if (!inquotes && c=='"') //beginquotechar
-        {
-            inquotes=true;
-        }
-        else if (inquotes && c=='"') //quotechar
-        {
-            if ( in.peek() == '"')//2 consecutive quotes resolve to 1
-            {
-                ss << (char)in.get();
-            }
-            else //endquotechar
-            {
-                inquotes=false;
-            }
-        }
-        else if (!inquotes && c==delimiter) //end of field
-        {
-            pout_strvec->push_back( ss.str() );
-            ss.str("");
-        }
-        else if (!inquotes && (c=='\r' || c=='\n') )
-        {
-            if(in.peek()=='\n') { in.get(); }
-            pout_strvec->push_back( ss.str() );
-            //return row;
-        }
-        else
-        {
-            ss << c;
-        }
-    }
+    return pimpl_->setCellValue(row, col, value);
 }
 
 } //namespace util

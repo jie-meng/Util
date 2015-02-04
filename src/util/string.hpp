@@ -39,24 +39,24 @@ bool strIsEqual(const std::string& str_first, const std::string& str_second, boo
 template <typename ConstIterator>
 std::string strJoin(ConstIterator c_it_begin, ConstIterator c_it_end, const std::string& del)
 {
-    std::string strJoin = "";
+    std::string str_join = "";
     ConstIterator c_it;
     while(c_it_begin != c_it_end)
     {
-        strJoin += *c_it_begin + del;
+        str_join += *c_it_begin + del;
         ++c_it_begin;
     }
-    return strJoin.substr(0, strJoin.length() - 1);
+    return str_join.substr(0, str_join.length() - 1);
 }
 
 template <typename Coll>
 std::string strJoin(const Coll& coll, const std::string& del)
 {
-    std::string strJoin = "";
+    std::string str_join = "";
     typename Coll::const_iterator c_it;
     for (c_it = coll.begin(); c_it != coll.end(); ++c_it)
-        strJoin += *c_it + del;
-    return strJoin.substr(0, strJoin.length() - 1);
+        str_join += *c_it + del;
+    return str_join.substr(0, str_join.length() - 1);
 }
 
 template <typename Coll>

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <list>
+#include <io.h>
 #include "util/thread.hpp"
 #include "util/file.hpp"
 #include "util/net.hpp"
@@ -19,7 +20,7 @@
 #include "util/luaextend.hpp"
 #include "util/any.hpp"
 #include "util/trace.hpp"
-#include <io.h>
+#include "util/csv.hpp"
 
 using namespace std;
 using namespace util;
@@ -259,8 +260,23 @@ int Trace()
 
 int main(int argc, char* argv[])
 {
-    //luaExecutor(argc, argv);
-    printLine(currentPath());
+    luaExecutor(argc, argv);
+
+//    Csv csv("ssg.csv");
+//    if (!csv.empty())
+//    {
+//        printLine(csv.getTotalRows());
+//        printLine(csv.getTotalCols());
+//        printLine("{" + csv.getCellValue(1, 2) + "}");
+//        printLine(csv.setCellValue(1, 2, "ggx\nmu"));
+//
+//        csv.write("shit.csv");
+//        csv.write();
+//    }
+//    else
+//    {
+//        printLine("sb");
+//    }
 
     return 0;
 }
