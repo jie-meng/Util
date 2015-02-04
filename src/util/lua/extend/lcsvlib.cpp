@@ -76,6 +76,15 @@ static int empty(lua_State* plua_state)
     return 1;
 }
 
+static int clear(lua_State* plua_state)
+{
+    Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
+    if (pcsv)
+        pcsv->clear();
+
+    return 0;
+}
+
 static int getTotalRows(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
@@ -140,6 +149,33 @@ static int setCellValue(lua_State* plua_state)
     return 1;
 }
 
+static int addRow(lua_State* plua_state)
+{
+    Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
+    if (!pcsv)
+    {
+        luaPushBoolean(plua_state, false);
+    }
+    else
+    {
+        int count = luaGetTop(plua_state);
+        if (count > 0)
+        {
+            vector<string> vec;
+            for (int i=0; i<count; ++i)
+                vec.push_back(luaGetString(plua_state, i+1, ""));
+
+            luaPushBoolean(plua_state, pcsv->addRow(vec));
+        }
+        else
+        {
+            luaPushBoolean(plua_state, false);
+        }
+    }
+
+    return 1;
+}
+
 static const u_luaL_Reg csv_lib[] =
 {
     {"create", create},
@@ -147,10 +183,12 @@ static const u_luaL_Reg csv_lib[] =
     {"read", read},
     {"write", write},
     {"empty", empty},
+    {"clear", clear},
     {"getTotalRows", getTotalRows},
     {"getTotalCols", getTotalCols},
     {"getCellValue", getCellValue},
     {"setCellValue", setCellValue},
+    {"addRow", addRow},
 
     {0, 0}
 };
@@ -160,6 +198,5 @@ int lualibCsvCreate(lua_State* plua_state)
     luaCreateLib(plua_state, (u_luaL_Reg*)csv_lib);
     return 1;
 }
-
 
 }

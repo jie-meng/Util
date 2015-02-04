@@ -60,14 +60,14 @@
 		<Unit filename="src/util/collection.hpp" />
 		<Unit filename="src/util/csv.cpp" />
 		<Unit filename="src/util/csv.hpp" />
-		<Unit filename="src/util/csv/csv_parser.cpp" />
-		<Unit filename="src/util/csv/csv_parser.hpp" />
 		<Unit filename="src/util/factory.hpp" />
 		<Unit filename="src/util/file.cpp" />
 		<Unit filename="src/util/file.hpp" />
 		<Unit filename="src/util/iterator.hpp" />
 		<Unit filename="src/util/lexicalcast.cpp" />
 		<Unit filename="src/util/lexicalcast.hpp" />
+		<Unit filename="src/util/lua/extend/lcsvlib.cpp" />
+		<Unit filename="src/util/lua/extend/lcsvlib.hpp" />
 		<Unit filename="src/util/lua/extend/lfilelib.cpp" />
 		<Unit filename="src/util/lua/extend/lfilelib.hpp" />
 		<Unit filename="src/util/lua/extend/lmemorylib.cpp" />
@@ -80,6 +80,7 @@
 		<Unit filename="src/util/lua/extend/lregexlib.hpp" />
 		<Unit filename="src/util/lua/extend/lthreadlib.cpp" />
 		<Unit filename="src/util/lua/extend/lthreadlib.hpp" />
+		<Unit filename="src/util/lua/src/Makefile" />
 		<Unit filename="src/util/lua/src/lapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -163,6 +164,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/util/lua/src/lparser.h" />
+		<Unit filename="src/util/lua/src/lprefix.h" />
 		<Unit filename="src/util/lua/src/lstate.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -199,6 +201,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/util/lua/src/lundump.h" />
+		<Unit filename="src/util/lua/src/lutf8lib.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src/util/lua/src/lvm.c">
 			<Option compilerVar="CC" />
 		</Unit>

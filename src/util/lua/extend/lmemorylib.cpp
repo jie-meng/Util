@@ -11,7 +11,7 @@ static int create(lua_State* plua_state)
     luaAssert(plua_state, luaGetTop(plua_state) > 0 &&
               LuaNumber == luaGetType(plua_state, 1), "create memory with incorrect size");
 
-    size_t memory_size = luaGetUInteger(plua_state, 1);
+    size_t memory_size = luaGetInteger(plua_state, 1);
 
     ByteMemory* pmemory = new ByteMemory(memory_size);
 
@@ -38,9 +38,9 @@ static int size(lua_State* plua_state)
 {
     ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pmemory)
-        luaPushUInteger(plua_state, 0);
+        luaPushInteger(plua_state, 0);
     else
-        luaPushUInteger(plua_state, pmemory->size());
+        luaPushInteger(plua_state, pmemory->size());
 
     return 1;
 }
@@ -77,7 +77,7 @@ static int offset(lua_State* plua_state)
         return 1;
     }
 
-    luaPushLightUserData(plua_state, (void*)(p + luaGetUInteger(plua_state, 2, 0)));
+    luaPushLightUserData(plua_state, (void*)(p + luaGetInteger(plua_state, 2, 0)));
 
     return 1;
 }
@@ -92,7 +92,7 @@ static int memstr(lua_State* plua_state)
         return 1;
     }
 
-    luaPushString(plua_state, memoryStr(p, luaGetUInteger(plua_state, 2)));
+    luaPushString(plua_state, memoryStr(p, luaGetInteger(plua_state, 2)));
 
     return 1;
 }
@@ -119,7 +119,7 @@ static int memset(lua_State* plua_state)
     if(!p)
         return 0;
 
-    ::memset(p, luaGetUInteger(plua_state, 2), luaGetUInteger(plua_state, 3));
+    ::memset(p, luaGetInteger(plua_state, 2), luaGetInteger(plua_state, 3));
 
     return 0;
 }
@@ -135,7 +135,7 @@ static int memcpy(lua_State* plua_state)
     if (!p2)
         return 0;
 
-    ::memcpy(p1, p2, luaGetUInteger(plua_state, 3));
+    ::memcpy(p1, p2, luaGetInteger(plua_state, 3));
 
     return 0;
 }
@@ -151,7 +151,7 @@ static int memmove(lua_State* plua_state)
     if (!p2)
         return 0;
 
-    ::memmove(p1, p2, luaGetUInteger(plua_state, 3));
+    ::memmove(p1, p2, luaGetInteger(plua_state, 3));
 
     return 0;
 }
@@ -186,7 +186,7 @@ static int setUint(lua_State* plua_state)
     if (!p)
         return 0;
 
-    *(T*)p = luaGetUInteger(plua_state, 2);
+    *(T*)p = luaGetInteger(plua_state, 2);
 
     return 0;
 }
@@ -198,7 +198,7 @@ static int getUint(lua_State* plua_state)
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
     luaAssert(plua_state, NULL != p, "[getUint] memory address is NULL");
 
-    luaPushUInteger(plua_state, *(T*)p);
+    luaPushInteger(plua_state, *(T*)p);
 
     return 1;
 }
@@ -213,8 +213,8 @@ static int setBytes(lua_State* plua_state)
     for (size_t i=2; i<=(size_t)luaGetTop(plua_state); ++i)
     {
         char* p1 = p + (i-2);
-        luaAssert(plua_state, luaGetUInteger(plua_state, i) <= 255, "[setMemBytes] byte value should not be more than 255");
-        *(uint8_t*)(p1) = luaGetUInteger(plua_state, i);
+        luaAssert(plua_state, luaGetInteger(plua_state, i) <= 255, "[setMemBytes] byte value should not be more than 255");
+        *(uint8_t*)(p1) = luaGetInteger(plua_state, i);
     }
 
     return 0;

@@ -10,42 +10,42 @@ namespace util
 ////////////////////////////////////////////////////
 static int htons(lua_State* plua_state)
 {
-    luaPushUInteger(plua_state, u_htons((uint16_t)luaGetUInteger(plua_state, 1, 0)));
+    luaPushInteger(plua_state, u_htons((uint16_t)luaGetInteger(plua_state, 1, 0)));
     return 1;
 }
 
 static int ntohs(lua_State* plua_state)
 {
-    luaPushUInteger(plua_state, u_ntohs((uint16_t)luaGetUInteger(plua_state, 1, 0)));
+    luaPushInteger(plua_state, u_ntohs((uint16_t)luaGetInteger(plua_state, 1, 0)));
     return 1;
 }
 
 static int htonl(lua_State* plua_state)
 {
-    luaPushUInteger(plua_state, u_htonl((uint32_t)luaGetUInteger(plua_state, 1, 0)));
+    luaPushInteger(plua_state, u_htonl((uint32_t)luaGetInteger(plua_state, 1, 0)));
     return 1;
 }
 
 static int ntohl(lua_State* plua_state)
 {
-    luaPushUInteger(plua_state, u_ntohl((uint32_t)luaGetUInteger(plua_state, 1, 0)));
+    luaPushInteger(plua_state, u_ntohl((uint32_t)luaGetInteger(plua_state, 1, 0)));
     return 1;
 }
 
 static int ip_array_to_str(lua_State* plua_state)
 {
-    luaPushString(plua_state, ipArrayToStr((Family)luaGetUInteger(plua_state, 1, Family_None),
+    luaPushString(plua_state, ipArrayToStr((Family)luaGetInteger(plua_state, 1, Family_None),
                                           (unsigned char*)luaGetLightUserData(plua_state, 2, 0),
-                                          (size_t)luaGetUInteger(plua_state, 3, 0)));
+                                          (size_t)luaGetInteger(plua_state, 3, 0)));
     return 1;
 }
 
 static int ip_str_to_array(lua_State* plua_state)
 {
-    luaPushLightUserData(plua_state, ipStrToArray((Family)luaGetUInteger(plua_state, 1, Family_None),
+    luaPushLightUserData(plua_state, ipStrToArray((Family)luaGetInteger(plua_state, 1, Family_None),
                                                   luaGetString(plua_state, 2, ""),
                                                   (unsigned char*)luaGetLightUserData(plua_state, 3, 0),
-                                                  (size_t)luaGetUInteger(plua_state, 4, 0)));
+                                                  (size_t)luaGetInteger(plua_state, 4, 0)));
     return 1;
 }
 
@@ -54,7 +54,7 @@ static int ip_str_to_array(lua_State* plua_state)
 ////////////////////////////////////////////////////
 static int udpCreate(lua_State* plua_state)
 {
-    size_t family = luaGetUInteger(plua_state, 1, Family_IPv4);
+    size_t family = luaGetInteger(plua_state, 1, Family_IPv4);
 
     DgramSocket* pds = new DgramSocket((Family)family);
 
@@ -116,7 +116,7 @@ static int udpSetBlock(lua_State* plua_state)
     if (!pds)
         luaPushInteger(plua_state, -1);
     else
-        luaPushInteger(plua_state, pds->setBlock(luaGetUInteger(plua_state, 2, 0)));
+        luaPushInteger(plua_state, pds->setBlock(luaGetInteger(plua_state, 2, 0)));
 
     return 1;
 }
@@ -128,7 +128,7 @@ static int udpBind(lua_State* plua_state)
         luaPushBoolean(plua_state, false);
     else
         luaPushBoolean(plua_state,
-                      pds->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetUInteger(plua_state, 3, 0)));
+                      pds->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
@@ -146,7 +146,7 @@ static int udpRecvFrom(lua_State* plua_state)
         luaPushInteger(plua_state, pds->recvFrom(&ip, &port));
 
     luaPushString(plua_state, ip);
-    luaPushUInteger(plua_state, port);
+    luaPushInteger(plua_state, port);
 
     return 3;
 }
@@ -164,16 +164,16 @@ static int udpSendTo(lua_State* plua_state)
         {
             std::string str = luaGetString(plua_state, 2);
             luaPushInteger(plua_state, pds->sendTo(str.c_str(),
-                                                  luaGetUInteger(plua_state, 3, str.length()),
+                                                  luaGetInteger(plua_state, 3, str.length()),
                                                   luaGetString(plua_state, 4, "127.0.0.1"),
-                                                  luaGetUInteger(plua_state, 5, 0)));
+                                                  luaGetInteger(plua_state, 5, 0)));
         }
         else if (LuaLightUserData == luaGetType(plua_state, 2))
         {
             luaPushInteger(plua_state, pds->sendTo((const char*)luaGetLightUserData(plua_state, 2),
-                                                  luaGetUInteger(plua_state, 3, 0),
+                                                  luaGetInteger(plua_state, 3, 0),
                                                   luaGetString(plua_state, 4, "127.0.0.1"),
-                                                  luaGetUInteger(plua_state, 5, 0)));
+                                                  luaGetInteger(plua_state, 5, 0)));
         }
         else
         {
@@ -213,7 +213,7 @@ static int udpClose(lua_State* plua_state)
 
 static int tcpCreate(lua_State* plua_state)
 {
-    size_t family = luaGetUInteger(plua_state, 1, Family_IPv4);
+    size_t family = luaGetInteger(plua_state, 1, Family_IPv4);
 
     StreamSocket* pss = new StreamSocket((Family)family);
 
@@ -275,7 +275,7 @@ static int tcpSetBlock(lua_State* plua_state)
     if (!pss)
         luaPushInteger(plua_state, -1);
     else
-        luaPushInteger(plua_state, pss->setBlock(luaGetUInteger(plua_state, 2, 0)));
+        luaPushInteger(plua_state, pss->setBlock(luaGetInteger(plua_state, 2, 0)));
 
     return 1;
 }
@@ -287,7 +287,7 @@ static int tcpBind(lua_State* plua_state)
         luaPushBoolean(plua_state, false);
     else
         luaPushBoolean(plua_state,
-                      pss->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetUInteger(plua_state, 3, 0)));
+                      pss->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
@@ -298,7 +298,7 @@ static int tcpListen(lua_State* plua_state)
     if (!pss)
         luaPushBoolean(plua_state, false);
     else
-        luaPushBoolean(plua_state, pss->listen(luaGetUInteger(plua_state, 2, 5)));
+        luaPushBoolean(plua_state, pss->listen(luaGetInteger(plua_state, 2, 5)));
 
     return 1;
 }
@@ -326,7 +326,7 @@ static int tcpConnect(lua_State* plua_state)
         luaPushBoolean(plua_state, false);
     else
         luaPushBoolean(plua_state,
-                      pss->connect(luaGetString(plua_state, 2, "127.0.0.1"), (unsigned short)luaGetUInteger(plua_state, 3, 0)));
+                      pss->connect(luaGetString(plua_state, 2, "127.0.0.1"), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
@@ -355,13 +355,13 @@ static int tcpClientSend(lua_State* plua_state)
         {
             std::string str = luaGetString(plua_state, 2);
             luaPushInteger(plua_state, pss->clientSend(str.c_str(),
-                                                  luaGetUInteger(plua_state, 3, str.length())
+                                                  luaGetInteger(plua_state, 3, str.length())
                                                   ));
         }
         else if (LuaLightUserData == luaGetType(plua_state, 2))
         {
             luaPushInteger(plua_state, pss->clientSend((const char*)luaGetLightUserData(plua_state, 2),
-                                                  luaGetUInteger(plua_state, 3, 0)
+                                                  luaGetInteger(plua_state, 3, 0)
                                                   ));
         }
         else
@@ -415,14 +415,14 @@ static int tcpServerSend(lua_State* plua_state)
             std::string str = luaGetString(plua_state, 3);
             luaPushInteger(plua_state, pss->serverSend(client_sock,
                                                       str.c_str(),
-                                                      luaGetUInteger(plua_state, 4, str.length())
+                                                      luaGetInteger(plua_state, 4, str.length())
                                                       ));
         }
         else if (LuaLightUserData == luaGetType(plua_state, 3))
         {
             luaPushInteger(plua_state, pss->serverSend(client_sock,
                                                     (const char*)luaGetLightUserData(plua_state, 3),
-                                                    luaGetUInteger(plua_state, 4, 0)
+                                                    luaGetInteger(plua_state, 4, 0)
                                                     ));
         }
         else
@@ -461,7 +461,7 @@ static int tcpClose(lua_State* plua_state)
 ////////////////////////////////////////////////////
 static int rawCreate(lua_State* plua_state)
 {
-    Socket* ps = new Socket((Family)luaGetUInteger(plua_state, 1, Family_IPv4), SockType_Raw, luaGetUInteger(plua_state, 2, 0));
+    Socket* ps = new Socket((Family)luaGetInteger(plua_state, 1, Family_IPv4), SockType_Raw, luaGetInteger(plua_state, 2, 0));
 
     LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)ps, deleteVoid<Socket>);
 
@@ -521,7 +521,7 @@ static int rawSetBlock(lua_State* plua_state)
     if (!ps)
         luaPushInteger(plua_state, -1);
     else
-        luaPushInteger(plua_state, ps->setBlock(luaGetUInteger(plua_state, 2, 0)));
+        luaPushInteger(plua_state, ps->setBlock(luaGetInteger(plua_state, 2, 0)));
 
     return 1;
 }
@@ -533,7 +533,7 @@ static int rawBind(lua_State* plua_state)
         luaPushBoolean(plua_state, false);
     else
         luaPushBoolean(plua_state,
-                      ps->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetUInteger(plua_state, 3, 0)));
+                      ps->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
@@ -542,7 +542,7 @@ static int rawRecvFrom(lua_State* plua_state)
 {
     Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
     char* buf = static_cast<char*>(luaGetLightUserData(plua_state, 2, 0));
-    size_t len = static_cast<size_t>(luaGetUInteger(plua_state, 3, 0));
+    size_t len = static_cast<size_t>(luaGetInteger(plua_state, 3, 0));
 
     std::string ip("");
     unsigned short port(0);
@@ -553,7 +553,7 @@ static int rawRecvFrom(lua_State* plua_state)
         luaPushInteger(plua_state, ps->recvFrom(buf, len, &ip, &port));
 
     luaPushString(plua_state, ip);
-    luaPushUInteger(plua_state, port);
+    luaPushInteger(plua_state, port);
 
     return 3;
 }
@@ -571,16 +571,16 @@ static int rawSendTo(lua_State* plua_state)
         {
             std::string str = luaGetString(plua_state, 2);
             luaPushInteger(plua_state, ps->sendTo(str.c_str(),
-                                                  luaGetUInteger(plua_state, 3, str.length()),
+                                                  luaGetInteger(plua_state, 3, str.length()),
                                                   luaGetString(plua_state, 4, "127.0.0.1"),
-                                                  luaGetUInteger(plua_state, 5, 0)));
+                                                  luaGetInteger(plua_state, 5, 0)));
         }
         else if (LuaLightUserData == luaGetType(plua_state, 2))
         {
             luaPushInteger(plua_state, ps->sendTo((const char*)luaGetLightUserData(plua_state, 2),
-                                                  luaGetUInteger(plua_state, 3, 0),
+                                                  luaGetInteger(plua_state, 3, 0),
                                                   luaGetString(plua_state, 4, "127.0.0.1"),
-                                                  luaGetUInteger(plua_state, 5, 0)));
+                                                  luaGetInteger(plua_state, 5, 0)));
         }
         else
         {
@@ -597,7 +597,7 @@ static int rawListen(lua_State* plua_state)
     if (!ps)
         luaPushBoolean(plua_state, false);
     else
-        luaPushBoolean(plua_state, ps->listen(luaGetUInteger(plua_state, 2, 5)));
+        luaPushBoolean(plua_state, ps->listen(luaGetInteger(plua_state, 2, 5)));
 
     return 1;
 }
@@ -619,7 +619,7 @@ static int rawAccept(lua_State* plua_state)
                          16);
 
         luaPushString(plua_state, ip);
-        luaPushUInteger(plua_state, tipaddrinfo.port);
+        luaPushInteger(plua_state, tipaddrinfo.port);
 
         return 3;
     }
@@ -632,7 +632,7 @@ static int rawConnect(lua_State* plua_state)
         luaPushBoolean(plua_state, false);
     else
         luaPushBoolean(plua_state,
-                      ps->connect(luaGetString(plua_state, 2, "127.0.0.1"), (unsigned short)luaGetUInteger(plua_state, 3, 0)));
+                      ps->connect(luaGetString(plua_state, 2, "127.0.0.1"), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
@@ -642,7 +642,7 @@ static int rawRecv(lua_State* plua_state)
     Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
     int sock = luaGetInteger(plua_state, 2, kInvalidSocket);
     char* buf = static_cast<char*>(luaGetLightUserData(plua_state, 3, 0));
-    size_t len = static_cast<size_t>(luaGetUInteger(plua_state, 4, 0));
+    size_t len = static_cast<size_t>(luaGetInteger(plua_state, 4, 0));
 
     if (!ps || kInvalidSocket == sock || NULL == buf)
         luaPushInteger(plua_state, -1);
@@ -667,14 +667,14 @@ static int rawSend(lua_State* plua_state)
             std::string str = luaGetString(plua_state, 3);
             luaPushInteger(plua_state, ps->send(sock,
                                                 str.c_str(),
-                                                luaGetUInteger(plua_state, 4, str.length())
+                                                luaGetInteger(plua_state, 4, str.length())
                                                 ));
         }
         else if (LuaLightUserData == luaGetType(plua_state, 3))
         {
             luaPushInteger(plua_state, ps->send(sock,
                                                 (const char*)luaGetLightUserData(plua_state, 3),
-                                                luaGetUInteger(plua_state, 4, 0)
+                                                luaGetInteger(plua_state, 4, 0)
                                                 ));
         }
         else

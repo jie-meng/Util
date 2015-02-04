@@ -183,6 +183,117 @@ struct Csv::CsvImpl
         }
     }
 
+    bool addRow(const std::vector<std::string>& vec)
+    {
+        if (vec.empty())
+            return false;
+
+        if (empty())
+        {
+            matrix_.push_back(SpStrVec(new vector<string>(vec)));
+            return true;
+        }
+        else
+        {
+            vector<string>* pvec = NULL;
+            if (vec.size() < getTotalCols())
+            {
+                pvec = new vector<string>(getTotalCols());
+                printLine(vec.size());
+                for (size_t i=0; i<getTotalCols(); ++i)
+                {
+                    if (i < vec.size())
+                        (*pvec)[i] = vec[i];
+                    else
+                        (*pvec)[i] = "";
+                }
+            }
+            else
+            {
+                pvec = new vector<string>(vec.begin(), vec.begin() + getTotalCols());
+            }
+
+            matrix_.push_back(SpStrVec(pvec));
+            return true;
+        }
+    }
+
+    std::string file_name_;
+    vector<SpStrVec> matrix_;
+    char delimeter_;
+    char enclosure_;
+};
+
+Csv::Csv(char delimeter,
+         char enclosure) :
+    pimpl_(new CsvImpl(delimeter, enclosure))
+{
+    //ctor
+}
+
+Csv::Csv(const std::string& file,
+         char delimeter,
+         char enclosure) :
+    pimpl_(new CsvImpl(file, delimeter, enclosure))
+{
+
+}
+
+Csv::~Csv()
+{
+    //dtor
+}
+
+bool Csv::read(const std::string& file)
+{
+    return pimpl_->read(file);
+}
+
+bool Csv::write(const std::string& file)
+{
+    return pimpl_->write(file);
+}
+
+bool Csv::write()
+{
+    return pimpl_->write();
+}
+
+void Csv::clear()
+{
+    return pimpl_->clear();
+}
+
+bool Csv::empty() const
+{
+    return pimpl_->empty();
+}
+
+size_t Csv::getTotalRows() const
+{
+    return pimpl_->getTotalRows();
+}
+
+size_t Csv::getTotalCols() const
+{
+    return pimpl_->getTotalCols();
+}
+
+std::string Csv::getCellValue(size_t row, size_t col) const
+{
+    return pimpl_->getCellValue(row, col);
+}
+
+bool Csv::setCellValue(size_t row, size_t col, const std::string& value)
+{
+    return pimpl_->setCellValue(row, col, value);
+}
+
+bool Csv::addRow(const std::vector<std::string>& vec)
+{
+    return pimpl_->addRow(vec);
+}
+
 //    void csvReadRow(std::string &line, char delimiter, std::vector<std::string>* pout_strvec)
 //    {
 //        if (!pout_strvec)
@@ -232,71 +343,5 @@ struct Csv::CsvImpl
 //            }
 //        }
 //    }
-
-    std::string file_name_;
-    vector<SpStrVec> matrix_;
-    char delimeter_;
-    char enclosure_;
-};
-
-Csv::Csv(char delimeter,
-         char enclosure) :
-    pimpl_(new CsvImpl(delimeter, enclosure))
-{
-    //ctor
-}
-
-Csv::Csv(const std::string& file,
-         char delimeter,
-         char enclosure) :
-    pimpl_(new CsvImpl(file, delimeter, enclosure))
-{
-
-}
-
-Csv::~Csv()
-{
-    //dtor
-}
-
-bool Csv::read(const std::string& file)
-{
-    return pimpl_->read(file);
-}
-
-bool Csv::write(const std::string& file)
-{
-    return pimpl_->write(file);
-}
-
-bool Csv::write()
-{
-    return pimpl_->write();
-}
-
-bool Csv::empty() const
-{
-    return pimpl_->empty();
-}
-
-size_t Csv::getTotalRows() const
-{
-    return pimpl_->getTotalRows();
-}
-
-size_t Csv::getTotalCols() const
-{
-    return pimpl_->getTotalCols();
-}
-
-std::string Csv::getCellValue(size_t row, size_t col) const
-{
-    return pimpl_->getCellValue(row, col);
-}
-
-bool Csv::setCellValue(size_t row, size_t col, const std::string& value)
-{
-    return pimpl_->setCellValue(row, col, value);
-}
 
 } //namespace util

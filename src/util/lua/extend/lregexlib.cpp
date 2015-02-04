@@ -8,7 +8,7 @@ namespace util
 static int create(lua_State* plua_state)
 {
     Regex* pregexer = new Regex(luaGetString(plua_state, 1, ""),
-        (Regex::RegexFlag)luaGetUInteger(plua_state, 2, 0));
+        (Regex::RegexFlag)luaGetInteger(plua_state, 2, 0));
 
     LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pregexer, deleteVoid<Regex>);
 
@@ -68,7 +68,7 @@ static int getMatchedGroupCnt(lua_State* plua_state)
     if (!pregexer)
         luaPushNil(plua_state);
     else
-        luaPushUInteger(plua_state, pregexer->getMatchedGroupCnt());
+        luaPushInteger(plua_state, pregexer->getMatchedGroupCnt());
 
     return 1;
 }
@@ -79,7 +79,7 @@ static int getMatchedGroupByIndex(lua_State* plua_state)
     if (!pregexer)
         luaPushNil(plua_state);
     else
-        luaPushString(plua_state, pregexer->getMatchedGroup(luaGetUInteger(plua_state, 2)));
+        luaPushString(plua_state, pregexer->getMatchedGroup(luaGetInteger(plua_state, 2)));
 
     return 1;
 }

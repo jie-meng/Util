@@ -32,16 +32,16 @@ int luaGetInteger(lua_State* plua_state, int index, int default_int)
     return lua_isnumber(plua_state, index) ? luaGetInteger(plua_state, index) : default_int;
 }
 
-unsigned int luaGetUInteger(lua_State* plua_state, int index)
-{
-    //return luaL_checkunsigned(plua_state, index);
-    return lua_tounsigned(plua_state, index);
-}
+//unsigned int luaGetUInteger(lua_State* plua_state, int index)
+//{
+//    //return luaL_checkunsigned(plua_state, index);
+//    //return lua_tounsigned(plua_state, index);
+//}
 
-unsigned int luaGetUInteger(lua_State* plua_state, int index, unsigned int default_uint)
-{
-    return lua_isnumber(plua_state, index) ? luaGetUInteger(plua_state, index) : default_uint;
-}
+//unsigned int luaGetUInteger(lua_State* plua_state, int index, unsigned int default_uint)
+//{
+//    return lua_isnumber(plua_state, index) ? luaGetInteger(plua_state, index) : default_uint;
+//}
 
 std::string luaGetString(lua_State* plua_state, int index)
 {
@@ -112,10 +112,10 @@ void luaPushInteger(lua_State* plua_state, int int_val)
     lua_pushinteger(plua_state, int_val);
 }
 
-void luaPushUInteger(lua_State* plua_state, unsigned int uint_val)
-{
-    lua_pushunsigned(plua_state, uint_val);
-}
+//void luaPushUInteger(lua_State* plua_state, unsigned int uint_val)
+//{
+//    lua_pushunsigned(plua_state, uint_val);
+//}
 
 void luaPushString(lua_State* plua_state, const std::string& str_val)
 {
@@ -184,7 +184,7 @@ int luaGetTop(lua_State* plua_state)
 
 void luaGetGlobal(lua_State* plua_state, const std::string& name)
 {
-    return lua_getglobal(plua_state, name.c_str());
+    lua_getglobal(plua_state, name.c_str());
 }
 
 int luaCallFunc(lua_State* plua_state, int nargs, int nrets)
@@ -415,13 +415,13 @@ void LuaHeapRecyclerManager::clear(lua_State* plua_state)
 //extend basic functions
 static int sleep(lua_State* plua_state)
 {
-    util::sleep(luaGetUInteger(plua_state, 1, 0));
+    util::sleep(luaGetInteger(plua_state, 1, 0));
     return 0;
 }
 
 static int msleep(lua_State* plua_state)
 {
-    util::msleep(luaGetUInteger(plua_state, 1, 0));
+    util::msleep(luaGetInteger(plua_state, 1, 0));
     return 0;
 }
 

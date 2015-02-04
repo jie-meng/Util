@@ -78,7 +78,7 @@ static int start(lua_State* plua_state)
         return 1;
     }
 
-    luaPushBoolean(plua_state, pthread->start(luaGetUInteger(plua_state, 2, 0)));
+    luaPushBoolean(plua_state, pthread->start(luaGetInteger(plua_state, 2, 0)));
 
     return 1;
 }
@@ -108,7 +108,7 @@ static int kill(lua_State* plua_state)
 
 static int getThreadId(lua_State* plua_state)
 {
-    luaPushUInteger(plua_state, getCurrentThreadId());
+    luaPushInteger(plua_state, getCurrentThreadId());
     return 1;
 }
 
@@ -195,7 +195,7 @@ static int lockTimedWait(lua_State* plua_state)
     if (!plock)
         return 0;
 
-    luaPushBoolean(plua_state, plock->timedWait(luaGetUInteger(plua_state, 2, 2000),
+    luaPushBoolean(plua_state, plock->timedWait(luaGetInteger(plua_state, 2, 2000),
                                                  luaGetBoolean(plua_state, 3, true)));
     return 1;
 }
@@ -214,7 +214,7 @@ static int lockNotify(lua_State* plua_state)
 static int multiLockCreate(lua_State* plua_state)
 {
     luaAssert(plua_state, 2 == luaGetTop(plua_state), "param \"lock_cnt\" and \"wait_all\" needed");
-    MultiLock* pmlock = new MultiLock(luaGetUInteger(plua_state, 1, 1), luaGetBoolean(plua_state, 2, true));
+    MultiLock* pmlock = new MultiLock(luaGetInteger(plua_state, 1, 1), luaGetBoolean(plua_state, 2, true));
 
     LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmlock, deleteVoid<MultiLock>);
 
@@ -252,7 +252,7 @@ static int multiLockTimedWait(lua_State* plua_state)
     if (!pmlock)
         return 0;
 
-    luaPushBoolean(plua_state, pmlock->timedWait(luaGetUInteger(plua_state, 2, 2000),
+    luaPushBoolean(plua_state, pmlock->timedWait(luaGetInteger(plua_state, 2, 2000),
                                                  luaGetBoolean(plua_state, 3, true)));
     return 1;
 }
@@ -263,7 +263,7 @@ static int multiLockNotify(lua_State* plua_state)
     if (!pmlock)
         return 0;
 
-    pmlock->notify(luaGetUInteger(plua_state, 1, 0));
+    pmlock->notify(luaGetInteger(plua_state, 1, 0));
 
     return 0;
 }

@@ -24,7 +24,7 @@ static int writeTextFile(lua_State* plua_state)
 static int createBinaryFile(lua_State* plua_state)
 {
     luaPushBoolean(plua_state, createBinaryFile(luaGetString(plua_state, 1, ""),
-                                                luaGetUInteger(plua_state, 2, 0),
+                                                luaGetInteger(plua_state, 2, 0),
                                                 static_cast<char>(luaGetInteger(plua_state, 3, 0))
                                                 ));
 
@@ -35,9 +35,9 @@ static int readBinaryFile(lua_State* plua_state)
 {
     luaPushBoolean(plua_state, readBinaryFile(luaGetString(plua_state, 1, ""),
                                              static_cast<char*>(luaGetLightUserData(plua_state, 2, 0)),
-                                             luaGetUInteger(plua_state, 3, 0),
-                                             static_cast<std::streamoff>(luaGetUInteger(plua_state, 4, 0)),
-                                             static_cast<std::ios::seekdir>(luaGetUInteger(plua_state, 5, 0))
+                                             luaGetInteger(plua_state, 3, 0),
+                                             static_cast<std::streamoff>(luaGetInteger(plua_state, 4, 0)),
+                                             static_cast<std::ios::seekdir>(luaGetInteger(plua_state, 5, 0))
                                              ));
     return 1;
 }
@@ -46,7 +46,7 @@ static int writeBinaryFile(lua_State* plua_state)
 {
     luaPushBoolean(plua_state, writeBinaryFile(luaGetString(plua_state, 1, ""),
                                              static_cast<char*>(luaGetLightUserData(plua_state, 2, 0)),
-                                             luaGetUInteger(plua_state, 3, 0),
+                                             luaGetInteger(plua_state, 3, 0),
                                              luaGetBoolean(plua_state, 4, false)
                                              ));
     return 1;
@@ -56,9 +56,9 @@ static int overwriteBinaryFile(lua_State* plua_state)
 {
     luaPushBoolean(plua_state, overwriteBinaryFile(luaGetString(plua_state, 1, ""),
                                              static_cast<char*>(luaGetLightUserData(plua_state, 2, 0)),
-                                             luaGetUInteger(plua_state, 3, 0),
-                                             static_cast<std::streamoff>(luaGetUInteger(plua_state, 4, 0)),
-                                             static_cast<std::ios::seekdir>(luaGetUInteger(plua_state, 5, 0))
+                                             luaGetInteger(plua_state, 3, 0),
+                                             static_cast<std::streamoff>(luaGetInteger(plua_state, 4, 0)),
+                                             static_cast<std::ios::seekdir>(luaGetInteger(plua_state, 5, 0))
                                              ));
     return 1;
 }

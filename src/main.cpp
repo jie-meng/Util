@@ -262,20 +262,29 @@ int main(int argc, char* argv[])
 {
     luaExecutor(argc, argv);
 
-//    Csv csv("ssg.csv");
+//    Csv csv("output.csv");
 //    if (!csv.empty())
 //    {
 //        printLine(csv.getTotalRows());
 //        printLine(csv.getTotalCols());
-//        printLine("{" + csv.getCellValue(1, 2) + "}");
-//        printLine(csv.setCellValue(1, 2, "ggx\nmu"));
+////        printLine("{" + csv.getCellValue(1, 2) + "}");
+////        printLine(csv.setCellValue(1, 2, "ggx\nmu"));
 //
-//        csv.write("shit.csv");
-//        csv.write();
+////        csv.write("output.csv");
+////        csv.write();
+//
+//        csv.clear();
+//        string s[4] = { "xx", "aa", "klad\"sf", "sv" };
+//        int a[4] = { 1, 2, 4, 5 };
+//        printLine(csv.addRow(&s[0], &s[3]));
+//        printLine(csv.addRow(&a[0], &a[4]));
+//        printLine(csv.addRow(&s[2], &s[1]));
+//
+//        csv.write("o2.csv");
 //    }
 //    else
 //    {
-//        printLine("sb");
+//        printLine("fail");
 //    }
 
     return 0;
