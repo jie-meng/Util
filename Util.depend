@@ -41031,3 +41031,962 @@
 	"lauxlib.h"
 	"lualib.h"
 
+1423321801 source:/home/joshua/workspace/git/Util/src/main.cpp
+	<iostream>
+	<map>
+	<list>
+	"util/thread.hpp"
+	"util/file.hpp"
+	"util/net.hpp"
+	"util/iterator.hpp"
+	"util/collection.hpp"
+	"util/cmdline.hpp"
+	"util/process.hpp"
+	"util/regex.hpp"
+	"util/time.hpp"
+	"util/timer.hpp"
+	"util/strategy.hpp"
+	"util/cfg.hpp"
+	"util/factory.hpp"
+	"util/unittest.hpp"
+	"util/luax.hpp"
+	"util/luaextend.hpp"
+	"util/any.hpp"
+	"util/trace.hpp"
+	"util/csv.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/thread.hpp
+	"base.hpp"
+	<vector>
+	<deque>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/base.hpp
+	"base/base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/base/base.hpp
+	<cstdlib>
+	<cstring>
+	<iostream>
+	<string>
+	<sstream>
+	<utility>
+	<exception>
+	<stdint.h>
+	<memory>
+	<boost/function.hpp>
+	<boost/bind.hpp>
+	<boost/shared_ptr.hpp>
+	<tr1/memory>
+	<tr1/functional>
+	"memory.hpp"
+	"in.hpp"
+	"out.hpp"
+	"baseclass.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/base/memory.hpp
+
+1423321524 /home/joshua/workspace/git/Util/src/util/base/in.hpp
+
+1423321524 /home/joshua/workspace/git/Util/src/util/base/out.hpp
+
+1423321524 /home/joshua/workspace/git/Util/src/util/base/baseclass.hpp
+
+1423321524 /home/joshua/workspace/git/Util/src/util/file.hpp
+	"string.hpp"
+	<vector>
+	<list>
+	<ctime>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/string.hpp
+	"base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/net.hpp
+	"base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/iterator.hpp
+	"base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/collection.hpp
+	"base.hpp"
+	<map>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/cmdline.hpp
+	<list>
+	<map>
+	<iterator>
+	"base.hpp"
+	"string.hpp"
+	"lexicalcast.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lexicalcast.hpp
+	"base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/process.hpp
+	"base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/regex.hpp
+	"base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/time.hpp
+	"base.hpp"
+	<ctime>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/timer.hpp
+	"thread.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/strategy.hpp
+	"base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/cfg.hpp
+	<map>
+	"string.hpp"
+	"lexicalcast.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/factory.hpp
+	"base.hpp"
+	<map>
+	"typeinfo.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/typeinfo.hpp
+	"base.hpp"
+	<typeinfo>
+	<cassert>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/unittest.hpp
+	<exception>
+	<vector>
+	<map>
+	<typeinfo>
+	"iterator.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/luax.hpp
+	<vector>
+	"cmdline.hpp"
+	"any.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/any.hpp
+	<algorithm>
+	<typeinfo>
+	"base.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/luaextend.hpp
+	"luax.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/trace.hpp
+	"trace/tracemgr.hpp"
+	"trace/listener/stdoutlistener.hpp"
+	"trace/listener/tcplistener.hpp"
+	"trace/listener/udplistener.hpp"
+	"trace/listener/filelistener.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/trace/tracemgr.hpp
+	"util/base.hpp"
+	"information.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/trace/information.hpp
+	"util/time.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/trace/listener/stdoutlistener.hpp
+	"../information.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/trace/listener/tcplistener.hpp
+	"util/net.hpp"
+	"../information.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/trace/listener/udplistener.hpp
+	"util/net.hpp"
+	"../information.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/trace/listener/filelistener.hpp
+	<fstream>
+	"util/time.hpp"
+	"../information.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/csv.hpp
+	"base.hpp"
+	<vector>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/base/out.cpp
+	<cstdio>
+	<cstdarg>
+	<cstring>
+	"base.hpp"
+	"out.hpp"
+	"util/string.hpp"
+	"util/time.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/cfg.cpp
+	"cfg.hpp"
+	<vector>
+	<list>
+	<algorithm>
+	"file.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/cmdline.cpp
+	"cmdline.hpp"
+	<vector>
+	"collection.hpp"
+	"regex.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/csv.cpp
+	"csv.hpp"
+	<vector>
+	<fstream>
+	<sstream>
+	<istream>
+	"string.hpp"
+	"file.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/file.cpp
+	"file.hpp"
+	<fstream>
+	<io.h>
+	<direct.h>
+	<Shlwapi.h>
+	<unistd.h>
+	<dirent.h>
+	<sys/types.h>
+	<sys/stat.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lexicalcast.cpp
+	"lexicalcast.hpp"
+	"string.hpp"
+	<cmath>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lcsvlib.cpp
+	"lcsvlib.hpp"
+	"lfilelib.hpp"
+	"util/luaextend.hpp"
+	"util/csv.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lcsvlib.hpp
+	<string>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lfilelib.hpp
+	<string>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lfilelib.cpp
+	"lfilelib.hpp"
+	"util/luaextend.hpp"
+	"util/file.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lmemorylib.cpp
+	"lmemorylib.hpp"
+	"util/luaextend.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lmemorylib.hpp
+	<string>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lnetlib.cpp
+	"lnetlib.hpp"
+	"util/luaextend.hpp"
+	"util/net.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lnetlib.hpp
+	<string>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lprocesslib.cpp
+	"lprocesslib.hpp"
+	"util/luaextend.hpp"
+	"util/process.hpp"
+	"util/any.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lprocesslib.hpp
+	<string>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lregexlib.cpp
+	"lregexlib.hpp"
+	"util/luaextend.hpp"
+	"util/regex.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lregexlib.hpp
+	<string>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lthreadlib.cpp
+	"lthreadlib.hpp"
+	<vector>
+	"util/luaextend.hpp"
+	"util/thread.hpp"
+	"util/any.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lthreadlib.hpp
+	<string>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lapi.c
+	"lprefix.h"
+	<stdarg.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lprefix.h
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/luaconf.h
+	<limits.h>
+	<stddef.h>
+	<math.h>
+	<stdint.h>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lapi.h
+	"llimits.h"
+	"lstate.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/llimits.h
+	<limits.h>
+	<stddef.h>
+	"lua.h"
+	<assert.h>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lstate.h
+	"lua.h"
+	"lobject.h"
+	"ltm.h"
+	"lzio.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lobject.h
+	<stdarg.h>
+	"llimits.h"
+	"lua.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/ltm.h
+	"lobject.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lzio.h
+	"lua.h"
+	"lmem.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lmem.h
+	<stddef.h>
+	"llimits.h"
+	"lua.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/ldebug.h
+	"lstate.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/ldo.h
+	"lobject.h"
+	"lstate.h"
+	"lzio.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lfunc.h
+	"lobject.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lgc.h
+	"lobject.h"
+	"lstate.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lstring.h
+	"lgc.h"
+	"lobject.h"
+	"lstate.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/ltable.h
+	"lobject.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lundump.h
+	"llimits.h"
+	"lobject.h"
+	"lzio.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lvm.h
+	"ldo.h"
+	"lobject.h"
+	"ltm.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lauxlib.c
+	"lprefix.h"
+	<errno.h>
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	<sys/wait.h>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lbaselib.c
+	"lprefix.h"
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lualib.h
+	"lua.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lbitlib.c
+	"lprefix.h"
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lcode.c
+	"lprefix.h"
+	<math.h>
+	<stdlib.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstring.h"
+	"ltable.h"
+	"lvm.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lcode.h
+	"llex.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/llex.h
+	"lobject.h"
+	"lzio.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lopcodes.h
+	"llimits.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lparser.h
+	"llimits.h"
+	"lobject.h"
+	"lzio.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lcorolib.c
+	"lprefix.h"
+	<stdlib.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lctype.c
+	"lprefix.h"
+	"lctype.h"
+	<limits.h>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lctype.h
+	"lua.h"
+	<limits.h>
+	"llimits.h"
+	<ctype.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/ldblib.c
+	"lprefix.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/ldebug.c
+	"lprefix.h"
+	<stdarg.h>
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/ldo.c
+	"lprefix.h"
+	<setjmp.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+	"lzio.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/ldump.c
+	"lprefix.h"
+	<stddef.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lundump.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lfunc.c
+	"lprefix.h"
+	<stddef.h>
+	"lua.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lgc.c
+	"lprefix.h"
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/linit.c
+	"lprefix.h"
+	<stddef.h>
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/liolib.c
+	"lprefix.h"
+	<ctype.h>
+	<errno.h>
+	<locale.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<sys/types.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/llex.c
+	"lprefix.h"
+	<locale.h>
+	<string.h>
+	"lua.h"
+	"lctype.h"
+	"ldo.h"
+	"lgc.h"
+	"llex.h"
+	"lobject.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lzio.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lmathlib.c
+	"lprefix.h"
+	<stdlib.h>
+	<math.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lmem.c
+	"lprefix.h"
+	<stddef.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/loadlib.c
+	"lprefix.h"
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<dlfcn.h>
+	<windows.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lobject.c
+	"lprefix.h"
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lctype.h"
+	"ldebug.h"
+	"ldo.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"lvm.h"
+	<math.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lopcodes.c
+	"lprefix.h"
+	<stddef.h>
+	"lopcodes.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/loslib.c
+	"lprefix.h"
+	<errno.h>
+	<locale.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<unistd.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lparser.c
+	"lprefix.h"
+	<string.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lstate.c
+	"lprefix.h"
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	<time.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lstring.c
+	"lprefix.h"
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lstrlib.c
+	"lprefix.h"
+	<ctype.h>
+	<limits.h>
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/ltable.c
+	"lprefix.h"
+	<float.h>
+	<math.h>
+	<string.h>
+	<limits.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lvm.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/ltablib.c
+	"lprefix.h"
+	<limits.h>
+	<stddef.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/ltm.c
+	"lprefix.h"
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lua.c
+	"lprefix.h"
+	<signal.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<unistd.h>
+	<io.h>
+	<readline/readline.h>
+	<readline/history.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/luac.c
+	"lprefix.h"
+	<ctype.h>
+	<errno.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lobject.h"
+	"lstate.h"
+	"lundump.h"
+	<ctype.h>
+	<stdio.h>
+	"ldebug.h"
+	"lobject.h"
+	"lopcodes.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lundump.c
+	"lprefix.h"
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstring.h"
+	"lundump.h"
+	"lzio.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lutf8lib.c
+	"lprefix.h"
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lvm.c
+	"lprefix.h"
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/src/lzio.c
+	"lprefix.h"
+	<string.h>
+	"lua.h"
+	"llimits.h"
+	"lmem.h"
+	"lstate.h"
+	"lzio.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/luaextend.cpp
+	"luaextend.hpp"
+	"lua/src/lua.hpp"
+	"lexicalcast.hpp"
+	"thread.hpp"
+	"net.hpp"
+	"lua/extend/lmemorylib.hpp"
+	"lua/extend/lregexlib.hpp"
+	"lua/extend/lnetlib.hpp"
+	"lua/extend/lthreadlib.hpp"
+	"lua/extend/lfilelib.hpp"
+	"lua/extend/lprocesslib.hpp"
+	"lua/extend/lcsvlib.hpp"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lua.hpp
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/luax.cpp
+	"luax.hpp"
+	<map>
+	<set>
+	"string.hpp"
+	"thread.hpp"
+	"lua/src/lua.hpp"
+	"luaextend.hpp"
+
+1423324596 source:/home/joshua/workspace/git/Util/src/util/net.cpp
+	"net.hpp"
+	<vector>
+	<list>
+	"string.hpp"
+	"lexicalcast.hpp"
+	"regex.hpp"
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<arpa/inet.h>
+	<unistd.h>
+	<fcntl.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netdb.h>
+	<sys/un.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/process.cpp
+	"process.hpp"
+	<vector>
+	"string.hpp"
+	"thread.hpp"
+	<windows.h>
+	<unistd.h>
+	<sys/types.h>
+	<sys/wait.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/regex.cpp
+	"regex.hpp"
+	"regex/deelx.h"
+
+1423321524 /home/joshua/workspace/git/Util/src/util/regex/deelx.h
+	<memory.h>
+	<ctype.h>
+	<limits.h>
+	<string.h>
+	<stdlib.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/string.cpp
+	"string.hpp"
+	<algorithm>
+	<iterator>
+	<cstdio>
+	<cstdarg>
+	<ctype.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/thread.cpp
+	"thread.hpp"
+	<process.h>
+	<windows.h>
+	<unistd.h>
+	<pthread.h>
+	<semaphore.h>
+	<thread_db.h>
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/time.cpp
+	"time.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/trace/information.cpp
+	"information.hpp"
+	"util/string.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/trace/informationthread.cpp
+	"informationthread.hpp"
+	<algorithm>
+
+1423321524 /home/joshua/workspace/git/Util/src/util/trace/informationthread.hpp
+	<list>
+	<deque>
+	"util/thread.hpp"
+	"information.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/trace/listener/filelistener.cpp
+	"filelistener.hpp"
+	"util/string.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/trace/listener/stdoutlistener.cpp
+	"stdoutlistener.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/trace/listener/tcplistener.cpp
+	"tcplistener.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/trace/listener/udplistener.cpp
+	"udplistener.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/trace/tracemgr.cpp
+	"tracemgr.hpp"
+	<cstdio>
+	<cstdarg>
+	"informationthread.hpp"
+
+1423321524 source:/home/joshua/workspace/git/Util/src/util/unittest.cpp
+	"unittest.hpp"
+	<cstdio>
+	<cstdarg>
+	<cstring>
+	"string.hpp"
+	"time.hpp"
+	"net.hpp"
+
