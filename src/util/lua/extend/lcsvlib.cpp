@@ -159,11 +159,11 @@ static int addRow(lua_State* plua_state)
     else
     {
         int count = luaGetTop(plua_state);
-        if (count > 0)
+        if (count > 1)
         {
             vector<string> vec;
-            for (int i=0; i<count; ++i)
-                vec.push_back(luaGetString(plua_state, i+1, ""));
+            for (int i=2; i<=count; ++i)
+                vec.push_back(luaGetString(plua_state, i, ""));
 
             luaPushBoolean(plua_state, pcsv->addRow(vec));
         }

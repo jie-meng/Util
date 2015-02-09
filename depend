@@ -1,4 +1,0 @@
-main.o: main.cpp util/thread.hpp util/base.hpp util/base/base.hpp \
- util/base/memory.hpp util/base/in.hpp util/base/out.hpp \
- util/base/baseclass.hpp util/base/lexicalcast.hpp util/file.hpp \
- util/iterator.hpp util/collection.hpp util/cmdline.hpp util/string.hpp

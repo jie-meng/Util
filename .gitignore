@@ -1,3 +1,5 @@
 *.obj
 *.o
 *.exe
+Util.depend
+Util.layout

@@ -489,14 +489,8 @@ bool Socket::bind(const std::string& ip, unsigned short port, unsigned short* pp
         if (Family_IPv4 == pdata_->family_)
         {
             sockaddr_in sin;
-#ifdef _PLATFORM_WINDOWS_
             int len = sizeof(sin);
-#endif
-#ifdef _PLATFORM_LINUX_
-            socklen_t len = sizeof(sin);
-#endif
             if (getsockname(pdata_->socket_, (struct sockaddr *)&sin, &len) != 0)
-
                 return ret;
 
             *pport_out = u_ntohs(sin.sin_port);
@@ -504,12 +498,7 @@ bool Socket::bind(const std::string& ip, unsigned short port, unsigned short* pp
         else if (Family_IPv6 == pdata_->family_)
         {
             sockaddr_in6 sin6;
-#ifdef _PLATFORM_WINDOWS_
             int len = sizeof(sin6);
-#endif
-#ifdef _PLATFORM_LINUX_
-            socklen_t len = sizeof(sin6);
-#endif
             if (getsockname(pdata_->socket_, (struct sockaddr *)&sin6, &len) != 0)
                 return ret;
 

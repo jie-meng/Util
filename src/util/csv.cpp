@@ -119,7 +119,7 @@ struct Csv::CsvImpl
                         strContains(str, enclosure) ||
                         strContains(str, "\r") ||
                         strContains(str, "\n"))
-                        str_join += "\"" + str + "\"" + delemiter;
+                        str_join += enclosure + str + enclosure + delemiter;
                     else
                         str_join += *c_it + delemiter;
                 }
@@ -199,7 +199,6 @@ struct Csv::CsvImpl
             if (vec.size() < getTotalCols())
             {
                 pvec = new vector<string>(getTotalCols());
-                printLine(vec.size());
                 for (size_t i=0; i<getTotalCols(); ++i)
                 {
                     if (i < vec.size())
@@ -236,12 +235,10 @@ Csv::Csv(const std::string& file,
          char enclosure) :
     pimpl_(new CsvImpl(file, delimeter, enclosure))
 {
-
 }
 
 Csv::~Csv()
 {
-    //dtor
 }
 
 bool Csv::read(const std::string& file)
