@@ -41082,7 +41082,7 @@
 	"lauxlib.h"
 	"lualib.h"
 
-1423321801 source:/home/joshua/workspace/git/Util/src/main.cpp
+1423575900 source:/home/joshua/workspace/git/Util/src/main.cpp
 	<iostream>
 	<map>
 	<list>
@@ -41105,6 +41105,7 @@
 	"util/any.hpp"
 	"util/trace.hpp"
 	"util/csv.hpp"
+	"util/Eigen/Core"
 
 1423321524 /home/joshua/workspace/git/Util/src/util/thread.hpp
 	"base.hpp"
@@ -41279,7 +41280,7 @@
 	"collection.hpp"
 	"regex.hpp"
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/csv.cpp
+1423573517 source:/home/joshua/workspace/git/Util/src/util/csv.cpp
 	"csv.hpp"
 	<vector>
 	<fstream>
@@ -41304,7 +41305,7 @@
 	"string.hpp"
 	<cmath>
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lcsvlib.cpp
+1423573517 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lcsvlib.cpp
 	"lcsvlib.hpp"
 	"lfilelib.hpp"
 	"util/luaextend.hpp"
@@ -41939,7 +41940,7 @@
 	"lua/src/lua.hpp"
 	"luaextend.hpp"
 
-1423324596 source:/home/joshua/workspace/git/Util/src/util/net.cpp
+1423573517 source:/home/joshua/workspace/git/Util/src/util/net.cpp
 	"net.hpp"
 	<vector>
 	<list>
@@ -42051,4 +42052,405 @@
 	"lua.h"
 	"lauxlib.h"
 	"lualib.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/Core
+	"src/Core/util/DisableStupidWarnings.h"
+	"src/Core/util/Macros.h"
+	<complex>
+	"src/Core/util/MKL_support.h"
+	<malloc.h>
+	<immintrin.h>
+	<emmintrin.h>
+	<xmmintrin.h>
+	<pmmintrin.h>
+	<tmmintrin.h>
+	<smmintrin.h>
+	<nmmintrin.h>
+	<altivec.h>
+	<arm_neon.h>
+	<omp.h>
+	<cerrno>
+	<cstddef>
+	<cstdlib>
+	<cmath>
+	<cassert>
+	<functional>
+	<iosfwd>
+	<cstring>
+	<string>
+	<limits>
+	<climits>
+	<algorithm>
+	<iostream>
+	<intrin.h>
+	<new>
+	"src/Core/util/Constants.h"
+	"src/Core/util/ForwardDeclarations.h"
+	"src/Core/util/Meta.h"
+	"src/Core/util/StaticAssert.h"
+	"src/Core/util/XprHelper.h"
+	"src/Core/util/Memory.h"
+	"src/Core/NumTraits.h"
+	"src/Core/MathFunctions.h"
+	"src/Core/GenericPacketMath.h"
+	"src/Core/arch/SSE/PacketMath.h"
+	"src/Core/arch/SSE/MathFunctions.h"
+	"src/Core/arch/SSE/Complex.h"
+	"src/Core/arch/AltiVec/PacketMath.h"
+	"src/Core/arch/AltiVec/Complex.h"
+	"src/Core/arch/NEON/PacketMath.h"
+	"src/Core/arch/NEON/Complex.h"
+	"src/Core/arch/Default/Settings.h"
+	"src/Core/Functors.h"
+	"src/Core/DenseCoeffsBase.h"
+	"src/Core/DenseBase.h"
+	"src/Core/MatrixBase.h"
+	"src/Core/EigenBase.h"
+	"src/Core/Assign.h"
+	"src/Core/util/BlasUtil.h"
+	"src/Core/DenseStorage.h"
+	"src/Core/NestByValue.h"
+	"src/Core/ForceAlignedAccess.h"
+	"src/Core/ReturnByValue.h"
+	"src/Core/NoAlias.h"
+	"src/Core/PlainObjectBase.h"
+	"src/Core/Matrix.h"
+	"src/Core/Array.h"
+	"src/Core/CwiseBinaryOp.h"
+	"src/Core/CwiseUnaryOp.h"
+	"src/Core/CwiseNullaryOp.h"
+	"src/Core/CwiseUnaryView.h"
+	"src/Core/SelfCwiseBinaryOp.h"
+	"src/Core/Dot.h"
+	"src/Core/StableNorm.h"
+	"src/Core/MapBase.h"
+	"src/Core/Stride.h"
+	"src/Core/Map.h"
+	"src/Core/Block.h"
+	"src/Core/VectorBlock.h"
+	"src/Core/Ref.h"
+	"src/Core/Transpose.h"
+	"src/Core/DiagonalMatrix.h"
+	"src/Core/Diagonal.h"
+	"src/Core/DiagonalProduct.h"
+	"src/Core/PermutationMatrix.h"
+	"src/Core/Transpositions.h"
+	"src/Core/Redux.h"
+	"src/Core/Visitor.h"
+	"src/Core/Fuzzy.h"
+	"src/Core/IO.h"
+	"src/Core/Swap.h"
+	"src/Core/CommaInitializer.h"
+	"src/Core/Flagged.h"
+	"src/Core/ProductBase.h"
+	"src/Core/GeneralProduct.h"
+	"src/Core/TriangularMatrix.h"
+	"src/Core/SelfAdjointView.h"
+	"src/Core/products/GeneralBlockPanelKernel.h"
+	"src/Core/products/Parallelizer.h"
+	"src/Core/products/CoeffBasedProduct.h"
+	"src/Core/products/GeneralMatrixVector.h"
+	"src/Core/products/GeneralMatrixMatrix.h"
+	"src/Core/SolveTriangular.h"
+	"src/Core/products/GeneralMatrixMatrixTriangular.h"
+	"src/Core/products/SelfadjointMatrixVector.h"
+	"src/Core/products/SelfadjointMatrixMatrix.h"
+	"src/Core/products/SelfadjointProduct.h"
+	"src/Core/products/SelfadjointRank2Update.h"
+	"src/Core/products/TriangularMatrixVector.h"
+	"src/Core/products/TriangularMatrixMatrix.h"
+	"src/Core/products/TriangularSolverMatrix.h"
+	"src/Core/products/TriangularSolverVector.h"
+	"src/Core/BandMatrix.h"
+	"src/Core/CoreIterators.h"
+	"src/Core/BooleanRedux.h"
+	"src/Core/Select.h"
+	"src/Core/VectorwiseOp.h"
+	"src/Core/Random.h"
+	"src/Core/Replicate.h"
+	"src/Core/Reverse.h"
+	"src/Core/ArrayBase.h"
+	"src/Core/ArrayWrapper.h"
+	"src/Core/products/GeneralMatrixMatrix_MKL.h"
+	"src/Core/products/GeneralMatrixVector_MKL.h"
+	"src/Core/products/GeneralMatrixMatrixTriangular_MKL.h"
+	"src/Core/products/SelfadjointMatrixMatrix_MKL.h"
+	"src/Core/products/SelfadjointMatrixVector_MKL.h"
+	"src/Core/products/TriangularMatrixMatrix_MKL.h"
+	"src/Core/products/TriangularMatrixVector_MKL.h"
+	"src/Core/products/TriangularSolverMatrix_MKL.h"
+	"src/Core/Assign_MKL.h"
+	"src/Core/GlobalFunctions.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+	"Eigen2Support"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/DisableStupidWarnings.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/Macros.h
+	<cstdlib>
+	<iostream>
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/MKL_support.h
+	<mkl.h>
+	<mkl_lapacke.h>
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/Constants.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/ForwardDeclarations.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/Meta.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/StaticAssert.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/XprHelper.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/Memory.h
+	<unistd.h>
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/NumTraits.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/MathFunctions.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/GenericPacketMath.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/arch/SSE/PacketMath.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/arch/SSE/MathFunctions.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/arch/SSE/Complex.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/arch/AltiVec/PacketMath.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/arch/AltiVec/Complex.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/arch/NEON/PacketMath.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/arch/NEON/Complex.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/arch/Default/Settings.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Functors.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/DenseCoeffsBase.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/DenseBase.h
+	"../plugins/BlockMethods.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/plugins/BlockMethods.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/MatrixBase.h
+	"../plugins/CommonCwiseUnaryOps.h"
+	"../plugins/CommonCwiseBinaryOps.h"
+	"../plugins/MatrixCwiseUnaryOps.h"
+	"../plugins/MatrixCwiseBinaryOps.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/plugins/CommonCwiseUnaryOps.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/plugins/CommonCwiseBinaryOps.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/plugins/MatrixCwiseBinaryOps.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/EigenBase.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Assign.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/BlasUtil.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/DenseStorage.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/NestByValue.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/ForceAlignedAccess.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/ReturnByValue.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/NoAlias.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/PlainObjectBase.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Matrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Array.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/CwiseBinaryOp.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/CwiseUnaryOp.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/CwiseNullaryOp.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/CwiseUnaryView.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/SelfCwiseBinaryOp.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Dot.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/StableNorm.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/MapBase.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Stride.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Map.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Block.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/VectorBlock.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Ref.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Transpose.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/DiagonalMatrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Diagonal.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/DiagonalProduct.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/PermutationMatrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Transpositions.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Redux.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Visitor.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Fuzzy.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/IO.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Swap.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/CommaInitializer.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Flagged.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/ProductBase.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/GeneralProduct.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/TriangularMatrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/SelfAdjointView.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/GeneralBlockPanelKernel.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/Parallelizer.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/CoeffBasedProduct.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/GeneralMatrixVector.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/GeneralMatrixMatrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/SolveTriangular.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/SelfadjointMatrixVector.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/SelfadjointMatrixMatrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/SelfadjointProduct.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/SelfadjointRank2Update.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/TriangularMatrixVector.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/TriangularMatrixMatrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/TriangularSolverMatrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/TriangularSolverVector.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/BandMatrix.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/CoreIterators.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/BooleanRedux.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Select.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/VectorwiseOp.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Random.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Replicate.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Reverse.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/ArrayBase.h
+	"../plugins/CommonCwiseUnaryOps.h"
+	"../plugins/MatrixCwiseUnaryOps.h"
+	"../plugins/ArrayCwiseUnaryOps.h"
+	"../plugins/CommonCwiseBinaryOps.h"
+	"../plugins/MatrixCwiseBinaryOps.h"
+	"../plugins/ArrayCwiseBinaryOps.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/plugins/ArrayCwiseUnaryOps.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/plugins/ArrayCwiseBinaryOps.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/ArrayWrapper.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/GeneralMatrixMatrix_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/GeneralMatrixVector_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/GeneralMatrixMatrixTriangular_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/SelfadjointMatrixMatrix_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/SelfadjointMatrixVector_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/TriangularMatrixMatrix_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/TriangularMatrixVector_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/products/TriangularSolverMatrix_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/Assign_MKL.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/GlobalFunctions.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Core/util/ReenableStupidWarnings.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/Eigen2Support
+	"src/Core/util/DisableStupidWarnings.h"
+	"src/Eigen2Support/Macros.h"
+	"src/Eigen2Support/Memory.h"
+	"src/Eigen2Support/Meta.h"
+	"src/Eigen2Support/Lazy.h"
+	"src/Eigen2Support/Cwise.h"
+	"src/Eigen2Support/CwiseOperators.h"
+	"src/Eigen2Support/TriangularSolver.h"
+	"src/Eigen2Support/Block.h"
+	"src/Eigen2Support/VectorBlock.h"
+	"src/Eigen2Support/Minor.h"
+	"src/Eigen2Support/MathFunctions.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+	<iostream>
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Macros.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Memory.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Meta.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Lazy.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Cwise.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/CwiseOperators.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/TriangularSolver.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Block.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/VectorBlock.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Minor.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/MathFunctions.h
 

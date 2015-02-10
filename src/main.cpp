@@ -1,7 +1,6 @@
 #include <iostream>
 #include <map>
 #include <list>
-#include <io.h>
 #include "util/thread.hpp"
 #include "util/file.hpp"
 #include "util/net.hpp"
@@ -21,6 +20,7 @@
 #include "util/any.hpp"
 #include "util/trace.hpp"
 #include "util/csv.hpp"
+#include "util/Eigen/Dense"
 
 using namespace std;
 using namespace util;
@@ -258,8 +258,31 @@ int Trace()
     return 0;
 }
 
+using namespace Eigen;
+
+void testEigen()
+{
+    MatrixXf m(2, 2);
+    m(0, 0) = 1;
+    m(0, 1) = 2;
+    m(1, 0) = 3;
+    m(1, 1) = 4;
+
+    MatrixXd n(2, 2);
+    n(0, 0) = 2.111111111111111;
+    n(0, 1) = 3;
+    n(1, 0) = 4;
+    n(1, 1) = 5;
+
+    MatrixXf x = MatrixXf::Identity(3, 3);
+
+    printLine(n);
+}
+
 int main(int argc, char* argv[])
 {
+    //testEigen();
+
     luaExecutor(argc, argv);
 
 //    Csv csv("output.csv");
