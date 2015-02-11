@@ -29,10 +29,13 @@ public:
 
     size_t rows() const;
     size_t cols() const;
+    inline bool isSquare() const
+    { return rows() == cols() && rows() > 0; }
 //    void set(const std::vector<value_type>& values);
 
+    size_t rank() const;
     value_type determinant() const;
-//    bool invertible() const;
+    bool invertable() const;
     Matrix inverse() const;
     Matrix transpose()const;
     Matrix conjugate() const;

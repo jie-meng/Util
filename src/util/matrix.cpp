@@ -91,13 +91,16 @@ Matrix::value_type Matrix::determinant() const
     return pimpl_->matrix_.determinant();
 }
 
-//bool Matrix::invertible() const
-//{
-//    UMatrix x;
-//    bool invertible;
-//    pimpl_->matrix_.computeInverseWithCheck(x, invertible);
-//    return invertible;
-//}
+size_t Matrix::rank() const
+{
+    FullPivLU<UMatrix> lu(pimpl_->matrix_);
+    return lu.rank();
+}
+
+bool Matrix::invertable() const
+{
+    return isSquare() && rank() == rows();
+}
 
 Matrix Matrix::inverse() const
 {

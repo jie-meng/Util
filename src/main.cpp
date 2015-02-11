@@ -319,11 +319,10 @@ void testInv()
     m(6, 5) =      -33264;
     m(6, 6) =      36966;
 
-    printLine("matrix:");
     printLine(m);
-    printLine("inverse:");
-    printLine(m.inverse());
-    printLine(m.determinant());
+
+    if (m.invertable())
+        printLine(m.inverse());
 }
 
 void testInv2()
@@ -338,16 +337,14 @@ void testInv2()
     m(1, 1) = 5;
     m(1, 2) = 6;
 
-
     m(2, 0) = 7;
     m(2, 1) = 8;
     m(2, 2) = 9;
 
-    printLine("matrix:");
     printLine(m);
-    printLine("inverse:");
-    printLine(m.inverse());
-    printLine(m.determinant());
+
+    if (m.invertable())
+        printLine(m.inverse());
 }
 
 void testInv3()
@@ -359,8 +356,10 @@ void testInv3()
     m(1, 0) = 3;
     m(1, 1) = 4;
 
-    printLine(m.inverse());
-    printLine(m.determinant());
+    printLine(m);
+
+    if (m.invertable())
+        printLine(m.inverse());
 }
 
 void testInv4()
@@ -372,11 +371,11 @@ void testInv4()
     m(1, 0) = 7;
     m(1, 1) = 8;
 
-    printLine(m.inverse());
-    printLine(m.determinant());
+    if (m.invertable())
+        printLine(m.inverse());
 }
 
-void testDeterminant()
+void testRank()
 {
     Matrix m(3, 2);
 
@@ -385,15 +384,14 @@ void testDeterminant()
     m(1, 0) = 7;
     m(1, 1) = 8;
 
-    printLine(m.determinant());
+    printLine(m.rank());
 }
 
 int main(int argc, char* argv[])
 {
-
     //luaExecutor(argc, argv);
 
-    testInv2();
+    testInv3();
 
     return 0;
 }
