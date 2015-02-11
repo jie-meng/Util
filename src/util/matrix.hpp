@@ -27,11 +27,17 @@ public:
     Matrix(const Matrix& m);
     ~Matrix();
 
+    bool set(const std::vector<value_type>& values);
+
+    template<typename Iter>
+    bool set(Iter first, Iter last);
+
     size_t rows() const;
     size_t cols() const;
-    inline bool isSquare() const
-    { return rows() == cols() && rows() > 0; }
-//    void set(const std::vector<value_type>& values);
+
+    inline bool empty() const { return rows() == 0 && cols() == 0; }
+    inline bool square() const { return rows() == cols() && rows() > 0; }
+    inline size_t elements() const { return rows() * cols(); }
 
     size_t rank() const;
     value_type determinant() const;
@@ -55,6 +61,20 @@ private:
     struct MatrixImpl;
     UtilAutoPtr<MatrixImpl> pimpl_;
 };
+
+template <typename Iter>
+bool Matrix::set(Iter first, Iter last)
+{
+    int len = std::distance(first, last);
+    if (len <= 0)
+        return false;
+
+    std::vector<Matrix::value_type> vec;
+    for (Iter it = first; it != last; ++it)
+        vec.push_back(*it);
+
+    return set(vec);
+}
 
 }
 

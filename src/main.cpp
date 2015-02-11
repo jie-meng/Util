@@ -387,11 +387,19 @@ void testRank()
     printLine(m.rank());
 }
 
+void testAddValue()
+{
+    Matrix m(2, 2);
+    double d[4] = { 2, 4, 6, 7 };
+    m.set(&d[0], &d[4]);
+    printLine(m);
+}
+
 int main(int argc, char* argv[])
 {
     //luaExecutor(argc, argv);
 
-    testInv3();
+    testAddValue();
 
     return 0;
 }

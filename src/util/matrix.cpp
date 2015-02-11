@@ -77,14 +77,18 @@ size_t Matrix::cols() const
     return pimpl_->matrix_.cols();
 }
 
-//void Matrix::set(const std::vector<value_type>& values)
-//{
-//    std::vector<value_type>::iterator it;
-////    for (it = values.begin(); it != values.end(); ++it)
-////    {
-////
-////    }
-//}
+bool Matrix::set(const std::vector<Matrix::value_type>& values)
+{
+    if (empty() || values.size() != elements())
+        return false;
+
+    std::vector<Matrix::value_type>::const_iterator it = values.begin();
+    for (size_t i=0; i<rows(); ++i)
+        for (size_t j=0; j<cols(); ++j)
+            pimpl_->matrix_(i, j) = *(it++);
+
+    return true;
+}
 
 Matrix::value_type Matrix::determinant() const
 {
@@ -99,7 +103,7 @@ size_t Matrix::rank() const
 
 bool Matrix::invertable() const
 {
-    return isSquare() && rank() == rows();
+    return square() && rank() == rows();
 }
 
 Matrix Matrix::inverse() const
