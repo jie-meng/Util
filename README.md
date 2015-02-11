@@ -1,9 +1,16 @@
-Util
-====
-#linux
-DEFINES = _PLATFORM_LINUX_
+# Util #
+----------------------------------------
+
+## linux ##
+
+
+DEFINES = \_PLATFORM\_LINUX\_
+
 LIBS = -lpthread
 
-#windows
-DEFINES = _PLATFORM_WINDOWS_
+
+## windows ##
+
+DEFINES = \_PLATFORM\_WINDOWS\_
+
 LIBS = -lws2_32 -lShlwapi

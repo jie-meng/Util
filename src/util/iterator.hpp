@@ -11,7 +11,7 @@ class Iterator : public Interface
 {
 public:
     virtual bool hasNext() = 0;
-    virtual T next() = 0;
+    virtual T& next() = 0;
 };
 
 template <typename T, class Collection>
@@ -23,7 +23,7 @@ public:
         it_(coll.begin())
     {}
     virtual bool hasNext() { return it_ != coll_.end(); }
-    virtual T next() { return *it_++; }
+    virtual T& next() { return *it_++; }
 private:
     Collection& coll_;
     typename Collection::iterator it_;

@@ -20,7 +20,8 @@
 #include "util/any.hpp"
 #include "util/trace.hpp"
 #include "util/csv.hpp"
-#include "util/Eigen/Dense"
+//#include "util/Eigen/Dense"
+#include "util/matrix.hpp"
 
 using namespace std;
 using namespace util;
@@ -258,57 +259,92 @@ int Trace()
     return 0;
 }
 
-using namespace Eigen;
-
-void testEigen()
-{
-    MatrixXf m(2, 2);
-    m(0, 0) = 1;
-    m(0, 1) = 2;
-    m(1, 0) = 3;
-    m(1, 1) = 4;
-
-    MatrixXd n(2, 2);
-    n(0, 0) = 2.111111111111111;
-    n(0, 1) = 3;
-    n(1, 0) = 4;
-    n(1, 1) = 5;
-
-    MatrixXf x = MatrixXf::Identity(3, 3);
-
-    printLine(n);
-}
+//void testEigen()
+//{
+//    MatrixXf m(2, 2);
+//    m(0, 0) = 1;
+//    m(0, 1) = 2;
+//    m(1, 0) = 3;
+//    m(1, 1) = 4;
+//
+//    MatrixXd n(2, 2);
+//    n(0, 0) = 2.111111111111111;
+//    n(0, 1) = 3;
+//    n(1, 0) = 4;
+//    n(1, 1) = 5;
+//
+//    MatrixXf x = MatrixXf::Identity(3, 3);
+//
+//    printLine(n);
+//}
 
 int main(int argc, char* argv[])
 {
-    //testEigen();
 
-    luaExecutor(argc, argv);
+    //luaExecutor(argc, argv);
 
-//    Csv csv("output.csv");
-//    if (!csv.empty())
-//    {
-//        printLine(csv.getTotalRows());
-//        printLine(csv.getTotalCols());
-////        printLine("{" + csv.getCellValue(1, 2) + "}");
-////        printLine(csv.setCellValue(1, 2, "ggx\nmu"));
-//
-////        csv.write("output.csv");
-////        csv.write();
-//
-//        csv.clear();
-//        string s[4] = { "xx", "aa", "klad\"sf", "sv" };
-//        int a[4] = { 1, 2, 4, 5 };
-//        printLine(csv.addRow(&s[0], &s[3]));
-//        printLine(csv.addRow(&a[0], &a[4]));
-//        printLine(csv.addRow(&s[2], &s[1]));
-//
-//        csv.write("o2.csv");
-//    }
-//    else
-//    {
-//        printLine("fail");
-//    }
+    Matrix m(7, 7);
+
+    printLine("matrix:");
+    printLine(m);
+    printLine("inverse:");
+
+    m(0, 1) =      0;
+    m(0, 2) =     0;
+    m(0, 3) =      330;
+    m(0, 4) =      0;
+    m(0, 5) =      -594;
+    m(0, 6) =      336;
+
+    m(1, 0) =      0;
+    m(1, 1) =      6;
+    m(1, 2) =      0;
+    m(1, 3) =      336;
+    m(1, 4) =      594;
+    m(1, 5) =      0;
+    m(1, 6) =      -330;
+
+    m(2, 0) =      0;
+    m(2, 1) =      0;
+    m(2, 2) =      6;
+    m(2, 3) =      594;
+    m(2, 4) =      -336;
+    m(2, 5) =      330;
+    m(2, 6) =      0;
+
+    m(3, 0) =      330;
+    m(3, 1) =      336;
+    m(3, 2) =      594;
+    m(3, 3) =      95772;
+    m(3, 4) =      0;
+    m(3, 5) =      0;
+    m(3, 6) =      0;
+
+    m(4, 0) =      0;
+    m(4, 1) =      594;
+    m(4, 2) =      -336;
+    m(4, 3) =      0;
+    m(4, 4) =      77622;
+    m(4, 5) =      -18480;
+    m(4, 6) =      -32670;
+
+    m(5, 0) =      -594;
+    m(5, 1) =      0;
+    m(5, 2) =      330;
+    m(5, 3) =      0;
+    m(5, 4) =      -18480;
+    m(5, 5) =      76956;
+    m(5, 6) =      -33264;
+
+    m(6, 0) =      336;
+    m(6, 1) =      -330;
+    m(6, 2) =      0;
+    m(6, 3) =      0;
+    m(6, 4) =      -32670;
+    m(6, 5) =      -33264;
+    m(6, 6) =      36966;
+
+    printLine(m.inverse());
 
     return 0;
 }
