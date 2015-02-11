@@ -58,7 +58,8 @@ static int udpCreate(lua_State* plua_state)
 
     DgramSocket* pds = new DgramSocket((Family)family);
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pds, deleteVoid<DgramSocket>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pds, deleteVoid<DgramSocket>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<DgramSocket>(plua_state, (void*)pds);
 
     luaPushLightUserData(plua_state, (void*)pds);
 
@@ -217,7 +218,8 @@ static int tcpCreate(lua_State* plua_state)
 
     StreamSocket* pss = new StreamSocket((Family)family);
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pss, deleteVoid<StreamSocket>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pss, deleteVoid<StreamSocket>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<StreamSocket>(plua_state, (void*)pss);
 
     luaPushLightUserData(plua_state, (void*)pss);
 
@@ -463,7 +465,8 @@ static int rawCreate(lua_State* plua_state)
 {
     Socket* ps = new Socket((Family)luaGetInteger(plua_state, 1, Family_IPv4), SockType_Raw, luaGetInteger(plua_state, 2, 0));
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)ps, deleteVoid<Socket>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)ps, deleteVoid<Socket>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Socket>(plua_state, (void*)ps);
 
     luaPushLightUserData(plua_state, (void*)ps);
 

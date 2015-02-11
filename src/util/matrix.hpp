@@ -27,10 +27,10 @@ public:
     Matrix(const Matrix& m);
     ~Matrix();
 
-    bool set(const std::vector<value_type>& values);
+    bool setElements(const std::vector<value_type>& values);
 
     template<typename Iter>
-    bool set(Iter first, Iter last);
+    bool setElements(Iter first, Iter last);
 
     size_t rows() const;
     size_t cols() const;
@@ -63,7 +63,7 @@ private:
 };
 
 template <typename Iter>
-bool Matrix::set(Iter first, Iter last)
+bool Matrix::setElements(Iter first, Iter last)
 {
     int len = std::distance(first, last);
     if (len <= 0)
@@ -73,7 +73,7 @@ bool Matrix::set(Iter first, Iter last)
     for (Iter it = first; it != last; ++it)
         vec.push_back(*it);
 
-    return set(vec);
+    return setElements(vec);
 }
 
 }

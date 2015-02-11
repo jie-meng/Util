@@ -10,6 +10,7 @@
 #include "lua/extend/lfilelib.hpp"
 #include "lua/extend/lprocesslib.hpp"
 #include "lua/extend/lcsvlib.hpp"
+#include "lua/extend/lmatrixlib.hpp"
 
 namespace util
 {
@@ -60,6 +61,7 @@ private:
         lua_extender_.addLib(kLuaExtendLibThread, lualibThreadCreate);
         lua_extender_.addLib(kLuaExtendLibProcess, lualibProcessCreate);
         lua_extender_.addLib(kLuaExtendLibCsv, lualibCsvCreate);
+        lua_extender_.addLib(kLuaExtendLibMatrix, lualibMatrixCreate);
     }
 private:
     LuaExtender lua_extender_;

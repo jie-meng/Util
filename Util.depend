@@ -37411,7 +37411,7 @@
 	"trace/listener/udplistener.hpp"
 	"trace/listener/filelistener.hpp"
 
-1423667006 source:d:\projects\git\util\src\main.cpp
+1423671901 source:d:\projects\git\util\src\main.cpp
 	<iostream>
 	<map>
 	<list>
@@ -37540,10 +37540,11 @@
 	<typeinfo>
 	"iterator.hpp"
 
-1423663939 d:\projects\git\util\src\util\luax.hpp
+1423670684 d:\projects\git\util\src\util\luax.hpp
 	<vector>
 	"cmdline.hpp"
 	"any.hpp"
+	"typeinfo.hpp"
 
 1423663753 d:\projects\git\util\src\util\any.hpp
 	<algorithm>
@@ -37629,14 +37630,14 @@
 1423663753 d:\projects\git\util\src\util\lua\extend\lfilelib.hpp
 	<string>
 
-1423663938 source:d:\projects\git\util\src\util\lua\extend\lmemorylib.cpp
+1423669958 source:d:\projects\git\util\src\util\lua\extend\lmemorylib.cpp
 	"lmemorylib.hpp"
 	"util/luaextend.hpp"
 
 1423663753 d:\projects\git\util\src\util\lua\extend\lmemorylib.hpp
 	<string>
 
-1423663938 source:d:\projects\git\util\src\util\lua\extend\lnetlib.cpp
+1423669939 source:d:\projects\git\util\src\util\lua\extend\lnetlib.cpp
 	"lnetlib.hpp"
 	"util/luaextend.hpp"
 	"util/net.hpp"
@@ -37644,7 +37645,7 @@
 1423663753 d:\projects\git\util\src\util\lua\extend\lnetlib.hpp
 	<string>
 
-1423663753 source:d:\projects\git\util\src\util\lua\extend\lprocesslib.cpp
+1423669805 source:d:\projects\git\util\src\util\lua\extend\lprocesslib.cpp
 	"lprocesslib.hpp"
 	"util/luaextend.hpp"
 	"util/process.hpp"
@@ -37653,7 +37654,7 @@
 1423663753 d:\projects\git\util\src\util\lua\extend\lprocesslib.hpp
 	<string>
 
-1423663938 source:d:\projects\git\util\src\util\lua\extend\lregexlib.cpp
+1423669756 source:d:\projects\git\util\src\util\lua\extend\lregexlib.cpp
 	"lregexlib.hpp"
 	"util/luaextend.hpp"
 	"util/regex.hpp"
@@ -37661,7 +37662,7 @@
 1423663753 d:\projects\git\util\src\util\lua\extend\lregexlib.hpp
 	<string>
 
-1423663938 source:d:\projects\git\util\src\util\lua\extend\lthreadlib.cpp
+1423670204 source:d:\projects\git\util\src\util\lua\extend\lthreadlib.cpp
 	"lthreadlib.hpp"
 	<vector>
 	"util/luaextend.hpp"
@@ -38208,7 +38209,7 @@
 	"lstate.h"
 	"lzio.h"
 
-1423663939 source:d:\projects\git\util\src\util\luaextend.cpp
+1423671321 source:d:\projects\git\util\src\util\luaextend.cpp
 	"luaextend.hpp"
 	"lua/src/lua.hpp"
 	"lexicalcast.hpp"
@@ -38221,13 +38222,14 @@
 	"lua/extend/lfilelib.hpp"
 	"lua/extend/lprocesslib.hpp"
 	"lua/extend/lcsvlib.hpp"
+	"lua/extend/lmatrixlib.hpp"
 
 1423663753 d:\projects\git\util\src\util\lua\src\lua.hpp
 	"lua.h"
 	"lualib.h"
 	"lauxlib.h"
 
-1423663939 source:d:\projects\git\util\src\util\luax.cpp
+1423670680 source:d:\projects\git\util\src\util\luax.cpp
 	"luax.hpp"
 	<map>
 	<set>
@@ -43212,7 +43214,7 @@
 	"base.hpp"
 	<vector>
 
-1423666876 d:\projects\git\util\src\util\matrix.hpp
+1423671639 d:\projects\git\util\src\util\matrix.hpp
 	"base.hpp"
 	<vector>
 
@@ -43225,7 +43227,7 @@
 	"string.hpp"
 	"file.hpp"
 
-1423663938 source:d:\projects\git\util\src\util\lua\extend\lcsvlib.cpp
+1423669990 source:d:\projects\git\util\src\util\lua\extend\lcsvlib.cpp
 	"lcsvlib.hpp"
 	"lfilelib.hpp"
 	"util/luaextend.hpp"
@@ -43245,7 +43247,7 @@
 	"lauxlib.h"
 	"lualib.h"
 
-1423666957 source:d:\projects\git\util\src\util\matrix.cpp
+1423671647 source:d:\projects\git\util\src\util\matrix.cpp
 	"matrix.hpp"
 	"Eigen/Dense"
 
@@ -43943,4 +43945,13 @@
 
 1423663935 d:\projects\git\util\src\util\eigen\src\eigenvalues\selfadjointeigensolver_mkl.h
 	"Eigen/src/Core/util/MKL_support.h"
+
+1423671863 source:d:\projects\git\util\src\util\lua\extend\lmatrixlib.cpp
+	"lmatrixlib.hpp"
+	"lfilelib.hpp"
+	"util/luaextend.hpp"
+	"util/matrix.hpp"
+
+1423670823 d:\projects\git\util\src\util\lua\extend\lmatrixlib.hpp
+	<string>
 

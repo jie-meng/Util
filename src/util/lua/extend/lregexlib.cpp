@@ -10,7 +10,8 @@ static int create(lua_State* plua_state)
     Regex* pregexer = new Regex(luaGetString(plua_state, 1, ""),
         (Regex::RegexFlag)luaGetInteger(plua_state, 2, 0));
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pregexer, deleteVoid<Regex>);
+//    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pregexer, deleteVoid<Regex>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Regex>(plua_state, (void*)pregexer);
 
     luaPushLightUserData(plua_state, (void*)pregexer);
 

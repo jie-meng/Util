@@ -391,15 +391,13 @@ void testAddValue()
 {
     Matrix m(2, 2);
     double d[4] = { 2, 4, 6, 7 };
-    m.set(&d[0], &d[4]);
+    m.setElements(&d[0], &d[4]);
     printLine(m);
 }
 
 int main(int argc, char* argv[])
 {
-    //luaExecutor(argc, argv);
-
-    testAddValue();
+    luaExecutor(argc, argv);
 
     return 0;
 }

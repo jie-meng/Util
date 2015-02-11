@@ -16,6 +16,7 @@
 					<Add option="-D_PLATFORM_WINDOWS_" />
 					<Add directory="src" />
 					<Add directory="src/util" />
+					<Add directory="src/util/lua/extend" />
 				</Compiler>
 				<Linker>
 					<Add option="-lws2_32" />
@@ -29,13 +30,15 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-D_PLATFORM_LINUX_" />
+					<Add option="-D_PLATFORM_WINDOWS_" />
 					<Add directory="src" />
 					<Add directory="src/util" />
+					<Add directory="src/util/lua/extend" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lpthread" />
+					<Add option="-lws2_32" />
+					<Add option="-lShlwapi" />
 				</Linker>
 			</Target>
 		</Build>
@@ -324,6 +327,8 @@
 		<Unit filename="src/util/lua/extend/lcsvlib.hpp" />
 		<Unit filename="src/util/lua/extend/lfilelib.cpp" />
 		<Unit filename="src/util/lua/extend/lfilelib.hpp" />
+		<Unit filename="src/util/lua/extend/lmatrixlib.cpp" />
+		<Unit filename="src/util/lua/extend/lmatrixlib.hpp" />
 		<Unit filename="src/util/lua/extend/lmemorylib.cpp" />
 		<Unit filename="src/util/lua/extend/lmemorylib.hpp" />
 		<Unit filename="src/util/lua/extend/lnetlib.cpp" />

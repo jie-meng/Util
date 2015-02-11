@@ -4,6 +4,7 @@
 #include <vector>
 #include "cmdline.hpp"
 #include "any.hpp"
+#include "typeinfo.hpp"
 
 struct lua_State;
 
@@ -68,15 +69,32 @@ int luaParseFile(lua_State* plua_state, const std::string& file, std::string& er
 //LuaHeapRecycler
 typedef void (*RecycleFunc)(void*);
 
+struct LuaHeapObjectInfo
+{
+    LuaHeapObjectInfo(TypeInfo ti, RecycleFunc r)
+    {
+        typeinfo = ti;
+        recycler = r;
+    }
+    TypeInfo typeinfo;
+    RecycleFunc recycler;
+};
+
 class LuaHeapRecycler
 {
 public:
     LuaHeapRecycler();
     ~LuaHeapRecycler();
-    void addHeapObject(void* p, RecycleFunc recycler);
+
+    void addHeapObject(void* p, LuaHeapObjectInfo lua_heap_object_info);
+
+    template<typename T>
+    void addHeapObject(void* p);
+
     void removeHeapObject(void* p);
     bool include(const std::string& file);
     void clear();
+    void clear(TypeInfo typeinfo);
 private:
     struct LuaHeapRecyclerImpl;
     UtilAutoPtr<LuaHeapRecyclerImpl> pimpl_;
@@ -84,14 +102,26 @@ private:
     DISALLOW_COPY_AND_ASSIGN(LuaHeapRecycler)
 };
 
+template<typename T>
+void LuaHeapRecycler::addHeapObject(void* p)
+{
+    addHeapObject(p, LuaHeapObjectInfo(typeid(T), deleteVoid<T>));
+}
+
 class LuaHeapRecyclerManager
 {
 public:
     SINGLETON(LuaHeapRecyclerManager)
-    void addHeapObject(lua_State* plua_state, void* p, RecycleFunc recycler);
+
+    void addHeapObject(lua_State* plua_state, void* p, LuaHeapObjectInfo lua_heap_object_info);
+
+    template<typename T>
+    void addHeapObject(lua_State* plua_state, void* p);
+
     void removeHeapObject(lua_State* plua_state, void* p);
     bool include(lua_State* plua_state, const std::string& file);
     void clear(lua_State* plua_state);
+    void clear(lua_State* plua_state, TypeInfo typeinfo);
     void addState(lua_State* plua_state, LuaHeapRecycler* ph);
     void removeState(lua_State* plua_state);
 private:
@@ -103,6 +133,12 @@ private:
 private:
     DISALLOW_COPY_AND_ASSIGN(LuaHeapRecyclerManager)
 };
+
+template<typename T>
+void LuaHeapRecyclerManager::addHeapObject(lua_State* plua_state, void* p)
+{
+    addHeapObject(plua_state, p, LuaHeapObjectInfo(typeid(T), deleteVoid<T>));
+}
 
 //LuaState
 class LuaState

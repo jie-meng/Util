@@ -10,7 +10,8 @@ static int create(lua_State* plua_state)
 {
     Process* pprocess = new Process();
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pprocess, deleteVoid<Process>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pprocess, deleteVoid<Process>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Process>(plua_state, (void*)pprocess);
 
     luaPushLightUserData(plua_state, (void*)pprocess);
 

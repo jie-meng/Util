@@ -16,7 +16,8 @@ static int create(lua_State* plua_state)
 
     Csv* pcsv = new Csv(file, delimiter.at(0), enclosure.at(0));
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pcsv, deleteVoid<Csv>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pcsv, deleteVoid<Csv>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Csv>(plua_state, (void*)pcsv);
 
     luaPushLightUserData(plua_state, (void*)pcsv);
 

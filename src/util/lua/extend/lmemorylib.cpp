@@ -15,7 +15,8 @@ static int create(lua_State* plua_state)
 
     ByteMemory* pmemory = new ByteMemory(memory_size);
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmemory, deleteVoid<ByteMemory>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmemory, deleteVoid<ByteMemory>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<ByteMemory>(plua_state, (void*)pmemory);
 
     luaPushLightUserData(plua_state, (void*)pmemory);
 

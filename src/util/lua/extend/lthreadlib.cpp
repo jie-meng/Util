@@ -50,7 +50,8 @@ static int create(lua_State* plua_state)
 
     Thread* pthread = new Thread(UtilBind(threadFunc, file, func, args));
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pthread, deleteVoid<Thread>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pthread, deleteVoid<Thread>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Thread>(plua_state, (void*)pthread);
 
     luaPushLightUserData(plua_state, (void*)pthread);
 
@@ -116,7 +117,8 @@ static int mutexCreate(lua_State* plua_state)
 {
     Mutex* pmutex = new Mutex();
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmutex, deleteVoid<Mutex>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmutex, deleteVoid<Mutex>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Mutex>(plua_state, (void*)pmutex);
 
     luaPushLightUserData(plua_state, (void*)pmutex);
 
@@ -159,7 +161,8 @@ static int lockCreate(lua_State* plua_state)
 {
     Lock* plock = new Lock();
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)plock, deleteVoid<Lock>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)plock, deleteVoid<Lock>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Lock>(plua_state, (void*)plock);
 
     luaPushLightUserData(plua_state, (void*)plock);
 
@@ -216,7 +219,8 @@ static int multiLockCreate(lua_State* plua_state)
     luaAssert(plua_state, 2 == luaGetTop(plua_state), "param \"lock_cnt\" and \"wait_all\" needed");
     MultiLock* pmlock = new MultiLock(luaGetInteger(plua_state, 1, 1), luaGetBoolean(plua_state, 2, true));
 
-    LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmlock, deleteVoid<MultiLock>);
+    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmlock, deleteVoid<MultiLock>);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<MultiLock>(plua_state, (void*)pmlock);
 
     luaPushLightUserData(plua_state, (void*)pmlock);
 

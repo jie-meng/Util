@@ -77,7 +77,7 @@ size_t Matrix::cols() const
     return pimpl_->matrix_.cols();
 }
 
-bool Matrix::set(const std::vector<Matrix::value_type>& values)
+bool Matrix::setElements(const std::vector<Matrix::value_type>& values)
 {
     if (empty() || values.size() != elements())
         return false;
