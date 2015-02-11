@@ -393,7 +393,7 @@ int main(int argc, char* argv[])
 
     //luaExecutor(argc, argv);
 
-    testInv4();
+    testInv2();
 
     return 0;
 }

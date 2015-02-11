@@ -7,7 +7,7 @@ namespace util
 using namespace std;
 using namespace Eigen;
 
-typedef MatrixXf UMatrix;
+typedef MatrixXd UMatrix;
 
 struct Matrix::MatrixImpl
 {
@@ -86,7 +86,7 @@ size_t Matrix::cols() const
 ////    }
 //}
 
-double Matrix::determinant() const
+Matrix::value_type Matrix::determinant() const
 {
     return pimpl_->matrix_.determinant();
 }
