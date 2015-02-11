@@ -259,36 +259,11 @@ int Trace()
     return 0;
 }
 
-//void testEigen()
-//{
-//    MatrixXf m(2, 2);
-//    m(0, 0) = 1;
-//    m(0, 1) = 2;
-//    m(1, 0) = 3;
-//    m(1, 1) = 4;
-//
-//    MatrixXd n(2, 2);
-//    n(0, 0) = 2.111111111111111;
-//    n(0, 1) = 3;
-//    n(1, 0) = 4;
-//    n(1, 1) = 5;
-//
-//    MatrixXf x = MatrixXf::Identity(3, 3);
-//
-//    printLine(n);
-//}
-
-int main(int argc, char* argv[])
+void testInv()
 {
-
-    //luaExecutor(argc, argv);
-
     Matrix m(7, 7);
 
-    printLine("matrix:");
-    printLine(m);
-    printLine("inverse:");
-
+    m(0, 0) =      6;
     m(0, 1) =      0;
     m(0, 2) =     0;
     m(0, 3) =      330;
@@ -344,7 +319,81 @@ int main(int argc, char* argv[])
     m(6, 5) =      -33264;
     m(6, 6) =      36966;
 
+    printLine("matrix:");
+    printLine(m);
+    printLine("inverse:");
     printLine(m.inverse());
+    printLine(m.determinant());
+}
+
+void testInv2()
+{
+    Matrix m(3, 3);
+
+    m(0, 0) = 1;
+    m(0, 1) = 2;
+    m(0, 2) = 3;
+
+    m(1, 0) = 4;
+    m(1, 1) = 5;
+    m(1, 2) = 6;
+
+
+    m(2, 0) = 7;
+    m(2, 1) = 8;
+    m(2, 2) = 9;
+
+    printLine("matrix:");
+    printLine(m);
+    printLine("inverse:");
+    printLine(m.inverse());
+    printLine(m.determinant());
+}
+
+void testInv3()
+{
+    Matrix m(2, 2);
+
+    m(0, 0) = 1;
+    m(0, 1) = 2;
+    m(1, 0) = 3;
+    m(1, 1) = 4;
+
+    printLine(m.inverse());
+    printLine(m.determinant());
+}
+
+void testInv4()
+{
+    Matrix m(2, 2);
+
+    m(0, 0) = 1;
+    m(0, 1) = 2;
+    m(1, 0) = 7;
+    m(1, 1) = 8;
+
+    printLine(m.inverse());
+    printLine(m.determinant());
+}
+
+void testDeterminant()
+{
+    Matrix m(3, 2);
+
+    m(0, 0) = 1;
+    m(0, 1) = 2;
+    m(1, 0) = 7;
+    m(1, 1) = 8;
+
+    printLine(m.determinant());
+}
+
+int main(int argc, char* argv[])
+{
+
+    //luaExecutor(argc, argv);
+
+    testInv4();
 
     return 0;
 }

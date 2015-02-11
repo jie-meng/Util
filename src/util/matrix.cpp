@@ -7,7 +7,7 @@ namespace util
 using namespace std;
 using namespace Eigen;
 
-typedef MatrixXd UMatrix;
+typedef MatrixXf UMatrix;
 
 struct Matrix::MatrixImpl
 {
@@ -84,6 +84,19 @@ size_t Matrix::cols() const
 ////    {
 ////
 ////    }
+//}
+
+double Matrix::determinant() const
+{
+    return pimpl_->matrix_.determinant();
+}
+
+//bool Matrix::invertible() const
+//{
+//    UMatrix x;
+//    bool invertible;
+//    pimpl_->matrix_.computeInverseWithCheck(x, invertible);
+//    return invertible;
 //}
 
 Matrix Matrix::inverse() const

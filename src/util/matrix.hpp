@@ -10,7 +10,7 @@ namespace util
 class Matrix
 {
 public:
-    typedef double value_type;
+    typedef float value_type;
 
     enum MatrixType
     {
@@ -31,6 +31,8 @@ public:
     size_t cols() const;
 //    void set(const std::vector<value_type>& values);
 
+    double determinant() const;
+//    bool invertible() const;
     Matrix inverse() const;
     Matrix transpose()const;
     Matrix conjugate() const;
