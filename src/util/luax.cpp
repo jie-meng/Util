@@ -192,12 +192,21 @@ int luaCallFunc(lua_State* plua_state, int nargs, int nrets)
     return lua_pcall(plua_state, nargs, nrets, 0);
 }
 
-int luaAssert(lua_State* plua_state, bool assertion, const std::string& str)
+void luaAssert(lua_State* plua_state, bool assertion, const std::string& str)
 {
-    if(!plua_state || assertion)
-        return lua_gettop(plua_state);
+    if (!plua_state)
+        luaL_error(plua_state, "plua_state is null");
 
-    return luaL_error(plua_state, "%s", str.c_str());
+    //if(assertion)
+        //return lua_gettop(plua_state);
+
+    if (!assertion)
+        luaL_error(plua_state, "%s", str.c_str());
+}
+
+void luaError(lua_State* plua_state, const std::string& str)
+{
+    luaL_error(plua_state, "%s", str.c_str());
 }
 
 //luaGetError

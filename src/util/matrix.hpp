@@ -46,6 +46,10 @@ public:
     Matrix transpose()const;
     Matrix conjugate() const;
     Matrix adjoint() const;
+    Matrix add(value_type scalar) const;
+    Matrix substract(value_type scalar) const;
+    Matrix multiply(value_type scalar) const;
+    Matrix divide(value_type scalar) const;
 
     Matrix& operator=(const Matrix& m);
     Matrix& operator+=(const Matrix& m);

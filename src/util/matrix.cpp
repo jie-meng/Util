@@ -134,6 +134,46 @@ Matrix Matrix::adjoint() const
     return m;
 }
 
+Matrix Matrix::add(value_type scalar) const
+{
+    Matrix m = *(this);
+    for (size_t i=0; i<rows(); ++i)
+        for (size_t j=0; j<cols(); ++j)
+            m.pimpl_->matrix_(i, j) = m.pimpl_->matrix_(i, j) + scalar;
+
+    return m;
+}
+
+Matrix Matrix::substract(value_type scalar) const
+{
+    Matrix m = *(this);
+    for (size_t i=0; i<rows(); ++i)
+        for (size_t j=0; j<cols(); ++j)
+            m.pimpl_->matrix_(i, j) = m.pimpl_->matrix_(i, j) - scalar;
+
+    return m;
+}
+
+Matrix Matrix::multiply(value_type scalar) const
+{
+    Matrix m = *(this);
+    for (size_t i=0; i<rows(); ++i)
+        for (size_t j=0; j<cols(); ++j)
+            m.pimpl_->matrix_(i, j) = m.pimpl_->matrix_(i, j) * scalar;
+
+    return m;
+}
+
+Matrix Matrix::divide(value_type scalar) const
+{
+    Matrix m = *(this);
+    for (size_t i=0; i<rows(); ++i)
+        for (size_t j=0; j<cols(); ++j)
+            m.pimpl_->matrix_(i, j) = m.pimpl_->matrix_(i, j) / scalar;
+
+    return m;
+}
+
 Matrix& Matrix::operator=(const Matrix& m)
 {
     if (this == &m)

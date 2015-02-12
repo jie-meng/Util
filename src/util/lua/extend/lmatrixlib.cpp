@@ -44,10 +44,9 @@ static int clear(lua_State* plua_state)
 static int toString(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-toString: null pointer");
-    else
-        luaPushString(plua_state, toString(*pm));
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "tostring", pm, "null pointer");
+
+    luaPushString(plua_state, toString(*pm));
 
     return 1;
 }
@@ -55,10 +54,9 @@ static int toString(lua_State* plua_state)
 static int rows(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-rows: null pointer");
-    else
-        luaPushInteger(plua_state, pm->rows());
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "rows", pm, "null pointer");
+
+    luaPushInteger(plua_state, pm->rows());
 
     return 1;
 }
@@ -66,10 +64,9 @@ static int rows(lua_State* plua_state)
 static int cols(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-cols: null pointer");
-    else
-        luaPushInteger(plua_state, pm->cols());
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "cols", pm, "null pointer");
+
+    luaPushInteger(plua_state, pm->cols());
 
     return 1;
 }
@@ -77,20 +74,14 @@ static int cols(lua_State* plua_state)
 static int get(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-get: null pointer");
-    }
-    else
-    {
-        int i = luaGetInteger(plua_state, 2, -1);
-        int j = luaGetInteger(plua_state, 3, -1);
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "get", pm, "null pointer");
 
-        if (i < 0 || j < 0)
-            throw Exception("LuaExtend-matrix-get: sub-index error");
+    int i = luaGetInteger(plua_state, 2, -1);
+    int j = luaGetInteger(plua_state, 3, -1);
 
-        luaPushDouble(plua_state, (*pm)(i, j));
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "get", i>=0 && i<(int)pm->rows() && j>=0 && j<(int)pm->cols(), "sub-index error");
+
+    luaPushDouble(plua_state, (*pm)(i, j));
 
     return 1;
 }
@@ -98,21 +89,15 @@ static int get(lua_State* plua_state)
 static int set(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-set: null pointer");
-    }
-    else
-    {
-        int i = luaGetInteger(plua_state, 2, -1);
-        int j = luaGetInteger(plua_state, 3, -1);
-        int v = luaGetInteger(plua_state, 4, 0);
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "set", pm, "null pointer");
 
-        if (i < 0 || j < 0)
-            throw Exception("LuaExtend-matrix-set: sub-index error");
+    int i = luaGetInteger(plua_state, 2, -1);
+    int j = luaGetInteger(plua_state, 3, -1);
+    int v = luaGetInteger(plua_state, 4, 0);
 
-        (*pm)(i, j) = v;
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "set", i>=0 && i<(int)pm->rows() && j>=0 && j<(int)pm->cols(), "sub-index error");
+
+    (*pm)(i, j) = v;
 
     return 0;
 }
@@ -120,25 +105,20 @@ static int set(lua_State* plua_state)
 static int setElements(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "setElements", pm, "null pointer");
+
+    int count = luaGetTop(plua_state);
+    if (count > 1)
     {
-        throw Exception("LuaExtend-matrix-setElements: null pointer");
+        vector<Matrix::value_type> vec;
+        for (int i=2; i<=count; ++i)
+            vec.push_back(luaGetDouble(plua_state, i, 0));
+
+        luaPushBoolean(plua_state, pm->setElements(vec));
     }
     else
     {
-        int count = luaGetTop(plua_state);
-        if (count > 1)
-        {
-            vector<Matrix::value_type> vec;
-            for (int i=2; i<=count; ++i)
-                vec.push_back(luaGetDouble(plua_state, i, 0));
-
-            luaPushBoolean(plua_state, pm->setElements(vec));
-        }
-        else
-        {
-            luaPushBoolean(plua_state, false);
-        }
+        luaPushBoolean(plua_state, false);
     }
 
     return 1;
@@ -147,10 +127,9 @@ static int setElements(lua_State* plua_state)
 static int empty(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-empty: null pointer");
-    else
-        luaPushBoolean(plua_state, pm->empty());
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "empty", pm, "null pointer");
+
+    luaPushBoolean(plua_state, pm->empty());
 
     return 1;
 }
@@ -158,10 +137,9 @@ static int empty(lua_State* plua_state)
 static int square(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-square: null pointer");
-    else
-        luaPushBoolean(plua_state, pm->square());
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "square", pm, "null pointer");
+
+    luaPushBoolean(plua_state, pm->square());
 
     return 1;
 }
@@ -169,10 +147,9 @@ static int square(lua_State* plua_state)
 static int elements(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-elements: null pointer");
-    else
-        luaPushInteger(plua_state, (int)pm->elements());
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "elements", pm, "null pointer");
+
+    luaPushInteger(plua_state, (int)pm->elements());
 
     return 1;
 }
@@ -180,10 +157,9 @@ static int elements(lua_State* plua_state)
 static int rank(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-rank: null pointer");
-    else
-        luaPushInteger(plua_state, (int)pm->rank());
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "rank", pm, "null pointer");
+
+    luaPushInteger(plua_state, (int)pm->rank());
 
     return 1;
 }
@@ -191,10 +167,9 @@ static int rank(lua_State* plua_state)
 static int determinant(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-determinant: null pointer");
-    else
-        luaPushDouble(plua_state, (int)pm->determinant());
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "determinant", pm, "null pointer");
+
+    luaPushDouble(plua_state, (int)pm->determinant());
 
     return 1;
 }
@@ -202,10 +177,9 @@ static int determinant(lua_State* plua_state)
 static int invertable(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-        throw Exception("LuaExtend-matrix-invertable: null pointer");
-    else
-        luaPushBoolean(plua_state, pm->invertable());
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "invertable", pm, "null pointer");
+
+    luaPushBoolean(plua_state, pm->invertable());
 
     return 1;
 }
@@ -213,18 +187,13 @@ static int invertable(lua_State* plua_state)
 static int inverse(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-inverse: null pointer");
-    }
-    else
-    {
-        Matrix* pm_ret = new Matrix();
-        (*pm_ret) = pm->inverse();
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "inverse", pm, "null pointer");
 
-        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
-        luaPushLightUserData(plua_state, (void*)pm_ret);
-    }
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = pm->inverse();
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
 
     return 1;
 }
@@ -232,18 +201,13 @@ static int inverse(lua_State* plua_state)
 static int transpose(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-transpose: null pointer");
-    }
-    else
-    {
-        Matrix* pm_ret = new Matrix();
-        (*pm_ret) = pm->transpose();
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "transpose", pm, "null pointer");
 
-        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
-        luaPushLightUserData(plua_state, (void*)pm_ret);
-    }
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = pm->transpose();
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
 
     return 1;
 }
@@ -251,18 +215,13 @@ static int transpose(lua_State* plua_state)
 static int conjugate(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-conjugate: null pointer");
-    }
-    else
-    {
-        Matrix* pm_ret = new Matrix();
-        (*pm_ret) = pm->conjugate();
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "conjugate", pm, "null pointer");
 
-        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
-        luaPushLightUserData(plua_state, (void*)pm_ret);
-    }
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = pm->conjugate();
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
 
     return 1;
 }
@@ -270,18 +229,72 @@ static int conjugate(lua_State* plua_state)
 static int adjoint(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-adjoint: null pointer");
-    }
-    else
-    {
-        Matrix* pm_ret = new Matrix();
-        (*pm_ret) = pm->adjoint();
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "adjoint", pm, "null pointer");
 
-        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
-        luaPushLightUserData(plua_state, (void*)pm_ret);
-    }
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = pm->adjoint();
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
+
+    return 1;
+}
+
+static int addScalar(lua_State* plua_state)
+{
+    Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "addScalar", pm, "null pointer");
+
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = pm->add(luaGetInteger(plua_state, 2, 0));
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
+
+    return 1;
+}
+
+static int subtractScalar(lua_State* plua_state)
+{
+    Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "subtractScalar", pm, "null pointer");
+
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = pm->substract(luaGetInteger(plua_state, 2, 0));
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
+
+    return 1;
+}
+
+static int multiplyScalar(lua_State* plua_state)
+{
+    Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "multiplyScalar", pm, "null pointer");
+
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = pm->multiply(luaGetInteger(plua_state, 2, 0));
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
+
+    return 1;
+}
+
+static int divideScalar(lua_State* plua_state)
+{
+    Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "divideScalar", pm, "null pointer");
+
+    int s = luaGetInteger(plua_state, 2, 0);
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "divideScalar", s, "cannot divide by 0");
+
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = pm->divide(s);
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
 
     return 1;
 }
@@ -290,18 +303,13 @@ static int add(lua_State* plua_state)
 {
     Matrix* plhs = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
     Matrix* prhs = static_cast<Matrix*>(luaGetLightUserData(plua_state, 2, 0));
-    if (!plhs || !prhs)
-    {
-        throw Exception("LuaExtend-matrix-add: null pointer");
-    }
-    else
-    {
-        Matrix* pm_ret = new Matrix();
-        (*pm_ret) = (*plhs) + (*prhs);
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "add", plhs && prhs, "null pointer");
 
-        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
-        luaPushLightUserData(plua_state, (void*)pm_ret);
-    }
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = (*plhs) + (*prhs);
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
 
     return 1;
 }
@@ -310,18 +318,13 @@ static int subtract(lua_State* plua_state)
 {
     Matrix* plhs = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
     Matrix* prhs = static_cast<Matrix*>(luaGetLightUserData(plua_state, 2, 0));
-    if (!plhs || !prhs)
-    {
-        throw Exception("LuaExtend-matrix-subtract: null pointer");
-    }
-    else
-    {
-        Matrix* pm_ret = new Matrix();
-        (*pm_ret) = (*plhs) - (*prhs);
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "subtract", plhs && prhs, "null pointer");
 
-        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
-        luaPushLightUserData(plua_state, (void*)pm_ret);
-    }
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = (*plhs) - (*prhs);
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
 
     return 1;
 }
@@ -330,18 +333,13 @@ static int multiply(lua_State* plua_state)
 {
     Matrix* plhs = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
     Matrix* prhs = static_cast<Matrix*>(luaGetLightUserData(plua_state, 2, 0));
-    if (!plhs || !prhs)
-    {
-        throw Exception("LuaExtend-matrix-multiply: null pointer");
-    }
-    else
-    {
-        Matrix* pm_ret = new Matrix();
-        (*pm_ret) = (*plhs) * (*prhs);
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "multiply", plhs && prhs, "null pointer");
 
-        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
-        luaPushLightUserData(plua_state, (void*)pm_ret);
-    }
+    Matrix* pm_ret = new Matrix();
+    (*pm_ret) = (*plhs) * (*prhs);
+
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
 
     return 1;
 }
@@ -349,66 +347,41 @@ static int multiply(lua_State* plua_state)
 static int getRow(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-multiply: null pointer");
-    }
-    else
-    {
-        int row = luaGetInteger(plua_state, 2, -1);
-        if (row >=0 && row <(int)(pm->rows()))
-        {
-            size_t i;
-            for (i=0; i<pm->cols(); ++i)
-                luaPushDouble(plua_state, (*pm)(row, i));
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "getRow", pm, "null pointer");
 
-            return (int)i;
-        }
-        else
-        {
-            throw Exception("LuaExtend-matrix-getCol: col number error");
-        }
-    }
+    int row = luaGetInteger(plua_state, 2, -1);
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "getRow", row >=0 && row <(int)(pm->rows()), "row number error");
+
+    size_t i;
+    for (i=0; i<pm->cols(); ++i)
+        luaPushDouble(plua_state, (*pm)(row, i));
+
+    return (int)i;
 }
 
 static int getCol(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-multiply: null pointer");
-    }
-    else
-    {
-        int col = luaGetInteger(plua_state, 2, -1);
-        if (col >=0 && col <(int)(pm->cols()))
-        {
-            size_t i;
-            for (i=0; i<pm->rows(); ++i)
-                luaPushDouble(plua_state, (*pm)(i, col));
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "getCol", pm, "null pointer");
 
-            return (int)i;
-        }
-        else
-        {
-            throw Exception("LuaExtend-matrix-getCol: col number error");
-        }
-    }
+    int col = luaGetInteger(plua_state, 2, -1);
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "getCol", col >=0 && col <(int)(pm->cols()), "col number error");
+
+    size_t i;
+    for (i=0; i<pm->rows(); ++i)
+        luaPushDouble(plua_state, (*pm)(i, col));
+
+    return (int)i;
 }
 
 static int clone(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pm)
-    {
-        throw Exception("LuaExtend-matrix-subtract: null pointer");
-    }
-    else
-    {
-        Matrix* pm_ret = new Matrix(*pm);
-        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
-        luaPushLightUserData(plua_state, (void*)pm_ret);
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibMatrix, "clone", pm, "null pointer");
+
+    Matrix* pm_ret = new Matrix(*pm);
+    LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+    luaPushLightUserData(plua_state, (void*)pm_ret);
 
     return 1;
 }
@@ -434,6 +407,10 @@ static const u_luaL_Reg matrix_lib[] =
     {"transpose", transpose},
     {"conjugate", conjugate},
     {"adjoint", adjoint},
+    {"addScalar", addScalar},
+    {"subtractScalar", subtractScalar},
+    {"multiplyScalar", multiplyScalar},
+    {"divideScalar", divideScalar},
     {"add", add},
     {"subtract", subtract},
     {"multiply", multiply},

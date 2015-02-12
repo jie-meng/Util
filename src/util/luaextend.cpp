@@ -15,6 +15,10 @@
 namespace util
 {
 
+using namespace std;
+
+const string kLuaExtendTag = "LuaExtend";
+
 //LuaExtender
 void LuaExtender::addLib(const std::string& name, LuaCFunc lib_create_func)
 {
@@ -158,5 +162,18 @@ void luaExecutor(int argc, char* argv[])
         td.kill();
     }
 }
+
+void luaExtendError(lua_State* plua_state, const std::string& lib, const std::string& func, const std::string& msg)
+{
+    string message = strFormat("[%s - %s.%s] %s", kLuaExtendTag.c_str(), lib.c_str(), func.c_str(), msg.c_str());
+    luaError(plua_state, message);
+}
+
+void luaExtendAssert(lua_State* plua_state, const std::string& lib, const std::string& func, bool assertion, const std::string& msg)
+{
+    string message = strFormat("[%s - %s.%s] %s", kLuaExtendTag.c_str(), lib.c_str(), func.c_str(), msg.c_str());
+    luaAssert(plua_state, assertion, message);
+}
+
 
 } // namespace util

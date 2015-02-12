@@ -60,7 +60,8 @@ void luaPop(lua_State* plua_state, int index);
 int luaGetTop(lua_State* plua_state);
 void luaGetGlobal(lua_State* plua_state, const std::string& name);
 int luaCallFunc(lua_State* plua_state, int nargs, int nrets);
-int luaAssert(lua_State* plua_state, bool assertion, const std::string& str);
+void luaAssert(lua_State* plua_state, bool assertion, const std::string& str);
+void luaError(lua_State* plua_state, const std::string& str);
 
 std::string luaGetError(lua_State* plua_state, int err);
 int luaParseLine(lua_State* plua_state, const std::string& line, std::string& error_str);

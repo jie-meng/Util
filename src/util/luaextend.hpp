@@ -46,6 +46,10 @@ private:
 
 void luaExecutor(int argc, char* argv[]);
 
+void luaExtendError(lua_State* plua_state, const std::string& lib, const std::string& func, const std::string& msg);
+
+void luaExtendAssert(lua_State* plua_state, const std::string& lib, const std::string& func, bool assertion, const std::string& msg);
+
 } // namespace util
 
 #endif // UTIL_LUAEXTEND_HPP
