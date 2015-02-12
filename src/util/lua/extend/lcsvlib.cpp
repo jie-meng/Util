@@ -34,10 +34,9 @@ static int destroy(lua_State* plua_state)
 static int read(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pcsv)
-        throw Exception("LuaExtend-csv-read: null pointer");
-    else
-        luaPushBoolean(plua_state, pcsv->read(luaGetString(plua_state, 2, "")));
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "read", pcsv, "null pointer");
+
+    luaPushBoolean(plua_state, pcsv->read(luaGetString(plua_state, 2, "")));
 
     return 1;
 }
@@ -45,18 +44,13 @@ static int read(lua_State* plua_state)
 static int write(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pcsv)
-    {
-        throw Exception("LuaExtend-csv-write: null pointer");
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "write", pcsv, "null pointer");
+
+    string file = luaGetString(plua_state, 2, "");
+    if (file == "")
+        luaPushBoolean(plua_state, pcsv->write());
     else
-    {
-        string file = luaGetString(plua_state, 2, "");
-        if (file == "")
-            luaPushBoolean(plua_state, pcsv->write());
-        else
-            luaPushBoolean(plua_state, pcsv->write(file));
-    }
+        luaPushBoolean(plua_state, pcsv->write(file));
 
     return 1;
 }
@@ -64,10 +58,9 @@ static int write(lua_State* plua_state)
 static int empty(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pcsv)
-        throw Exception("LuaExtend-csv-empty: null pointer");
-    else
-        luaPushBoolean(plua_state, pcsv->empty());
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "empty", pcsv, "null pointer");
+
+    luaPushBoolean(plua_state, pcsv->empty());
 
     return 1;
 }
@@ -81,24 +74,22 @@ static int clear(lua_State* plua_state)
     return 0;
 }
 
-static int getTotalRows(lua_State* plua_state)
+static int rows(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pcsv)
-        throw Exception("LuaExtend-csv-getTotalRows: null pointer");
-    else
-        luaPushInteger(plua_state, pcsv->getTotalRows());
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "rows", pcsv, "null pointer");
+
+    luaPushInteger(plua_state, pcsv->rows());
 
     return 1;
 }
 
-static int getTotalCols(lua_State* plua_state)
+static int cols(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pcsv)
-        throw Exception("LuaExtend-csv-getTotalCols: null pointer");
-    else
-        luaPushInteger(plua_state, pcsv->getTotalCols());
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "cols", pcsv, "null pointer");
+
+    luaPushInteger(plua_state, pcsv->cols());
 
     return 1;
 }
@@ -106,20 +97,13 @@ static int getTotalCols(lua_State* plua_state)
 static int getCellValue(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pcsv)
-    {
-        throw Exception("LuaExtend-csv-getCellValue: null pointer");
-    }
-    else
-    {
-        int row = luaGetInteger(plua_state, 2, -1);
-        int col = luaGetInteger(plua_state, 3, -1);
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "getCellValue", pcsv, "null pointer");
 
-        if (row < 0 || col <0)
-            luaPushString(plua_state, "");
-        else
-            luaPushString(plua_state, pcsv->getCellValue(row, col));
-    }
+    int row = luaGetInteger(plua_state, 2, -1);
+    int col = luaGetInteger(plua_state, 3, -1);
+
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "getCellValue", row>=0 && row<(int)pcsv->rows() && col>=0 && col<(int)pcsv->cols(), "sub-index error");
+    luaPushString(plua_state, pcsv->getCellValue(row, col));
 
     return 1;
 }
@@ -127,20 +111,15 @@ static int getCellValue(lua_State* plua_state)
 static int setCellValue(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pcsv)
-    {
-        throw Exception("LuaExtend-csv-setCellValue: null pointer");
-    }
-    else
-    {
-        int row = luaGetInteger(plua_state, 2, -1);
-        int col = luaGetInteger(plua_state, 3, -1);
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "setCellValue", pcsv, "null pointer");
 
-        if (row < 0 || col <0)
-            luaPushBoolean(plua_state, false);
-        else
-            luaPushBoolean(plua_state, pcsv->setCellValue(row, col, luaGetString(plua_state, 4, "")));
-    }
+    int row = luaGetInteger(plua_state, 2, -1);
+    int col = luaGetInteger(plua_state, 3, -1);
+
+    if (row>=0 && row<(int)pcsv->rows() && col>=0 && col<(int)pcsv->cols())
+        luaPushBoolean(plua_state, pcsv->setCellValue(row, col, luaGetString(plua_state, 4, "")));
+    else
+        luaPushBoolean(plua_state, false);
 
     return 1;
 }
@@ -148,25 +127,20 @@ static int setCellValue(lua_State* plua_state)
 static int addRow(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pcsv)
+    luaExtendAssert(plua_state, kLuaExtendLibCsv, "addRow", pcsv, "null pointer");
+
+    int count = luaGetTop(plua_state);
+    if (count > 1)
     {
-        throw Exception("LuaExtend-csv-addRow: null pointer");
+        vector<string> vec;
+        for (int i=2; i<=count; ++i)
+            vec.push_back(luaGetString(plua_state, i, ""));
+
+        luaPushBoolean(plua_state, pcsv->addRow(vec));
     }
     else
     {
-        int count = luaGetTop(plua_state);
-        if (count > 1)
-        {
-            vector<string> vec;
-            for (int i=2; i<=count; ++i)
-                vec.push_back(luaGetString(plua_state, i, ""));
-
-            luaPushBoolean(plua_state, pcsv->addRow(vec));
-        }
-        else
-        {
-            luaPushBoolean(plua_state, false);
-        }
+        luaPushBoolean(plua_state, false);
     }
 
     return 1;
@@ -180,8 +154,8 @@ static const u_luaL_Reg csv_lib[] =
     {"write", write},
     {"empty", empty},
     {"clear", clear},
-    {"getTotalRows", getTotalRows},
-    {"getTotalCols", getTotalCols},
+    {"rows", rows},
+    {"cols", cols},
     {"getCellValue", getCellValue},
     {"setCellValue", setCellValue},
     {"addRow", addRow},

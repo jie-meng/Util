@@ -77,7 +77,7 @@ struct Csv::CsvImpl
                 spstrvec->push_back( ss.str() );
                 ss.str("");
 
-                if (!empty() && spstrvec->size() != getTotalCols())
+                if (!empty() && spstrvec->size() != cols())
                 {
                     clear();
                     return false;
@@ -149,12 +149,12 @@ struct Csv::CsvImpl
         return matrix_.empty();
     }
 
-    size_t getTotalRows() const
+    size_t rows() const
     {
         return matrix_.size();
     }
 
-    size_t getTotalCols() const
+    size_t cols() const
     {
         if (matrix_.empty())
             return 0;
@@ -164,7 +164,7 @@ struct Csv::CsvImpl
 
     std::string getCellValue(size_t row, size_t col) const
     {
-        if (row < getTotalRows() && col < getTotalCols())
+        if (row < rows() && col < cols())
             return matrix_[row]->at(col);
         else
             return "";
@@ -172,7 +172,7 @@ struct Csv::CsvImpl
 
     bool setCellValue(size_t row, size_t col, const std::string& value)
     {
-        if (row < getTotalRows() && col < getTotalCols())
+        if (row < rows() && col < cols())
         {
             matrix_[row]->at(col) = value;
             return true;
@@ -196,10 +196,10 @@ struct Csv::CsvImpl
         else
         {
             vector<string>* pvec = NULL;
-            if (vec.size() < getTotalCols())
+            if (vec.size() < cols())
             {
-                pvec = new vector<string>(getTotalCols());
-                for (size_t i=0; i<getTotalCols(); ++i)
+                pvec = new vector<string>(cols());
+                for (size_t i=0; i<cols(); ++i)
                 {
                     if (i < vec.size())
                         (*pvec)[i] = vec[i];
@@ -209,7 +209,7 @@ struct Csv::CsvImpl
             }
             else
             {
-                pvec = new vector<string>(vec.begin(), vec.begin() + getTotalCols());
+                pvec = new vector<string>(vec.begin(), vec.begin() + cols());
             }
 
             matrix_.push_back(SpStrVec(pvec));
@@ -266,14 +266,14 @@ bool Csv::empty() const
     return pimpl_->empty();
 }
 
-size_t Csv::getTotalRows() const
+size_t Csv::rows() const
 {
-    return pimpl_->getTotalRows();
+    return pimpl_->rows();
 }
 
-size_t Csv::getTotalCols() const
+size_t Csv::cols() const
 {
-    return pimpl_->getTotalCols();
+    return pimpl_->cols();
 }
 
 std::string Csv::getCellValue(size_t row, size_t col) const

@@ -18,8 +18,8 @@ public:
     bool write();
     void clear();
     bool empty() const;
-    size_t getTotalRows() const;
-    size_t getTotalCols() const;
+    size_t rows() const;
+    size_t cols() const;
     std::string getCellValue(size_t row, size_t col) const;
     bool setCellValue(size_t row, size_t col, const std::string& value);
 
