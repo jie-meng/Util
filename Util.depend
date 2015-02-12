@@ -40143,7 +40143,7 @@
 	"time.hpp"
 	"net.hpp"
 
-1423648015 source:c:\users\jmeng\workspace\git\util\src\main.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\main.cpp
 	<iostream>
 	<map>
 	<list>
@@ -40202,7 +40202,7 @@
 
 1423618330 c:\users\jmeng\workspace\git\util\src\util\base\out.hpp
 
-1423618330 c:\users\jmeng\workspace\git\util\src\util\base\baseclass.hpp
+1423703350 c:\users\jmeng\workspace\git\util\src\util\base\baseclass.hpp
 
 1423618330 c:\users\jmeng\workspace\git\util\src\util\file.hpp
 	"string.hpp"
@@ -40265,17 +40265,18 @@
 	<typeinfo>
 	<cassert>
 
-1423618332 c:\users\jmeng\workspace\git\util\src\util\unittest.hpp
+1423703332 c:\users\jmeng\workspace\git\util\src\util\unittest.hpp
 	<exception>
 	<vector>
 	<map>
 	<typeinfo>
 	"iterator.hpp"
 
-1423618332 c:\users\jmeng\workspace\git\util\src\util\luax.hpp
+1423702707 c:\users\jmeng\workspace\git\util\src\util\luax.hpp
 	<vector>
 	"cmdline.hpp"
 	"any.hpp"
+	"typeinfo.hpp"
 
 1423618330 c:\users\jmeng\workspace\git\util\src\util\any.hpp
 	<algorithm>
@@ -40361,14 +40362,14 @@
 1423618330 c:\users\jmeng\workspace\git\util\src\util\lua\extend\lfilelib.hpp
 	<string>
 
-1423618330 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lmemorylib.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lmemorylib.cpp
 	"lmemorylib.hpp"
 	"util/luaextend.hpp"
 
 1423618330 c:\users\jmeng\workspace\git\util\src\util\lua\extend\lmemorylib.hpp
 	<string>
 
-1423618330 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lnetlib.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lnetlib.cpp
 	"lnetlib.hpp"
 	"util/luaextend.hpp"
 	"util/net.hpp"
@@ -40376,7 +40377,7 @@
 1423618330 c:\users\jmeng\workspace\git\util\src\util\lua\extend\lnetlib.hpp
 	<string>
 
-1423618330 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lprocesslib.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lprocesslib.cpp
 	"lprocesslib.hpp"
 	"util/luaextend.hpp"
 	"util/process.hpp"
@@ -40385,7 +40386,7 @@
 1423618330 c:\users\jmeng\workspace\git\util\src\util\lua\extend\lprocesslib.hpp
 	<string>
 
-1423618330 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lregexlib.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lregexlib.cpp
 	"lregexlib.hpp"
 	"util/luaextend.hpp"
 	"util/regex.hpp"
@@ -40393,7 +40394,7 @@
 1423618330 c:\users\jmeng\workspace\git\util\src\util\lua\extend\lregexlib.hpp
 	<string>
 
-1423618330 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lthreadlib.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lthreadlib.cpp
 	"lthreadlib.hpp"
 	<vector>
 	"util/luaextend.hpp"
@@ -40940,7 +40941,7 @@
 	"lstate.h"
 	"lzio.h"
 
-1423618332 source:c:\users\jmeng\workspace\git\util\src\util\luaextend.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\util\luaextend.cpp
 	"luaextend.hpp"
 	"lua/src/lua.hpp"
 	"lexicalcast.hpp"
@@ -40953,13 +40954,14 @@
 	"lua/extend/lfilelib.hpp"
 	"lua/extend/lprocesslib.hpp"
 	"lua/extend/lcsvlib.hpp"
+	"lua/extend/lmatrixlib.hpp"
 
 1423618332 c:\users\jmeng\workspace\git\util\src\util\lua\src\lua.hpp
 	"lua.h"
 	"lualib.h"
 	"lauxlib.h"
 
-1423618332 source:c:\users\jmeng\workspace\git\util\src\util\luax.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\util\luax.cpp
 	"luax.hpp"
 	<map>
 	<set>
@@ -41093,7 +41095,7 @@
 1423029100 source:c:\users\jmeng\workspace\git\util\src\util\csv\csv_parser.cpp
 	"csv_parser.hpp"
 
-1423618330 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lcsvlib.cpp
+1423704726 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lcsvlib.cpp
 	"lcsvlib.hpp"
 	"lfilelib.hpp"
 	"util/luaextend.hpp"
@@ -43202,11 +43204,11 @@
 1423618356 c:\users\jmeng\workspace\git\util\src\util\eigen\src\eigenvalues\selfadjointeigensolver_mkl.h
 	"Eigen/src/Core/util/MKL_support.h"
 
-1423649200 source:c:\users\jmeng\workspace\git\util\src\util\matrix.cpp
+1423702707 source:c:\users\jmeng\workspace\git\util\src\util\matrix.cpp
 	"matrix.hpp"
 	"Eigen/Dense"
 
-1423649194 c:\users\jmeng\workspace\git\util\src\util\matrix.hpp
+1423702707 c:\users\jmeng\workspace\git\util\src\util\matrix.hpp
 	"base.hpp"
 	<vector>
 
@@ -43954,4 +43956,13 @@
 
 1423670823 d:\projects\git\util\src\util\lua\extend\lmatrixlib.hpp
 	<string>
+
+1423702707 c:\users\jmeng\workspace\git\util\src\util\lua\extend\lmatrixlib.hpp
+	<string>
+
+1423704604 source:c:\users\jmeng\workspace\git\util\src\util\lua\extend\lmatrixlib.cpp
+	"lmatrixlib.hpp"
+	"lfilelib.hpp"
+	"util/luaextend.hpp"
+	"util/matrix.hpp"
 

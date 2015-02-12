@@ -15,10 +15,7 @@ static int create(lua_State* plua_state)
     string enclosure = luaGetString(plua_state, 3, "\"");
 
     Csv* pcsv = new Csv(file, delimiter.at(0), enclosure.at(0));
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pcsv, deleteVoid<Csv>);
     LuaHeapRecyclerManager::getInstance().addHeapObject<Csv>(plua_state, (void*)pcsv);
-
     luaPushLightUserData(plua_state, (void*)pcsv);
 
     return 1;
@@ -27,9 +24,7 @@ static int create(lua_State* plua_state)
 static int destroy(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
-
     LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)pcsv);
-
     if (pcsv)
         delete pcsv;
 
@@ -40,7 +35,7 @@ static int read(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pcsv)
-        luaPushBoolean(plua_state, false);
+        throw Exception("LuaExtend-csv-read: null pointer");
     else
         luaPushBoolean(plua_state, pcsv->read(luaGetString(plua_state, 2, "")));
 
@@ -52,7 +47,7 @@ static int write(lua_State* plua_state)
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pcsv)
     {
-            luaPushBoolean(plua_state, false);
+        throw Exception("LuaExtend-csv-write: null pointer");
     }
     else
     {
@@ -70,7 +65,7 @@ static int empty(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pcsv)
-        luaPushBoolean(plua_state, false);
+        throw Exception("LuaExtend-csv-empty: null pointer");
     else
         luaPushBoolean(plua_state, pcsv->empty());
 
@@ -90,7 +85,7 @@ static int getTotalRows(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pcsv)
-        luaPushInteger(plua_state, -1);
+        throw Exception("LuaExtend-csv-getTotalRows: null pointer");
     else
         luaPushInteger(plua_state, pcsv->getTotalRows());
 
@@ -101,7 +96,7 @@ static int getTotalCols(lua_State* plua_state)
 {
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pcsv)
-        luaPushInteger(plua_state, -1);
+        throw Exception("LuaExtend-csv-getTotalCols: null pointer");
     else
         luaPushInteger(plua_state, pcsv->getTotalCols());
 
@@ -113,7 +108,7 @@ static int getCellValue(lua_State* plua_state)
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pcsv)
     {
-        luaPushString(plua_state, "");
+        throw Exception("LuaExtend-csv-getCellValue: null pointer");
     }
     else
     {
@@ -134,7 +129,7 @@ static int setCellValue(lua_State* plua_state)
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pcsv)
     {
-        luaPushBoolean(plua_state, false);
+        throw Exception("LuaExtend-csv-setCellValue: null pointer");
     }
     else
     {
@@ -155,7 +150,7 @@ static int addRow(lua_State* plua_state)
     Csv* pcsv = static_cast<Csv*>(luaGetLightUserData(plua_state, 1, 0));
     if (!pcsv)
     {
-        luaPushBoolean(plua_state, false);
+        throw Exception("LuaExtend-csv-addRow: null pointer");
     }
     else
     {
