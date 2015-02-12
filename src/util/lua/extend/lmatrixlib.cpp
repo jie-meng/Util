@@ -396,6 +396,23 @@ static int getCol(lua_State* plua_state)
     }
 }
 
+static int clone(lua_State* plua_state)
+{
+    Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
+    if (!pm)
+    {
+        throw Exception("LuaExtend-matrix-subtract: null pointer");
+    }
+    else
+    {
+        Matrix* pm_ret = new Matrix(*pm);
+        LuaHeapRecyclerManager::getInstance().addHeapObject<Matrix>(plua_state, (void*)pm_ret);
+        luaPushLightUserData(plua_state, (void*)pm_ret);
+    }
+
+    return 1;
+}
+
 static const u_luaL_Reg matrix_lib[] =
 {
     {"create", create},
@@ -422,6 +439,7 @@ static const u_luaL_Reg matrix_lib[] =
     {"multiply", multiply},
     {"getRow", getRow},
     {"getCol", getCol},
+    {"clone", clone},
 
     {0, 0}
 };
