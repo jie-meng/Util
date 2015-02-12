@@ -8,14 +8,11 @@ typedef Memory<char> ByteMemory;
 
 static int create(lua_State* plua_state)
 {
-    luaAssert(plua_state, luaGetTop(plua_state) > 0 &&
-              LuaNumber == luaGetType(plua_state, 1), "create memory with incorrect size");
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "create",
+        luaGetTop(plua_state) > 0 && LuaNumber == luaGetType(plua_state, 1), "create memory with incorrect size");
 
     size_t memory_size = luaGetInteger(plua_state, 1);
-
     ByteMemory* pmemory = new ByteMemory(memory_size);
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmemory, deleteVoid<ByteMemory>);
     LuaHeapRecyclerManager::getInstance().addHeapObject<ByteMemory>(plua_state, (void*)pmemory);
 
     luaPushLightUserData(plua_state, (void*)pmemory);
@@ -26,7 +23,6 @@ static int create(lua_State* plua_state)
 static int destroy(lua_State* plua_state)
 {
     ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
-
     LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)pmemory);
 
     if (pmemory)
@@ -38,10 +34,9 @@ static int destroy(lua_State* plua_state)
 static int size(lua_State* plua_state)
 {
     ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmemory)
-        luaPushInteger(plua_state, 0);
-    else
-        luaPushInteger(plua_state, pmemory->size());
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "size", pmemory, "null pointer");
+
+    luaPushInteger(plua_state, pmemory->size());
 
     return 1;
 }
@@ -49,10 +44,9 @@ static int size(lua_State* plua_state)
 static int buf(lua_State* plua_state)
 {
     ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmemory)
-        luaPushNil(plua_state);
-    else
-        luaPushLightUserData(plua_state, pmemory->buf());
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "buf", pmemory, "null pointer");
+
+    luaPushLightUserData(plua_state, pmemory->buf());
 
     return 1;
 }
@@ -60,8 +54,7 @@ static int buf(lua_State* plua_state)
 static int clear(lua_State* plua_state)
 {
     ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmemory)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "clear", pmemory, "null pointer");
 
     pmemory->clear();
 
@@ -70,13 +63,8 @@ static int clear(lua_State* plua_state)
 
 static int offset(lua_State* plua_state)
 {
-    luaAssert(plua_state, 2 == luaGetTop(plua_state), "[offset] param cnt should be 2");
-    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if (!p)
-    {
-        luaPushLightUserData(plua_state, NULL);
-        return 1;
-    }
+    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "offset", p, "address is null");
 
     luaPushLightUserData(plua_state, (void*)(p + luaGetInteger(plua_state, 2, 0)));
 
@@ -85,13 +73,10 @@ static int offset(lua_State* plua_state)
 
 static int memstr(lua_State* plua_state)
 {
-    luaAssert(plua_state, 2 == luaGetTop(plua_state), "[memstr] param cnt should be 2");
-    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if (!p)
-    {
-        luaPushString(plua_state, "");
-        return 1;
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memstr", luaGetTop(plua_state) == 2,
+        "parameter count should be 2");
+    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memstr", p, "address is null");
 
     luaPushString(plua_state, memoryStr(p, luaGetInteger(plua_state, 2)));
 
@@ -100,13 +85,8 @@ static int memstr(lua_State* plua_state)
 
 static int tostring(lua_State* plua_state)
 {
-    luaAssert(plua_state, 1 == luaGetTop(plua_state), "[tostring] param cnt should be 1");
-    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if (!p)
-    {
-        luaPushString(plua_state, "");
-        return 1;
-    }
+    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "tostring", p, "c-string address is null");
 
     luaPushString(plua_state, toString(p));
 
@@ -115,10 +95,10 @@ static int tostring(lua_State* plua_state)
 
 static int memset(lua_State* plua_state)
 {
-    luaAssert(plua_state, 3 == luaGetTop(plua_state), "[memset] param cnt should be 3");
-    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if(!p)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memset", 3 == luaGetTop(plua_state),
+        "parameter count should be 3");
+    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memset", p, "address is null");
 
     ::memset(p, luaGetInteger(plua_state, 2), luaGetInteger(plua_state, 3));
 
@@ -127,42 +107,45 @@ static int memset(lua_State* plua_state)
 
 static int memcpy(lua_State* plua_state)
 {
-    luaAssert(plua_state, 3 == luaGetTop(plua_state), "[memcpy] param cnt should be 3");
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memcpy", 3 == luaGetTop(plua_state),
+        "parameter count should be 3");
     char* p1 = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if (!p1)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memcpy", p1,
+        "dest address is null");
 
     char* p2 = static_cast<char*>(luaGetLightUserData(plua_state, 2));
-    if (!p2)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memcpy", p2,
+        "src address is null");
 
-    ::memcpy(p1, p2, luaGetInteger(plua_state, 3));
+    ::memcpy(p1, p2, luaGetInteger(plua_state, 3, 0));
 
     return 0;
 }
 
 static int memmove(lua_State* plua_state)
 {
-    luaAssert(plua_state, 3 == luaGetTop(plua_state), "[memmove] param cnt should be 3");
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memmove", 3 == luaGetTop(plua_state),
+        "parameter count should be 3");
     char* p1 = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if (!p1)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memmove", p1,
+        "dest address is null");
 
     char* p2 = static_cast<char*>(luaGetLightUserData(plua_state, 2));
-    if (!p2)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "memmove", p2,
+        "src address is null");
 
-    ::memmove(p1, p2, luaGetInteger(plua_state, 3));
+    ::memmove(p1, p2, luaGetInteger(plua_state, 3, 0));
 
     return 0;
 }
 
 static int strcpy(lua_State* plua_state)
 {
-    luaAssert(plua_state, 2 == luaGetTop(plua_state), "[strcpy] param cnt should be 2");
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "strcpy", 2 == luaGetTop(plua_state),
+        "parameter count should be 2");
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if (!p)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "strcpy", p,
+        "dest address is null");
 
     if(LuaLightUserData == luaGetType(plua_state, 2))
     {
@@ -182,10 +165,11 @@ static int strcpy(lua_State* plua_state)
 template <typename T>
 static int setUint(lua_State* plua_state)
 {
-    luaAssert(plua_state, 2 == luaGetTop(plua_state), "[setUint] param cnt should be 2");
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "setUnit", 2 == luaGetTop(plua_state),
+        "parameter count should be 2");
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if (!p)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "setUnit", p,
+        "address is null");
 
     *(T*)p = luaGetInteger(plua_state, 2);
 
@@ -195,9 +179,11 @@ static int setUint(lua_State* plua_state)
 template <typename T>
 static int getUint(lua_State* plua_state)
 {
-    luaAssert(plua_state, 1 == luaGetTop(plua_state), "[getUint] param cnt should be 1");
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "getUnit", 1 == luaGetTop(plua_state),
+        "parameter count should be 1");
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    luaAssert(plua_state, NULL != p, "[getUint] memory address is NULL");
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "getUnit", p,
+        "address is null");
 
     luaPushInteger(plua_state, *(T*)p);
 
@@ -206,15 +192,17 @@ static int getUint(lua_State* plua_state)
 
 static int setBytes(lua_State* plua_state)
 {
-    luaAssert(plua_state, luaGetTop(plua_state) > 1, "[setMemBytes] param cnt should not less than 2");
-    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    if (!p)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "setBytes", luaGetTop(plua_state) > 1,
+        "parameter count should not less than 2");
+    char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
+    luaExtendAssert(plua_state, kLuaExtendLibMemory, "setBytes", p,
+        "address is null");
 
     for (size_t i=2; i<=(size_t)luaGetTop(plua_state); ++i)
     {
+        luaExtendAssert(plua_state, kLuaExtendLibMemory, "setBytes", luaGetInteger(plua_state, i) <= 255,
+            "byte value should not be more than 255");
         char* p1 = p + (i-2);
-        luaAssert(plua_state, luaGetInteger(plua_state, i) <= 255, "[setMemBytes] byte value should not be more than 255");
         *(uint8_t*)(p1) = luaGetInteger(plua_state, i);
     }
 

@@ -41137,7 +41137,7 @@
 	"lauxlib.h"
 	"lualib.h"
 
-1423575900 source:/home/joshua/workspace/git/Util/src/main.cpp
+1423745564 source:/home/joshua/workspace/git/Util/src/main.cpp
 	<iostream>
 	<map>
 	<list>
@@ -41160,7 +41160,7 @@
 	"util/any.hpp"
 	"util/trace.hpp"
 	"util/csv.hpp"
-	"util/Eigen/Core"
+	"util/matrix.hpp"
 
 1423321524 /home/joshua/workspace/git/Util/src/util/thread.hpp
 	"base.hpp"
@@ -41196,7 +41196,7 @@
 
 1423321524 /home/joshua/workspace/git/Util/src/util/base/out.hpp
 
-1423321524 /home/joshua/workspace/git/Util/src/util/base/baseclass.hpp
+1423745564 /home/joshua/workspace/git/Util/src/util/base/baseclass.hpp
 
 1423321524 /home/joshua/workspace/git/Util/src/util/file.hpp
 	"string.hpp"
@@ -41210,7 +41210,7 @@
 1423321524 /home/joshua/workspace/git/Util/src/util/net.hpp
 	"base.hpp"
 
-1423321524 /home/joshua/workspace/git/Util/src/util/iterator.hpp
+1423745564 /home/joshua/workspace/git/Util/src/util/iterator.hpp
 	"base.hpp"
 
 1423321524 /home/joshua/workspace/git/Util/src/util/collection.hpp
@@ -41259,24 +41259,25 @@
 	<typeinfo>
 	<cassert>
 
-1423321524 /home/joshua/workspace/git/Util/src/util/unittest.hpp
+1423745564 /home/joshua/workspace/git/Util/src/util/unittest.hpp
 	<exception>
 	<vector>
 	<map>
 	<typeinfo>
 	"iterator.hpp"
 
-1423321524 /home/joshua/workspace/git/Util/src/util/luax.hpp
+1423745564 /home/joshua/workspace/git/Util/src/util/luax.hpp
 	<vector>
 	"cmdline.hpp"
 	"any.hpp"
+	"typeinfo.hpp"
 
 1423321524 /home/joshua/workspace/git/Util/src/util/any.hpp
 	<algorithm>
 	<typeinfo>
 	"base.hpp"
 
-1423321524 /home/joshua/workspace/git/Util/src/util/luaextend.hpp
+1423745564 /home/joshua/workspace/git/Util/src/util/luaextend.hpp
 	"luax.hpp"
 
 1423321524 /home/joshua/workspace/git/Util/src/util/trace.hpp
@@ -41309,7 +41310,7 @@
 	"util/time.hpp"
 	"../information.hpp"
 
-1423321524 /home/joshua/workspace/git/Util/src/util/csv.hpp
+1423745564 /home/joshua/workspace/git/Util/src/util/csv.hpp
 	"base.hpp"
 	<vector>
 
@@ -41335,7 +41336,7 @@
 	"collection.hpp"
 	"regex.hpp"
 
-1423573517 source:/home/joshua/workspace/git/Util/src/util/csv.cpp
+1423745564 source:/home/joshua/workspace/git/Util/src/util/csv.cpp
 	"csv.hpp"
 	<vector>
 	<fstream>
@@ -41360,7 +41361,7 @@
 	"string.hpp"
 	<cmath>
 
-1423573517 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lcsvlib.cpp
+1423745564 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lcsvlib.cpp
 	"lcsvlib.hpp"
 	"lfilelib.hpp"
 	"util/luaextend.hpp"
@@ -41377,14 +41378,14 @@
 	"util/luaextend.hpp"
 	"util/file.hpp"
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lmemorylib.cpp
+1423749476 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lmemorylib.cpp
 	"lmemorylib.hpp"
 	"util/luaextend.hpp"
 
 1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lmemorylib.hpp
 	<string>
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lnetlib.cpp
+1423754230 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lnetlib.cpp
 	"lnetlib.hpp"
 	"util/luaextend.hpp"
 	"util/net.hpp"
@@ -41392,7 +41393,7 @@
 1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lnetlib.hpp
 	<string>
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lprocesslib.cpp
+1423749827 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lprocesslib.cpp
 	"lprocesslib.hpp"
 	"util/luaextend.hpp"
 	"util/process.hpp"
@@ -41401,7 +41402,7 @@
 1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lprocesslib.hpp
 	<string>
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lregexlib.cpp
+1423749906 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lregexlib.cpp
 	"lregexlib.hpp"
 	"util/luaextend.hpp"
 	"util/regex.hpp"
@@ -41409,7 +41410,7 @@
 1423321524 /home/joshua/workspace/git/Util/src/util/lua/extend/lregexlib.hpp
 	<string>
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lthreadlib.cpp
+1423745564 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lthreadlib.cpp
 	"lthreadlib.hpp"
 	<vector>
 	"util/luaextend.hpp"
@@ -41967,7 +41968,7 @@
 	"lstate.h"
 	"lzio.h"
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/luaextend.cpp
+1423745564 source:/home/joshua/workspace/git/Util/src/util/luaextend.cpp
 	"luaextend.hpp"
 	"lua/src/lua.hpp"
 	"lexicalcast.hpp"
@@ -41980,13 +41981,14 @@
 	"lua/extend/lfilelib.hpp"
 	"lua/extend/lprocesslib.hpp"
 	"lua/extend/lcsvlib.hpp"
+	"lua/extend/lmatrixlib.hpp"
 
 1423321524 /home/joshua/workspace/git/Util/src/util/lua/src/lua.hpp
 	"lua.h"
 	"lualib.h"
 	"lauxlib.h"
 
-1423321524 source:/home/joshua/workspace/git/Util/src/util/luax.cpp
+1423745564 source:/home/joshua/workspace/git/Util/src/util/luax.cpp
 	"luax.hpp"
 	<map>
 	<set>
@@ -43965,4 +43967,315 @@
 	"lfilelib.hpp"
 	"util/luaextend.hpp"
 	"util/matrix.hpp"
+
+1423745564 /home/joshua/workspace/git/Util/src/util/matrix.hpp
+	"base.hpp"
+	<vector>
+
+1423745564 source:/home/joshua/workspace/git/Util/src/util/lua/extend/lmatrixlib.cpp
+	"lmatrixlib.hpp"
+	"lfilelib.hpp"
+	"util/luaextend.hpp"
+	"util/matrix.hpp"
+
+1423745564 /home/joshua/workspace/git/Util/src/util/lua/extend/lmatrixlib.hpp
+	<string>
+
+1423745564 source:/home/joshua/workspace/git/Util/src/util/matrix.cpp
+	"matrix.hpp"
+	"Eigen/Dense"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/Dense
+	"Core"
+	"LU"
+	"Cholesky"
+	"QR"
+	"SVD"
+	"Geometry"
+	"Eigenvalues"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/LU
+	"Core"
+	"src/Core/util/DisableStupidWarnings.h"
+	"src/misc/Solve.h"
+	"src/misc/Kernel.h"
+	"src/misc/Image.h"
+	"src/LU/FullPivLU.h"
+	"src/LU/PartialPivLU.h"
+	"src/LU/PartialPivLU_MKL.h"
+	"src/LU/Determinant.h"
+	"src/LU/Inverse.h"
+	"src/LU/arch/Inverse_SSE.h"
+	"src/Eigen2Support/LU.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/misc/Solve.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/misc/Kernel.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/misc/Image.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/LU/FullPivLU.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/LU/PartialPivLU.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/LU/PartialPivLU_MKL.h
+	"Eigen/src/Core/util/MKL_support.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/LU/Determinant.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/LU/Inverse.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/LU/arch/Inverse_SSE.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/LU.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/Cholesky
+	"Core"
+	"src/Core/util/DisableStupidWarnings.h"
+	"src/misc/Solve.h"
+	"src/Cholesky/LLT.h"
+	"src/Cholesky/LDLT.h"
+	"src/Cholesky/LLT_MKL.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Cholesky/LLT.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Cholesky/LDLT.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Cholesky/LLT_MKL.h
+	"Eigen/src/Core/util/MKL_support.h"
+	<iostream>
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/QR
+	"Core"
+	"src/Core/util/DisableStupidWarnings.h"
+	"Cholesky"
+	"Jacobi"
+	"Householder"
+	"src/misc/Solve.h"
+	"src/QR/HouseholderQR.h"
+	"src/QR/FullPivHouseholderQR.h"
+	"src/QR/ColPivHouseholderQR.h"
+	"src/QR/HouseholderQR_MKL.h"
+	"src/QR/ColPivHouseholderQR_MKL.h"
+	"src/Eigen2Support/QR.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+	"Eigenvalues"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/Jacobi
+	"Core"
+	"src/Core/util/DisableStupidWarnings.h"
+	"src/Jacobi/Jacobi.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Jacobi/Jacobi.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/Householder
+	"Core"
+	"src/Core/util/DisableStupidWarnings.h"
+	"src/Householder/Householder.h"
+	"src/Householder/HouseholderSequence.h"
+	"src/Householder/BlockHouseholder.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Householder/Householder.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Householder/HouseholderSequence.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Householder/BlockHouseholder.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/QR/HouseholderQR.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/QR/FullPivHouseholderQR.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/QR/ColPivHouseholderQR.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/QR/HouseholderQR_MKL.h
+	"Eigen/src/Core/util/MKL_support.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/QR/ColPivHouseholderQR_MKL.h
+	"Eigen/src/Core/util/MKL_support.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/QR.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/Eigenvalues
+	"Core"
+	"src/Core/util/DisableStupidWarnings.h"
+	"Cholesky"
+	"Jacobi"
+	"Householder"
+	"LU"
+	"Geometry"
+	"src/Eigenvalues/Tridiagonalization.h"
+	"src/Eigenvalues/RealSchur.h"
+	"src/Eigenvalues/EigenSolver.h"
+	"src/Eigenvalues/SelfAdjointEigenSolver.h"
+	"src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h"
+	"src/Eigenvalues/HessenbergDecomposition.h"
+	"src/Eigenvalues/ComplexSchur.h"
+	"src/Eigenvalues/ComplexEigenSolver.h"
+	"src/Eigenvalues/RealQZ.h"
+	"src/Eigenvalues/GeneralizedEigenSolver.h"
+	"src/Eigenvalues/MatrixBaseEigenvalues.h"
+	"src/Eigenvalues/RealSchur_MKL.h"
+	"src/Eigenvalues/ComplexSchur_MKL.h"
+	"src/Eigenvalues/SelfAdjointEigenSolver_MKL.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/Geometry
+	"Core"
+	"src/Core/util/DisableStupidWarnings.h"
+	"SVD"
+	"LU"
+	<limits>
+	"src/Geometry/OrthoMethods.h"
+	"src/Geometry/EulerAngles.h"
+	"src/Geometry/Homogeneous.h"
+	"src/Geometry/RotationBase.h"
+	"src/Geometry/Rotation2D.h"
+	"src/Geometry/Quaternion.h"
+	"src/Geometry/AngleAxis.h"
+	"src/Geometry/Transform.h"
+	"src/Geometry/Translation.h"
+	"src/Geometry/Scaling.h"
+	"src/Geometry/Hyperplane.h"
+	"src/Geometry/ParametrizedLine.h"
+	"src/Geometry/AlignedBox.h"
+	"src/Geometry/Umeyama.h"
+	"src/Geometry/arch/Geometry_SSE.h"
+	"src/Eigen2Support/Geometry/All.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/SVD
+	"QR"
+	"Householder"
+	"Jacobi"
+	"src/Core/util/DisableStupidWarnings.h"
+	"src/misc/Solve.h"
+	"src/SVD/JacobiSVD.h"
+	"src/SVD/JacobiSVD_MKL.h"
+	"src/SVD/UpperBidiagonalization.h"
+	"src/Eigen2Support/SVD.h"
+	"src/Core/util/ReenableStupidWarnings.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/SVD/JacobiSVD.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/SVD/JacobiSVD_MKL.h
+	"Eigen/src/Core/util/MKL_support.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/SVD/UpperBidiagonalization.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/SVD.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/OrthoMethods.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/EulerAngles.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/Homogeneous.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/RotationBase.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/Rotation2D.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/Quaternion.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/AngleAxis.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/Transform.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/Translation.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/Scaling.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/Hyperplane.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/ParametrizedLine.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/AlignedBox.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/Umeyama.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Geometry/arch/Geometry_SSE.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/All.h
+	<limits>
+	"RotationBase.h"
+	"Rotation2D.h"
+	"Quaternion.h"
+	"AngleAxis.h"
+	"Transform.h"
+	"Translation.h"
+	"Scaling.h"
+	"AlignedBox.h"
+	"Hyperplane.h"
+	"ParametrizedLine.h"
+	"RotationBase.h"
+	"Rotation2D.h"
+	"Quaternion.h"
+	"AngleAxis.h"
+	"Transform.h"
+	"Translation.h"
+	"Scaling.h"
+	"AlignedBox.h"
+	"Hyperplane.h"
+	"ParametrizedLine.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/RotationBase.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/Rotation2D.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/Quaternion.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/AngleAxis.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/Transform.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/Translation.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/Scaling.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/AlignedBox.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/Hyperplane.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigen2Support/Geometry/ParametrizedLine.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/Tridiagonalization.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/RealSchur.h
+	"./HessenbergDecomposition.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/HessenbergDecomposition.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/EigenSolver.h
+	"./RealSchur.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h
+	"./Tridiagonalization.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h
+	"./Tridiagonalization.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/ComplexSchur.h
+	"./HessenbergDecomposition.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/ComplexEigenSolver.h
+	"./ComplexSchur.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/RealQZ.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h
+	"./RealQZ.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/RealSchur_MKL.h
+	"Eigen/src/Core/util/MKL_support.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/ComplexSchur_MKL.h
+	"Eigen/src/Core/util/MKL_support.h"
+
+1421857601 /home/joshua/workspace/git/Util/src/util/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_MKL.h
+	"Eigen/src/Core/util/MKL_support.h"
 

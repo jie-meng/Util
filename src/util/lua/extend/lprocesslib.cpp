@@ -61,11 +61,8 @@ void outputFunc(std::string file, std::string func, const std::string& str, std:
 static int start(lua_State* plua_state)
 {
     Process* pprocess = static_cast<Process*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pprocess)
-    {
-        luaPushBoolean(plua_state, false);
-        return 1;
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibProcess, "start", pprocess,
+        "null pointer");
 
     std::vector<any> args;
     for (int i=8; i<=luaGetTop(plua_state); ++i)
@@ -88,8 +85,8 @@ static int start(lua_State* plua_state)
 static int kill(lua_State* plua_state)
 {
     Process* pprocess = static_cast<Process*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pprocess)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibProcess, "kill", pprocess,
+        "null pointer");
 
     pprocess->kill();
     return 0;
@@ -98,11 +95,8 @@ static int kill(lua_State* plua_state)
 static int input(lua_State* plua_state)
 {
     Process* pprocess = static_cast<Process*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pprocess)
-    {
-        luaPushBoolean(plua_state, false);
-        return 1;
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibProcess, "input", pprocess,
+        "null pointer");
 
     luaPushBoolean(plua_state, pprocess->input(luaGetString(plua_state, 2, "")));
     return 1;

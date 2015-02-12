@@ -36,10 +36,9 @@ static void threadFunc(std::string file, std::string func, std::vector<any> args
 
 static int create(lua_State* plua_state)
 {
-    luaAssert(plua_state, luaGetTop(plua_state) >= 2, "file and threadfunc needed");
-    luaAssert(plua_state,
-              LuaString == luaGetType(plua_state, 1) && LuaString == luaGetType(plua_state, 2),
-              "file and threadfunc must be string type");
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "create", luaGetTop(plua_state) >= 2, "file and threadfunc needed");
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "create",
+        LuaString == luaGetType(plua_state, 1) && LuaString == luaGetType(plua_state, 2), "file and threadfunc must be string type");
 
     std::string file = luaGetString(plua_state, 1, "");
     std::string func = luaGetString(plua_state, 2, "");
@@ -49,8 +48,6 @@ static int create(lua_State* plua_state)
         args.push_back(luaGetAny(plua_state, i));
 
     Thread* pthread = new Thread(UtilBind(threadFunc, file, func, args));
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pthread, deleteVoid<Thread>);
     LuaHeapRecyclerManager::getInstance().addHeapObject<Thread>(plua_state, (void*)pthread);
 
     luaPushLightUserData(plua_state, (void*)pthread);
@@ -73,11 +70,7 @@ static int destrory(lua_State* plua_state)
 static int start(lua_State* plua_state)
 {
     Thread* pthread = static_cast<Thread*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pthread)
-    {
-        luaPushBoolean(plua_state, false);
-        return 1;
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "start", pthread, "null pointer");
 
     luaPushBoolean(plua_state, pthread->start(luaGetInteger(plua_state, 2, 0)));
 
@@ -87,11 +80,7 @@ static int start(lua_State* plua_state)
 static int join(lua_State* plua_state)
 {
     Thread* pthread = static_cast<Thread*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pthread)
-    {
-        luaPushBoolean(plua_state, false);
-        return 1;
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "join", pthread, "null pointer");
 
     luaPushBoolean(plua_state, pthread->join());
     return 1;
@@ -100,8 +89,7 @@ static int join(lua_State* plua_state)
 static int kill(lua_State* plua_state)
 {
     Thread* pthread = static_cast<Thread*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pthread)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "kill", pthread, "null pointer");
 
     pthread->kill();
     return 0;
@@ -116,8 +104,6 @@ static int getThreadId(lua_State* plua_state)
 static int mutexCreate(lua_State* plua_state)
 {
     Mutex* pmutex = new Mutex();
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmutex, deleteVoid<Mutex>);
     LuaHeapRecyclerManager::getInstance().addHeapObject<Mutex>(plua_state, (void*)pmutex);
 
     luaPushLightUserData(plua_state, (void*)pmutex);
@@ -128,7 +114,6 @@ static int mutexCreate(lua_State* plua_state)
 static int mutexDestroy(lua_State* plua_state)
 {
     Mutex* pmutex = static_cast<Mutex*>(luaGetLightUserData(plua_state, 1, 0));
-
     LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)pmutex);
 
     if (pmutex)
@@ -140,8 +125,7 @@ static int mutexDestroy(lua_State* plua_state)
 static int mutexLock(lua_State* plua_state)
 {
     Mutex* pmutex = static_cast<Mutex*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmutex)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "mutexLock", pmutex, "null pointer");
 
     pmutex->lock();
     return 0;
@@ -150,8 +134,7 @@ static int mutexLock(lua_State* plua_state)
 static int mutexUnLock(lua_State* plua_state)
 {
     Mutex* pmutex = static_cast<Mutex*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmutex)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "mutexUnLock", pmutex, "null pointer");
 
     pmutex->unLock();
     return 0;
@@ -160,8 +143,6 @@ static int mutexUnLock(lua_State* plua_state)
 static int lockCreate(lua_State* plua_state)
 {
     Lock* plock = new Lock();
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)plock, deleteVoid<Lock>);
     LuaHeapRecyclerManager::getInstance().addHeapObject<Lock>(plua_state, (void*)plock);
 
     luaPushLightUserData(plua_state, (void*)plock);
@@ -172,7 +153,6 @@ static int lockCreate(lua_State* plua_state)
 static int lockDestroy(lua_State* plua_state)
 {
     Lock* plock = static_cast<Lock*>(luaGetLightUserData(plua_state, 1, 0));
-
     LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)plock);
 
     if (plock)
@@ -184,8 +164,7 @@ static int lockDestroy(lua_State* plua_state)
 static int lockWait(lua_State* plua_state)
 {
     Lock* plock = static_cast<Lock*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!plock)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "lockWait", plock, "null pointer");
 
     plock->wait(luaGetBoolean(plua_state, 2, true));
 
@@ -195,8 +174,7 @@ static int lockWait(lua_State* plua_state)
 static int lockTimedWait(lua_State* plua_state)
 {
     Lock* plock = static_cast<Lock*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!plock)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "lockTimedWait", plock, "null pointer");
 
     luaPushBoolean(plua_state, plock->timedWait(luaGetInteger(plua_state, 2, 2000),
                                                  luaGetBoolean(plua_state, 3, true)));
@@ -206,8 +184,7 @@ static int lockTimedWait(lua_State* plua_state)
 static int lockNotify(lua_State* plua_state)
 {
     Lock* plock = static_cast<Lock*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!plock)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "lockNotify", plock, "null pointer");
 
     plock->notify();
 
@@ -218,8 +195,6 @@ static int multiLockCreate(lua_State* plua_state)
 {
     luaAssert(plua_state, 2 == luaGetTop(plua_state), "param \"lock_cnt\" and \"wait_all\" needed");
     MultiLock* pmlock = new MultiLock(luaGetInteger(plua_state, 1, 1), luaGetBoolean(plua_state, 2, true));
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pmlock, deleteVoid<MultiLock>);
     LuaHeapRecyclerManager::getInstance().addHeapObject<MultiLock>(plua_state, (void*)pmlock);
 
     luaPushLightUserData(plua_state, (void*)pmlock);
@@ -230,7 +205,6 @@ static int multiLockCreate(lua_State* plua_state)
 static int multiLockDestroy(lua_State* plua_state)
 {
     MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-
     LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)pmlock);
 
     if (pmlock)
@@ -242,8 +216,7 @@ static int multiLockDestroy(lua_State* plua_state)
 static int multiLockWait(lua_State* plua_state)
 {
     MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmlock)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "multiLockWait", pmlock, "null pointer");
 
     pmlock->wait(luaGetBoolean(plua_state, 2, true));
 
@@ -253,8 +226,7 @@ static int multiLockWait(lua_State* plua_state)
 static int multiLockTimedWait(lua_State* plua_state)
 {
     MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmlock)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "multiLockTimedWait", pmlock, "null pointer");
 
     luaPushBoolean(plua_state, pmlock->timedWait(luaGetInteger(plua_state, 2, 2000),
                                                  luaGetBoolean(plua_state, 3, true)));
@@ -264,8 +236,7 @@ static int multiLockTimedWait(lua_State* plua_state)
 static int multiLockNotify(lua_State* plua_state)
 {
     MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmlock)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "multiLockNotify", pmlock, "null pointer");
 
     pmlock->notify(luaGetInteger(plua_state, 1, 0));
 
@@ -275,8 +246,7 @@ static int multiLockNotify(lua_State* plua_state)
 static int multiLockNotifyAll(lua_State* plua_state)
 {
     MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pmlock)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "multiLockNotifyAll", pmlock, "null pointer");
 
     pmlock->notifyAll();
 

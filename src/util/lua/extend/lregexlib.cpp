@@ -33,8 +33,8 @@ static int destrory(lua_State* plua_state)
 static int compile(lua_State* plua_state)
 {
     Regex* pregexer = static_cast<Regex*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pregexer)
-        return 0;
+    luaExtendAssert(plua_state, kLuaExtendLibRegex, "compile", pregexer,
+        "null pointer");
 
     pregexer->compile(luaGetString(plua_state, 2));
 
@@ -44,10 +44,10 @@ static int compile(lua_State* plua_state)
 static int match(lua_State* plua_state)
 {
     Regex* pregexer = static_cast<Regex*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pregexer)
-        luaPushBoolean(plua_state, false);
-    else
-        luaPushBoolean(plua_state, pregexer->match(luaGetString(plua_state, 2)));
+    luaExtendAssert(plua_state, kLuaExtendLibRegex, "match", pregexer,
+        "null pointer");
+
+    luaPushBoolean(plua_state, pregexer->match(luaGetString(plua_state, 2)));
 
     return 1;
 }
@@ -55,10 +55,10 @@ static int match(lua_State* plua_state)
 static int search(lua_State* plua_state)
 {
     Regex* pregexer = static_cast<Regex*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pregexer)
-        luaPushBoolean(plua_state, false);
-    else
-        luaPushBoolean(plua_state, pregexer->search(luaGetString(plua_state, 2)));
+    luaExtendAssert(plua_state, kLuaExtendLibRegex, "search", pregexer,
+        "null pointer");
+
+    luaPushBoolean(plua_state, pregexer->search(luaGetString(plua_state, 2)));
 
     return 1;
 }
@@ -66,10 +66,10 @@ static int search(lua_State* plua_state)
 static int getMatchedGroupCnt(lua_State* plua_state)
 {
     Regex* pregexer = static_cast<Regex*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pregexer)
-        luaPushNil(plua_state);
-    else
-        luaPushInteger(plua_state, pregexer->getMatchedGroupCnt());
+    luaExtendAssert(plua_state, kLuaExtendLibRegex, "getMatchedGroupCnt", pregexer,
+        "null pointer");
+
+    luaPushInteger(plua_state, pregexer->getMatchedGroupCnt());
 
     return 1;
 }
@@ -77,10 +77,10 @@ static int getMatchedGroupCnt(lua_State* plua_state)
 static int getMatchedGroupByIndex(lua_State* plua_state)
 {
     Regex* pregexer = static_cast<Regex*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pregexer)
-        luaPushNil(plua_state);
-    else
-        luaPushString(plua_state, pregexer->getMatchedGroup(luaGetInteger(plua_state, 2)));
+    luaExtendAssert(plua_state, kLuaExtendLibRegex, "getMatchedGroupByIndex", pregexer,
+        "null pointer");
+
+    luaPushString(plua_state, pregexer->getMatchedGroup(luaGetInteger(plua_state, 2)));
 
     return 1;
 }
@@ -88,10 +88,10 @@ static int getMatchedGroupByIndex(lua_State* plua_state)
 static int getMatchedGroupByName(lua_State* plua_state)
 {
     Regex* pregexer = static_cast<Regex*>(luaGetLightUserData(plua_state, 1, 0));
-    if (!pregexer)
-        luaPushNil(plua_state);
-    else
-        luaPushString(plua_state, pregexer->getMatchedGroup(luaGetString(plua_state, 2)));
+    luaExtendAssert(plua_state, kLuaExtendLibRegex, "getMatchedGroupByName", pregexer,
+        "null pointer");
+
+    luaPushString(plua_state, pregexer->getMatchedGroup(luaGetString(plua_state, 2)));
 
     return 1;
 }
