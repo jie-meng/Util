@@ -349,7 +349,7 @@ static int multiply(lua_State* plua_state)
 static int getRow(lua_State* plua_state)
 {
     Matrix* pm = static_cast<Matrix*>(luaGetLightUserData(plua_state, 1, 0));
-    if (pm)
+    if (!pm)
     {
         throw Exception("LuaExtend-matrix-multiply: null pointer");
     }
