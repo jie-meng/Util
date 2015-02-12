@@ -15,8 +15,8 @@ public:
     enum MatrixType
     {
         Zero,
-        Identity,
         Ones,
+        Identity,
         Random,
     };
 
