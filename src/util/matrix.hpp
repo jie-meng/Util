@@ -16,8 +16,8 @@ public:
     {
         Zero,
         Identity,
+        Ones,
         Random,
-        Ones
     };
 
     friend std::ostream& operator<<(std::ostream& out, const Matrix& m);
