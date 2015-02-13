@@ -364,11 +364,7 @@ static int tcpServerSend(lua_State* plua_state)
     luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpServerSend", pss, "null pointer");
 
     int client_sock = luaGetInteger(plua_state, 2, kInvalidSocket);
-    if (kInvalidSocket == client_sock)
-    {
-        luaPushInteger(plua_state, -1);
-        return 1;
-    }
+    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpServerSend", kInvalidSocket != client_sock, "invalid client socket");
 
     if (LuaString == luaGetType(plua_state, 3))
     {
