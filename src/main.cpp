@@ -362,29 +362,17 @@ void testInv3()
         printLine(m.inverse());
 }
 
-void testInv4()
+void testRank()
 {
     Matrix m(2, 2);
 
-    m(0, 0) = 1;
+    m(0, 0) = 1.5;
     m(0, 1) = 2;
-    m(1, 0) = 7;
-    m(1, 1) = 8;
-
-    if (m.invertable())
-        printLine(m.inverse());
-}
-
-void testRank()
-{
-    Matrix m(3, 2);
-
-    m(0, 0) = 1;
-    m(0, 1) = 2;
-    m(1, 0) = 7;
-    m(1, 1) = 8;
+    m(1, 0) = 3.1;
+    m(1, 1) = 4;
 
     printLine(m.rank());
+    printLine(m.invertable());
 }
 
 void testAddValue()
@@ -393,6 +381,23 @@ void testAddValue()
     double d[4] = { 2, 4, 6, 7 };
     m.setElements(&d[0], &d[4]);
     printLine(m);
+}
+
+void testParamCalcData()
+{
+    Matrix x(7, 7);
+    double values[49] = {3,             0,             0, -6.33173e+006,             0, -1.08342e+007,  1.44183e+007,
+            0,             3,             0,  1.44183e+007,  1.08342e+007,             0,  6.33173e+006,
+            0,             0,             3,  1.08342e+007, -1.44183e+007, -6.33173e+006,             0,
+-6.33173e+006,  1.44183e+007,  1.08342e+007,  1.21786e+014,             0,             0,             0,
+            0,  1.08342e+007, -1.44183e+007,             0,  1.08422e+014,  3.04308e+013,  2.28665e+013,
+-1.08342e+007,             0, -6.33173e+006,             0,  3.04308e+013,  5.24906e+013, -5.20703e+013,
+ 1.44183e+007,  6.33173e+006,             0,             0,  2.28665e+013, -5.20703e+013,  8.26589e+013 };
+
+    x.setElements(&values[0], &values[49]);
+
+    printLine(x.rank());
+    printLine(x.invertable());
 }
 
 int main(int argc, char* argv[])

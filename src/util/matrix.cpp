@@ -103,7 +103,8 @@ size_t Matrix::rank() const
 
 bool Matrix::invertable() const
 {
-    return square() && rank() == rows();
+    FullPivLU<UMatrix> lu(pimpl_->matrix_);
+    return lu.isInvertible();
 }
 
 Matrix Matrix::inverse() const

@@ -1,5 +1,4 @@
 #include "lmatrixlib.hpp"
-#include "lfilelib.hpp"
 #include "util/luaextend.hpp"
 #include "util/matrix.hpp"
 
@@ -93,7 +92,7 @@ static int set(lua_State* plua_state)
 
     int i = luaGetInteger(plua_state, 2, -1);
     int j = luaGetInteger(plua_state, 3, -1);
-    int v = luaGetInteger(plua_state, 4, 0);
+    double v = luaGetDouble(plua_state, 4, 0);
 
     luaExtendAssert(plua_state, kLuaExtendLibMatrix, "set", i>=0 && i<(int)pm->rows() && j>=0 && j<(int)pm->cols(), "sub-index error");
 
