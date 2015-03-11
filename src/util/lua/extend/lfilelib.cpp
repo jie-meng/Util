@@ -158,25 +158,37 @@ static int mkDir(lua_State* plua_state)
 //dir
 static int findFilesInDir(lua_State* plua_state)
 {
-    std::list<std::string> coll;
+    std::vector<std::string> coll;
     findFilesInDir(luaGetString(plua_state, 1, ""), coll, luaGetString(plua_state, 2, ""));
-    luaPushString(plua_state, strJoin(coll.begin(), coll.end(), luaGetString(plua_state, 3, "\n")));
+    std::vector< std::pair<any, any> > vec;
+    for (int i=0; i<(int)coll.size(); ++i)
+        vec.push_back(std::make_pair(any(i+1), any(coll[i])));
+
+    luaPushTable(plua_state, vec);
     return 1;
 }
 
 static int findPathInDir(lua_State* plua_state)
 {
-    std::list<std::string> coll;
+    std::vector<std::string> coll;
     findPathInDir(luaGetString(plua_state, 1, ""), coll);
-    luaPushString(plua_state, strJoin(coll.begin(), coll.end(), luaGetString(plua_state, 2, "\n")));
+    std::vector< std::pair<any, any> > vec;
+    for (int i=0; i<(int)coll.size(); ++i)
+        vec.push_back(std::make_pair(any(i+1), any(coll[i])));
+
+    luaPushTable(plua_state, vec);
     return 1;
 }
 
 static int findFilesInDirRecursively(lua_State* plua_state)
 {
-    std::list<std::string> coll;
+    std::vector<std::string> coll;
     findFilesInDirRecursively(luaGetString(plua_state, 1, ""), coll, luaGetString(plua_state, 2, ""));
-    luaPushString(plua_state, strJoin(coll.begin(), coll.end(), luaGetString(plua_state, 3, "\n")));
+    std::vector< std::pair<any, any> > vec;
+    for (int i=0; i<(int)coll.size(); ++i)
+        vec.push_back(std::make_pair(any(i+1), any(coll[i])));
+
+    luaPushTable(plua_state, vec);
     return 1;
 }
 

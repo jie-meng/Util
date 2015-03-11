@@ -155,9 +155,51 @@ void luaPushAny(lua_State* plua_state, const any& a)
     {
         luaPushString(plua_state, any_cast<std::string>(a));
     }
+    else if (a.type() == typeid(float))
+    {
+        luaPushDouble(plua_state, (double)any_cast<float>(a));
+    }
+    else if (a.type() == typeid(int))
+    {
+        luaPushInteger(plua_state, any_cast<int>(a));
+    }
+    else if (a.type() == typeid(short))
+    {
+        luaPushInteger(plua_state, (int)any_cast<short>(a));
+    }
+    else if (a.type() == typeid(long))
+    {
+        luaPushInteger(plua_state, (int)any_cast<long>(a));
+    }
+    else if (a.type() == typeid(uint8_t))
+    {
+        luaPushInteger(plua_state, (int)any_cast<uint8_t>(a));
+    }
+    else if (a.type() == typeid(uint16_t))
+    {
+        luaPushInteger(plua_state, (int)any_cast<uint16_t>(a));
+    }
+    else if (a.type() == typeid(uint32_t))
+    {
+        luaPushInteger(plua_state, (int)any_cast<uint32_t>(a));
+    }
     else
     {
         luaPushNil(plua_state);
+    }
+}
+
+//table operate
+void luaPushTable(lua_State* plua_state, const std::vector< std::pair<any, any> >& key_value_vec)
+{
+    lua_newtable(plua_state);
+
+    std::vector< std::pair<any, any> >::const_iterator it;
+    for (it = key_value_vec.begin(); it != key_value_vec.end(); ++it)
+    {
+        luaPushAny(plua_state, it->first);
+        luaPushAny(plua_state, it->second);
+        lua_settable(plua_state, -3);
     }
 }
 
