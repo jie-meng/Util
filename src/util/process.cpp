@@ -1,6 +1,5 @@
 #include "process.hpp"
 #include <vector>
-#include "string.hpp"
 #include "thread.hpp"
 
 #ifdef _PLATFORM_WINDOWS_

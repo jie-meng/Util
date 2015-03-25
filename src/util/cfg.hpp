@@ -2,7 +2,7 @@
 #define UTIL_CFG_HPP
 
 #include <map>
-#include "string.hpp"
+#include "base.hpp"
 #include "lexicalcast.hpp"
 
 namespace util

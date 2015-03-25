@@ -1,5 +1,4 @@
 #include "information.hpp"
-#include "util/string.hpp"
 
 namespace util
 {

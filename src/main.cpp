@@ -9,7 +9,6 @@
 #include "util/cmdline.hpp"
 #include "util/process.hpp"
 #include "util/regex.hpp"
-#include "util/time.hpp"
 #include "util/timer.hpp"
 #include "util/strategy.hpp"
 #include "util/cfg.hpp"

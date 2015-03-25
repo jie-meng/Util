@@ -2,8 +2,6 @@
 #include <cstdio>
 #include <cstdarg>
 #include <cstring>
-#include "string.hpp"
-#include "time.hpp"
 #include "net.hpp"
 
 namespace util

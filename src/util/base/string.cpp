@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdarg>
 #include <ctype.h>
+#include "constants.hpp"
 
 namespace util
 {

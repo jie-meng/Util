@@ -1,9 +1,9 @@
+#include "base.hpp"
 #include "csv.hpp"
 #include <vector>
 #include <fstream>
 #include <sstream>
 #include <istream>
-#include "string.hpp"
 #include "file.hpp"
 
 using namespace std;

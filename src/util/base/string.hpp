@@ -1,7 +1,8 @@
 #ifndef UTIL_STRING_HPP
 #define UTIL_STRING_HPP
 
-#include "base.hpp"
+#include <cstring>
+#include <string>
 
 namespace util
 {

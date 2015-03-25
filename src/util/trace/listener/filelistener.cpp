@@ -1,5 +1,4 @@
 #include "filelistener.hpp"
-#include "util/string.hpp"
 
 namespace util
 {

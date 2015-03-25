@@ -1,7 +1,7 @@
 #ifndef UTIL_FILE_HPP
 #define UTIL_FILE_HPP
 
-#include "string.hpp"
+#include "base.hpp"
 #include <vector>
 #include <list>
 #include <ctime>

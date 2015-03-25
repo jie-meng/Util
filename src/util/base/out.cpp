@@ -3,8 +3,8 @@
 #include <cstring>
 #include "base.hpp"
 #include "out.hpp"
-#include "util/string.hpp"
-#include "util/time.hpp"
+#include "string.hpp"
+#include "time.hpp"
 
 namespace util
 {

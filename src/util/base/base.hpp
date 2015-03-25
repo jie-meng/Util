@@ -44,25 +44,12 @@ using namespace std::tr1::placeholders;
 #define SINGLETON(TypeName) static TypeName& getInstance() { static TypeName s_instance; return s_instance; }
 
 //base classes & functions
+#include "constants.hpp"
 #include "memory.hpp"
 #include "in.hpp"
 #include "out.hpp"
 #include "baseclass.hpp"
-
-namespace util
-{
-
-const size_t kBufSize = 4096;
-const size_t kMaxPathLen = 512;
-const int kSuccess = 1;
-const int kFail = 0;
-
-//static check
-template<int> struct CompileTimeError;
-template<> struct CompileTimeError<true> {};
-#define STATIC_CHECK(expr, msg) \
-    { CompileTimeError<((expr) != 0)> ERROR_##msg; (void)ERROR_##msg; }
-
-} // namespace util
+#include "string.hpp"
+#include "time.hpp"
 
 #endif // UTIL_BASE_BASE_HPP

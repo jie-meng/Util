@@ -1,5 +1,4 @@
 #include "lexicalcast.hpp"
-#include "string.hpp"
 #include <cmath>
 
 namespace util

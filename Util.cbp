@@ -33,7 +33,6 @@
 					<Add option="-D_PLATFORM_WINDOWS_" />
 					<Add directory="src" />
 					<Add directory="src/util" />
-					<Add directory="src/util/lua/extend" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -306,10 +305,15 @@
 		<Unit filename="src/util/base.hpp" />
 		<Unit filename="src/util/base/base.hpp" />
 		<Unit filename="src/util/base/baseclass.hpp" />
+		<Unit filename="src/util/base/constants.hpp" />
 		<Unit filename="src/util/base/in.hpp" />
 		<Unit filename="src/util/base/memory.hpp" />
 		<Unit filename="src/util/base/out.cpp" />
 		<Unit filename="src/util/base/out.hpp" />
+		<Unit filename="src/util/base/string.cpp" />
+		<Unit filename="src/util/base/string.hpp" />
+		<Unit filename="src/util/base/time.cpp" />
+		<Unit filename="src/util/base/time.hpp" />
 		<Unit filename="src/util/cfg.cpp" />
 		<Unit filename="src/util/cfg.hpp" />
 		<Unit filename="src/util/cmdline.cpp" />
@@ -485,12 +489,8 @@
 		<Unit filename="src/util/regex.hpp" />
 		<Unit filename="src/util/regex/deelx.h" />
 		<Unit filename="src/util/strategy.hpp" />
-		<Unit filename="src/util/string.cpp" />
-		<Unit filename="src/util/string.hpp" />
 		<Unit filename="src/util/thread.cpp" />
 		<Unit filename="src/util/thread.hpp" />
-		<Unit filename="src/util/time.cpp" />
-		<Unit filename="src/util/time.hpp" />
 		<Unit filename="src/util/timer.hpp" />
 		<Unit filename="src/util/trace.hpp" />
 		<Unit filename="src/util/trace/information.cpp" />

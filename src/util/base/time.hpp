@@ -1,7 +1,6 @@
 #ifndef UTIL_TIME_HPP
 #define UTIL_TIME_HPP
 
-#include "base.hpp"
 #include <ctime>
 
 namespace util

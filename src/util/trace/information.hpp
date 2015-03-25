@@ -1,7 +1,7 @@
 #ifndef UTIL_TRACE_INFORMATION_HPP
 #define UTIL_TRACE_INFORMATION_HPP
 
-#include "util/time.hpp"
+#include "base.hpp"
 
 namespace util
 {

@@ -5,7 +5,6 @@
 #include <map>
 #include <iterator>
 #include "base.hpp"
-#include "string.hpp"
 #include "lexicalcast.hpp"
 
 namespace util

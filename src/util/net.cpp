@@ -1,7 +1,6 @@
 #include "net.hpp"
 #include <vector>
 #include <list>
-#include "string.hpp"
 #include "lexicalcast.hpp"
 #include "regex.hpp"
 
