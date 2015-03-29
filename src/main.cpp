@@ -19,7 +19,6 @@
 #include "util/any.hpp"
 #include "util/trace.hpp"
 #include "util/csv.hpp"
-//#include "util/Eigen/Dense"
 #include "util/matrix.hpp"
 
 using namespace std;
