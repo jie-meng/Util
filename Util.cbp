@@ -13,14 +13,13 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add option="-D_PLATFORM_WINDOWS_" />
+					<Add option="-D_PLATFORM_LINUX_" />
 					<Add directory="src" />
 					<Add directory="src/util" />
 					<Add directory="src/util/lua/extend" />
 				</Compiler>
 				<Linker>
-					<Add option="-lws2_32" />
-					<Add option="-lShlwapi" />
+					<Add option="-lpthread" />
 				</Linker>
 			</Target>
 			<Target title="Release">

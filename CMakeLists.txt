@@ -1,0 +1,16 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+PROJECT(Util)
+
+ADD_DEFINITIONS(-D_PLATFORM_LINUX_)
+
+INCLUDE_DIRECTORIES(
+    src
+    src/util
+    src/util/luaextend)
+
+FILE(GLOB_RECURSE SRCS "./src/*.cpp" "./src/*.c")
+
+ADD_EXECUTABLE(Util ${SRCS})
+
+TARGET_LINK_LIBRARIES(Util pthread)

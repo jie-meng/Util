@@ -3,4 +3,14 @@
 *.exe
 *.depend
 *.layout
+
 tags
+
+Debug/
+Release/
+Util
+
+*.cmake
+Makefile
+CMakeFiles/
+CMakeCache.txt
