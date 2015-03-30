@@ -1,6 +1,8 @@
 #ifndef UTIL_BASE_CONSTANTS_HPP
 #define UTIL_BASE_CONSTANTS_HPP
 
+#include <cstdlib>
+
 namespace util
 {
 

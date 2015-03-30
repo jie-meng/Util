@@ -1,6 +1,8 @@
 #ifndef UTIL_BASE_MEMORY_HPP
 #define UTIL_BASE_MEMORY_HPP
 
+#include <cstdlib>
+
 namespace util
 {
 

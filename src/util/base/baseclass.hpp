@@ -1,6 +1,8 @@
 #ifndef UTIL_BASE_BASECLASS_HPP
 #define UTIL_BASE_BASECLASS_HPP
 
+#include <string>
+
 namespace util
 {
 
