@@ -165,7 +165,7 @@ std::string fileBaseName(const std::string& file)
     std::string str = splitPathname(file).second;
     size_t found = str.find_last_of(".");
     if (found == std::string::npos)
-        return "";
+        return str;
     else
         return str.substr(0, found);
 }
