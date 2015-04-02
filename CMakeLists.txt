@@ -4,8 +4,7 @@ SET(APP_NAME Util)
 PROJECT(${APP_NAME})
 
 INCLUDE_DIRECTORIES(
-    src
-    src/util)
+    src)
 
 FILE(GLOB_RECURSE SRCS "./src/*.cpp" "./src/*.c")
 

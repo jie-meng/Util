@@ -2,7 +2,7 @@
 #define UTIL_TRACE_LISTENER_FILELISTENER_HPP
 
 #include <fstream>
-#include "base.hpp"
+#include "util/base.hpp"
 #include "../information.hpp"
 
 namespace util
