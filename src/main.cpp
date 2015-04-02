@@ -406,6 +406,10 @@ void testCpp11()
     UtilFunction<int (int)> s = a;
 
     printLine(s(4));
+
+    auto x = std::make_tuple(1, 3, "shit", 4.5, "test");
+    printLine(std::get<0>(x));
+    printLine(std::get<4>(x));
 }
 #endif
 
