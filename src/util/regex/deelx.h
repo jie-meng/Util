@@ -10,7 +10,7 @@
 // Author:  ∑ ŸŒ∞ (sswater shi)
 // sswater@gmail.com
 //
-// $Revision: 749 $
+// $Revision: 864 $
 //
 
 #ifndef __DEELX_REGEXP__H__
@@ -22,12 +22,14 @@
 #include <string.h>
 #include <stdlib.h>
 
+//joshua
+inline int util_isascii(int c) {return ((c & ~0x7F) == 0);}
+inline int util_isblank(int c) { return c == 0x20 || c == '\t'; }
+
 extern "C" {
 	typedef int (*POSIX_FUNC)(int);
 	int isblank(int c);
 }
-
-namespace deelx {
 
 //
 // Data Reference
@@ -477,7 +479,7 @@ public:
 	void SortUnFreeze();
 
 public:
-	int  Find(const T & rT, int(* strCompare)(const void *, const void *) = 0) { return FindAs(*(T*)&rT, strCompare); }
+	int  Find(const T & rT, int(* compare)(const void *, const void *) = 0) { return FindAs(*(T*)&rT, compare); }
 	int  FindAs(const T & rT, int(*)(const void *, const void *) = 0);
 	int  GetSize() const { return CBufferRefT<T>::m_nSize; }
 	T & operator [] (int nIndex) { return CBufferT <T> :: operator [] (nIndex); }
@@ -496,9 +498,9 @@ template <class T> CSortedBufferT <T> :: CSortedBufferT(int reverse)
 	m_bSortFreezed = 0;
 }
 
-template <class T> CSortedBufferT <T> :: CSortedBufferT(int (* strCompare)(const void *, const void *))
+template <class T> CSortedBufferT <T> :: CSortedBufferT(int (* compare)(const void *, const void *))
 {
-	m_fncompare = strCompare;
+	m_fncompare = compare;
 	m_bSortFreezed = 0;
 }
 
@@ -506,7 +508,7 @@ template <class T> void CSortedBufferT <T> :: Add(const T & rT)
 {
 	if(m_bSortFreezed != 0)
 	{
-//		Append(rT);
+		this->Append(rT);
 		return;
 	}
 
@@ -536,9 +538,9 @@ template <class T> void CSortedBufferT <T> :: Add(const T * pT, int nSize)
 	}
 }
 
-template <class T> int CSortedBufferT <T> :: FindAs(const T & rT, int(* strCompare)(const void *, const void *))
+template <class T> int CSortedBufferT <T> :: FindAs(const T & rT, int(* compare)(const void *, const void *))
 {
-	const T * pT = (const T *)bsearch(&rT, CBufferRefT<T>::m_pBuffer, CBufferRefT<T>::m_nSize, sizeof(T), strCompare == 0 ? m_fncompare : strCompare);
+	const T * pT = (const T *)bsearch(&rT, CBufferRefT<T>::m_pBuffer, CBufferRefT<T>::m_nSize, sizeof(T), compare == 0 ? m_fncompare : compare);
 
 	if( pT != NULL )
 		return pT - CBufferRefT<T>::m_pBuffer;
@@ -601,6 +603,7 @@ public:
 	int    m_nBeginPos;
 	int    m_nLastBeginPos;
 	int    m_nParenZindex;
+	int    m_nCursiveLimit;
 
 	void * m_pMatchString;
 	int    m_pMatchStringLength;
@@ -1055,7 +1058,17 @@ template <class CHART> CDelegateElxT <CHART> :: CDelegateElxT(int ndata)
 template <class CHART> int CDelegateElxT <CHART> :: Match(CContext * pContext) const
 {
 	if(m_pelx != 0)
-		return m_pelx->Match(pContext);
+	{
+		if(pContext->m_nCursiveLimit > 0)
+		{
+			pContext->m_nCursiveLimit --;
+			int result = m_pelx->Match(pContext);
+			pContext->m_nCursiveLimit ++;
+			return result;
+		}
+		else
+			return 0;
+	}
 	else
 		return 1;
 }
@@ -1237,7 +1250,7 @@ template <class CHART> CPosixElxT <CHART> :: CPosixElxT(const char * posix, int 
 
 	if     (!strncmp(posix, "alnum:", 6)) m_posixfun = ::isalnum ;
 	else if(!strncmp(posix, "alpha:", 6)) m_posixfun = ::isalpha ;
-	else if(!strncmp(posix, "ascii:", 6)) m_posixfun = ::isascii ;
+	else if(!strncmp(posix, "ascii:", 6)) m_posixfun = util_isascii ;
 	else if(!strncmp(posix, "cntrl:", 6)) m_posixfun = ::iscntrl ;
 	else if(!strncmp(posix, "digit:", 6)) m_posixfun = ::isdigit ;
 	else if(!strncmp(posix, "graph:", 6)) m_posixfun = ::isgraph ;
@@ -1247,14 +1260,14 @@ template <class CHART> CPosixElxT <CHART> :: CPosixElxT(const char * posix, int 
 	else if(!strncmp(posix, "space:", 6)) m_posixfun = ::isspace ;
 	else if(!strncmp(posix, "upper:", 6)) m_posixfun = ::isupper ;
 	else if(!strncmp(posix, "xdigit:",7)) m_posixfun = ::isxdigit;
-	else if(!strncmp(posix, "blank:", 6)) m_posixfun =   isblank ;
+	else if(!strncmp(posix, "blank:", 6)) m_posixfun = util_isblank ;
 	else                                  m_posixfun = 0         ;
 }
 
-inline int isblank(int c)
-{
-	return c == 0x20 || c == '\t';
-}
+//inline int isblank(int c)
+//{
+//	return c == 0x20 || c == '\t';
+//}
 
 template <class CHART> int CPosixElxT <CHART> :: Match(CContext * pContext) const
 {
@@ -1775,6 +1788,19 @@ protected:
 	int m_nCharsetDepth;
 	int m_bQuoted;
 	POSIX_FUNC m_quote_fun;
+
+	// Backup current pos
+	struct Snapshot
+	{
+		CHART_INFO prev, curr, next, nex2;
+		int m_nNextPos;
+		int m_nCharsetDepth;
+		int m_bQuoted;
+		POSIX_FUNC m_quote_fun;
+		Snapshot():prev(0,0),curr(0,0),next(0,0),nex2(0,0) {}
+	};
+	void Backup (Snapshot * pdata) { memcpy(pdata, &prev, sizeof(Snapshot)); }
+	void Restore(Snapshot * pdata) { memcpy(&prev, pdata, sizeof(Snapshot)); }
 
 	ElxInterface * m_pStockElxs[STOCKELX_COUNT];
 };
@@ -2812,6 +2838,10 @@ template <class CHART> ElxInterface * CBuilderT <CHART> :: BuildCharset(int & fl
 			// create
 			if(curr == CHART_INFO(RCHART(':'), 1))
 			{
+				// Backup before posix
+				Snapshot shot;
+				Backup(&shot);
+
 				CBufferT <char> posix;
 
 				do {
@@ -2823,9 +2853,17 @@ template <class CHART> ElxInterface * CBuilderT <CHART> :: BuildCharset(int & fl
 				MoveNext(); // skip ']'
 
 				// posix
-				return Keep(new CPosixElxT <CHART> (posix.GetBuffer(), flags & RIGHTTOLEFT));
+				CPosixElxT<CHART> * pposix = (CPosixElxT<CHART> *) Keep(new CPosixElxT <CHART> (posix.GetBuffer(), flags & RIGHTTOLEFT));
+				if(pposix->m_posixfun != 0)
+				{
+					return pposix;
+				}
+
+				// restore if not posix
+				Restore(&shot);
 			}
-			else if(curr == CHART_INFO(RCHART('^'), 1))
+
+			if(curr == CHART_INFO(RCHART('^'), 1))
 			{
 				MoveNext(); // skip '^'
 				pRange = (CRangeElxT <CHART> *)Keep(new CRangeElxT <CHART> (flags & RIGHTTOLEFT, 0));
@@ -3466,6 +3504,7 @@ template <class CHART> MatchResult CRegexpT <CHART> :: MatchExact(const CHART * 
 	pContext->m_nLastBeginPos = -1;
 	pContext->m_pMatchString  = (void*)tstring;
 	pContext->m_pMatchStringLength = length;
+	pContext->m_nCursiveLimit = 100;
 
 	if(m_builder.m_nFlags & RIGHTTOLEFT)
 	{
@@ -3603,6 +3642,7 @@ template <class CHART> CContext * CRegexpT <CHART> :: PrepareMatch(const CHART *
 	pContext->m_nLastBeginPos = -1;
 	pContext->m_pMatchString  = (void*)tstring;
 	pContext->m_pMatchStringLength = length;
+	pContext->m_nCursiveLimit = 100;
 
 	if(start < 0)
 	{
@@ -4625,7 +4665,5 @@ typedef CRegexpT <unsigned short> CRegexpW;
 #else
 	typedef CRegexpA CRegexp;
 #endif
-
-} // namespace deelx
 
 #endif//__DEELX_REGEXP__H__

@@ -29,7 +29,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add option="-D_PLATFORM_WINDOWS_" />
+					<Add option="-D_CPP11_" />
 					<Add directory="src" />
 					<Add directory="src/util" />
 				</Compiler>

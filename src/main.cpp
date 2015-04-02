@@ -398,6 +398,17 @@ void testParamCalcData()
     printLine(x.invertable());
 }
 
+#ifdef _CPP11_
+void testCpp11()
+{
+    auto a = [](int x) { return x + 2; };
+
+    UtilFunction<int (int)> s = a;
+
+    printLine(s(4));
+}
+#endif
+
 int main(int argc, char* argv[])
 {
     luaExecutor(argc, argv);

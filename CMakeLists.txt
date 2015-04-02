@@ -5,12 +5,24 @@ PROJECT(${APP_NAME})
 
 INCLUDE_DIRECTORIES(
     src
-    src/util
-    src/util/luaextend)
+    src/util)
 
 FILE(GLOB_RECURSE SRCS "./src/*.cpp" "./src/*.c")
 
 ADD_EXECUTABLE(${APP_NAME} ${SRCS})
+
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	ADD_DEFINITIONS(-D_CPP11_)
+elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+	ADD_DEFINITIONS(-D_CPP0X_)
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+endif()
 
 if (UNIX)
     ADD_DEFINITIONS(-D_PLATFORM_LINUX_)

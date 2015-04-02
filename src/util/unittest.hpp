@@ -247,7 +247,7 @@ public:
     ResultPrinter();
     ~ResultPrinter();
 public:
-    inline void setPrinter(UtilAutoPtr<Printer> printer) { printer_ = printer; }
+    inline void setPrinter(UtilAutoPtr<Printer>& printer) { autoPtrMove(printer_, printer); }
 
     void print(TestResult* presult, unsigned long run_time);
     void printWaitPrompt();

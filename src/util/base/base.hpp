@@ -9,6 +9,7 @@
 #include <sstream>
 #include <utility>
 #include <exception>
+
 #ifdef _MSVC_
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
@@ -19,6 +20,7 @@ typedef unsigned __int64 uint64_t;
 #endif
 
 #ifdef _BOOST_
+
 #include <memory>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
@@ -27,7 +29,24 @@ typedef unsigned __int64 uint64_t;
 #define UtilBind           boost::bind
 #define UtilAutoPtr        std::auto_ptr
 #define UtilSharedPtr      boost::shared_ptr
-#else  //STL-TR1
+
+#elif defined _CPP11_
+
+#include <memory>
+#include <functional>
+#define UtilFunction       std::function
+#define UtilBind           std::bind
+#define UtilAutoPtr        std::unique_ptr
+#define UtilUniquePtr      std::unique_ptr
+#define UtilSharedPtr      std::shared_ptr
+using namespace std::placeholders;
+
+template <typename T>
+inline void autoPtrMove(UtilAutoPtr<T>& to, UtilAutoPtr<T>& from) { to = std::move(from); }
+
+#else
+
+//STL-TR1 by default
 #include <tr1/memory>
 #include <tr1/functional>
 #define UtilFunction       std::tr1::function
@@ -35,6 +54,10 @@ typedef unsigned __int64 uint64_t;
 #define UtilAutoPtr        std::auto_ptr
 #define UtilSharedPtr      std::tr1::shared_ptr
 using namespace std::tr1::placeholders;
+
+template <typename T>
+inline void autoPtrMove(UtilAutoPtr<T>& to, UtilAutoPtr<T>& from) { to = from; }
+
 #endif
 
 #ifndef NULL

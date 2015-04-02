@@ -12,8 +12,8 @@ struct Regex::RegexData
     RegexData(const std::string& expression, int flag) :
         regexer_(expression.c_str(), flag)
     {}
-    deelx::CRegexpT<char> regexer_;
-    deelx::MatchResult result_;
+    CRegexpT<char> regexer_;
+    MatchResult result_;
     std::string str_;
 };
 
