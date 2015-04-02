@@ -413,9 +413,32 @@ void testCpp11()
 }
 #endif
 
+void func(const std::string& str)
+{
+    printLine(str);
+}
+
+void testProcess()
+{
+    Process p;
+    auto ret = p.create("luaexec /home/joshua/tools/Lunar/scripts/test.lua", 
+            "",//"/home/joshua/tools/Lunar/scripts",
+            false,
+            true,
+            func);//[](const std::string& str){ printLine(str); });
+
+    if (ret)
+        printLine("ok");
+    else
+        printLine("error");
+    getLine();    
+}
+
 int main(int argc, char* argv[])
 {
-    luaExecutor(argc, argv);
+    //luaExecutor(argc, argv);
+
+    testProcess();
 
     return 0;
 }
