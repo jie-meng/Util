@@ -411,34 +411,34 @@ void testCpp11()
     printLine(std::get<0>(x));
     printLine(std::get<4>(x));
 }
-#endif
-
-void func(const std::string& str)
-{
-    printLine(str);
-}
 
 void testProcess()
 {
     Process p;
     auto ret = p.create("luaexec /home/joshua/tools/Lunar/scripts/test.lua", 
-            "",//"/home/joshua/tools/Lunar/scripts",
-            false,
+            "/home/joshua/tools/Lunar/scripts",
             true,
-            func);//[](const std::string& str){ printLine(str); });
+            true,
+            [](const std::string& str){ printLine(str); });
 
     if (ret)
-        printLine("ok");
+        printLine("process ok");
     else
-        printLine("error");
-    getLine();    
+        printLine("process error");
+    auto s = getLine();
+    if (p.isRunning())
+    {
+        p.input(s + "\n");
+    }
+    
+    getLine();
 }
+
+#endif
 
 int main(int argc, char* argv[])
 {
-    //luaExecutor(argc, argv);
-
-    testProcess();
+    luaExecutor(argc, argv);
 
     return 0;
 }

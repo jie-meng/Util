@@ -383,7 +383,6 @@ struct Process::ProcessImpl
             exit(0);
         default:
             {
-                msleep(500);
                 if (0 != waitpid(pid_, (int*)0, WNOHANG))
                     return false;
 
@@ -425,20 +424,11 @@ struct Process::ProcessImpl
         //reset output
         if (output)
         {
-
-printLine("ss 0");
             close(1);
-
-printLine("ss 1");
             dup(output_pipe_[1]);
-
-printLine("ss 2");
             closePipe(output_pipe_);
-
-printLine("ss 3");
         }
 
-printLine("ss");
         //exec
         std::vector<int> argv(params.size()+1);
         size_t i(0);
