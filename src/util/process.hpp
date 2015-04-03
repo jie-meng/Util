@@ -6,6 +6,9 @@
 namespace util
 {
 
+//get app path
+std::string appPath();
+
 //execute process and wait it end, returns process exit_code (fail : -1)
 int executeProcess(const std::string& cmdline, const std::string& cur_path = "");
 
