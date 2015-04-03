@@ -415,7 +415,7 @@ void testCpp11()
 void testProcess()
 {
     Process p;
-    auto ret = p.create("luaexec /home/joshua/tools/Lunar/scripts/test.lua",
+    auto ret = p.create("luaexec \"/home/joshua/tools/Lunar/s c/test.lua\"",
             "/home/joshua/tools/Lunar/scripts",
             true,
             true,
