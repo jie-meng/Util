@@ -35,7 +35,6 @@
 					<Add option="-D_PLATFORM_WINDOWS_" />
 					<Add option="-D_CPP11_" />
 					<Add directory="src" />
-					<Add directory="src/util" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

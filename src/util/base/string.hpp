@@ -84,6 +84,71 @@ inline size_t strSplit(const std::string& str, const std::string& del, Coll& out
     return out_coll.size();
 }
 
+template <typename Coll>
+inline size_t strSplitEx(const std::string& str, const std::string& del,
+                         const std::string& start_flag, const std::string& end_flag,
+                         Coll& out_coll, size_t limit = 0)
+{
+    if (start_flag == "" || start_flag == "")
+        return 0;
+
+    std::string::size_type start = 0;
+    std::string::size_type idx = 0;
+    std::string::size_type del_len = del.length();
+
+    idx = str.find(del, start);
+    bool scope_in = false;
+    while (std::string::npos != idx)
+    {
+        if (limit > 0 && out_coll.size() + 1 >= limit && !scope_in)
+            break;
+
+        std::string sub = str.substr(start, idx - start);
+
+        if (scope_in && !out_coll.empty())
+            out_coll[out_coll.size()-1] = out_coll[out_coll.size()-1] + del + sub;
+        else
+            out_coll.push_back(sub);
+
+        if (strStartWith(sub, start_flag))
+        {
+            if(!out_coll.empty())
+                out_coll[out_coll.size()-1] = strRight(out_coll[out_coll.size()-1], out_coll[out_coll.size()-1].length() - start_flag.length());
+
+            scope_in = true;
+        }
+
+        if (scope_in && strEndWith(sub, end_flag))
+        {
+            if(!out_coll.empty())
+                out_coll[out_coll.size()-1] = strLeft(out_coll[out_coll.size()-1], out_coll[out_coll.size()-1].length() - end_flag.length());
+
+            scope_in = false;
+        }
+
+        start = idx + del_len;
+        idx = str.find(del, start);
+    }
+
+    if (start<str.length())
+    {
+        std::string left_behind = str.substr(start);
+        if (scope_in)
+        {
+            if (strEndWith(left_behind, end_flag))
+                left_behind = strLeft(left_behind, left_behind.length() - end_flag.length());
+
+            out_coll[out_coll.size()-1] = out_coll[out_coll.size()-1] + del + left_behind;
+        }
+        else
+        {
+            out_coll.push_back(left_behind);
+        }
+    }
+
+    return out_coll.size();
+}
+
 char* strToCharArray(const std::string& str, char* pout_buf, size_t buf_len);
 
 } // namespace util

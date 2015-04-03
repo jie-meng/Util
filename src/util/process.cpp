@@ -267,7 +267,7 @@ int executeProcess(const std::string& cmdline, const std::string& cur_path)
         {
             //extract params
             std::vector<std::string> params;
-            strSplit(cmdline, " ", params);
+            strSplitEx(cmdline, " ", "\"", "\"", params);
             if (params.empty())
                 exit(-1);
 
@@ -312,7 +312,7 @@ bool executeProcessAsyn(const std::string& cmdline, const std::string& cur_path)
         {
             //extract params
             std::vector<std::string> params;
-            strSplit(cmdline, " ", params);
+            strSplitEx(cmdline, " ", "\"", "\"", params);
             if (params.empty())
                 exit(-1);
 
@@ -368,7 +368,7 @@ struct Process::ProcessImpl
             if (0 != pipe(output_pipe_))
                 return false;
         }
-        
+
         pid_ = fork();
         switch(pid_)
         {
@@ -405,7 +405,7 @@ struct Process::ProcessImpl
     {
         //extract params
         std::vector<std::string> params;
-        strSplit(cmdline, " ", params);
+        strSplitEx(cmdline, " ", "\"", "\"", params);
         if (params.empty())
             return false;
 
