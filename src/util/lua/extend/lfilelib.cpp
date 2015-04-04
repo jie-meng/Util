@@ -113,6 +113,12 @@ static int setCurrentPath(lua_State* plua_state)
     return 1;
 }
 
+static int relativePathToAbsolutePath(lua_State* plua_state)
+{
+    luaPushString(plua_state, relativePathToAbsolutePath(luaGetString(plua_state, 1, "")));
+    return 1;
+}
+
 static int isPathExists(lua_State* plua_state)
 {
     luaPushBoolean(plua_state, isPathExists(luaGetString(plua_state, 1, "")));
@@ -209,6 +215,7 @@ static const u_luaL_Reg file_lib[] =
 
     {"currentPath", currentPath},
     {"setCurrentPath", setCurrentPath},
+    {"relativePathToAbsolutePath", relativePathToAbsolutePath},
     {"isPathExists", isPathExists},
     {"isPathDir", isPathDir},
     {"isPathFile", isPathFile},

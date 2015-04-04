@@ -266,6 +266,23 @@ time_t fileTime(const std::string& file, E_FileTime ft)
 #endif // _PLATFORM_LINUX_
 }
 
+std::string appPath()
+{
+    char buf[kMaxPathLen];
+    memset(buf, 0, sizeof(buf));
+
+#ifdef _PLATFORM_WINDOWS_
+    GetModuleFileNameA(NULL, buf, sizeof(buf));
+    return strReplaceAll(std::string(buf), "\\", "/");
+#endif // _PLATFORM_WINDOWS_
+
+#ifdef _PLATFORM_LINUX_
+    std::string link = strFormat("/proc/%d/exe", getpid());
+    readlink(link.c_str(), buf, sizeof(buf));
+    return splitPathname(buf).first;
+#endif // _PLATFORM_LINUX_
+}
+
 std::string currentPath()
 {
     size_t i = 1;
@@ -288,6 +305,24 @@ std::string currentPath()
 bool setCurrentPath(const std::string& dir)
 {
     return 0 == ::chdir(dir.c_str());
+}
+
+std::string relativePathToAbsolutePath(const std::string& path)
+{
+    std::string path_format = strReplaceAll(path, "\\", "/");
+
+    //linux absolute path
+    if (strStartWith(path_format, "/"))
+        return path_format;
+
+    //windows absolute path
+    if (path_format.length() >= 2 && path_format[1] == ':')
+        return path_format;
+
+    if (strStartWith(path_format, "./"))
+        path_format = strRight(path_format, path_format.length() - 2);
+
+    return currentPath() + "/" + path_format;
 }
 
 bool isPathExists(const std::string& path)
