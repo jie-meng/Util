@@ -1,10 +1,9 @@
 #include "base.hpp"
-#include "luax.hpp"
 #include <map>
 #include <set>
+#include "luaextend.hpp"
 #include "thread.hpp"
 #include "lua/src/lua.hpp"
-#include "luaextend.hpp"
 
 namespace util
 {
