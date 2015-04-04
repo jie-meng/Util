@@ -279,7 +279,7 @@ std::string appPath()
 #ifdef _PLATFORM_LINUX_
     std::string link = strFormat("/proc/%d/exe", getpid());
     readlink(link.c_str(), buf, sizeof(buf));
-    return splitPathname(buf).first;
+    return std::string(buf);
 #endif // _PLATFORM_LINUX_
 }
 

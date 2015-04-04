@@ -438,7 +438,8 @@ void testProcess()
 
 int main(int argc, char* argv[])
 {
-    luaExecutor(argc, argv);
+//    luaExecutor(argc, argv);
+    printLine(appPath());
 
     return 0;
 }
