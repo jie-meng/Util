@@ -624,12 +624,12 @@ void LuaCmdLine::registerFunction(const std::string& func_name, LuaCFunc lua_reg
 
 void LuaCmdLine::process(const std::string& cmd)
 {
-    if(strIsEqual(cmd, "clearheap", isCaseSensitive()))
+    if(strAreEqual(cmd, "clearheap", isCaseSensitive()))
     {
         clearHeap();
         return;
     }
-    else if(strIsEqual(cmd, "clear", isCaseSensitive()))
+    else if(strAreEqual(cmd, "clear", isCaseSensitive()))
     {
         clear();
         return;

@@ -179,7 +179,7 @@ int strCompare(const std::string& str_first, const std::string& str_second, bool
     return str_first_tmp.compare(str_second_tmp);
 }
 
-bool strIsEqual(const std::string& str_first, const std::string& str_second, bool case_sensitive)
+bool strAreEqual(const std::string& str_first, const std::string& str_second, bool case_sensitive)
 {
     return (0 == strCompare(str_first, str_second, case_sensitive)) ? true : false;
 }

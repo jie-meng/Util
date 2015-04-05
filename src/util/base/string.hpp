@@ -35,7 +35,7 @@ std::string strMid(const std::string& str, size_t pos, size_t n);
 
 bool strContains(const std::string& str, const std::string& contain, bool case_sensitive = true);
 int strCompare(const std::string& str_first, const std::string& str_second, bool case_sensitive = true);
-bool strIsEqual(const std::string& str_first, const std::string& str_second, bool case_sensitive = true);
+bool strAreEqual(const std::string& str_first, const std::string& str_second, bool case_sensitive = true);
 
 template <typename ConstIterator>
 std::string strJoin(ConstIterator c_it_begin, ConstIterator c_it_end, const std::string& del)

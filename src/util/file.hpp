@@ -70,7 +70,7 @@ public:
             }
             else
             {
-                if (strIsEqual(fileExtension(path), ext_, false))
+                if (strAreEqual(fileExtension(path), ext_, false))
                     return true;
                 else
                     return false;
@@ -113,7 +113,7 @@ public:
             }
             else
             {
-                if (strIsEqual(fileExtension(path), ext_, false))
+                if (strAreEqual(fileExtension(path), ext_, false))
                     return true;
                 else
                     return false;
