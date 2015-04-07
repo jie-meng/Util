@@ -478,9 +478,5 @@ int testCppCallLuaFunc()
 
 int main(int argc, char* argv[])
 {
-    //luaExecutor(argc, argv);
-
-    return testCppCallLuaFunc();
-
-    //return 0;
+    luaExecutor(argc, argv);
 }
