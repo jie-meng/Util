@@ -434,11 +434,53 @@ void testProcess()
     getLine();
 }
 
+
+int testCppCallLuaFunc()
+{
+    LuaState luaState;
+    int err = luaState.parseFile("test.lua");
+    if (0 != err)
+    {
+        printLine(luaGetError(luaState.getState(), err));
+        return -1;
+    }
+
+    luaGetGlobal(luaState.getState(), "mog");
+    err = luaCallFunc(luaState.getState(), 0, 3);
+    if (0 != err)
+    {
+        printLine(luaGetError(luaState.getState(), err));
+        luaPop(luaState.getState(), -1);
+        return -1;
+    }
+
+    int ret_cnt = luaGetTop(luaState.getState());
+    printLine(ret_cnt);
+    printLine(luaGetInteger(luaState.getState(), 1));
+
+    if (luaGetType(luaState.getState(), 2) == LuaType::LuaTable)
+    {
+        printLine("table elements:");
+        auto vec = luaGetTable(luaState.getState(), 2);
+        for (auto x : vec)
+        {
+            printLine("key: %s, value: %s", x.first.toString().c_str(), x.second.toString().c_str());
+        }
+    }
+
+    printLine(luaGetString(luaState.getState(), 3));
+
+    return 0;
+}
+
 #endif
+
 
 int main(int argc, char* argv[])
 {
-    luaExecutor(argc, argv);
+    //luaExecutor(argc, argv);
 
-    return 0;
+    return testCppCallLuaFunc();
+
+    //return 0;
 }

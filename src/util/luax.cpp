@@ -31,17 +31,6 @@ int luaGetInteger(lua_State* plua_state, int index, int default_int)
     return lua_isnumber(plua_state, index) ? luaGetInteger(plua_state, index) : default_int;
 }
 
-//unsigned int luaGetUInteger(lua_State* plua_state, int index)
-//{
-//    //return luaL_checkunsigned(plua_state, index);
-//    //return lua_tounsigned(plua_state, index);
-//}
-
-//unsigned int luaGetUInteger(lua_State* plua_state, int index, unsigned int default_uint)
-//{
-//    return lua_isnumber(plua_state, index) ? luaGetInteger(plua_state, index) : default_uint;
-//}
-
 std::string luaGetString(lua_State* plua_state, int index)
 {
     //return std::string(luaL_checkstring(plua_state, index));
@@ -100,7 +89,34 @@ any luaGetAny(lua_State* plua_state, int index)
     return a;
 }
 
-//set operate
+std::vector< std::pair<any, any> > luaGetTable(lua_State* plua_state, int index)
+{
+    std::vector< std::pair<any, any> > vec;
+
+    if (!lua_istable(plua_state, index))
+    {
+        return vec;
+    }
+
+    // Process of lua_next:
+    // 1) Pop a key from stack
+    // 2) Get a key-value pair from specified position, push key and then value to stack
+    // 3) If 2) success then return non-zero, else return zero, and do not push any thing to stack.
+    // The key-value get from table is related to the popped key in 1).
+    // There is nothing before first pair of key-value, so we use lua_pushnil() to push a nil as first key.
+    lua_pushnil(plua_state);
+    while(0 != lua_next(plua_state, index))
+    {
+        //Now value is at (-1), key is at (-2)
+        vec.push_back(std::make_pair(luaGetAny(plua_state, -2), luaGetAny(plua_state, -1)));
+        //remove value from stack, make the key to the top in order to keep on enumerating
+        lua_pop(plua_state, 1);
+    }
+
+    return vec;
+}
+
+//push operate
 void luaPushDouble(lua_State* plua_state, double double_val)
 {
     lua_pushnumber(plua_state, double_val);
@@ -110,11 +126,6 @@ void luaPushInteger(lua_State* plua_state, int int_val)
 {
     lua_pushinteger(plua_state, int_val);
 }
-
-//void luaPushUInteger(lua_State* plua_state, unsigned int uint_val)
-//{
-//    lua_pushunsigned(plua_state, uint_val);
-//}
 
 void luaPushString(lua_State* plua_state, const std::string& str_val)
 {
@@ -188,7 +199,6 @@ void luaPushAny(lua_State* plua_state, const any& a)
     }
 }
 
-//table operate
 void luaPushTable(lua_State* plua_state, const std::vector< std::pair<any, any> >& key_value_vec)
 {
     lua_newtable(plua_state);

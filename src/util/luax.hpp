@@ -47,8 +47,6 @@ double luaGetDouble(lua_State* plua_state, int index);
 double luaGetDouble(lua_State* plua_state, int index, double default_num);
 int luaGetInteger(lua_State* plua_state, int index);
 int luaGetInteger(lua_State* plua_state, int index, int default_int);
-//unsigned int luaGetUInteger(lua_State* plua_state, int index);
-//unsigned int luaGetUInteger(lua_State* plua_state, int index, unsigned int default_uint);
 std::string luaGetString(lua_State* plua_state, int index);
 std::string luaGetString(lua_State* plua_state, int index, const std::string& default_str);
 bool luaGetBoolean(lua_State* plua_state, int index);
@@ -56,18 +54,16 @@ bool luaGetBoolean(lua_State* plua_state, int index, bool default_bool);
 void* luaGetLightUserData(lua_State* plua_state, int index);
 void* luaGetLightUserData(lua_State* plua_state, int index, void* default_data);
 any luaGetAny(lua_State* plua_state, int index);
+std::vector< std::pair<any, any> > luaGetTable(lua_State* plua_state, int index);
 
 //push operate
 void luaPushDouble(lua_State* plua_state, double double_val);
 void luaPushInteger(lua_State* plua_state, int int_val);
-//void luaPushUInteger(lua_State* plua_state, unsigned int uint_val);
 void luaPushString(lua_State* plua_state, const std::string& str_val);
 void luaPushNil(lua_State* plua_state);
 void luaPushBoolean(lua_State* plua_state, bool boolean);
 void luaPushLightUserData(lua_State* plua_state, void* p);
 void luaPushAny(lua_State* plua_state, const any& a);
-
-//table operate
 void luaPushTable(lua_State* plua_state, const std::vector< std::pair<any, any> >& key_value_vec);
 
 //other operate

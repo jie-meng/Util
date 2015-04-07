@@ -74,6 +74,12 @@ namespace util
             return content ? content->type() : typeid(void);
         }
 
+        //joshua
+        std::string toString() const
+        {
+            return content ? content->toString() : "";
+        }
+
 //#ifndef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
     private: // types
 //#else
@@ -94,6 +100,8 @@ namespace util
 
             virtual placeholder * clone() const = 0;
 
+            //joshua
+            virtual std::string toString() const = 0;
         };
 
         template<typename ValueType>
@@ -116,6 +124,12 @@ namespace util
             virtual placeholder * clone() const
             {
                 return new holder(held);
+            }
+
+            //joshua
+            virtual std::string toString() const
+            {
+                return util::toString(held);
             }
 
         public: // representation
@@ -230,6 +244,9 @@ namespace util
 //    {
 //        return unsafe_any_cast<ValueType>(const_cast<any *>(operand));
 //    }
+
+    //joshua
+    inline std::string toString(const any& a) { return a.toString(); }
 
 } // namespace util
 
