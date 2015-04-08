@@ -212,6 +212,18 @@ void luaPushTable(lua_State* plua_state, const std::vector< std::pair<any, any> 
     }
 }
 
+void luaPushTable(lua_State* plua_state, const std::vector<any>& vec)
+{
+    lua_newtable(plua_state);
+
+    for (size_t i=0; i<vec.size(); ++i)
+    {
+        luaPushAny(plua_state, any(i));
+        luaPushAny(plua_state, vec[i]);
+        lua_settable(plua_state, -3);
+    }
+}
+
 //other operate
 LuaType luaGetType(lua_State* plua_state, int index)
 {
@@ -552,6 +564,46 @@ static int strTrim(lua_State* plua_state)
     return 1;
 }
 
+static int strTrimLeftEx(lua_State* plua_state)
+{
+    luaPushString(plua_state, util::strTrimLeftEx(luaGetString(plua_state, 1, ""), luaGetString(plua_state, 2, kWhiteSpace)));
+    return 1;
+}
+
+static int strTrimRightEx(lua_State* plua_state)
+{
+    luaPushString(plua_state, util::strTrimRightEx(luaGetString(plua_state, 1, ""), luaGetString(plua_state, 2, kWhiteSpace)));
+    return 1;
+}
+
+static int strTrimEx(lua_State* plua_state)
+{
+    luaPushString(plua_state, util::strTrimEx(luaGetString(plua_state, 1, ""), luaGetString(plua_state, 2, kWhiteSpace)));
+    return 1;
+}
+
+static int strReplace(lua_State* plua_state)
+{
+    luaPushString(plua_state, 
+            util::strReplace(
+                luaGetString(plua_state, 1, ""), 
+                luaGetString(plua_state, 2, ""),
+                luaGetString(plua_state, 3, "")));
+
+    return 1;
+}
+
+static int strRelaceAll(lua_State* plua_state)
+{
+    luaPushString(plua_state, 
+            util::strReplaceAll(
+                luaGetString(plua_state, 1, ""), 
+                luaGetString(plua_state, 2, ""),
+                luaGetString(plua_state, 3, "")));
+
+    return 1;
+}
+
 static int strStartWith(lua_State* plua_state)
 {
     luaPushBoolean(plua_state, util::strStartWith(luaGetString(plua_state, 1, ""), luaGetString(plua_state, 2, ""), luaGetBoolean(plua_state, 3, true)));
@@ -620,17 +672,31 @@ static int strJoin(lua_State* plua_state)
 
 static int strSplit(lua_State* plua_state)
 {
+    std::vector<std::string> vec;
+    util::strSplit(luaGetString(plua_state, 1, ""),
+             luaGetString(plua_state, 2, " "),
+             vec,
+             luaGetInteger(plua_state, 3, 0));
+
+    luaPushTable(plua_state, vec);
+
     return 1;
 }
 
 static int strSplitEx(lua_State* plua_state)
 {
+    std::vector<std::string> vec;
+    util::strSplitEx(luaGetString(plua_state, 1, ""),
+             luaGetString(plua_state, 2, " "),
+             luaGetString(plua_state, 3, "\""),
+             luaGetString(plua_state, 4, "\""),
+             vec,
+             luaGetInteger(plua_state, 5, 0));
+
+    luaPushTable(plua_state, vec);
+
     return 1;
 }
-//inline size_t strSplit(const std::string& str, const std::string& del, Coll& out_coll, size_t limit = 0)
-//inline size_t strSplitEx(const std::string& str, const std::string& del,
-//                         const std::string& start_flag, const std::string& end_flag,
-//                         Coll& out_coll, size_t limit = 0)
 
 //LuaState
 LuaState::LuaState() :
@@ -697,6 +763,11 @@ void LuaState::extendBasicFunctions()
     registerFunction("strTrim", strTrim);
     registerFunction("strTrimLeft", strTrimLeft);
     registerFunction("strTrimRight", strTrimRight);
+    registerFunction("strTrimEx", strTrimEx);
+    registerFunction("strTrimLeftEx", strTrimLeftEx);
+    registerFunction("strTrimRightEx", strTrimRightEx);
+    registerFunction("strReplace", strReplace);
+    registerFunction("strRelaceAll", strRelaceAll);
     registerFunction("strLeft", strLeft);
     registerFunction("strRight", strRight);
     registerFunction("strMid", strMid);

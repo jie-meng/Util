@@ -65,6 +65,17 @@ void luaPushBoolean(lua_State* plua_state, bool boolean);
 void luaPushLightUserData(lua_State* plua_state, void* p);
 void luaPushAny(lua_State* plua_state, const any& a);
 void luaPushTable(lua_State* plua_state, const std::vector< std::pair<any, any> >& key_value_vec);
+void luaPushTable(lua_State* plua_state, const std::vector<any>& vec);
+
+template <typename Coll>
+void luaPushTable(lua_State* plua_state, const Coll& coll)
+{
+    std::vector<any> any_vec;
+    typename Coll::const_iterator it;
+    for (it = coll.begin(); it != coll.end(); ++it)
+        any_vec.push_back(any(*it));
+    luaPushTable(plua_state, any_vec);
+}
 
 //other operate
 LuaType luaGetType(lua_State* plua_state, int index);
