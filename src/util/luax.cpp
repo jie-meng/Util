@@ -218,7 +218,7 @@ void luaPushTable(lua_State* plua_state, const std::vector<any>& vec)
 
     for (size_t i=0; i<vec.size(); ++i)
     {
-        luaPushAny(plua_state, any(i));
+        luaPushAny(plua_state, any(i+1));
         luaPushAny(plua_state, vec[i]);
         lua_settable(plua_state, -3);
     }
@@ -584,9 +584,9 @@ static int strTrimEx(lua_State* plua_state)
 
 static int strReplace(lua_State* plua_state)
 {
-    luaPushString(plua_state, 
+    luaPushString(plua_state,
             util::strReplace(
-                luaGetString(plua_state, 1, ""), 
+                luaGetString(plua_state, 1, ""),
                 luaGetString(plua_state, 2, ""),
                 luaGetString(plua_state, 3, "")));
 
@@ -595,9 +595,9 @@ static int strReplace(lua_State* plua_state)
 
 static int strRelaceAll(lua_State* plua_state)
 {
-    luaPushString(plua_state, 
+    luaPushString(plua_state,
             util::strReplaceAll(
-                luaGetString(plua_state, 1, ""), 
+                luaGetString(plua_state, 1, ""),
                 luaGetString(plua_state, 2, ""),
                 luaGetString(plua_state, 3, "")));
 
@@ -630,7 +630,8 @@ static int strRight(lua_State* plua_state)
 
 static int strMid(lua_State* plua_state)
 {
-    luaPushString(plua_state, util::strMid(luaGetString(plua_state, 1, ""), luaGetInteger(plua_state, 2, 0), luaGetInteger(plua_state, 3, 0)));
+    //in lua, index start from 1, so mid index adjust to (idx-1)
+    luaPushString(plua_state, util::strMid(luaGetString(plua_state, 1, ""), luaGetInteger(plua_state, 2, 0)-1, luaGetInteger(plua_state, 3, 0)));
     return 1;
 }
 
