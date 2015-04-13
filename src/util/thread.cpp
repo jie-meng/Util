@@ -3,7 +3,7 @@
 #include <process.h>
 #include <windows.h>
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
 #include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -229,7 +229,7 @@ unsigned int Thread::threadFunc(void* param)
 
 #endif // _PLATFORM_WINDOWS_
 
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
 void sleep(size_t s)
 {
     ::sleep(s);

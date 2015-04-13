@@ -5,7 +5,7 @@
 #ifdef _PLATFORM_WINDOWS_
 #include <windows.h>
 #endif // _PLATFORM_WINDOWS_
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -254,7 +254,7 @@ struct Process::ProcessImpl
 
 #endif // _PLATFORM_WINDOWS_
 
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
 
 int executeProcess(const std::string& cmdline, const std::string& cur_path)
 {

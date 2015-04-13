@@ -14,11 +14,9 @@
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
-					<Add option="-D_PLATFORM_LINUX_" />
+					<Add option="-D_PLATFORM_UNIX_" />
 					<Add option="-D_CPP11_" />
 					<Add directory="src" />
-					<Add directory="src/util" />
-					<Add directory="src/util/lua/extend" />
 				</Compiler>
 				<Linker>
 					<Add option="-lpthread" />

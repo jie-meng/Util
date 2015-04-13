@@ -6,7 +6,7 @@
 #include <direct.h>
 #include <Shlwapi.h>
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/types.h>
@@ -247,7 +247,7 @@ time_t fileTime(const std::string& file, E_FileTime ft)
     return systemTimeToTime_t(st);
 
 #endif // _PLATFORM_WINDOWS_
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
     struct stat buf;
     if (0 != ::stat(file.c_str(), &buf))
         return 0;
@@ -276,7 +276,7 @@ std::string appPath()
     return strReplaceAll(std::string(buf), "\\", "/");
 #endif // _PLATFORM_WINDOWS_
 
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
     std::string link = strFormat("/proc/%d/exe", getpid());
     readlink(link.c_str(), buf, sizeof(buf));
     return std::string(buf);
@@ -330,7 +330,7 @@ bool isPathExists(const std::string& path)
 #ifdef _PLATFORM_WINDOWS_
     return ::PathFileExistsA(path.c_str());
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
     return 0 == ::access(path.c_str(), F_OK);
 #endif
 }
@@ -340,7 +340,7 @@ bool isPathDir(const std::string& path)
 #ifdef _PLATFORM_WINDOWS_
     return ::PathIsDirectoryA(path.c_str());
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
     struct stat info;
     stat(path.c_str(), &info);
     if(S_ISDIR(info.st_mode))
@@ -366,7 +366,7 @@ bool isPathEmpty(const std::string& path)
 #ifdef _PLATFORM_WINDOWS_
     return ::PathIsDirectoryEmptyA(path.c_str());
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
     if (!pathRemove(path))
         return false;
 
@@ -391,7 +391,7 @@ void pathRemoveAll(const std::string& path)
 #ifdef _PLATFORM_WINDOWS_
         std::string cmd = std::string("rd /s /q \"") + path + "\"";
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
         std::string cmd = std::string("rm -rf \"") + path + "\"";
 #endif
         ::system(cmd.c_str());
@@ -420,7 +420,7 @@ bool mkDir(const std::string& path)
 #ifdef _PLATFORM_WINDOWS_
         return 0 == ::mkdir(path.c_str());
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
         return 0 == ::mkdir(path.c_str(), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
 }
@@ -463,7 +463,7 @@ size_t listFiles(const std::string& path, Coll& out_coll, PathFilter* pfilter)
     }
     ::FindClose(hListFile);
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
     DIR* pdir = 0;
     struct dirent* pdirent;
     if((pdir = opendir(path.c_str())) == 0)

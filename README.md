@@ -4,7 +4,7 @@
 ## linux ##
 
 
-DEFINES = \_PLATFORM\_LINUX\_
+DEFINES = \_PLATFORM\_UNIX\_
 
 LIBS = -lpthread
 

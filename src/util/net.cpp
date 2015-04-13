@@ -12,7 +12,7 @@
 #include <ws2tcpip.h>
 typedef int socklen_t;
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
 #ifdef _ANDROID_
 #include <sys/select.h>
 //#include <sys/socket.h>
@@ -491,7 +491,7 @@ bool Socket::bind(const std::string& ip, unsigned short port, unsigned short* pp
 #ifdef _PLATFORM_WINDOWS_
              int len = sizeof(sin);
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
             socklen_t len = sizeof(sin);
 #endif
             if (getsockname(pdata_->socket_, (struct sockaddr *)&sin, &len) != 0)
@@ -505,7 +505,7 @@ bool Socket::bind(const std::string& ip, unsigned short port, unsigned short* pp
 #ifdef _PLATFORM_WINDOWS_
              int len = sizeof(sin6);
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
             socklen_t len = sizeof(sin6);
 #endif
             if (getsockname(pdata_->socket_, (struct sockaddr *)&sin6, &len) != 0)
@@ -531,7 +531,7 @@ int Socket::setBlock(unsigned long block)
     unsigned long ublock = block;
     return ::ioctlsocket(pdata_->socket_, FIONBIO, &ublock);
 #endif
-#ifdef _PLATFORM_LINUX_
+#ifdef _PLATFORM_UNIX_
     int flags  = fcntl(pdata_->socket_,F_GETFL,0);
     if (block)
         return ::fcntl(pdata_->socket_, F_SETFL, flags | O_NONBLOCK);   //set noblock
