@@ -14,12 +14,13 @@
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
-					<Add option="-D_PLATFORM_UNIX_" />
+					<Add option="-D_PLATFORM_WINDOWS_" />
 					<Add option="-D_CPP11_" />
 					<Add directory="src" />
 				</Compiler>
 				<Linker>
-					<Add option="-lpthread" />
+					<Add option="-lws2_32" />
+					<Add option="-lShlwapi" />
 				</Linker>
 			</Target>
 			<Target title="Release">

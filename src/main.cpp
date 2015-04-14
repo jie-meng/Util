@@ -479,4 +479,9 @@ int testCppCallLuaFunc()
 int main(int argc, char* argv[])
 {
     luaExecutor(argc, argv);
+//    Process p;
+//    p.create("e.exe", "", false, true, [](const string& str){ printLine(str); });
+//    getLine();
+//    cout<<"stdout"<<endl;
+//    cerr<<"stderr"<<endl;
 }
