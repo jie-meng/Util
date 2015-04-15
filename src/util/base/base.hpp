@@ -30,6 +30,10 @@ typedef unsigned __int64 uint64_t;
 #define UtilAutoPtr        std::auto_ptr
 #define UtilSharedPtr      boost::shared_ptr
 
+#ifndef NULL
+#define NULL  0
+#endif
+
 #elif defined _CPP11_
 
 #include <memory>
@@ -39,6 +43,12 @@ typedef unsigned __int64 uint64_t;
 #define UtilAutoPtr        std::unique_ptr
 #define UtilUniquePtr      std::unique_ptr
 #define UtilSharedPtr      std::shared_ptr
+
+
+#ifndef NULL
+#define NULL nullptr 
+#endif
+
 using namespace std::placeholders;
 
 template <typename T>
@@ -53,6 +63,11 @@ inline void autoPtrMove(UtilAutoPtr<T>& to, UtilAutoPtr<T>& from) { to = std::mo
 #define UtilBind           std::tr1::bind
 #define UtilAutoPtr        std::auto_ptr
 #define UtilSharedPtr      std::tr1::shared_ptr
+
+#ifndef NULL
+#define NULL  0
+#endif
+
 using namespace std::tr1::placeholders;
 
 template <typename T>
@@ -60,10 +75,14 @@ inline void autoPtrMove(UtilAutoPtr<T>& to, UtilAutoPtr<T>& from) { to = from; }
 
 #endif
 
-#ifndef NULL
-#define NULL  0
+#ifdef DISALLOW_COPY_AND_ASSIGN
+#undef DISALLOW_COPY_AND_ASSIGN
 #endif
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) TypeName(const TypeName&); TypeName& operator=(const TypeName&);
+
+#ifdef SINGLETON
+#undef SINGLETON
+#endif
 #define SINGLETON(TypeName) static TypeName& getInstance() { static TypeName s_instance; return s_instance; }
 
 //base classes & functions
