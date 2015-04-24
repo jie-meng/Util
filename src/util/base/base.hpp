@@ -46,7 +46,7 @@ typedef unsigned __int64 uint64_t;
 
 
 #ifndef NULL
-#define NULL nullptr 
+#define NULL nullptr
 #endif
 
 using namespace std::placeholders;
@@ -93,5 +93,6 @@ inline void autoPtrMove(UtilAutoPtr<T>& to, UtilAutoPtr<T>& from) { to = from; }
 #include "baseclass.hpp"
 #include "string.hpp"
 #include "time.hpp"
+#include "platform.hpp"
 
 #endif // UTIL_BASE_BASE_HPP

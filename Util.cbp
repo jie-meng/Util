@@ -17,6 +17,7 @@
 					<Add option="-D_PLATFORM_WINDOWS_" />
 					<Add option="-D_CPP11_" />
 					<Add directory="src" />
+					<Add directory="src/util/base" />
 				</Compiler>
 				<Linker>
 					<Add option="-lws2_32" />
@@ -34,6 +35,7 @@
 					<Add option="-D_PLATFORM_WINDOWS_" />
 					<Add option="-D_CPP11_" />
 					<Add directory="src" />
+					<Add directory="src/util/base" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -311,6 +313,8 @@
 		<Unit filename="src/util/base/memory.hpp" />
 		<Unit filename="src/util/base/out.cpp" />
 		<Unit filename="src/util/base/out.hpp" />
+		<Unit filename="src/util/base/platform.cpp" />
+		<Unit filename="src/util/base/platform.hpp" />
 		<Unit filename="src/util/base/string.cpp" />
 		<Unit filename="src/util/base/string.hpp" />
 		<Unit filename="src/util/base/time.cpp" />

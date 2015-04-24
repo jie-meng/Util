@@ -545,6 +545,12 @@ static int run(lua_State* plua_state)
     return lua_dofile_export(plua_state);
 }
 
+static int platformInfo(lua_State* plua_state)
+{
+    luaPushString(plua_state, platformInfo());
+    return 1;
+}
+
 //string operations supplement
 static int strTrimLeft(lua_State* plua_state)
 {
@@ -761,6 +767,7 @@ void LuaState::extendBasicFunctions()
     registerFunction("msleep", msleep);
     registerFunction("include", include);
     registerFunction("run", run);
+    registerFunction("platformInfo", platformInfo);
     registerFunction("strTrim", strTrim);
     registerFunction("strTrimLeft", strTrimLeft);
     registerFunction("strTrimRight", strTrimRight);
