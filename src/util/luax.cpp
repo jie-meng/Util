@@ -547,7 +547,7 @@ static int run(lua_State* plua_state)
 
 static int platformInfo(lua_State* plua_state)
 {
-    luaPushString(plua_state, platformInfo());
+    luaPushString(plua_state, util::platformInfo());
     return 1;
 }
 
