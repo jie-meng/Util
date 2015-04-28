@@ -117,7 +117,7 @@ public:
     void addHeapObject(void* p);
 
     void removeHeapObject(void* p);
-    bool include(const std::string& file);
+    //bool include(const std::string& file);
     void clear();
     void clear(TypeInfo typeinfo);
 private:
@@ -144,7 +144,7 @@ public:
     void addHeapObject(lua_State* plua_state, void* p);
 
     void removeHeapObject(lua_State* plua_state, void* p);
-    bool include(lua_State* plua_state, const std::string& file);
+    //bool include(lua_State* plua_state, const std::string& file);
     void clear(lua_State* plua_state);
     void clear(lua_State* plua_state, TypeInfo typeinfo);
     void addState(lua_State* plua_state, LuaHeapRecycler* ph);

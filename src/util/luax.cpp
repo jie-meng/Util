@@ -348,7 +348,7 @@ int luaParseFile(lua_State* plua_state, const std::string& file, std::string& er
 
 //LuaHeapRecycler
 typedef std::map<void*, LuaHeapObjectInfo> HeapMap;
-typedef std::set<std::string> IncludeSet;
+//typedef std::set<std::string> IncludeSet;
 
 struct LuaHeapRecycler::LuaHeapRecyclerImpl
 {
@@ -356,10 +356,10 @@ struct LuaHeapRecycler::LuaHeapRecyclerImpl
     void removeHeapObject(void* p);
     void clear();
     void clear(TypeInfo typeinfo);
-    bool include(const std::string& file);
+    //bool include(const std::string& file);
 
     HeapMap heap_map_;
-    IncludeSet include_set_;
+    //IncludeSet include_set_;
     Mutex mutex_;
 };
 
@@ -381,10 +381,10 @@ void LuaHeapRecycler::LuaHeapRecyclerImpl::removeHeapObject(void* p)
         heap_map_.erase(p);
 }
 
-bool LuaHeapRecycler::LuaHeapRecyclerImpl::include(const std::string& file)
-{
-    return include_set_.insert(file).second;
-}
+//bool LuaHeapRecycler::LuaHeapRecyclerImpl::include(const std::string& file)
+//{
+//    return include_set_.insert(file).second;
+//}
 
 void LuaHeapRecycler::LuaHeapRecyclerImpl::clear()
 {
@@ -395,7 +395,7 @@ void LuaHeapRecycler::LuaHeapRecyclerImpl::clear()
         it->second.recycler(it->first);
     }
     heap_map_.clear();
-    include_set_.clear();
+    //include_set_.clear();
 }
 
 void LuaHeapRecycler::LuaHeapRecyclerImpl::clear(TypeInfo typeinfo)
@@ -432,10 +432,10 @@ void LuaHeapRecycler::removeHeapObject(void* p)
     pimpl_->removeHeapObject(p);
 }
 
-bool LuaHeapRecycler::include(const std::string& file)
-{
-    return pimpl_->include(file);
-}
+//bool LuaHeapRecycler::include(const std::string& file)
+//{
+//    return pimpl_->include(file);
+//}
 
 void LuaHeapRecycler::clear()
 {
@@ -477,15 +477,15 @@ void LuaHeapRecyclerManager::removeHeapObject(lua_State* plua_state, void* p)
         (it->second)->removeHeapObject(p);
 }
 
-bool LuaHeapRecyclerManager::include(lua_State* plua_state, const std::string& file)
-{
-    Synchronize sc(pimpl_->lua_heap_recycler_mutex_);
-    std::map<lua_State*, LuaHeapRecycler*>::iterator it = pimpl_->state_map_.find(plua_state);
-    if (it != pimpl_->state_map_.end())
-        return (it->second)->include(file);
-
-    return false;
-}
+//bool LuaHeapRecyclerManager::include(lua_State* plua_state, const std::string& file)
+//{
+//    Synchronize sc(pimpl_->lua_heap_recycler_mutex_);
+//    std::map<lua_State*, LuaHeapRecycler*>::iterator it = pimpl_->state_map_.find(plua_state);
+//    if (it != pimpl_->state_map_.end())
+//        return (it->second)->include(file);
+//
+//    return false;
+//}
 
 void LuaHeapRecyclerManager::addState(lua_State* plua_state, LuaHeapRecycler* ph)
 {
@@ -528,14 +528,14 @@ static int msleep(lua_State* plua_state)
     return 0;
 }
 
-static int include(lua_State* plua_state)
-{
-    //do not include same file
-    if (!LuaHeapRecyclerManager::getInstance().include(plua_state, luaGetString(plua_state, 1)))
-        return 0;
-
-    return lua_dofile_export(plua_state);
-}
+//static int include(lua_State* plua_state)
+//{
+//    //do not include same file
+//    if (!LuaHeapRecyclerManager::getInstance().include(plua_state, luaGetString(plua_state, 1)))
+//        return 0;
+//
+//    return lua_dofile_export(plua_state);
+//}
 
 static int run(lua_State* plua_state)
 {
@@ -765,7 +765,7 @@ void LuaState::extendBasicFunctions()
 {
     registerFunction("sleep", sleep);
     registerFunction("msleep", msleep);
-    registerFunction("include", include);
+    //registerFunction("include", include);
     registerFunction("run", run);
     registerFunction("platformInfo", platformInfo);
     registerFunction("strTrim", strTrim);
