@@ -475,8 +475,7 @@ int testCppCallLuaFunc()
 
 #endif
 
-
 int main(int argc, char* argv[])
-{
+{    
     luaExecutor(argc, argv);
 }

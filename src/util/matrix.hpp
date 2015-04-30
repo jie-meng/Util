@@ -43,7 +43,7 @@ public:
     value_type determinant() const;
     bool invertable() const;
     Matrix inverse() const;
-    Matrix transpose()const;
+    Matrix transpose() const;
     Matrix conjugate() const;
     Matrix adjoint() const;
     Matrix add(value_type scalar) const;
