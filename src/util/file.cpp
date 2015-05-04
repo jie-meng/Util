@@ -65,16 +65,13 @@ bool writeTextFile(const std::string& file, const std::string& content, bool app
 
 bool createBinaryFile(const std::string& file, uint64_t file_size, char default_data)
 {
-    if (file_size < 0)
-        return false;
-
     std::ofstream ofs(file.c_str(), std::ios::binary);
     if (!ofs.is_open())
         return false;
 
     if (file_size > 0)
     {
-        char buf[1024*1024] = {0};
+        char buf[1024*1024] = {default_data};
         uint64_t i = 0;
         while(i + sizeof(buf) < file_size)
         {
@@ -96,7 +93,7 @@ bool createBinaryFile(const std::string& file, uint64_t file_size, char default_
 
 bool readBinaryFile(const std::string& file, char* pout_buf, size_t read_len, std::streamoff offset, std::ios::seekdir pos)
 {
-    if (0 == pout_buf || read_len < 0)
+    if (0 == pout_buf)
         return false;
 
     std::ifstream ifs(file.c_str(), std::ios::binary);
@@ -114,7 +111,7 @@ bool readBinaryFile(const std::string& file, char* pout_buf, size_t read_len, st
 
 bool writeBinaryFile(const std::string& file, char* pbuf, size_t write_len, bool append)
 {
-    if (0 == pbuf || write_len < 0)
+    if (0 == pbuf)
         return false;
 
     std::ios_base::openmode openmode = std::ios::binary | std::ios::out;
@@ -135,7 +132,7 @@ bool writeBinaryFile(const std::string& file, char* pbuf, size_t write_len, bool
 
 bool overwriteBinaryFile(const std::string& file, char* pbuf, size_t write_len, std::streamoff offset, std::ios::seekdir pos)
 {
-    if (0 == pbuf || write_len < 0)
+    if (0 == pbuf)
         return false;
 
     std::ofstream ofs(file.c_str(), std::ios::binary | std::ios::in | std::ios::out);

@@ -186,10 +186,10 @@ class StreamSocketSvrListener
 public:
     StreamSocketSvrListener() {}
     virtual ~StreamSocketSvrListener() {}
-    virtual void newConn(size_t conn, TConnSocket* ptconn_socket) {}
-    virtual void recvConn(char* buf, size_t len, size_t conn, TConnSocket* ptconn_socket) {}
-    virtual void closeConn(size_t conn) {}
-    virtual void processMsgConn(char* pmsg, size_t len, size_t conn, TConnSocket* ptconn_socket) {}
+    virtual void newConn(size_t /*conn*/, TConnSocket* /*ptconn_socket*/) {}
+    virtual void recvConn(char* /*buf*/, size_t /*len*/, size_t /*conn*/, TConnSocket* /*ptconn_socket*/) {}
+    virtual void closeConn(size_t /*conn*/) {}
+    virtual void processMsgConn(char* /*pmsg*/, size_t /*len*/, size_t /*conn*/, TConnSocket* /*ptconn_socket*/) {}
 };
 
 class StreamSocket
