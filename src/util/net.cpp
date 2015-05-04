@@ -716,7 +716,7 @@ struct StreamSocket::StreamSocketImpl
         is_selecting_(false)
     {
         recv_buf_ = new char[recv_buf_len_];
-        memset(recv_buf_, 0, sizeof(recv_buf_));
+        memset(recv_buf_, 0, recv_buf_len_);
     }
 
     ~StreamSocketImpl()
