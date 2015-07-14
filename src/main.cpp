@@ -1,6 +1,8 @@
 #include <iostream>
 #include <map>
 #include <list>
+//#include <locale>
+//#include <codecvt>
 #include "util/thread.hpp"
 #include "util/file.hpp"
 #include "util/net.hpp"
@@ -475,7 +477,34 @@ int testCppCallLuaFunc()
 
 #endif
 
+int pnpoly (int nvert, float *vertx, float *verty, float testx, float testy) {
+
+    int i, j, c = 0;
+
+    for (i = 0, j = nvert-1; i < nvert; j = i++) {
+
+        if ( ( (verty[i]>testy) != (verty[j]>testy) ) && (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
+        {
+            c = !c;
+            printLine("in polygon " + toString(c));
+        }
+    }
+    return c;
+}
+
+//const std::string ws2utf8( const std::wstring& src )
+//{
+//	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+//	return conv.to_bytes( src );
+//}
+//
+//const std::wstring utf8_2_ws( const std::string& src )
+//{
+//	std::wstring_convert<std::codecvt_utf8<wchar_t> > conv;
+//	return conv.from_bytes( src );
+//}
+
 int main(int argc, char* argv[])
-{    
+{
     luaExecutor(argc, argv);
 }
