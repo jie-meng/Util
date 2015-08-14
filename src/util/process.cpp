@@ -313,12 +313,12 @@ int executeProcess(const std::string& cmdline, const std::string& cur_path)
                 chdir(cur_path.c_str());
 
             //exec
-            std::vector<int> argv(params.size()+1);
+            std::vector<uintptr_t> argv(params.size()+1);
             size_t i(0);
             for (; i<params.size(); ++i)
-                argv[i] = (int)params[i].c_str();
+                argv[i] = reinterpret_cast<uintptr_t>(params[i].c_str());
             argv[i] = 0;
-            if(-1 == execvp(params[0].c_str(), (char* const*)&argv[0]))
+            if(-1 == execvp(params[0].c_str(), reinterpret_cast<char* const*>(&argv[0])))
                 exit(-1);
         }
         exit(0);
@@ -358,13 +358,13 @@ bool executeProcessAsyn(const std::string& cmdline, const std::string& cur_path)
                 chdir(cur_path.c_str());
 
             //exec
-            std::vector<int> argv(params.size()+1);
+            std::vector<uintptr_t> argv(params.size()+1);
             size_t i(0);
             for (; i<params.size(); ++i)
-                argv[i] = (int)params[i].c_str();
+                argv[i] = reinterpret_cast<uintptr_t>(params[i].c_str());
             argv[i] = 0;
 
-            if(-1 == execvp(params[0].c_str(), (char* const*)&argv[0]))
+            if(-1 == execvp(params[0].c_str(), reinterpret_cast<char* const*>(&argv[0])))
                 exit(-1);
         }
         exit(0);
@@ -478,12 +478,12 @@ struct Process::ProcessImpl
         }
 
         //exec
-        std::vector<int> argv(params.size()+1);
+        std::vector<uintptr_t> argv(params.size()+1);
         size_t i(0);
         for (; i<params.size(); ++i)
-            argv[i] = (int)params[i].c_str();
+            argv[i] = reinterpret_cast<uintptr_t>(params[i].c_str());
         argv[i] = 0;
-        if(-1 == execvp(params[0].c_str(), (char* const*)&argv[0]))
+        if(-1 == execvp(params[0].c_str(), reinterpret_cast<char* const*>(&argv[0])))
             return false;
 
         return true;
@@ -548,7 +548,7 @@ struct Process::ProcessImpl
         char buf[kBufSize] = {0};
         while(true)
         {
-    
+
             memset(buf, 0, sizeof(buf));
             size_t len = ::read(error_pipe_[0], buf, sizeof(buf));
             if (len <= 0)
