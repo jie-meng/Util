@@ -99,7 +99,7 @@ LUALIB_API void (luaL_requiref) (lua_State *L, const char *modname,
                                  lua_CFunction openf, int glb);
 
 //joshua
-int lua_dofile_export (lua_State *L);								 
+int lua_dofile_export (lua_State *L);
 
 /*
 ** ===============================================================

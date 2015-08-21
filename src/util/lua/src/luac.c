@@ -1,5 +1,5 @@
 /*
-** $Id: luac.c,v 1.72 2015/01/06 03:09:13 lhf Exp $
+** $Id: luac.c,v 1.75 2015/03/12 01:58:27 lhf Exp $
 ** Lua compiler (saves bytecodes to files; also lists bytecodes)
 ** See Copyright Notice in lua.h
 */
@@ -189,24 +189,24 @@ static int pmain(lua_State* L)
  return 0;
 }
 
-int main_l2(int argc, char* argv[])
-{
- lua_State* L;
- int i=doargs(argc,argv);
- argc-=i; argv+=i;
- if (argc<=0) usage("no input files given");
- L=luaL_newstate();
- if (L==NULL) fatal("cannot create state: not enough memory");
- lua_pushcfunction(L,&pmain);
- lua_pushinteger(L,argc);
- lua_pushlightuserdata(L,argv);
- if (lua_pcall(L,2,0,0)!=LUA_OK) fatal(lua_tostring(L,-1));
- lua_close(L);
- return EXIT_SUCCESS;
-}
+//int main(int argc, char* argv[])
+//{
+// lua_State* L;
+// int i=doargs(argc,argv);
+// argc-=i; argv+=i;
+// if (argc<=0) usage("no input files given");
+// L=luaL_newstate();
+// if (L==NULL) fatal("cannot create state: not enough memory");
+// lua_pushcfunction(L,&pmain);
+// lua_pushinteger(L,argc);
+// lua_pushlightuserdata(L,argv);
+// if (lua_pcall(L,2,0,0)!=LUA_OK) fatal(lua_tostring(L,-1));
+// lua_close(L);
+// return EXIT_SUCCESS;
+//}
 
 /*
-** $Id: print.c,v 1.76 2015/01/05 16:12:50 lhf Exp $
+** $Id: luac.c,v 1.75 2015/03/12 01:58:27 lhf Exp $
 ** print bytecodes
 ** See Copyright Notice in lua.h
 */
@@ -226,7 +226,7 @@ int main_l2(int argc, char* argv[])
 static void PrintString(const TString* ts)
 {
  const char* s=getstr(ts);
- size_t i,n=ts->len;
+ size_t i,n=tsslen(ts);
  printf("%c",'"');
  for (i=0; i<n; i++)
  {
