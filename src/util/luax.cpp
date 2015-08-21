@@ -173,6 +173,10 @@ void luaPushAny(lua_State* plua_state, const any& a)
     {
         luaPushInteger(plua_state, any_cast<int>(a));
     }
+    else if (a.type() == typeid(size_t))
+    {
+        luaPushInteger(plua_state, (int)any_cast<size_t>(a));
+    }
     else if (a.type() == typeid(short))
     {
         luaPushInteger(plua_state, (int)any_cast<short>(a));
@@ -218,7 +222,7 @@ void luaPushTable(lua_State* plua_state, const std::vector<any>& vec)
 
     for (size_t i=0; i<vec.size(); ++i)
     {
-        luaPushAny(plua_state, any(i+1));
+        luaPushInteger(plua_state, i+1);
         luaPushAny(plua_state, vec[i]);
         lua_settable(plua_state, -3);
     }
@@ -528,15 +532,6 @@ static int msleep(lua_State* plua_state)
     return 0;
 }
 
-//static int include(lua_State* plua_state)
-//{
-//    //do not include same file
-//    if (!LuaHeapRecyclerManager::getInstance().include(plua_state, luaGetString(plua_state, 1)))
-//        return 0;
-//
-//    return lua_dofile_export(plua_state);
-//}
-
 static int run(lua_State* plua_state)
 {
     //clear heap before run
@@ -765,7 +760,6 @@ void LuaState::extendBasicFunctions()
 {
     registerFunction("sleep", sleep);
     registerFunction("msleep", msleep);
-    //registerFunction("include", include);
     registerFunction("run", run);
     registerFunction("platformInfo", platformInfo);
     registerFunction("strTrim", strTrim);
