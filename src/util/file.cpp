@@ -402,8 +402,7 @@ bool pathRemove(const std::string& path)
 
     if (isPathFile(path))
     {
-        ::remove(path.c_str());
-        return true;
+        return 0 == ::remove(path.c_str());
     }
 
     if (isPathDir(path))
