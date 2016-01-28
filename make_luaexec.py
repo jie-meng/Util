@@ -1,7 +1,8 @@
 import os
 import platform
+import subprocess
 
-if os.system("make.py") == 0:
+if subprocess.call(['python', 'make.py']) == 0:
     if platform.system().lower().find('windows') >= 0:
         os.rename('Util.exe', 'luaexec.exe')
     else:

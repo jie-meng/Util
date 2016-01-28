@@ -7,6 +7,6 @@ if platform.system().lower().find('windows') >= 0:
     os.system('mingw32-make')
 else:
     os.system("cmake .")
-    os.system("mame")
+    os.system("make")
 
 print("Make ok.")
