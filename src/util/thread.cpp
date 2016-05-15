@@ -230,6 +230,26 @@ unsigned int Thread::threadFunc(void* param)
 #endif // _PLATFORM_WINDOWS_
 
 #ifdef _PLATFORM_UNIX_
+
+#ifdef __APPLE__
+
+void timedwait_notify_tdfunc(sem_t* sem, size_t ms)
+{
+    msleep(ms);
+    ::sem_post(sem);
+}
+    
+int sem_timedwait(sem_t* sem, const struct timespec *abstime)
+{    
+    ::sem_init(sem, 0, 0);
+    Thread td(UtilBind(timedwait_notify_tdfunc, sem, abstime->tv_sec * 1000 + abstime->tv_nsec / 1000000));
+    td.start();
+    ::sem_wait(sem);
+    ::sem_destroy(sem);
+}
+
+#endif    
+    
 void sleep(size_t s)
 {
     ::sleep(s);
@@ -242,7 +262,7 @@ void msleep(size_t ms)
 
 unsigned long getCurrentThreadId()
 {
-    return pthread_self();
+    return (unsigned long)pthread_self();
 }
 
 struct Mutex::MutexData
@@ -254,7 +274,11 @@ Mutex::Mutex() :
     pdata_(new MutexData())
 {
     pthread_mutexattr_t mattr;
+#ifdef __APPLE__
+    pthread_mutexattr_settype(&mattr,PTHREAD_MUTEX_RECURSIVE);
+#else
     pthread_mutexattr_settype(&mattr,PTHREAD_MUTEX_RECURSIVE_NP);
+#endif
     ::pthread_mutex_init(&pdata_->mutex_, &mattr);
 }
 Mutex::~Mutex()
@@ -314,13 +338,13 @@ bool Lock::timedWait(size_t ms, bool reset)
     {
         int ret(0);
         while(!pdata_->notify_ && 0 == ret)
-            ret = ::sem_timedwait(&pdata_->sem_, &ts);
+            ret = sem_timedwait(&pdata_->sem_, &ts);
 
         return (0 == ret) ? true : false;
     }
     else
     {
-        return (0 == ::sem_timedwait(&pdata_->sem_, &ts)) ? true : false;
+        return (0 == sem_timedwait(&pdata_->sem_, &ts)) ? true : false;
     }
 }
 
@@ -429,7 +453,7 @@ bool MultiLock::timedWait(size_t ms, bool reset)
 
     int ret(0);
     while(!(pdata_->wait_all_ ? pdata_->allNotified() : pdata_->oneNotified()) && 0 == ret)
-        ret = ::sem_timedwait(&pdata_->sem_, &ts);
+        ret = sem_timedwait(&pdata_->sem_, &ts);
 
     return (0 == ret) ? true : false;
 }

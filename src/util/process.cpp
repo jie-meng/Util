@@ -9,7 +9,10 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#endif // _PLATFORM_LINUX_
+#ifdef __APPLE__
+#include <signal.h>
+#endif
+#endif // _PLATFORM_UNIX_
 
 namespace util
 {

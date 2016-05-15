@@ -28,7 +28,9 @@ inline int util_isblank(int c) { return c == 0x20 || c == '\t'; }
 
 extern "C" {
 	typedef int (*POSIX_FUNC)(int);
-	int isblank(int c);
+#ifndef __APPLE__
+    int isblank(int c);
+#endif
 }
 
 //

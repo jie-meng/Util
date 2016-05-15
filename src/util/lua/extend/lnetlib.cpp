@@ -8,25 +8,25 @@ namespace util
 ////////////////////////////////////////////////////
 // NET
 ////////////////////////////////////////////////////
-static int htons(lua_State* plua_state)
+static int lua_htons(lua_State* plua_state)
 {
     luaPushInteger(plua_state, u_htons((uint16_t)luaGetInteger(plua_state, 1, 0)));
     return 1;
 }
 
-static int ntohs(lua_State* plua_state)
+static int lua_ntohs(lua_State* plua_state)
 {
     luaPushInteger(plua_state, u_ntohs((uint16_t)luaGetInteger(plua_state, 1, 0)));
     return 1;
 }
 
-static int htonl(lua_State* plua_state)
+static int lua_htonl(lua_State* plua_state)
 {
     luaPushInteger(plua_state, u_htonl((uint32_t)luaGetInteger(plua_state, 1, 0)));
     return 1;
 }
 
-static int ntohl(lua_State* plua_state)
+static int lua_ntohl(lua_State* plua_state)
 {
     luaPushInteger(plua_state, u_ntohl((uint32_t)luaGetInteger(plua_state, 1, 0)));
     return 1;
@@ -642,10 +642,10 @@ static const u_luaL_Reg net_lib[] =
 {
     {"ipArrayToStr", ip_array_to_str},
     {"ipStrToArray", ip_str_to_array},
-    {"htons", htons},
-    {"ntohs", ntohs},
-    {"htonl", htonl},
-    {"ntohl", ntohl},
+    {"htons", lua_htons},
+    {"ntohs", lua_ntohs},
+    {"htonl", lua_htonl},
+    {"ntohl", lua_ntohl},
 
     {"udpCreate", udpCreate},
     {"udpDestroy", udpDestroy},
