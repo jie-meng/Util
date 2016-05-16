@@ -11,6 +11,9 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
 #endif
 
 namespace util
@@ -260,7 +263,7 @@ time_t fileTime(const std::string& file, E_FileTime ft)
         default:
             return 0;
     }
-#endif // _PLATFORM_LINUX_
+#endif // _PLATFORM_UNIX_
 }
 
 std::string appPath()
@@ -274,10 +277,16 @@ std::string appPath()
 #endif // _PLATFORM_WINDOWS_
 
 #ifdef _PLATFORM_UNIX_
+#ifdef __APPLE__
+    uint32_t buf_size = kMaxPathLen;
+    return _NSGetExecutablePath(buf, &buf_size) ? "" : std::string(buf);
+#else
     std::string link = strFormat("/proc/%d/exe", getpid());
     readlink(link.c_str(), buf, sizeof(buf));
     return std::string(buf);
-#endif // _PLATFORM_LINUX_
+#endif
+    
+#endif // _PLATFORM_UNIX_
 }
 
 std::string currentPath()
@@ -533,5 +542,3 @@ void findFilesInDirRecursively(const std::string& dir, std::list<std::string>& o
 ///---------------------------//
 
 } // namespace util
-
-
