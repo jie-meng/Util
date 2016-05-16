@@ -101,6 +101,12 @@ static int splitPathname(lua_State* plua_state)
 }
 
 //path
+static int appPath(lua_State* plua_state)
+{
+    luaPushString(plua_state, appPath());
+    return 1;
+}
+    
 static int currentPath(lua_State* plua_state)
 {
     luaPushString(plua_state, currentPath());
@@ -213,6 +219,7 @@ static const u_luaL_Reg file_lib[] =
     {"fileCopy", fileCopy},
     {"splitPathname", splitPathname},
 
+    {"appPath", appPath},
     {"currentPath", currentPath},
     {"setCurrentPath", setCurrentPath},
     {"relativePathToAbsolutePath", relativePathToAbsolutePath},

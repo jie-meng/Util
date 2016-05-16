@@ -279,13 +279,17 @@ std::string appPath()
 #ifdef _PLATFORM_UNIX_
 #ifdef __APPLE__
     uint32_t buf_size = kMaxPathLen;
-    return _NSGetExecutablePath(buf, &buf_size) ? "" : std::string(buf);
+    if (!_NSGetExecutablePath(buf, &buf_size))
+        return std::string(buf);
+    else
+        return "";
+
 #else
     std::string link = strFormat("/proc/%d/exe", getpid());
     readlink(link.c_str(), buf, sizeof(buf));
     return std::string(buf);
 #endif
-    
+
 #endif // _PLATFORM_UNIX_
 }
 
