@@ -27,7 +27,7 @@ Cross-platform (Unix & Windows) C++ library
 
 Build Util: Go to directory of Util, execute command: python make.py
 
-Build luaexec: Go to directory of Util, execute command: python make_luaexec.py
+Build luaexec: Build Util first, rename Util to luaexec
 
 ### Difference of platform ###
 
