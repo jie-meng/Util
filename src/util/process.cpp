@@ -567,7 +567,7 @@ struct Process::ProcessImpl
     {
         if (input_pipe_[1])
         {
-            size_t len = ::write(input_pipe_[1], str.c_str(), str.length());
+            int len = ::write(input_pipe_[1], str.c_str(), str.length());
             return (len >= 0) ? true : false;
         }
         else
