@@ -13,6 +13,9 @@ std::string platformInfo()
     vector<string> vec;
 #ifdef _PLATFORM_UNIX_
     vec.push_back(kPlatformUnix);
+#ifdef  __APPLE__
+    vec.push_back(kPlatformMacOS);
+#endif
 #endif
 
 #ifdef _PLATFORM_WINDOWS_

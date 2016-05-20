@@ -12,6 +12,7 @@ const size_t kMaxPathLen = 512;
 const int kSuccess = 1;
 const int kFail = 0;
 const std::string kPlatformUnix = "unix";
+const std::string kPlatformMacOS = "macos";
 const std::string kPlatformWindows = "windows";
 
 } // namespace util
