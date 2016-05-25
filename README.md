@@ -1,6 +1,6 @@
 ## Util ##
 
-Cross-platform (Unix & Windows) C++ library
+A ligth-weight cross platform (Unix & Windows) C++ library
 
 - any type
 - typeinfo
@@ -27,20 +27,10 @@ Cross-platform (Unix & Windows) C++ library
 
 Build Util: Go to directory of Util, execute command: python make.py
 
-Build luaexec: Build Util first, rename Util to luaexec
+Build luaexec: 
 
-### Difference of platform ###
+1. Build Util
 
-#### unix ####
+2. rename Util to luaexec
 
-
-DEFINES = \_PLATFORM\_UNIX\_
-
-LIBS = -lpthread
-
-
-#### windows ####
-
-DEFINES = \_PLATFORM\_WINDOWS\_
-
-LIBS = -lws2_32 -lShlwapi
+luaexec is a lua script executor which contains basic lua & extensions (file, memory, net, process, regex, thread, csv, matrix)
