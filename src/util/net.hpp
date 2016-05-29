@@ -11,16 +11,16 @@ static const int kInvalidSocket = -1;
 //enums
 enum Family
 {
-    Family_None,
-    Family_IPv4,
-    Family_IPv6
+    Family_None = 0,
+    Family_IPv4 = 1,
+    Family_IPv6 = 2
 };
 
 enum SockType
 {
-    SockType_Dgram,
-    SockType_Stream,
-    SockType_Raw
+    SockType_Raw = 0,
+    SockType_Dgram = 1,
+    SockType_Stream = 2
 };
 
 uint16_t u_htons(uint16_t value);

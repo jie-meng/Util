@@ -233,19 +233,23 @@ unsigned int Thread::threadFunc(void* param)
 
 #ifdef __APPLE__
 
-void timedwait_notify_tdfunc(sem_t* sem, size_t ms)
+void timedwait_notify_tdfunc(sem_t* sem, size_t ms, int* ptimeout)
 {
     msleep(ms);
+    *ptimeout = -1;
     ::sem_post(sem);
 }
     
 int sem_timedwait(sem_t* sem, const struct timespec *abstime)
 {    
     ::sem_init(sem, 0, 0);
-    Thread td(UtilBind(timedwait_notify_tdfunc, sem, abstime->tv_sec * 1000 + abstime->tv_nsec / 1000000));
+    int timeout = 0;
+    Thread td(UtilBind(timedwait_notify_tdfunc, sem, abstime->tv_sec * 1000 + abstime->tv_nsec / 1000000, &timeout));
     td.start();
     ::sem_wait(sem);
+    td.kill();
     ::sem_destroy(sem);
+    return timeout;
 }
 
 #endif    

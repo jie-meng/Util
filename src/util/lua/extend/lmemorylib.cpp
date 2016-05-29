@@ -163,7 +163,7 @@ static int strcpy(lua_State* plua_state)
 }
 
 template <typename T>
-static int setUint(lua_State* plua_state)
+static int setUInt(lua_State* plua_state)
 {
     luaExtendAssert(plua_state, kLuaExtendLibMemory, "setUnit", 2 == luaGetTop(plua_state),
         "parameter count should be 2");
@@ -177,7 +177,7 @@ static int setUint(lua_State* plua_state)
 }
 
 template <typename T>
-static int getUint(lua_State* plua_state)
+static int getUInt(lua_State* plua_state)
 {
     luaExtendAssert(plua_state, kLuaExtendLibMemory, "getUnit", 1 == luaGetTop(plua_state),
         "parameter count should be 1");
@@ -225,12 +225,12 @@ static const u_luaL_Reg memory_lib[] =
     {"memstr", memstr},
     {"tostring", tostring},
 
-    {"setUint8", setUint<uint8_t>},
-    {"setUint16", setUint<uint16_t>},
-    {"setUint32", setUint<uint32_t>},
-    {"getUint8", getUint<uint8_t>},
-    {"getUint16", getUint<uint16_t>},
-    {"getUint32", getUint<uint32_t>},
+    {"setUInt8", setUInt<uint8_t>},
+    {"setUInt16", setUInt<uint16_t>},
+    {"setUInt32", setUInt<uint32_t>},
+    {"getUInt8", getUInt<uint8_t>},
+    {"getUInt16", getUInt<uint16_t>},
+    {"getUInt32", getUInt<uint32_t>},
     {"setBytes", setBytes},
 
     {0, 0}
