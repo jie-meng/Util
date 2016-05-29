@@ -1,5 +1,3 @@
-os.execute("python ./make.py")
-
 print("Running started ...\n")
 
 if strContains(platformInfo(), "win", false) then

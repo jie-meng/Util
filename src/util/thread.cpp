@@ -240,15 +240,13 @@ void timedwait_notify_tdfunc(sem_t* sem, size_t ms, int* ptimeout)
     ::sem_post(sem);
 }
     
-int sem_timedwait(sem_t* sem, const struct timespec *abstime)
+int sem_timedwait(sem_t* sem, size_t ms)
 {    
-    ::sem_init(sem, 0, 0);
     int timeout = 0;
-    Thread td(UtilBind(timedwait_notify_tdfunc, sem, abstime->tv_sec * 1000 + abstime->tv_nsec / 1000000, &timeout));
+    Thread td(UtilBind(timedwait_notify_tdfunc, sem, ms, &timeout));
     td.start();
     ::sem_wait(sem);
     td.kill();
-    ::sem_destroy(sem);
     return timeout;
 }
 
@@ -302,19 +300,33 @@ void Mutex::unLock()
 
 struct Lock::LockData
 {
+#ifdef __APPLE__
+    sem_t* psem_;
+#else
     sem_t sem_;
+#endif
     bool notify_;
 };
 
 Lock::Lock() :
     pdata_(new LockData())
 {
+#ifdef __APPLE__
+    std::string name = strFormat("sem_%d", this);
+    ::sem_unlink(name.c_str()); //check?
+    pdata_->psem_ = ::sem_open(name.c_str(), O_CREAT, O_RDWR, 0);
+#else
     ::sem_init(&pdata_->sem_, 0, 0);
+#endif
 }
 
 Lock::~Lock()
 {
+#ifdef __APPLE__
+    ::sem_close(pdata_->psem_);
+#else
     ::sem_destroy(&pdata_->sem_);
+#endif
 }
 
 void Lock::wait(bool reset)
@@ -323,16 +335,29 @@ void Lock::wait(bool reset)
     if (reset)
     {
         while(!pdata_->notify_)
+        {
+#ifdef __APPLE__
+            ::sem_wait(pdata_->psem_);
+#else
             ::sem_wait(&pdata_->sem_);
+#endif
+        }
     }
     else
     {
+#ifdef __APPLE__
+        ::sem_wait(pdata_->psem_);
+#else
         ::sem_wait(&pdata_->sem_);
+#endif
     }
 }
 
 bool Lock::timedWait(size_t ms, bool reset)
 {
+#ifdef __APPLE__
+    return 0 == sem_timedwait(pdata_->psem_, ms);
+#else
     struct timespec ts;
     ts.tv_sec = time(0) + ms / 1000;
     ts.tv_nsec = (ms % 1000) * 1000 * 1000;
@@ -344,18 +369,23 @@ bool Lock::timedWait(size_t ms, bool reset)
         while(!pdata_->notify_ && 0 == ret)
             ret = sem_timedwait(&pdata_->sem_, &ts);
 
-        return (0 == ret) ? true : false;
+        return 0 == ret;
     }
     else
     {
-        return (0 == sem_timedwait(&pdata_->sem_, &ts)) ? true : false;
+        return 0 == sem_timedwait(&pdata_->sem_, &ts);
     }
+#endif
 }
 
 void Lock::notify()
 {
     pdata_->notify_ = true;
+#ifdef __APPLE__
+    ::sem_post(pdata_->psem_);
+#else
     ::sem_post(&pdata_->sem_);
+#endif
 }
 
 struct MultiLock::MultiLockData
@@ -364,13 +394,23 @@ struct MultiLock::MultiLockData
         event_locks_(lock_cnt),
         wait_all_(wait_all)
     {
+#ifdef __APPLE__
+        std::string name = strFormat("sem_%d", this);
+        ::sem_unlink(name.c_str()); //check?
+        psem_ = ::sem_open(name.c_str(), O_CREAT, O_RDWR, 0);
+#else
         ::sem_init(&sem_, 0, 0);
+#endif
         resetEvents();
     }
 
     ~MultiLockData()
     {
+#ifdef __APPLE__
+        ::sem_close(psem_);
+#else
         ::sem_destroy(&sem_);
+#endif
     }
 
     void resetEvents(int state = 0)
@@ -383,7 +423,11 @@ struct MultiLock::MultiLockData
     {
         Synchronize sc(mutex_);
         resetEvents(1);
+#ifdef __APPLE__
+        ::sem_post(psem_);
+#else
         ::sem_post(&sem_);
+#endif
     }
 
     void notify(size_t index)
@@ -395,11 +439,21 @@ struct MultiLock::MultiLockData
             if (wait_all_)
             {
                 if (allNotified())
+                {
+#ifdef __APPLE__
+                    ::sem_post(psem_);
+#else
                     ::sem_post(&sem_);
+#endif
+                }
             }
             else
             {
-                ::sem_post(&sem_);
+#ifdef __APPLE__
+                    ::sem_post(psem_);
+#else
+                    ::sem_post(&sem_);
+#endif
             }
         }
     }
@@ -424,7 +478,11 @@ struct MultiLock::MultiLockData
         return false;
     }
 
+#ifdef __APPLE__
+    sem_t* psem_;
+#else
     sem_t sem_;
+#endif
     std::vector<int> event_locks_;
     bool wait_all_;
     Mutex mutex_;
@@ -443,7 +501,13 @@ void MultiLock::wait(bool reset)
         pdata_->resetEvents();
 
     while(!(pdata_->wait_all_ ? pdata_->allNotified() : pdata_->oneNotified()))
+    {
+#ifdef __APPLE__
+        ::sem_wait(pdata_->psem_);
+#else
         ::sem_wait(&pdata_->sem_);
+#endif
+    }
 }
 
 bool MultiLock::timedWait(size_t ms, bool reset)
@@ -457,9 +521,15 @@ bool MultiLock::timedWait(size_t ms, bool reset)
 
     int ret(0);
     while(!(pdata_->wait_all_ ? pdata_->allNotified() : pdata_->oneNotified()) && 0 == ret)
+    {
+#ifdef __APPLE__
+        ret = sem_timedwait(pdata_->psem_, ms);
+#else
         ret = sem_timedwait(&pdata_->sem_, &ts);
+#endif
+    }
 
-    return (0 == ret) ? true : false;
+    return 0 == ret;
 }
 void MultiLock::notify(size_t index)
 {
