@@ -87,4 +87,4 @@ private:
 
 } // namespace util
 
-#endif // UTIL_TIMzhER_HPP
+#endif // UTIL_TIMER_HPP
