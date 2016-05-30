@@ -3,6 +3,6 @@ function mog()
     table.insert(x, "gx")
     table.insert(x, "test")
     table.insert(x, "gogo")
-    x["cao"] = 45
+    x["ads"] = 45
     return 45, x, "89dfx";
 end
