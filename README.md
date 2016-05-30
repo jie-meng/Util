@@ -1,6 +1,10 @@
 ## Util ##
 
-A ligth-weight cross platform (Unix & Windows) C++ library
+A ligthweight cross-platform C++ library. 
+
+Support Unix & Windows. 
+
+Currently can run on MacOS/Linux/Windows.
 
 - any type
 - typeinfo

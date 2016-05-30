@@ -355,9 +355,6 @@ void Lock::wait(bool reset)
 
 bool Lock::timedWait(size_t ms, bool reset)
 {
-#ifdef __APPLE__
-    return 0 == sem_timedwait(pdata_->psem_, ms);
-#else
     struct timespec ts;
     ts.tv_sec = time(0) + ms / 1000;
     ts.tv_nsec = (ms % 1000) * 1000 * 1000;
@@ -367,15 +364,25 @@ bool Lock::timedWait(size_t ms, bool reset)
     {
         int ret(0);
         while(!pdata_->notify_ && 0 == ret)
+        {
+#ifdef __APPLE__
+            ret = sem_timedwait(pdata_->psem_, ms);
+#else
             ret = sem_timedwait(&pdata_->sem_, &ts);
+#endif
+        }
 
         return 0 == ret;
     }
     else
     {
-        return 0 == sem_timedwait(&pdata_->sem_, &ts);
-    }
+#ifdef __APPLE__
+            return 0 == sem_timedwait(pdata_->psem_, ms);
+#else
+            return 0 == sem_timedwait(&pdata_->sem_, &ts);
 #endif
+    }
+//#endif
 }
 
 void Lock::notify()
