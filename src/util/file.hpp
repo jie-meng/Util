@@ -20,9 +20,7 @@ bool overwriteBinaryFile(const std::string& file, char* pbuf, size_t write_len, 
 //file info
 std::string fileExtension(const std::string& file);
 std::string fileBaseName(const std::string& file);
-bool fileRename(const std::string& src_path, const std::string& dest_path);
 bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exitst = true);
-std::pair<std::string, std::string> splitPathname(const std::string& str);
 
 //file time
 enum E_FileTime
@@ -45,6 +43,8 @@ bool isPathFile(const std::string& path);
 bool isPathEmpty(const std::string& path);
 void pathRemoveAll(const std::string& path);
 bool pathRemove(const std::string& path);
+bool pathRename(const std::string& src_path, const std::string& dest_path);
+std::pair<std::string, std::string> splitPathname(const std::string& str);
 bool mkDir(const std::string& path);
 
 class PathFilter : public Interface

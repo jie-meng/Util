@@ -171,11 +171,6 @@ std::string fileBaseName(const std::string& file)
         return str.substr(0, found);
 }
 
-bool fileRename(const std::string& src_path, const std::string& dest_path)
-{
-    return 0 == rename(src_path.c_str(), dest_path.c_str());
-}
-
 bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exitst)
 {
     if (fail_if_exitst && isPathExists(dest_path)) return false;
@@ -423,6 +418,11 @@ bool pathRemove(const std::string& path)
         return 0 == ::rmdir(path.c_str());
 
     return false;
+}
+
+bool pathRename(const std::string& src_path, const std::string& dest_path)
+{
+    return 0 == rename(src_path.c_str(), dest_path.c_str());
 }
 
 bool mkDir(const std::string& path)

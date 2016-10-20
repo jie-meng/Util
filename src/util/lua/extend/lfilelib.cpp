@@ -76,9 +76,9 @@ static int fileBaseName(lua_State* plua_state)
     return 1;
 }
 
-static int fileRename(lua_State* plua_state)
+static int pathRename(lua_State* plua_state)
 {
-    luaPushBoolean(plua_state, fileRename(luaGetString(plua_state, 1, ""), luaGetString(plua_state, 2, "")));
+    luaPushBoolean(plua_state, pathRename(luaGetString(plua_state, 1, ""), luaGetString(plua_state, 2, "")));
     return 1;
 }
 
@@ -215,9 +215,7 @@ static const u_luaL_Reg file_lib[] =
 
     {"fileExtension", fileExtension},
     {"fileBaseName", fileBaseName},
-    {"fileRename", fileRename},
     {"fileCopy", fileCopy},
-    {"splitPathname", splitPathname},
 
     {"appPath", appPath},
     {"currentPath", currentPath},
@@ -229,6 +227,8 @@ static const u_luaL_Reg file_lib[] =
     {"isPathEmpty", isPathEmpty},
     {"pathRemoveAll", pathRemoveAll},
     {"pathRemove", pathRemove},
+    {"pathRename", pathRename},
+    {"splitPathname", splitPathname},
     {"mkDir", mkDir},
 
     {"findFilesInDir", findFilesInDir},
