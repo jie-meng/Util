@@ -16,7 +16,6 @@ Currently can run on MacOS/Linux/Windows.
 - thread
 - timer
 - csv
-- matrix
 - process
 - regex
 - trace
@@ -37,4 +36,4 @@ Build luaexec:
 
 2. rename Util to luaexec
 
-luaexec is a lua script executor which contains basic lua & extensions (file, memory, net, process, regex, thread, csv, matrix)
+luaexec is a lua script executor which contains basic lua & extensions (file, memory, net, process, regex, thread, csv)
