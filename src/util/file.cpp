@@ -1,6 +1,5 @@
 #include "file.hpp"
 #include <fstream>
-#include "process.hpp"
 
 #ifdef _PLATFORM_WINDOWS_
 #include <io.h>
@@ -400,7 +399,7 @@ void pathRemoveAll(const std::string& path)
 #ifdef _PLATFORM_UNIX_
         std::string cmd = std::string("rm -rf \"") + path + "\"";
 #endif
-        executeProcess(cmd);
+        ::system(cmd.c_str());
     }
 }
 
