@@ -124,8 +124,8 @@ public:
 class SetUpAndTearDown
 {
 public:
-    virtual void setUp() throw (std::exception) = 0;
-    virtual void tearDown() throw (std::exception) = 0;
+    virtual void setUp() = 0;
+    virtual void tearDown() = 0;
 };
 
 class AutoSetupTearDown
@@ -144,7 +144,7 @@ typedef UtilFunction<void ()> TestFunction;
 typedef std::map<std::string, TestFunction> TestFunctionMap;
 typedef MapCollectionIterator<std::string, TestFunction, TestFunctionMap> TestFunctionMapIterator;
 
-#define TESTCASE_COMMON(className) \
+#define TESTCASE_DECLARE(className) \
     className(const std::string& case_name) : TestCase(case_name) { registerTestFunctions(); } \
     explicit className(const std::string& case_name, const std::string& name) : TestCase(case_name, name) { registerTestFunctions(); } \
     virtual ~className() {} \
@@ -162,7 +162,7 @@ public:
     inline void setName(const std::string& name) { name_ = name; }
     inline TestFunctionMapIterator testFunctionMapIterator() { return TestFunctionMapIterator(test_function_map_); }
 
-    void runBare() throw (Exception);
+    void runBare();
     size_t registeredTestFunctionCount() const { return test_function_map_.size(); }
 
     virtual TestCase* create(const std::string& name) const = 0;
@@ -173,9 +173,9 @@ protected:
     { test_function_map_[name] = test_function; }
 
     virtual void registerTestFunctions() = 0;
-    virtual void setUp() throw (std::exception) {}
-    virtual void tearDown() throw (std::exception) {}
-    void runTest() throw (Exception);
+    virtual void setUp() {}
+    virtual void tearDown() {}
+    void runTest();
 private:
     TestFunction findTestFunction(const std::string& name);
 private:
@@ -194,14 +194,13 @@ public:
     TestSuite() {}
     TestSuite(const std::string& name) : name_(name) {}
     virtual ~TestSuite() { cleanup(); }
-public:
+
     inline std::string name() const { return name_; }
     inline void setName(const std::string& name) { name_ = name; }
     inline void addTest(Test* ptest) { tests_.push_back(ptest); }
     inline void runTest(Test* ptest, TestResult* ptest_result) { ptest->run(ptest_result); }
     inline size_t testCount() const { return tests_.size(); }
     inline Test* getTest(size_t index) const { return tests_.at(index); }
-
     void addTestSuite(const TestCase& test_case);
     void run(TestResult* ptest_result);
 
@@ -295,7 +294,7 @@ private:
 //class DemoTestCase : public TestCase
 //{
 //public:
-//    TESTCASE_COMMON(DemoTestCase)
+//    TESTCASE_DECLARE(DemoTestCase)
 //
 //    virtual void registerTestFunctions()
 //    {
@@ -305,13 +304,13 @@ private:
 //        REGISTER_TEST_FUNCTION(DemoTestCase, test4);
 //    }
 //
-//    void test1() throw(std::exception) { int* x = 0; assertNull((int*)0, "test1 exception"); }
-//    void test2() throw(std::exception) { int p = 0; assertNotNull(&p, "test2 exception"); }
-//    void test3() throw(std::exception) { assertEquals(1, 1, "test3 exception"); }
-//    void test4() throw(std::exception) { throw std::exception(); }
+//    void test1() { int* x = 0; assertNull((int*)0, "test1 exception"); }
+//    void test2() { int p = 0; assertNotNull(&p, "test2 exception"); }
+//    void test3() { assertEquals(1, 1, "test3 exception"); }
+//    void test4() { throw std::exception(); }
 //protected:
-//    virtual void setUp() throw (std::exception) {}
-//    virtual void tearDown() throw (std::exception) {}
+//    virtual void setUp() {}
+//    virtual void tearDown() {}
 //};
 //
 //void unitTest()

@@ -21,6 +21,7 @@
 #include "util/any.hpp"
 #include "util/trace.hpp"
 #include "util/csv.hpp"
+#include "tests/unittest_hoster.hpp"
 
 using namespace std;
 using namespace util;
@@ -134,7 +135,7 @@ public:
 class DemoTestCase : public TestCase
 {
 public:
-    TESTCASE_COMMON(DemoTestCase)
+    TESTCASE_DECLARE(DemoTestCase)
 
     virtual void registerTestFunctions()
     {
@@ -144,13 +145,13 @@ public:
         REGISTER_TEST_FUNCTION(DemoTestCase, test4);
     }
 
-    void test1() throw(std::exception) { int a = 3; int* x = &a; assertNull(x, "test1 exception"); }
-    void test2() throw(std::exception) { int p = 0; assertNotNull(&p, "test2 exception"); }
-    void test3() throw(std::exception) { assertEquals(1, 1, "test3 exception"); }
-    void test4() throw(std::exception) { throw std::exception(); }
+    void test1() { int a = 3; int* x = &a; assertNull(x, "test1 exception"); }
+    void test2() { int p = 0; assertNotNull(&p, "test2 exception"); }
+    void test3() { assertEquals(1, 1, "test3 exception"); }
+    void test4() { throw std::exception(); }
 protected:
-    virtual void setUp() throw (std::exception) {}
-    virtual void tearDown() throw (std::exception) {}
+    virtual void setUp() {}
+    virtual void tearDown() {}
 };
 
 void testUnitTest()
@@ -362,7 +363,17 @@ int pnpoly (int nvert, float *vertx, float *verty, float testx, float testy) {
 //	return conv.from_bytes( src );
 //}
 
+void runUnitTest()
+{
+    UnitTestHoster::getInstance().run();
+}
+
 int main(int argc, char* argv[])
 {
-    luaExecutor(argc, argv);
+    if (argc > 1 && strStartWith(argv[1], "$"))
+        runUnitTest();
+    else
+        luaExecutor(argc, argv);
+    
+    return 0;
 }

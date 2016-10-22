@@ -82,13 +82,13 @@ void TestResult::cleanup()
 }
 
 // TestCase
-void TestCase::runBare() throw (Exception)
+void TestCase::runBare()
 {
     AutoSetupTearDown astd(this);
     runTest();
 }
 
-void TestCase::runTest() throw (Exception)
+void TestCase::runTest()
 {
     try
     {
@@ -361,7 +361,5 @@ void TestRunner::pause(bool wait)
     printer_.printWaitPrompt();
     getInput();
 }
-
-
 
 } // namespace util
