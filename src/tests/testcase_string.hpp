@@ -16,6 +16,7 @@ public:
     void testStrToUpper();
     void testStrTrimLeftEx();
     void testStrTrimRightEx();
+    void testStrTrimEx();
 protected:
     virtual void setUp();
     virtual void tearDown();

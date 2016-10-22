@@ -29,24 +29,99 @@ public:
 class Assert
 {
 public:
-    inline static void assertTrue(bool condition, const std::string& message = "") { if (!condition) fail(message); }
-    inline static void assertFalse(bool condition, const std::string& message = "") { assertTrue(!condition, message); }
+    inline static void assertTrue(bool condition, const std::string& message = "") 
+    { 
+        if (!condition) 
+            fail(strFormat("Expect true, actually is false. %s", message.c_str())); 
+    }
+    
+    inline static void assertFalse(bool condition, const std::string& message = "") 
+    { 
+        auxAssertTrue(!condition, strFormat("Expect false, actually is true. %s", message.c_str())); 
+    }
+    
     template <typename T>
-    inline static void assertNull(T* p, const std::string& message = "") { assertTrue(0 == p, message); }
+    inline static void assertNull(T* p, const std::string& message = "") 
+    { 
+        auxAssertTrue(NULL == p, strFormat("Expect NULL, actually is not NULL. %s", message.c_str())); 
+    }
+    
     template <typename T>
-    inline static void assertNotNull(T* p, const std::string& message = "") { assertTrue(0 != p, message); }
+    inline static void assertNotNull(T* p, const std::string& message = "") 
+    { 
+        auxAssertTrue(0 != p, strFormat("Expect not NULL, actually is NULL. %s", message.c_str())); 
+    }
+    
     template <typename T>
-    inline static void assertEquals(T t1, T t2, const std::string& message = "") { assertTrue(t1 == t2, message); }
+    inline static void assertEquals(const T& expect, const T& actual, const std::string& message = "") 
+    { 
+        auxAssertTrue(expect == actual, strFormat("Expect equals to %s, actually is %s. %s", toString(expect).c_str(), toString(actual).c_str(), message.c_str())); 
+    }
+    
     template <typename T>
-    inline static void assertSame(T t1, T t2, const std::string& message = "") { assertTrue(&t1 == &t2, message); }
+    inline static void assertNotEquals(const T& expect, const T& actual, const std::string& message = "") 
+    { 
+        auxAssertTrue(expect != actual, strFormat("Expect not equals to %s, actually equals. %s", toString(expect).c_str(), message.c_str())); 
+    }
+    
     template <typename T>
-    inline static void assertNotSame(T t1, T t2, const std::string& message = "") { assertTrue(&t1 != &t2, message); }
-
-    inline static void fail(const std::string& message) { throw AssertFailException(message); }
-    inline static void fail() { fail(""); }
+    inline static void assertSame(const T& expect, const T& actual, const std::string& message = "") 
+    { 
+        auxAssertTrue(&expect == &actual, strFormat("Expect same to %s, actually is %s. %s", toString(&expect).c_str(), toString(&actual).c_str(), message.c_str())); 
+    }
+    
+    template <typename T>
+    inline static void assertNotSame(const T& expect, const T& actual, const std::string& message = "") 
+    { 
+        auxAssertTrue(&expect != &actual, strFormat("Expect not same to %s, actually same. %s", toString(&expect).c_str(), message.c_str())); 
+    }
+    
+    inline static void assertStringEmpty(const std::string& str, const std::string& message = "")
+    {
+        auxAssertTrue(str.empty(), strFormat("Expect string is empty, actually is \"%s\". %s", str.c_str(), message.c_str()));
+    }
+    
+    inline static void assertStringNotEmpty(const std::string& str, const std::string& message = "")
+    {
+        auxAssertTrue(!str.empty(), strFormat("Expect string is not empty, actually is. %s", message.c_str()));
+    }
+    
+    inline static void assertStringWhiteSpace(const std::string& str, const std::string& message = "")
+    {
+        auxAssertTrue(strTrim(str).empty(), strFormat("Expect string is white space, actually is \"%s\". %s", str.c_str(), message.c_str()));
+    }
+    
+    inline static void assertStringNotWhiteSpace(const std::string& str, const std::string& message = "")
+    {
+        auxAssertTrue(!strTrim(str).empty(), strFormat("Expect string is not white space, actually is. %s", message.c_str()));
+    }
+    
+    template <typename T>
+    inline static void assertCollectionEmpty(const T& coll, const std::string& message = "")
+    {
+        auxAssertTrue(coll.empty(), strFormat("Expect collection is empty, actually is not. %s", message.c_str()));
+    }
+    
+    template <typename T>
+    inline static void assertCollectionNotEmpty(const T& coll, const std::string& message = "")
+    {
+        auxAssertTrue(!coll.empty(), strFormat("Expect collection is not empty, actually is. %s", message.c_str()));
+    }
+    
+    inline static void fail(const std::string& message = "")
+    { 
+        throw AssertFailException(message); 
+    }
 protected:
     Assert() {}
     ~Assert() {}
+    
+private:
+    inline static void auxAssertTrue(bool condition, const std::string& message = "") 
+    {
+        if (!condition) 
+            fail(message); 
+    }
 };
 
 class TestFailure

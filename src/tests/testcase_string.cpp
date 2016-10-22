@@ -11,6 +11,7 @@ void TestCaseString::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseString, testStrToUpper)
     REGISTER_TEST_FUNCTION(TestCaseString, testStrTrimLeftEx)
     REGISTER_TEST_FUNCTION(TestCaseString, testStrTrimRightEx)
+    REGISTER_TEST_FUNCTION(TestCaseString, testStrTrimEx)
 }
 
 void TestCaseString::setUp()
@@ -81,4 +82,13 @@ void TestCaseString::testStrTrimRightEx()
     assertEquals<size_t>(8, s.length());
     assertEquals<char>('<', s[0]);
     assertEquals<char>('>', s[1]);
+}
+
+void TestCaseString::testStrTrimEx()
+{
+    string s = "<>kdy<xya<>>";
+    s = strTrimEx(s, "<>");
+    assertEquals<size_t>(7, s.length());
+    assertEquals<char>('k', s[0], "k");
+    assertEquals<char>('a', s[6], "a");
 }
