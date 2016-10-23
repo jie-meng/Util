@@ -132,40 +132,6 @@ public:
     virtual std::string name() const { return "B"; }
 };
 
-class DemoTestCase : public TestCase
-{
-public:
-    TESTCASE_DECLARE(DemoTestCase)
-
-    virtual void registerTestFunctions()
-    {
-        REGISTER_TEST_FUNCTION(DemoTestCase, test1)
-        REGISTER_TEST_FUNCTION(DemoTestCase, test2)
-        REGISTER_TEST_FUNCTION(DemoTestCase, test3)
-        REGISTER_TEST_FUNCTION(DemoTestCase, test4);
-    }
-
-    void test1() { int a = 3; int* x = &a; assertNull(x, "test1 exception"); }
-    void test2() { int p = 0; assertNotNull(&p, "test2 exception"); }
-    void test3() { assertEquals(1, 1, "test3 exception"); }
-    void test4() { throw std::exception(); }
-protected:
-    virtual void setUp() {}
-    virtual void tearDown() {}
-};
-
-void testUnitTest()
-{
-    TestSuite suit;
-    DemoTestCase demo_case("DemoTestCase");
-    suit.addTestSuite(demo_case);
-    suit.addTest(demo_case.create("test1"));
-
-    TestRunner runner;
-    //runner.setPrinter(UtilAutoPtr<Printer>(new UdpPrinter(60001)));
-    runner.run(suit);
-}
-
 void testBind()
 {
     StreamSocket ss(Family_IPv4);

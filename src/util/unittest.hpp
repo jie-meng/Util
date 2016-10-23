@@ -12,6 +12,8 @@ namespace util
 
 #define REGISTER_TEST_FUNCTION(className, functionName) \
     registerTestFunction(#functionName, UtilBind(&className::functionName, this));
+    
+#define ASSERT_POSITION util::strFormat("File: %s, Line: %d", __FILE__, __LINE__)
 
 class Test;
 class TestCase;
@@ -29,98 +31,97 @@ public:
 class Assert
 {
 public:
-    inline static void assertTrue(bool condition, const std::string& message = "") 
-    { 
-        if (!condition) 
-            fail(strFormat("Expect true, actually is false. %s", message.c_str())); 
-    }
-    
-    inline static void assertFalse(bool condition, const std::string& message = "") 
-    { 
-        auxAssertTrue(!condition, strFormat("Expect false, actually is true. %s", message.c_str())); 
-    }
-    
-    template <typename T>
-    inline static void assertNull(T* p, const std::string& message = "") 
-    { 
-        auxAssertTrue(NULL == p, strFormat("Expect NULL, actually is not NULL. %s", message.c_str())); 
-    }
-    
-    template <typename T>
-    inline static void assertNotNull(T* p, const std::string& message = "") 
-    { 
-        auxAssertTrue(0 != p, strFormat("Expect not NULL, actually is NULL. %s", message.c_str())); 
-    }
-    
-    template <typename T>
-    inline static void assertEquals(const T& expect, const T& actual, const std::string& message = "") 
-    { 
-        auxAssertTrue(expect == actual, strFormat("Expect equals to %s, actually is %s. %s", toString(expect).c_str(), toString(actual).c_str(), message.c_str())); 
-    }
-    
-    template <typename T>
-    inline static void assertNotEquals(const T& expect, const T& actual, const std::string& message = "") 
-    { 
-        auxAssertTrue(expect != actual, strFormat("Expect not equals to %s, actually equals. %s", toString(expect).c_str(), message.c_str())); 
-    }
-    
-    template <typename T>
-    inline static void assertSame(const T& expect, const T& actual, const std::string& message = "") 
-    { 
-        auxAssertTrue(&expect == &actual, strFormat("Expect same to %s, actually is %s. %s", toString(&expect).c_str(), toString(&actual).c_str(), message.c_str())); 
-    }
-    
-    template <typename T>
-    inline static void assertNotSame(const T& expect, const T& actual, const std::string& message = "") 
-    { 
-        auxAssertTrue(&expect != &actual, strFormat("Expect not same to %s, actually same. %s", toString(&expect).c_str(), message.c_str())); 
-    }
-    
-    inline static void assertStringEmpty(const std::string& str, const std::string& message = "")
+    inline static void isTrue(bool condition, const std::string& position, const std::string& message = "") 
     {
-        auxAssertTrue(str.empty(), strFormat("Expect string is empty, actually is \"%s\". %s", str.c_str(), message.c_str()));
+        auxIsTrue(condition, position, strFormat("Expect true, actually is false. %s", message.c_str()));
     }
     
-    inline static void assertStringNotEmpty(const std::string& str, const std::string& message = "")
-    {
-        auxAssertTrue(!str.empty(), strFormat("Expect string is not empty, actually is. %s", message.c_str()));
-    }
-    
-    inline static void assertStringWhiteSpace(const std::string& str, const std::string& message = "")
-    {
-        auxAssertTrue(strTrim(str).empty(), strFormat("Expect string is white space, actually is \"%s\". %s", str.c_str(), message.c_str()));
-    }
-    
-    inline static void assertStringNotWhiteSpace(const std::string& str, const std::string& message = "")
-    {
-        auxAssertTrue(!strTrim(str).empty(), strFormat("Expect string is not white space, actually is. %s", message.c_str()));
-    }
-    
-    template <typename T>
-    inline static void assertCollectionEmpty(const T& coll, const std::string& message = "")
-    {
-        auxAssertTrue(coll.empty(), strFormat("Expect collection is empty, actually is not. %s", message.c_str()));
-    }
-    
-    template <typename T>
-    inline static void assertCollectionNotEmpty(const T& coll, const std::string& message = "")
-    {
-        auxAssertTrue(!coll.empty(), strFormat("Expect collection is not empty, actually is. %s", message.c_str()));
-    }
-    
-    inline static void fail(const std::string& message = "")
+    inline static void isFalse(bool condition, const std::string& position, const std::string& message = "") 
     { 
-        throw AssertFailException(message); 
+        auxIsTrue(!condition, position, strFormat("Expect false, actually is true. %s", message.c_str())); 
+    }
+    
+    template <typename T>
+    inline static void isNull(T* p, const std::string& position, const std::string& message = "")
+    { 
+        auxIsTrue(NULL == p, position, strFormat("Expect NULL, actually is not NULL. %s", message.c_str())); 
+    }
+    
+    template <typename T>
+    inline static void isNotNull(T* p, const std::string& position, const std::string& message = "") 
+    { 
+        auxIsTrue(0 != p, position, strFormat("Expect not NULL, actually is NULL. %s", message.c_str())); 
+    }
+    
+    template <typename T>
+    inline static void areEqual(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
+    { 
+        auxIsTrue(expect == actual, position, strFormat("Expect equals to %s, actually is %s. %s", toString(expect).c_str(), toString(actual).c_str(), message.c_str())); 
+    }
+    
+    template <typename T>
+    inline static void areNotEqual(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
+    { 
+        auxIsTrue(expect != actual, position, strFormat("Expect not equals to %s, actually equals. %s", toString(expect).c_str(), message.c_str())); 
+    }
+    
+    template <typename T>
+    inline static void areSame(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
+    { 
+        auxIsTrue(&expect == &actual, position, strFormat("Expect same to %s, actually is %s. %s", toString(&expect).c_str(), toString(&actual).c_str(), message.c_str())); 
+    }
+    
+    template <typename T>
+    inline static void areNotSame(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
+    { 
+        auxIsTrue(&expect != &actual, position, strFormat("Expect not same to %s, actually same. %s", toString(&expect).c_str(), message.c_str())); 
+    }
+    
+    inline static void isStringEmpty(const std::string& str, const std::string& position, const std::string& message = "")
+    {
+        auxIsTrue(str.empty(), position, strFormat("Expect string is empty, actually is \"%s\". %s", str.c_str(), message.c_str()));
+    }
+    
+    inline static void isStringNotEmpty(const std::string& str, const std::string& position, const std::string& message = "")
+    {
+        auxIsTrue(!str.empty(), position, strFormat("Expect string is not empty, actually is. %s", message.c_str()));
+    }
+    
+    inline static void isStringWhiteSpace(const std::string& str, const std::string& position, const std::string& message = "")
+    {
+        auxIsTrue(strTrim(str).empty(), position, strFormat("Expect string is white space, actually is \"%s\". %s", str.c_str(), message.c_str()));
+    }
+    
+    inline static void isStringNotWhiteSpace(const std::string& str, const std::string& position, const std::string& message = "")
+    {
+        auxIsTrue(!strTrim(str).empty(), position, strFormat("Expect string is not white space, actually is. %s", message.c_str()));
+    }
+    
+    template <typename T>
+    inline static void isCollectionEmpty(const T& coll, const std::string& position, const std::string& message = "")
+    {
+        auxIsTrue(coll.empty(), position, strFormat("Expect collection is empty, actually is not. %s", message.c_str()));
+    }
+    
+    template <typename T>
+    inline static void isCollectionNotEmpty(const T& coll, const std::string& position, const std::string& message = "")
+    {
+        auxIsTrue(!coll.empty(), position, strFormat("Expect collection is not empty, actually is. %s", message.c_str()));
+    }
+    
+    inline static void fail(const std::string& position, const std::string& message = "")
+    {
+        throw AssertFailException(strFormat("%s\n\t%s", position.c_str(), message.c_str())); 
     }
 protected:
     Assert() {}
     ~Assert() {}
     
 private:
-    inline static void auxAssertTrue(bool condition, const std::string& message = "") 
+    inline static void auxIsTrue(bool condition, const std::string& position, const std::string& message = "") 
     {
         if (!condition) 
-            fail(message); 
+            fail(position, message); 
     }
 };
 
@@ -225,7 +226,7 @@ typedef MapCollectionIterator<std::string, TestFunction, TestFunctionMap> TestFu
     virtual ~className() {} \
     virtual className* create(const std::string& name) const { return new className(getCaseName(), name); }
 
-class TestCase : public Assert, public Test, public SetUpAndTearDown
+class TestCase : public Test, public SetUpAndTearDown
 {
 public:
     explicit TestCase(const std::string& case_name) : case_name_(case_name) {}
@@ -364,40 +365,6 @@ private:
 private:
     DISALLOW_COPY_AND_ASSIGN(TestRunner)
 };
-
-// demo
-//class DemoTestCase : public TestCase
-//{
-//public:
-//    TESTCASE_DECLARE(DemoTestCase)
-//
-//    virtual void registerTestFunctions()
-//    {
-//        REGISTER_TEST_FUNCTION(DemoTestCase, test1)
-//        REGISTER_TEST_FUNCTION(DemoTestCase, test2)
-//        REGISTER_TEST_FUNCTION(DemoTestCase, test3)
-//        REGISTER_TEST_FUNCTION(DemoTestCase, test4);
-//    }
-//
-//    void test1() { int* x = 0; assertNull((int*)0, "test1 exception"); }
-//    void test2() { int p = 0; assertNotNull(&p, "test2 exception"); }
-//    void test3() { assertEquals(1, 1, "test3 exception"); }
-//    void test4() { throw std::exception(); }
-//protected:
-//    virtual void setUp() {}
-//    virtual void tearDown() {}
-//};
-//
-//void unitTest()
-//{
-//    TestSuite suit;
-//    DemoTestCase demo_case("DemoTestCase");
-//    suit.addTestSuite(demo_case);
-//    suit.addTest(demo_case.create("test6"));
-//
-//    TestRunner runner;
-//    runner.run(suit);
-//}
 
 } // namespace util
 

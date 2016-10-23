@@ -24,71 +24,71 @@ void TestCaseString::tearDown()
 
 void TestCaseString::testIsSpace()
 {
-    assertTrue(isSpace(' '));
-    assertTrue(isSpace('\r'));
-    assertTrue(isSpace('\n'));
-    assertTrue(isSpace('\t'));
-    assertTrue(isSpace('\f'));
-    assertTrue(isSpace('\v'));
+    Assert::isTrue(isSpace(' '), ASSERT_POSITION);
+    Assert::isTrue(isSpace('\r'), ASSERT_POSITION);
+    Assert::isTrue(isSpace('\n'), ASSERT_POSITION);
+    Assert::isTrue(isSpace('\t'), ASSERT_POSITION);
+    Assert::isTrue(isSpace('\f'), ASSERT_POSITION);
+    Assert::isTrue(isSpace('\v'), ASSERT_POSITION);
 }
 
 void TestCaseString::testStrFormat()
 {
     string s = strFormat("%d %s", 45, "glad");
-    assertEquals<char>('4', s[0], "Fail on '4'");
-    assertEquals<char>('5', s[1], "Fail on '5'");
-    assertEquals<char>(' ', s[2], "Fail on ' '");
-    assertEquals<char>('g', s[3], "Fail on 'g'");
-    assertEquals<char>('l', s[4], "Fail on 'l'");
-    assertEquals<char>('a', s[5], "Fail on 'a'");
-    assertEquals<char>('d', s[6], "Fail on 'd'");
+    Assert::areEqual('4', s[0], ASSERT_POSITION);
+    Assert::areEqual('5', s[1], ASSERT_POSITION);
+    Assert::areEqual(' ', s[2], ASSERT_POSITION);
+    Assert::areEqual('g', s[3], ASSERT_POSITION);
+    Assert::areEqual('l', s[4], ASSERT_POSITION);
+    Assert::areEqual('a', s[5], ASSERT_POSITION);
+    Assert::areEqual('d', s[6], ASSERT_POSITION);
 }
 
 void TestCaseString::testStrToLower()
 {
     string s = "ABCD123";
     s = strToLower(s);
-    assertEquals<char>('a', s[0]);
-    assertEquals<char>('b', s[1]);
-    assertEquals<char>('c', s[2]);
-    assertEquals<char>('d', s[3]);
-    assertEquals<char>('1', s[4]);
+    Assert::areEqual('a', s[0], ASSERT_POSITION);
+    Assert::areEqual('b', s[1], ASSERT_POSITION);
+    Assert::areEqual('c', s[2], ASSERT_POSITION);
+    Assert::areEqual('d', s[3], ASSERT_POSITION);
+    Assert::areEqual('1', s[4], ASSERT_POSITION);
 }
 
 void TestCaseString::testStrToUpper()
 {
     string s = "axyz123";
     s = strToUpper(s);
-    assertEquals<char>('A', s[0], "Fail on 'A'");
-    assertEquals<char>('X', s[1], "Fail on 'X'");
-    assertEquals<char>('Y', s[2], "Fail on 'Y'");
-    assertEquals<char>('Z', s[3], "Fail on 'Z'");
-    assertEquals<char>('1', s[4], "Fail on '1'");
+    Assert::areEqual('A', s[0], ASSERT_POSITION);
+    Assert::areEqual('X', s[1], ASSERT_POSITION);
+    Assert::areEqual('Y', s[2], ASSERT_POSITION);
+    Assert::areEqual('Z', s[3], ASSERT_POSITION);
+    Assert::areEqual('1', s[4], ASSERT_POSITION);
 }
 
 void TestCaseString::testStrTrimLeftEx()
 {
     string s = "<>kdy<xya";
     s = strTrimLeftEx(s, "<>");
-    assertEquals<size_t>(7, s.length());
-    assertEquals<char>('k', s[0]);
-    assertEquals<char>('<', s[3]);
+    Assert::areEqual<size_t>(7, s.length(), ASSERT_POSITION);
+    Assert::areEqual('k', s[0], ASSERT_POSITION);
+    Assert::areEqual('<', s[3], ASSERT_POSITION);
 }
 
 void TestCaseString::testStrTrimRightEx()
 {
     string s = "<>kdy<xya";
     s = strTrimRightEx(s, "a");
-    assertEquals<size_t>(8, s.length());
-    assertEquals<char>('<', s[0]);
-    assertEquals<char>('>', s[1]);
+    Assert::areEqual<size_t>(8, s.length(), ASSERT_POSITION);
+    Assert::areEqual('<', s[0], ASSERT_POSITION);
+    Assert::areEqual('>', s[1], ASSERT_POSITION);
 }
 
 void TestCaseString::testStrTrimEx()
 {
     string s = "<>kdy<xya<>>";
     s = strTrimEx(s, "<>");
-    assertEquals<size_t>(7, s.length());
-    assertEquals<char>('k', s[0], "k");
-    assertEquals<char>('a', s[6], "a");
+    Assert::areEqual<size_t>(7, s.length(), ASSERT_POSITION);
+    Assert::areEqual('k', s[0], ASSERT_POSITION);
+    Assert::areEqual('a', s[6], ASSERT_POSITION);
 }
