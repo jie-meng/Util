@@ -47,7 +47,7 @@ std::string strJoin(ConstIterator c_it_begin, ConstIterator c_it_end, const std:
         str_join += *c_it_begin + del;
         ++c_it_begin;
     }
-    return str_join.substr(0, str_join.length() - 1);
+    return str_join.substr(0, str_join.length() - del.length());
 }
 
 template <typename Coll>
@@ -57,12 +57,15 @@ std::string strJoin(const Coll& coll, const std::string& del)
     typename Coll::const_iterator c_it;
     for (c_it = coll.begin(); c_it != coll.end(); ++c_it)
         str_join += *c_it + del;
-    return str_join.substr(0, str_join.length() - 1);
+    return str_join.substr(0, str_join.length() - del.length());
 }
 
 template <typename Coll>
 inline size_t strSplit(const std::string& str, const std::string& del, Coll& out_coll, size_t limit = 0)
 {
+    if (del.empty())
+        return 0;
+    
     std::string::size_type start = 0;
     std::string::size_type idx = 0;
     std::string::size_type del_len = del.length();
@@ -89,7 +92,7 @@ inline size_t strSplitEx(const std::string& str, const std::string& del,
                          const std::string& start_flag, const std::string& end_flag,
                          Coll& out_coll, size_t limit = 0)
 {
-    if (start_flag == "" || start_flag == "")
+    if (del.empty() || start_flag.empty() || start_flag.empty())
         return 0;
 
     std::string::size_type start = 0;

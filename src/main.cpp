@@ -336,7 +336,7 @@ void runUnitTest()
 
 int main(int argc, char* argv[])
 {
-    if (argc > 1 && strStartWith(argv[1], "$"))
+    if (argc > 1 && strAreEqual("$", argv[1]))
         runUnitTest();
     else
         luaExecutor(argc, argv);

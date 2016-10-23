@@ -22,6 +22,16 @@ public:
     void testStrReplaceAll();
     void testStrStartWith();
     void testStrEndWith();
+    void testStrLeft();
+    void testStrRight();
+    void testStrMid();
+    void testStrContains();
+    void testStrCompare();
+    void testStrAreEqual();
+    void testStrJoin();
+    void testStrSplit();
+    void testStrSplitEx();
+    void testStrToCharArray();
 protected:
     virtual void setUp();
     virtual void tearDown();
