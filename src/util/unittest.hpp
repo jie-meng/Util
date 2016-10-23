@@ -31,82 +31,82 @@ public:
 class Assert
 {
 public:
-    inline static void isTrue(bool condition, const std::string& position, const std::string& message = "") 
+    inline static void assertTrue(bool condition, const std::string& position, const std::string& message = "") 
     {
-        auxIsTrue(condition, position, strFormat("Expect true, actually is false. %s", message.c_str()));
+        auxAssertTrue(condition, position, strFormat("Expect true, actually is false. %s", message.c_str()));
     }
     
-    inline static void isFalse(bool condition, const std::string& position, const std::string& message = "") 
+    inline static void assertFalse(bool condition, const std::string& position, const std::string& message = "") 
     { 
-        auxIsTrue(!condition, position, strFormat("Expect false, actually is true. %s", message.c_str())); 
+        auxAssertTrue(!condition, position, strFormat("Expect false, actually is true. %s", message.c_str())); 
     }
     
     template <typename T>
-    inline static void isNull(T* p, const std::string& position, const std::string& message = "")
+    inline static void assertNull(T* p, const std::string& position, const std::string& message = "")
     { 
-        auxIsTrue(NULL == p, position, strFormat("Expect NULL, actually is not NULL. %s", message.c_str())); 
+        auxAssertTrue(NULL == p, position, strFormat("Expect NULL, actually is not NULL. %s", message.c_str())); 
     }
     
     template <typename T>
-    inline static void isNotNull(T* p, const std::string& position, const std::string& message = "") 
+    inline static void assertNotNull(T* p, const std::string& position, const std::string& message = "") 
     { 
-        auxIsTrue(0 != p, position, strFormat("Expect not NULL, actually is NULL. %s", message.c_str())); 
+        auxAssertTrue(0 != p, position, strFormat("Expect not NULL, actually is NULL. %s", message.c_str())); 
     }
     
     template <typename T>
-    inline static void areEqual(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
+    inline static void assertEquals(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
     { 
-        auxIsTrue(expect == actual, position, strFormat("Expect equals to %s, actually is %s. %s", toString(expect).c_str(), toString(actual).c_str(), message.c_str())); 
+        auxAssertTrue(expect == actual, position, strFormat("Expect equals to %s, actually is %s. %s", toString(expect).c_str(), toString(actual).c_str(), message.c_str())); 
     }
     
     template <typename T>
-    inline static void areNotEqual(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
+    inline static void assertNotEquals(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
     { 
-        auxIsTrue(expect != actual, position, strFormat("Expect not equals to %s, actually equals. %s", toString(expect).c_str(), message.c_str())); 
+        auxAssertTrue(expect != actual, position, strFormat("Expect not equals to %s, actually equals. %s", toString(expect).c_str(), message.c_str())); 
     }
     
     template <typename T>
-    inline static void areSame(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
+    inline static void assertSame(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
     { 
-        auxIsTrue(&expect == &actual, position, strFormat("Expect same to %s, actually is %s. %s", toString(&expect).c_str(), toString(&actual).c_str(), message.c_str())); 
+        auxAssertTrue(&expect == &actual, position, strFormat("Expect same to %s, actually is %s. %s", toString(&expect).c_str(), toString(&actual).c_str(), message.c_str())); 
     }
     
     template <typename T>
-    inline static void areNotSame(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
+    inline static void assertNotSame(const T& expect, const T& actual, const std::string& position, const std::string& message = "") 
     { 
-        auxIsTrue(&expect != &actual, position, strFormat("Expect not same to %s, actually same. %s", toString(&expect).c_str(), message.c_str())); 
+        auxAssertTrue(&expect != &actual, position, strFormat("Expect not same to %s, actually same. %s", toString(&expect).c_str(), message.c_str())); 
     }
     
-    inline static void isStringEmpty(const std::string& str, const std::string& position, const std::string& message = "")
+    inline static void assertStringEmpty(const std::string& str, const std::string& position, const std::string& message = "")
     {
-        auxIsTrue(str.empty(), position, strFormat("Expect string is empty, actually is \"%s\". %s", str.c_str(), message.c_str()));
+        auxAssertTrue(str.empty(), position, strFormat("Expect string is empty, actually is \"%s\". %s", str.c_str(), message.c_str()));
     }
     
-    inline static void isStringNotEmpty(const std::string& str, const std::string& position, const std::string& message = "")
+    inline static void assertStringNotEmpty(const std::string& str, const std::string& position, const std::string& message = "")
     {
-        auxIsTrue(!str.empty(), position, strFormat("Expect string is not empty, actually is. %s", message.c_str()));
+        auxAssertTrue(!str.empty(), position, strFormat("Expect string is not empty, actually is. %s", message.c_str()));
     }
     
-    inline static void isStringWhiteSpace(const std::string& str, const std::string& position, const std::string& message = "")
+    inline static void assertStringWhiteSpace(const std::string& str, const std::string& position, const std::string& message = "")
     {
-        auxIsTrue(strTrim(str).empty(), position, strFormat("Expect string is white space, actually is \"%s\". %s", str.c_str(), message.c_str()));
+        auxAssertTrue(strTrim(str).empty(), position, strFormat("Expect string is white space, actually is \"%s\". %s", str.c_str(), message.c_str()));
     }
     
-    inline static void isStringNotWhiteSpace(const std::string& str, const std::string& position, const std::string& message = "")
+    inline static void assertStringNotWhiteSpace(const std::string& str, const std::string& position, const std::string& message = "")
     {
-        auxIsTrue(!strTrim(str).empty(), position, strFormat("Expect string is not white space, actually is. %s", message.c_str()));
-    }
-    
-    template <typename T>
-    inline static void isCollectionEmpty(const T& coll, const std::string& position, const std::string& message = "")
-    {
-        auxIsTrue(coll.empty(), position, strFormat("Expect collection is empty, actually is not. %s", message.c_str()));
+        auxAssertTrue(!strTrim(str).empty(), position, strFormat("Expect string is not white space, actually is. %s", message.c_str()));
     }
     
     template <typename T>
-    inline static void isCollectionNotEmpty(const T& coll, const std::string& position, const std::string& message = "")
+    inline static void assertCollectionEmpty(const T& coll, const std::string& position, const std::string& message = "")
     {
-        auxIsTrue(!coll.empty(), position, strFormat("Expect collection is not empty, actually is. %s", message.c_str()));
+        auxAssertTrue(coll.empty(), position, strFormat("Expect collection is empty, actually is not. %s", message.c_str()));
+    }
+    
+    template <typename T>
+    inline static void assertCollectionNotEmpty(const T& coll, const std::string& position, const std::string& message = "")
+    {
+        auxAssertTrue(!coll.empty(), position, strFormat("Expect collection is not empty, actually is. %s", message.c_str()));
     }
     
     inline static void fail(const std::string& position, const std::string& message = "")
@@ -118,7 +118,7 @@ protected:
     ~Assert() {}
     
 private:
-    inline static void auxIsTrue(bool condition, const std::string& position, const std::string& message = "") 
+    inline static void auxAssertTrue(bool condition, const std::string& position, const std::string& message = "") 
     {
         if (!condition) 
             fail(position, message); 
@@ -226,7 +226,7 @@ typedef MapCollectionIterator<std::string, TestFunction, TestFunctionMap> TestFu
     virtual ~className() {} \
     virtual className* create(const std::string& name) const { return new className(getCaseName(), name); }
 
-class TestCase : public Test, public SetUpAndTearDown
+class TestCase : public Assert, public Test, public SetUpAndTearDown
 {
 public:
     explicit TestCase(const std::string& case_name) : case_name_(case_name) {}
