@@ -12,6 +12,11 @@ void TestCaseString::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseString, testStrTrimLeftEx)
     REGISTER_TEST_FUNCTION(TestCaseString, testStrTrimRightEx)
     REGISTER_TEST_FUNCTION(TestCaseString, testStrTrimEx)
+    REGISTER_TEST_FUNCTION(TestCaseString, testStrTrim)
+    REGISTER_TEST_FUNCTION(TestCaseString, testStrReplace)
+    REGISTER_TEST_FUNCTION(TestCaseString, testStrReplaceAll)
+    REGISTER_TEST_FUNCTION(TestCaseString, testStrStartWith)
+    REGISTER_TEST_FUNCTION(TestCaseString, testStrEndWith)
 }
 
 void TestCaseString::setUp()
@@ -91,4 +96,37 @@ void TestCaseString::testStrTrimEx()
     assertEquals<size_t>(7, s.length(), ASSERT_POSITION);
     assertEquals('k', s[0], ASSERT_POSITION);
     assertEquals('a', s[6], ASSERT_POSITION);
+}
+
+void TestCaseString::testStrTrim()
+{
+    string s = "      tx ky  \t\n\r";
+    s = strTrim(s);
+    assertEquals<string>("tx ky", s, ASSERT_POSITION);
+}
+
+void TestCaseString::testStrReplace()
+{
+    string s = "dabcdabc";
+    s = strReplace(s, "abc", "xyz");
+    assertEquals<string>("dxyzdabc", s, ASSERT_POSITION);
+}
+
+void TestCaseString::testStrReplaceAll()
+{
+    string s = "dabcdabc";
+    s = strReplaceAll(s, "abc", "xyz");
+    assertEquals<string>("dxyzdxyz", s, ASSERT_POSITION);
+}
+
+void TestCaseString::testStrStartWith()
+{
+    string s = " xyzda";
+    assertTrue(strStartWith(s, " x"), ASSERT_POSITION);
+}
+
+void TestCaseString::testStrEndWith()
+{
+    string s = " xyzda";
+    assertTrue(strEndWith(s, "da"), ASSERT_POSITION);
 }

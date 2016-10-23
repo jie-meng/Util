@@ -17,6 +17,11 @@ public:
     void testStrTrimLeftEx();
     void testStrTrimRightEx();
     void testStrTrimEx();
+    void testStrTrim();
+    void testStrReplace();
+    void testStrReplaceAll();
+    void testStrStartWith();
+    void testStrEndWith();
 protected:
     virtual void setUp();
     virtual void tearDown();
