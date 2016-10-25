@@ -339,7 +339,12 @@ int main(int argc, char* argv[])
     if (argc > 1 && strAreEqual("$", argv[1]))
         runUnitTest();
     else
+    {
+        if (argc == 1)
+            printLine("---------------------------------\nluaexec (version: 1.0.0.20161025)\n---------------------------------");
+        
         luaExecutor(argc, argv);
+    }
     
     return 0;
 }
