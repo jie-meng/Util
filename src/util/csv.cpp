@@ -227,7 +227,6 @@ Csv::Csv(char delimeter,
          char enclosure) :
     pimpl_(new CsvImpl(delimeter, enclosure))
 {
-    //ctor
 }
 
 Csv::Csv(const std::string& file,
@@ -290,55 +289,5 @@ bool Csv::addRow(const std::vector<std::string>& vec)
 {
     return pimpl_->addRow(vec);
 }
-
-//    void csvReadRow(std::string &line, char delimiter, std::vector<std::string>* pout_strvec)
-//    {
-//        if (!pout_strvec)
-//            return;
-//
-//        std::stringstream ss(line);
-//        csvReadRow(ss, delimiter, pout_strvec);
-//    }
-//
-//    void csvReadRow(std::istream &in, char delimiter, std::vector<std::string>* pout_strvec)
-//    {
-//        std::stringstream ss;
-//        bool inquotes = false;
-//        //std::vector<std::string> row;//relying on RVO
-//        while(in.good())
-//        {
-//            char c = in.get();
-//            if (!inquotes && c=='"') //beginquotechar
-//            {
-//                inquotes=true;
-//            }
-//            else if (inquotes && c=='"') //quotechar
-//            {
-//                if ( in.peek() == '"')//2 consecutive quotes resolve to 1
-//                {
-//                    ss << (char)in.get();
-//                }
-//                else //endquotechar
-//                {
-//                    inquotes=false;
-//                }
-//            }
-//            else if (!inquotes && c==delimiter) //end of field
-//            {
-//                pout_strvec->push_back( ss.str() );
-//                ss.str("");
-//            }
-//            else if (!inquotes && (c=='\r' || c=='\n') )
-//            {
-//                if(in.peek()=='\n') { in.get(); }
-//                pout_strvec->push_back( ss.str() );
-//                //return row;
-//            }
-//            else
-//            {
-//                ss << c;
-//            }
-//        }
-//    }
 
 } //namespace util
