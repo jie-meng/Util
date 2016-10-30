@@ -11,6 +11,8 @@ public:
     
     //Tests
     void testLexicalCast();
+    void testPowUInt();
+    void testHexStrToDec();
 protected:
     virtual void setUp();
     virtual void tearDown();
