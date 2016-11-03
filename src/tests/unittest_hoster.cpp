@@ -1,5 +1,6 @@
 #include "unittest_hoster.hpp"
 #include "testcase_string.hpp"
+#include "testcase_file.hpp"
 #include "testcase_lexicalcast.hpp"
 
 using namespace std;
@@ -14,6 +15,7 @@ void UnitTestHoster::run()
     TestSuite suit;
     
     suit.addTestSuite(TestCaseString("TestCaseString"));
+    suit.addTestSuite(TestCaseFile("TestCaseFile"))
     suit.addTestSuite(TestCaseLexicalCast("TestCaseLexicalCast"));
 
     TestRunner runner;
