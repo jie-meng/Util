@@ -6,7 +6,7 @@ using namespace util;
 
 void TestCaseFile::registerTestFunctions()
 {
-    REGISTER_TEST_FUNCTION(TestCaseFile, test)
+    REGISTER_TEST_FUNCTION(TestCaseFile, testReadWrite)
 }
 
 void TestCaseFile::setUp()
@@ -17,7 +17,8 @@ void TestCaseFile::tearDown()
 {    
 }
 
-void TestCaseFile::test()
+void TestCaseFile::testReadWrite()
 {
+    assertStringNotWhiteSpace(readTextFile("LICENSE"), ASSERT_POSITION);
 }
 

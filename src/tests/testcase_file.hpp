@@ -10,7 +10,7 @@ public:
     virtual void registerTestFunctions();
     
     //Tests
-    void test();
+    void testReadWrite();
 protected:
     virtual void setUp();
     virtual void tearDown();

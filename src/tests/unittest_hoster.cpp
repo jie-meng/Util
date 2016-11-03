@@ -16,7 +16,7 @@ void UnitTestHoster::run()
     TestSuite suit;
     
     suit.addTestSuite(TestCaseString("TestCaseString"));
-    suit.addTestSuite(TestCaseFile("TestCaseFile"))
+    suit.addTestSuite(TestCaseFile("TestCaseFile"));
     suit.addTestSuite(TestCaseLexicalCast("TestCaseLexicalCast"));
     suit.addTestSuite(TestCaseCsv("TestCaseCsv"));
 
