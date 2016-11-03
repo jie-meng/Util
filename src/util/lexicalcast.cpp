@@ -138,5 +138,4 @@ int getDecFromHexCh(char ch)
     return -1;
 }
 
-
 } // namespace util

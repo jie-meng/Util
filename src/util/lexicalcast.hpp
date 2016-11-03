@@ -47,23 +47,20 @@ bool checkLexical(const std::string& str)
 }
 
 template <typename T>
-struct PowUInt
+T powUInt(T data, size_t n)
 {
-    T operator() (T data, size_t n)
-    {
-        if (0 == n)
-            return 1;
+    if (0 == n)
+        return 1;
 
-        if (1 == n)
-            return data;
+    if (1 == n)
+        return data;
 
-        T out(data);
-        for (size_t i = 1; i<n; ++i)
-            out *= data;
+    T out(data);
+    for (size_t i = 1; i<n; ++i)
+        out *= data;
 
-        return out;
-    }
-};
+    return out;
+}
 
 int getDecFromHexCh(char ch);
 
@@ -80,7 +77,7 @@ bool hexStrToDec(const std::string& hex, T& out_data)
         int dec = getDecFromHexCh(hex.at(i));
         if (dec < 0)
             return false;
-        data += dec * PowUInt<T>()(16, (size_t)(hex.size() - i - 1));
+        data += dec * powUInt<T>(16, (size_t)(hex.size() - i - 1));
     }
     out_data = data;
     return true;
