@@ -18,6 +18,7 @@ bool writeBinaryFile(const std::string& file, char* pbuf, size_t write_len, bool
 bool overwriteBinaryFile(const std::string& file, char* pbuf, size_t write_len, std::streamoff offset = 0, std::ios::seekdir pos = std::ios_base::beg);
 
 //file info
+uint64_t fileSize(const std::string& file);
 std::string fileExtension(const std::string& file);
 std::string fileBaseName(const std::string& file);
 bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exitst = true);

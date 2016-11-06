@@ -64,6 +64,12 @@ static int overwriteBinaryFile(lua_State* plua_state)
 }
 
 //file info
+static int fileSize(lua_State* plua_state)
+{
+    luaPushInteger(plua_state, fileSize(luaGetString(plua_state, 1, "")));
+    return 1;
+}
+
 static int fileExtension(lua_State* plua_state)
 {
     luaPushString(plua_state, fileExtension(luaGetString(plua_state, 1, "")));
@@ -213,6 +219,7 @@ static const u_luaL_Reg file_lib[] =
     {"writeBinaryFile", writeBinaryFile},
     {"overwriteBinaryFile", overwriteBinaryFile},
 
+    {"fileSize", fileSize},
     {"fileExtension", fileExtension},
     {"fileBaseName", fileBaseName},
     {"fileCopy", fileCopy},

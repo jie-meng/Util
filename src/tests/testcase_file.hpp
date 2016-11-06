@@ -11,6 +11,8 @@ public:
     
     //Tests
     void testReadWrite();
+    void testCreateBinaryFile();
+    void testWriteBinaryFile();
 protected:
     virtual void setUp();
     virtual void tearDown();

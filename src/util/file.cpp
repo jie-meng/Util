@@ -74,7 +74,8 @@ bool createBinaryFile(const std::string& file, uint64_t file_size, char default_
 
     if (file_size > 0)
     {
-        char buf[1024*1024] = {default_data};
+        char buf[1024*1024];
+        memset(buf, default_data, sizeof(buf));
         uint64_t i = 0;
         while(i + sizeof(buf) < file_size)
         {
@@ -149,6 +150,15 @@ bool overwriteBinaryFile(const std::string& file, char* pbuf, size_t write_len, 
     {
         return false;
     }
+}
+
+uint64_t fileSize(const std::string& file)
+{
+    if (!isPathFile(file))
+        return (uint64_t)(-1);
+    
+    std::ifstream in(file.c_str(), std::ifstream::ate | std::ifstream::binary);
+    return in.tellg();
 }
 
 std::string fileExtension(const std::string& file)
