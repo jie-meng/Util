@@ -152,6 +152,25 @@ bool overwriteBinaryFile(const std::string& file, char* pbuf, size_t write_len, 
     }
 }
 
+bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exitst)
+{
+    if (fail_if_exitst && isPathExists(dest_path)) return false;
+
+    std::ifstream ifs(src_path.c_str(), std::ios::binary);
+    if (!ifs.is_open()) return false;
+
+    char buf[kBufSize];
+    std::ofstream ofs(dest_path.c_str(), std::ios::binary);
+
+    while (!ifs.eof())
+    {
+        ifs.read(buf, sizeof(buf));
+        ofs.write(buf, ifs.gcount());
+    }
+
+    return true;
+}
+
 uint64_t fileSize(const std::string& file)
 {
     if (!isPathFile(file))
@@ -178,25 +197,6 @@ std::string fileBaseName(const std::string& file)
         return str;
     else
         return str.substr(0, found);
-}
-
-bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exitst)
-{
-    if (fail_if_exitst && isPathExists(dest_path)) return false;
-
-    std::ifstream ifs(src_path.c_str(), std::ios::binary);
-    if (!ifs.is_open()) return false;
-
-    char buf[kBufSize];
-    std::ofstream ofs(dest_path.c_str(), std::ios::binary);
-
-    while (!ifs.eof())
-    {
-        ifs.read(buf, sizeof(buf));
-        ofs.write(buf, ifs.gcount());
-    }
-
-    return true;
 }
 
 std::pair<std::string, std::string> splitPathname(const std::string& str)

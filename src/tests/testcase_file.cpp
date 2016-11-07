@@ -11,6 +11,8 @@ void TestCaseFile::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseFile, testReadWrite)
     REGISTER_TEST_FUNCTION(TestCaseFile, testCreateBinaryFile)
     REGISTER_TEST_FUNCTION(TestCaseFile, testWriteBinaryFile)
+    REGISTER_TEST_FUNCTION(TestCaseFile, testFileInfo)
+    REGISTER_TEST_FUNCTION(TestCaseFile, testPath)
 }
 
 void TestCaseFile::setUp()
@@ -91,4 +93,90 @@ void TestCaseFile::testWriteBinaryFile()
     assertEquals<char>('^', read[55], ASSERT_POSITION);
     assertEquals<char>('^', read[73], ASSERT_POSITION);
     assertEquals<char>('$', read[110], ASSERT_POSITION);
+}
+
+void TestCaseFile::testFileInfo()
+{
+    assertTrue(fileSize("unittest.lua") > 0, ASSERT_POSITION);
+    string pathname = "/home/joshua/Documents/readme.md";
+    assertEquals<string>("md", fileExtension(pathname), ASSERT_POSITION);
+    assertEquals<string>("readme", fileBaseName(pathname), ASSERT_POSITION);
+    pathname = "C:\\Program Files\\Microsoft\\Temp\\Test.exe";
+    assertEquals<string>("exe", fileExtension(pathname), ASSERT_POSITION);
+    assertEquals<string>("Test", fileBaseName(pathname), ASSERT_POSITION);
+    
+    time_t createTime = fileTime("unittest.lua", FtCreationTime);
+    time_t writeTime = fileTime("unittest.lua", FtLastWriteTime);
+    time_t accessTime = fileTime("unittest.lua", FtLastAccessTime);
+    assertEquals<string>("Sat Oct 22 21:41:59 2016", strTrim(ctime(&createTime)), ASSERT_POSITION);
+    assertEquals<string>("Sun Oct 30 23:23:31 2016", strTrim(ctime(&writeTime)), ASSERT_POSITION);
+    assertEquals<string>("Sun Oct 30 23:23:31 2016", strTrim(ctime(&accessTime)), ASSERT_POSITION);
+}
+
+void TestCaseFile::testPath()
+{
+    std::pair<std::string, std::string> pair = splitPathname(appPath());
+    assertEquals<string>(currentPath(), pair.first, ASSERT_POSITION);
+    
+    string pathname = "/home/joshua/Documents/readme.md";
+    pair = splitPathname(pathname);
+    assertEquals<string>("/home/joshua/Documents", pair.first, ASSERT_POSITION);
+    assertEquals<string>("readme.md", pair.second, ASSERT_POSITION);
+    
+    pathname = "C:\\Program Files\\Microsoft\\Temp\\Test.exe";
+    pair = splitPathname(pathname);
+    assertEquals<string>("C:\\Program Files\\Microsoft\\Temp", pair.first, ASSERT_POSITION);
+    assertEquals<string>("Test.exe", pair.second, ASSERT_POSITION);
+    
+    string lastPath = currentPath();
+    setCurrentPath(currentPath() + "/src");
+    assertEquals<string>(lastPath + "/src", currentPath(), ASSERT_POSITION);
+    setCurrentPath(lastPath);
+    assertEquals<string>(lastPath, currentPath(), ASSERT_POSITION);
+    
+    string ab = relativePathToAbsolutePath("src");
+    assertEquals<string>(currentPath() + "/src", ab, ASSERT_POSITION);
+    
+    assertTrue(isPathExists(currentPath() + "/src"), ASSERT_POSITION);
+    assertTrue(isPathExists("src"), ASSERT_POSITION);
+    assertTrue(isPathDir(currentPath() + "/src"), ASSERT_POSITION);
+    assertTrue(isPathDir("src"), ASSERT_POSITION);
+    assertFalse(isPathFile(currentPath() + "/src"), ASSERT_POSITION);
+    assertFalse(isPathFile("src"), ASSERT_POSITION);
+    
+    assertTrue(isPathExists(currentPath() + "/src/main.cpp"), ASSERT_POSITION);
+    assertTrue(isPathExists("src"), ASSERT_POSITION);
+    assertFalse(isPathDir(currentPath() + "/src/main.cpp"), ASSERT_POSITION);
+    assertFalse(isPathDir("src/main.cpp"), ASSERT_POSITION);
+    assertTrue(isPathFile(currentPath() + "/src/main.cpp"), ASSERT_POSITION);
+    assertTrue(isPathFile("src/main.cpp"), ASSERT_POSITION);
+    
+    assertFalse(isPathEmpty("src"), ASSERT_POSITION);
+    assertFalse(isPathEmpty(currentPath() + "/src"), ASSERT_POSITION);
+    assertFalse(isPathEmpty("src/main.cpp"), ASSERT_POSITION);
+    assertFalse(isPathEmpty(currentPath() + "/src/main.cpp"), ASSERT_POSITION);
+    assertTrue(mkDir("test_mkdir"), ASSERT_POSITION);
+    assertTrue(isPathEmpty("test_mkdir"), ASSERT_POSITION);
+    assertTrue(writeTextFile("test_mkdir/testfile", "content"), ASSERT_POSITION);
+    assertFalse(isPathEmpty("test_mkdir"), ASSERT_POSITION);
+    assertFalse(pathRemove("test_mkdir"), ASSERT_POSITION);
+    assertTrue(pathRemove("test_mkdir/testfile"), ASSERT_POSITION);
+    assertTrue(pathRemove("test_mkdir"), ASSERT_POSITION);
+    assertTrue(mkDir("test_mkdir"), ASSERT_POSITION);
+    assertTrue(isPathEmpty("test_mkdir"), ASSERT_POSITION);
+    assertTrue(writeTextFile("test_mkdir/testfile0", "content"), ASSERT_POSITION);
+    assertTrue(writeTextFile("test_mkdir/testfile1", "content"), ASSERT_POSITION);
+    assertTrue(writeTextFile("test_mkdir/testfile2", "content"), ASSERT_POSITION);
+    pathRemoveAll("test_mkdir");
+    assertFalse(isPathExists("test_mkdir"), ASSERT_POSITION);
+    
+    assertTrue(mkDir("test_mkdir"), ASSERT_POSITION);
+    assertTrue(writeTextFile("test_mkdir/testfile", "content"), ASSERT_POSITION);
+    assertFalse(isPathDir("test2_mkdir"), ASSERT_POSITION);
+    assertTrue(pathRename("test_mkdir", "test2_mkdir"), ASSERT_POSITION);
+    assertTrue(isPathDir("test2_mkdir"), ASSERT_POSITION);
+    assertFalse(isPathFile("test2_mkdir/testfile2"), ASSERT_POSITION);
+    assertTrue(pathRename(currentPath() + "/test2_mkdir/testfile", "test2_mkdir/testfile2"), ASSERT_POSITION);
+    assertTrue(isPathFile("test2_mkdir/testfile2"), ASSERT_POSITION);
+    pathRemoveAll("test2_mkdir");
 }

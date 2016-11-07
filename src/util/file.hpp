@@ -16,21 +16,19 @@ bool createBinaryFile(const std::string& file, uint64_t file_size = 0, char defa
 bool readBinaryFile(const std::string& file, char* pout_buf, size_t read_len, std::streamoff offset = 0, std::ios::seekdir pos = std::ios_base::beg);
 bool writeBinaryFile(const std::string& file, char* pbuf, size_t write_len, bool append = false);
 bool overwriteBinaryFile(const std::string& file, char* pbuf, size_t write_len, std::streamoff offset = 0, std::ios::seekdir pos = std::ios_base::beg);
-
+bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exitst = true);
+    
 //file info
 uint64_t fileSize(const std::string& file);
 std::string fileExtension(const std::string& file);
 std::string fileBaseName(const std::string& file);
-bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exitst = true);
 
-//file time
 enum E_FileTime
 {
     FtCreationTime = 0,
     FtLastWriteTime,
     FtLastAccessTime
 };
-
 time_t fileTime(const std::string& file, E_FileTime ft);
 
 //path

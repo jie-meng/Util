@@ -13,6 +13,8 @@ public:
     void testReadWrite();
     void testCreateBinaryFile();
     void testWriteBinaryFile();
+    void testFileInfo();
+    void testPath();
 protected:
     virtual void setUp();
     virtual void tearDown();
