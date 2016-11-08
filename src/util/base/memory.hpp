@@ -20,7 +20,7 @@ template <typename T>
 class Memory
 {
 public:
-    Memory() :count_(0), buf_(0) {}
+    Memory() : count_(0), buf_(0) {}
     explicit Memory(size_t length) : count_(length), buf_(0) { create(count_); }
     ~Memory() { safeDeleteArray(buf_); }
 
@@ -35,6 +35,17 @@ public:
     }
 
     T* buf() const { return buf_; }
+    
+    T& operator[](size_t i)
+    {
+        return buf()[i];
+    }
+    
+    const T& operator[](size_t i) const
+    {
+        return buf()[i];
+    }
+    
     void clear() const { memset(buf_, 0, size()); }
     size_t count() const { return count_; }
     size_t size() const { return count() * sizeof(T); }
