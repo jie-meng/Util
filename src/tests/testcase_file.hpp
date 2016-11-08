@@ -15,6 +15,7 @@ public:
     void testWriteBinaryFile();
     void testFileInfo();
     void testPath();
+    void testListFile();
 protected:
     virtual void setUp();
     virtual void tearDown();

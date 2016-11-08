@@ -13,6 +13,7 @@ void TestCaseFile::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseFile, testWriteBinaryFile)
     REGISTER_TEST_FUNCTION(TestCaseFile, testFileInfo)
     REGISTER_TEST_FUNCTION(TestCaseFile, testPath)
+    REGISTER_TEST_FUNCTION(TestCaseFile, testListFile)
 }
 
 void TestCaseFile::setUp()
@@ -179,4 +180,43 @@ void TestCaseFile::testPath()
     assertTrue(pathRename(currentPath() + "/test2_mkdir/testfile", "test2_mkdir/testfile2"), ASSERT_POSITION);
     assertTrue(isPathFile("test2_mkdir/testfile2"), ASSERT_POSITION);
     pathRemoveAll("test2_mkdir");
+}
+
+
+void TestCaseFile::testListFile()
+{
+    vector<string> vec;
+    FileFilter ff("cpp");
+    assertTrue(listFiles(currentPath() + "/src", vec, &ff) > 0, ASSERT_POSITION);
+    for (vector<string>::iterator it = vec.begin(); it != vec.end(); ++it)
+        assertTrue(strEndWith(*it, "cpp"), ASSERT_POSITION);
+    
+    vec.clear();
+    DirFilter df;
+    size_t cnt = listFiles("src", vec, &df);
+    assertTrue(cnt > 0, ASSERT_POSITION);
+    assertEquals<size_t>(cnt, vec.size(), ASSERT_POSITION);
+    
+    vec.clear();
+    FileFilterRecursive< vector<string> > ffr(vec, "hpp");
+    assertTrue(listFiles("src", vec, &ffr) > 20, ASSERT_POSITION);
+    for (vector<string>::iterator it = vec.begin(); it != vec.end(); ++it)
+        assertTrue(strEndWith(*it, ".hpp"), ASSERT_POSITION);
+    
+    vec.clear();
+    findFilesInDir(currentPath() + "/src", vec, "cpp");
+    assertTrue(vec.size() > 0, ASSERT_POSITION);
+    for (vector<string>::iterator it = vec.begin(); it != vec.end(); ++it)
+        assertTrue(strEndWith(*it, "cpp"), ASSERT_POSITION);
+    
+    vec.clear();
+    findPathInDir("src", vec);
+    assertTrue(cnt > 0, ASSERT_POSITION);
+    assertEquals<size_t>(cnt, vec.size(), ASSERT_POSITION);
+    
+    vec.clear();
+    findFilesInDirRecursively("src", vec, "hpp");
+    assertTrue(vec.size() > 20, ASSERT_POSITION);
+    for (vector<string>::iterator it = vec.begin(); it != vec.end(); ++it)
+        assertTrue(strEndWith(*it, ".hpp"), ASSERT_POSITION);
 }
