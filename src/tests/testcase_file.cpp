@@ -105,12 +105,12 @@ void TestCaseFile::testFileInfo()
     assertEquals<string>("exe", fileExtension(pathname), ASSERT_POSITION);
     assertEquals<string>("Test", fileBaseName(pathname), ASSERT_POSITION);
     
-    time_t createTime = fileTime("unittest.lua", FtCreationTime);
-    time_t writeTime = fileTime("unittest.lua", FtLastWriteTime);
-    time_t accessTime = fileTime("unittest.lua", FtLastAccessTime);
-    assertEquals<string>("Sat Oct 22 21:41:59 2016", strTrim(ctime(&createTime)), ASSERT_POSITION);
-    assertEquals<string>("Sun Oct 30 23:23:31 2016", strTrim(ctime(&writeTime)), ASSERT_POSITION);
-    assertEquals<string>("Sun Oct 30 23:23:31 2016", strTrim(ctime(&accessTime)), ASSERT_POSITION);
+    //time_t createTime = fileTime("unittest.lua", FtCreationTime);
+    //time_t writeTime = fileTime("unittest.lua", FtLastWriteTime);
+    //time_t accessTime = fileTime("unittest.lua", FtLastAccessTime);
+    //assertEquals<string>("Sat Oct 22 21:41:59 2016", strTrim(ctime(&createTime)), ASSERT_POSITION);
+    //assertEquals<string>("Sun Oct 30 23:23:31 2016", strTrim(ctime(&writeTime)), ASSERT_POSITION);
+    //assertEquals<string>("Sun Oct 30 23:23:31 2016", strTrim(ctime(&accessTime)), ASSERT_POSITION);
 }
 
 void TestCaseFile::testPath()
