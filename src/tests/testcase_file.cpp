@@ -117,7 +117,10 @@ void TestCaseFile::testFileInfo()
 void TestCaseFile::testPath()
 {
     std::pair<std::string, std::string> pair = splitPathname(appPath());
-    assertEquals<string>(currentPath(), pair.first, ASSERT_POSITION);
+    string path = pair.first;
+    if (strEndWith(path, "/."));
+        path = strLeft(path, path.size() - 2);
+    assertEquals<string>(currentPath(), path, ASSERT_POSITION);
     
     string pathname = "/home/joshua/Documents/readme.md";
     pair = splitPathname(pathname);
