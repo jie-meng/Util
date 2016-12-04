@@ -19,7 +19,9 @@ void TestCaseTime::tearDown()
 
 void TestCaseTime::testDateTime()
 {
-    tm t = localTime();
-    DateTime dt(&t);
+    DateTime dt(localTime());
     printLine("%d-%d-%d %d:%d:%d %d", dt.getYear(), dt.getMonth(), dt.getDay(), dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getWeekday());
+    
+    DateTime dt2(gmtTime());
+    printLine("%d-%d-%d %d:%d:%d %d", dt2.getYear(), dt2.getMonth(), dt2.getDay(), dt2.getHour(), dt2.getMinute(), dt2.getSecond(), dt2.getWeekday());
 }

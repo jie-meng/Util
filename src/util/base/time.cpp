@@ -25,14 +25,14 @@ time_t mkCurrentTime()
     return ::mktime(&t);
 }
 
-DateTime::DateTime(tm* ptm) :
-    year_(ptm->tm_year+1900),
-    month_(ptm->tm_mon + 1),
-    day_(ptm->tm_mday),
-    hour_(ptm->tm_hour),
-    minute_(ptm->tm_min),
-    second_(ptm->tm_sec),
-    weekday_(ptm->tm_wday)
+DateTime::DateTime(const tm& t) :
+    year_(t.tm_year+1900),
+    month_(t.tm_mon + 1),
+    day_(t.tm_mday),
+    hour_(t.tm_hour),
+    minute_(t.tm_min),
+    second_(t.tm_sec),
+    weekday_(t.tm_wday)
 {
 }
 

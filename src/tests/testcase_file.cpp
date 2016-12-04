@@ -118,7 +118,7 @@ void TestCaseFile::testPath()
 {
     std::pair<std::string, std::string> pair = splitPathname(appPath());
     string path = pair.first;
-    if (strEndWith(path, "/."));
+    if (strEndWith(path, "/."))
         path = strLeft(path, path.size() - 2);
     assertEquals<string>(currentPath(), path, ASSERT_POSITION);
     

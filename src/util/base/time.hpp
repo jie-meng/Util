@@ -15,7 +15,7 @@ time_t mkCurrentTime();
 class DateTime
 {
 public:
-    explicit DateTime(tm* ptm);
+    explicit DateTime(const tm& t);
     DateTime(int year, int month, int day, int hour, int minute, int second);
 
     inline int getYear() { return year_; }
