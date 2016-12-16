@@ -27,14 +27,7 @@ public:
     inline InformationLevel getLevel() const { return level_; }
     inline std::string getModule() const { return module_; }
     inline std::string getInfo() const { return info_; }
-    inline tm getTime() const { return time_; }
-    inline size_t getYear() const { return time_.tm_year + 1900; }
-    inline size_t getMonth() const { return time_.tm_mon + 1; }
-    inline size_t getDay() const { return time_.tm_mday; }
-    inline size_t getWday() const { return time_.tm_wday; }
-    inline size_t getHour() const { return time_.tm_hour; }
-    inline size_t getMinute() const { return time_.tm_min; }
-    inline size_t getSecond() const { return time_.tm_sec; }
+    inline DateTime getTime() const { return time_; }
     std::string getLevelStr() const;
     std::string getWdayStr() const;
     std::string getTimeStr() const;
@@ -43,7 +36,7 @@ private:
     InformationLevel level_;
     std::string module_;
     std::string info_;
-    tm time_;
+    DateTime time_;
 };
 
 class InformationListener

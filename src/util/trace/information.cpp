@@ -10,7 +10,7 @@ Information::Information(const std::string& module, InformationLevel info_level,
     module_(module),
     info_(info)
 {
-    time_ = localTime();
+    time_ = DateTime::now();
 }
 
 Information::~Information()
@@ -19,12 +19,12 @@ Information::~Information()
 std::string Information::getTimeStr() const
 {
     return strFormat("%04d-%02d-%02d %02d:%02d:%02d",
-                        getYear(),
-                        getMonth(),
-                        getDay(),
-                        getHour(),
-                        getMinute(),
-                        getSecond());
+                        getTime().getYear(),
+                        getTime().getMonth(),
+                        getTime().getDay(),
+                        getTime().getHour(),
+                        getTime().getMinute(),
+                        getTime().getSecond());
 }
 
 std::string Information::getLevelStr() const
@@ -54,7 +54,7 @@ std::string Information::getLevelStr() const
 
 std::string Information::getWdayStr() const
 {
-    switch (getWday())
+    switch (getTime().getWeekday())
     {
     case 0:
         return "SUN";

@@ -128,12 +128,12 @@ void trace(Trace::Level lv, const char* fmt, ...)
     vsnprintf(buffer, kBufSize, fmt, ap);
     va_end(ap);
 
-    tm t = localTime();
+    DateTime dt = DateTime::now();
     std::string lv_str = util::strFormat("[TRACE %s %02d:%02d:%02d] ",
                                               traceLvStr(lv).c_str(),
-                                              t.tm_hour,
-                                              t.tm_min,
-                                              t.tm_sec);
+                                              dt.getHour(),
+                                              dt.getMinute(),
+                                              dt.getSecond());
     printLine(lv_str + std::string(buffer));
 }
 

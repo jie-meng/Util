@@ -345,10 +345,10 @@ void ResultPrinter::printFooter(TestResult* presult)
 // TestRunner
 void TestRunner::doRun(Test& test, bool wait)
 {
-    time_t start_time = mkCurrentTime();
+    DateTime start_time = DateTime::now();
     test.run(&result_);
-    time_t end_time = mkCurrentTime();
-    double dt = difftime(end_time, start_time);
+    DateTime end_time = DateTime::now();
+    double dt = DateTime::drift(end_time, start_time);
     printer_.print(&result_, (unsigned long)dt);
 
     pause(wait);

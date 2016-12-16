@@ -2,37 +2,35 @@
 #define UTIL_TIME_HPP
 
 #include <ctime>
+#include <string>
 
 namespace util
 {
 
-tm localTime();
-
-tm gmtTime();
-
-time_t mkCurrentTime();
-    
 class DateTime
 {
 public:
+    DateTime();
+    explicit DateTime(time_t timet);
     explicit DateTime(const tm& t);
     DateTime(int year, int month, int day, int hour, int minute, int second);
 
-    inline int getYear() { return year_; }
-    inline int getMonth() { return month_; }
-    inline int getDay() { return day_; }
-    inline int getHour() { return hour_; }
-    inline int getMinute() { return minute_; }
-    inline int getSecond() { return second_; }
-    inline int getWeekday() { return weekday_; }
+    static DateTime now();
+    static double drift(const DateTime& dt1, const DateTime& dt0);
+
+    int getYear() const;
+    int getMonth() const;
+    int getDay() const;
+    int getHour() const;
+    int getMinute() const;
+    int getSecond() const;
+    int getWeekday() const;
+    
+    std::string format(const std::string& fmt) const;
 private:
-    int year_;
-    int month_;
-    int day_;
-    int hour_;
-    int minute_;
-    int second_;
-    int weekday_;
+    tm* timet2tm() const;
+private:
+    time_t timet_;
 };
 
 } // namespace util

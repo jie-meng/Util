@@ -1,50 +1,100 @@
 #include "time.hpp"
+#include "constants.hpp"
 
 namespace util
 {
 
-tm localTime()
+DateTime DateTime::now()
 {
-    time_t timer;
-    timer = ::time(0);
-    tm* pn = localtime(&timer);
-    return *pn;
+    return DateTime(time(0));
 }
 
-tm gmtTime()
+double DateTime::drift(const DateTime& dt1, const DateTime& dt0)
 {
-    time_t timer;
-    timer = ::time(0);
-    tm* pn = gmtime(&timer);
-    return *pn;
+    return difftime(dt1.timet_, dt0.timet_);
 }
 
-time_t mkCurrentTime()
-{
-    tm t = localTime();
-    return ::mktime(&t);
-}
-
-DateTime::DateTime(const tm& t) :
-    year_(t.tm_year+1900),
-    month_(t.tm_mon + 1),
-    day_(t.tm_mday),
-    hour_(t.tm_hour),
-    minute_(t.tm_min),
-    second_(t.tm_sec),
-    weekday_(t.tm_wday)
+DateTime::DateTime() :
+    timet_(time(0))
 {
 }
 
-DateTime::DateTime(int year, int month, int day, int hour, int minute, int second) :
-    year_(year),
-    month_(month),
-    day_(day),
-    hour_(hour),
-    minute_(minute),
-    second_(second)
+DateTime::DateTime(time_t timet) :
+    timet_(timet)
 {
-    //calculate weekday here
+}
+
+DateTime::DateTime(const tm& t)
+{
+    tm* ptm = const_cast<tm*>(&t);
+    timet_ = mktime(ptm);
+}
+
+DateTime::DateTime(int year, int month, int day, int hour, int minute, int second)
+{
+    tm t;
+    t.tm_year = year - 1900;
+    t.tm_mon = month - 1;
+    t.tm_mday = day;
+    t.tm_hour =  hour;
+    t.tm_min = minute;
+    t.tm_sec = second;
+    t.tm_isdst = 0;
+    
+    timet_ = mktime(&t);
+}
+
+int DateTime::getYear() const
+{ 
+    return timet2tm()->tm_year + 1900;
+}
+
+int DateTime::getMonth() const
+{
+    return timet2tm()->tm_mon + 1;
+}
+
+int DateTime::getDay() const
+{ 
+    return timet2tm()->tm_mday;
+}
+
+int DateTime::getHour() const
+{ 
+    return timet2tm()->tm_hour;
+}
+
+int DateTime::getMinute() const
+{ 
+    return timet2tm()->tm_min;
+}
+
+int DateTime::getSecond() const
+{ 
+    return timet2tm()->tm_sec;
+}
+
+int DateTime::getWeekday() const
+{ 
+    return timet2tm()->tm_wday;
+}
+
+std::string DateTime::format(const std::string& fmt) const
+{
+    if (fmt.empty())
+    {
+        return std::string(ctime(&timet_));
+    }
+    
+    char buf[kBufSize];
+    strftime(buf, kBufSize, fmt.c_str(), timet2tm());
+    
+    return std::string(buf);
+}
+
+tm* DateTime::timet2tm() const
+{
+    return localtime(&timet_);
 }
 
 } // namespace util
