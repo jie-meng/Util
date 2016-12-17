@@ -15,6 +15,7 @@ inline std::string toString(const T& t)
     os << t << std::flush;
     return os.str();
 }
+
 inline std::string toString(const std::string& str) { return str; }
 inline std::string toString(const char* c_str) { return std::string(c_str); }
 

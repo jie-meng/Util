@@ -29,7 +29,7 @@ enum E_FileTime
     FtLastWriteTime,
     FtLastAccessTime
 };
-time_t fileTime(const std::string& file, E_FileTime ft);
+DateTime fileTime(const std::string& file, E_FileTime ft);
 
 //path
 std::string appPath();

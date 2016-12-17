@@ -224,12 +224,12 @@ time_t systemTimeToTime_t(const SYSTEMTIME& st)
 }
 #endif
 
-time_t fileTime(const std::string& file, E_FileTime ft)
+DateTime fileTime(const std::string& file, E_FileTime ft)
 {
 #ifdef _PLATFORM_WINDOWS_
     WIN32_FILE_ATTRIBUTE_DATA wfad;
     if (!::GetFileAttributesExA(file.c_str(), ::GetFileExInfoStandard, &wfad))
-        return 0;
+        return DateTime((time_t)0);
 
     FILETIME ftlocal;
     SYSTEMTIME st;
@@ -245,29 +245,36 @@ time_t fileTime(const std::string& file, E_FileTime ft)
             FileTimeToLocalFileTime(&wfad.ftLastAccessTime, &ftlocal);
             break;
         default:
-            return 0;
+            return DateTime((time_t)0);
     }
 
     FileTimeToSystemTime(&ftlocal, &st);
-    return systemTimeToTime_t(st);
+    return DateTime(systemTimeToTime_t(st));
 
 #endif // _PLATFORM_WINDOWS_
 #ifdef _PLATFORM_UNIX_
     struct stat buf;
     if (0 != ::stat(file.c_str(), &buf))
-        return 0;
+        return DateTime((time_t)0);
 
+    time_t timet = 0;
     switch (ft)
     {
         case FtCreationTime:
-            return buf.st_ctime;
+            timet = buf.st_ctime;
+            break;
         case FtLastWriteTime:
-            return buf.st_mtime;
+            timet = buf.st_mtime;
+            break;
         case FtLastAccessTime:
-            return buf.st_atime;
+            timet = buf.st_atime;
+            break;
         default:
-            return 0;
+            timet = 0;
+            break;
     }
+    
+    return DateTime(timet);
 #endif // _PLATFORM_UNIX_
 }
 

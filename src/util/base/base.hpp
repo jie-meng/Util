@@ -9,6 +9,8 @@
 #include <sstream>
 #include <utility>
 #include <exception>
+#include <type_traits>
+#include <iomanip>
 
 #ifdef _MSVC_
 typedef unsigned char uint8_t;
@@ -85,12 +87,46 @@ inline void autoPtrMove(UtilAutoPtr<T>& to, UtilAutoPtr<T>& from) { to = from; }
 #endif
 #define SINGLETON(TypeName) static TypeName& getInstance() { static TypeName s_instance; return s_instance; }
 
+template <class T>
+inline bool isPrimitiveType(const T& data) {
+    return std::is_fundamental<T>::value;
+}
+
+// SFINAE test
+#define GENERATE_HAS_MEMBER(member)    \
+    \
+template <typename T>   \
+class HasMember_##member   \
+{   \
+private:    \
+    typedef char YesType[1];    \
+    typedef char NoType[2];     \
+    \
+    template <typename C> static YesType& test(decltype(&C::toString)) ;  \
+    template <typename C> static NoType& test(...); \
+    \
+public:     \
+    enum { value = sizeof(test<T>(0)) == sizeof(YesType) }; \
+};  \
+    \
+template<typename T> \
+typename std::enable_if<HasMember_##member<T>::value, std::string>::type   \
+callToString(const T& t) {   \
+   return t.toString();    \
+}   \
+    \
+template<class T>  \
+struct has_member_##member  \
+: public std::integral_constant<bool, HasMember_##member<T>::value>    \
+{   \
+};
+
 //base classes & functions
 #include "constants.hpp"
+#include "baseclass.hpp"
 #include "memory.hpp"
 #include "in.hpp"
 #include "out.hpp"
-#include "baseclass.hpp"
 #include "string.hpp"
 #include "time.hpp"
 #include "platform.hpp"

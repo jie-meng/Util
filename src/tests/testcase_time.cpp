@@ -1,5 +1,6 @@
 #include "testcase_time.hpp"
 #include "util/base.hpp"
+#include "util/thread.hpp"
 
 using namespace std;
 using namespace util;
@@ -19,13 +20,26 @@ void TestCaseTime::tearDown()
 
 void TestCaseTime::testDateTime()
 {
-    //DateTime dt(localTime());
-    //printLine("%d-%d-%d %d:%d:%d %d", dt.getYear(), dt.getMonth(), dt.getDay(), dt.getHour(), dt.getMinute(), dt.getSecond(), dt.getWeekday());
+    DateTime dt1(2016, 12, 5, 20, 10, 30);
+    DateTime dt2(2016, 12, 5, 20, 10, 31);
+    DateTime dt3(2016, 12, 5, 20, 11, 31);
+
+    assertTrue(dt1 < dt2, ASSERT_POSITION);
+    assertTrue(dt1 <= dt2, ASSERT_POSITION);
+    assertTrue(dt2 > dt1, ASSERT_POSITION);
+    assertTrue(dt2 >= dt1, ASSERT_POSITION);
+    assertEquals<double>(1, dt2.drift(dt1), ASSERT_POSITION);
+    assertEquals<double>(-1, dt1.drift(dt2), ASSERT_POSITION);
+    assertEquals<double>(61, dt3.drift(dt1), ASSERT_POSITION);
+        
+    assertTrue(dt1.earlierThan(dt2), ASSERT_POSITION);
+    assertTrue(dt2.earlierThan(dt3), ASSERT_POSITION);
     
-    //DateTime dt2(gmtTime());
-    //printLine("%d-%d-%d %d:%d:%d %d", dt2.getYear(), dt2.getMonth(), dt2.getDay(), dt2.getHour(), dt2.getMinute(), dt2.getSecond(), dt2.getWeekday());
-    
-    //DateTime dt(2016, 12, 5, 20, 10, 30);
-    DateTime dt;
-    printLine(dt.format(""));
+    assertEquals<int>(2016, dt1.getYear(), ASSERT_POSITION);
+    assertEquals<int>(12, dt1.getMonth(), ASSERT_POSITION);
+    assertEquals<int>(5, dt1.getDay(), ASSERT_POSITION);
+    assertEquals<int>(20, dt1.getHour(), ASSERT_POSITION);
+    assertEquals<int>(10, dt1.getMinute(), ASSERT_POSITION);
+    assertEquals<int>(30, dt1.getSecond(), ASSERT_POSITION);
+    assertEquals<int>(1, dt1.getWeekday(), ASSERT_POSITION);
 }

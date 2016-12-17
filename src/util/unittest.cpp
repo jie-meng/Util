@@ -348,7 +348,7 @@ void TestRunner::doRun(Test& test, bool wait)
     DateTime start_time = DateTime::now();
     test.run(&result_);
     DateTime end_time = DateTime::now();
-    double dt = DateTime::drift(end_time, start_time);
+    double dt = end_time.drift(start_time);
     printer_.print(&result_, (unsigned long)dt);
 
     pause(wait);

@@ -1,5 +1,6 @@
 #include "time.hpp"
 #include "constants.hpp"
+#include "string.hpp"
 
 namespace util
 {
@@ -7,11 +8,6 @@ namespace util
 DateTime DateTime::now()
 {
     return DateTime(time(0));
-}
-
-double DateTime::drift(const DateTime& dt1, const DateTime& dt0)
-{
-    return difftime(dt1.timet_, dt0.timet_);
 }
 
 DateTime::DateTime() :
@@ -82,9 +78,7 @@ int DateTime::getWeekday() const
 std::string DateTime::format(const std::string& fmt) const
 {
     if (fmt.empty())
-    {
         return std::string(ctime(&timet_));
-    }
     
     char buf[kBufSize];
     strftime(buf, kBufSize, fmt.c_str(), timet2tm());
@@ -92,9 +86,29 @@ std::string DateTime::format(const std::string& fmt) const
     return std::string(buf);
 }
 
+double DateTime::drift(const DateTime& dt) const
+{
+    return difftime(timet_, dt.timet_);
+}
+
+bool DateTime::equals(const DateTime& dateTime) const
+{
+    return timet_ == dateTime.timet_;
+}
+
+bool DateTime::earlierThan(const DateTime& dateTime) const
+{
+    return timet_ < dateTime.timet_;
+}
+
 tm* DateTime::timet2tm() const
 {
     return localtime(&timet_);
+}
+
+std::string toString(const DateTime& dt) 
+{ 
+    return strTrim(dt.format("")); 
 }
 
 } // namespace util
