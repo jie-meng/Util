@@ -1,6 +1,5 @@
 #include "testcase_time.hpp"
 #include "util/base.hpp"
-#include "util/thread.hpp"
 
 using namespace std;
 using namespace util;

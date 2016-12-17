@@ -101,10 +101,7 @@ bool CmdLineParser::parse(const std::string& cmdline)
 std::string CmdLineParser::getValue(const std::string& key) const
 {
     KeyValueMap::const_iterator pos = key_value_map_.find(getFilterKeyWithCaseSensitive(key));
-    if (pos != key_value_map_.end())
-        return pos->second;
-    else
-        return "";
+    return pos != key_value_map_.end() ? pos->second : "";
 }
 
 std::string CmdLineParser::content() const

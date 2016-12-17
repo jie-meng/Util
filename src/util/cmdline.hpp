@@ -168,6 +168,7 @@ T CmdLineParser::getValue(const std::string& key, const T& default_value) const
 //////////////////////////////////////////////////
 typedef std::pair<std::string, std::string> StrPair;
 typedef std::list<StrPair> ArgList;
+
 class CmdLineMaker
 {
 public:
@@ -182,17 +183,7 @@ public:
     std::string getCmdLine();
     void removeKey(const std::string& key);
     void sort(int argc, const char* argv[]);
-
-    template<typename T>
-    inline void addKeyValue(const std::string& key, const T& value)
-    {
-        std::string format_key = getFilterKeyWithCaseSensitive(key);
-        ArgList::iterator it = findKey(format_key);
-        if (it != arg_list_.end())
-            return;
-        arg_list_.push_back(std::make_pair(format_key, toString(value)));
-    }
-
+    
     template<class Iter>
     void sort(Iter begin, Iter end)
     {
@@ -210,6 +201,16 @@ public:
         }
         copy(arg_list_.begin(), arg_list_.end(), std::back_inserter(arg_list_temp));
         arg_list_.swap(arg_list_temp);
+    }
+
+    template<typename T>
+    inline void addKeyValue(const std::string& key, const T& value)
+    {
+        std::string format_key = getFilterKeyWithCaseSensitive(key);
+        ArgList::iterator it = findKey(format_key);
+        if (it != arg_list_.end())
+            return;
+        arg_list_.push_back(std::make_pair(format_key, toString(value)));
     }
 private:
     std::string getFilterKeyWithCaseSensitive(const std::string& key) const;

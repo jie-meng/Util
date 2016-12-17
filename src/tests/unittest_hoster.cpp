@@ -5,6 +5,7 @@
 #include "testcase_file.hpp"
 #include "testcase_lexicalcast.hpp"
 #include "testcase_csv.hpp"
+#include "testcase_cmdline.hpp"
 
 using namespace std;
 using namespace util;
@@ -23,6 +24,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseFile("TestCaseFile"));
     suit.addTestSuite(TestCaseLexicalCast("TestCaseLexicalCast"));
     suit.addTestSuite(TestCaseCsv("TestCaseCsv"));
+    suit.addTestSuite(TestCaseCmdLine("TestCaseCmdLine"));
 
     TestRunner runner;
     runner.run(suit);
