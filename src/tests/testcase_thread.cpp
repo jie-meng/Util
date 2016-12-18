@@ -120,12 +120,9 @@ void TestCaseThread::synchronizeMethod()
 {
     Synchronize sc(mutex_);
     int step = number_ >= 5000 ? 2 : 1;
-    int sum = 0;
     for (int i=0; i<5000; ++i)
     {
         number_ += step;
-        sum += step;
-        printLine("thread %u, step %d, times = %d, sum = %d", getCurrentThreadId(), step, i, sum);
     }
 }
 
@@ -137,12 +134,9 @@ void TestCaseThread::testMutex()
     {
         Synchronize sc(mutex_);
         int step = number_ >= 5000 ? 2 : 1;
-        int sum = 0;
         for (int i=0; i<5000; ++i)
         {
             number_ += step;
-            sum += step;
-            printLine("thread %u, step %d, times = %d, sum = %d", getCurrentThreadId(), step, i, sum);
         }
     }
     assertTrue(td.join(), ASSERT_POSITION);

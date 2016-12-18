@@ -275,13 +275,13 @@ struct Mutex::MutexData
 Mutex::Mutex() :
     pdata_(new MutexData())
 {
-    pthread_mutexattr_t mattr;
 #ifdef __APPLE__
-    pthread_mutexattr_settype(&mattr,PTHREAD_MUTEX_RECURSIVE);
+    ::pthread_mutex_init(&pdata_->mutex_, NULL);
 #else
+    pthread_mutexattr_t mattr;
     pthread_mutexattr_settype(&mattr,PTHREAD_MUTEX_RECURSIVE_NP);
-#endif
     ::pthread_mutex_init(&pdata_->mutex_, &mattr);
+#endif
 }
 Mutex::~Mutex()
 {
