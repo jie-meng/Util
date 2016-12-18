@@ -293,7 +293,7 @@ void Mutex::lock()
      ::pthread_mutex_lock(&pdata_->mutex_);
 }
 
-void Mutex::unLock()
+void Mutex::unlock()
 {
      ::pthread_mutex_unlock(&pdata_->mutex_);
 }

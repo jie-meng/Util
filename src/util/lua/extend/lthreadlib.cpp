@@ -131,12 +131,12 @@ static int mutexLock(lua_State* plua_state)
     return 0;
 }
 
-static int mutexUnLock(lua_State* plua_state)
+static int mutexUnlock(lua_State* plua_state)
 {
     Mutex* pmutex = static_cast<Mutex*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibThread, "mutexUnLock", pmutex, "null pointer");
+    luaExtendAssert(plua_state, kLuaExtendLibThread, "mutexUnlock", pmutex, "null pointer");
 
-    pmutex->unLock();
+    pmutex->unlock();
     return 0;
 }
 
@@ -266,7 +266,7 @@ static const u_luaL_Reg thread_lib[] =
     {"mutexCreate", mutexCreate},
     {"mutexDestroy", mutexDestroy},
     {"mutexLock", mutexLock},
-    {"mutexUnLock", mutexUnLock},
+    {"mutexUnlock", mutexUnlock},
 
     {"lockCreate", lockCreate},
     {"lockDestroy", lockDestroy},
