@@ -56,7 +56,7 @@ void Mutex::lock()
     //::EnterCriticalSection(&pdata_->cs_);
 }
 
-void Mutex::unLock()
+void Mutex::unlock()
 {
     ::ReleaseMutex(pdata_->hmutex_);
     //::LeaveCriticalSection(&pdata_->cs_);
