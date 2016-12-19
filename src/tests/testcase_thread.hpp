@@ -18,6 +18,7 @@ public:
     void testMsgThread();
     void testMutex();
     void testLock();
+    void testLockTimedWait();
 protected:
     virtual void setUp();
     virtual void tearDown();
@@ -25,11 +26,13 @@ private:
     void synchronizeMethod();
     void lockThread0();
     void lockThread1();
+    void lockTimedWaitThread(bool timeout);
 private:
     util::Mutex mutex_;
-    int number_;
     util::Lock lock0_;
     util::Lock lock1_;
+    util::Lock lock2_;
+    int number_;
     std::string lockStr_;
 };
 
