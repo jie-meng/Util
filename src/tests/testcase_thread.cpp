@@ -14,6 +14,7 @@ void TestCaseThread::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseThread, testMutex)
     REGISTER_TEST_FUNCTION(TestCaseThread, testLock)
     REGISTER_TEST_FUNCTION(TestCaseThread, testLockTimedWait)
+    REGISTER_TEST_FUNCTION(TestCaseThread, testMultiLockTimedWait)
 }
 
 void TestCaseThread::setUp()
@@ -209,6 +210,58 @@ void TestCaseThread::testLockTimedWait()
     msleep(200);
     assertEquals<int>(0, number_, ASSERT_POSITION);
     lock2_.notify();
+    msleep(50);
+    assertEquals<int>(1, number_, ASSERT_POSITION);
+}
+
+void TestCaseThread::multiLockTimedWaitThread(MultiLock* pmlock, bool timeout)
+{
+    assertNotEquals<bool>(timeout, pmlock->timedWait(500), ASSERT_POSITION);
+    number_ = 1;   
+}
+
+void TestCaseThread::testMultiLockTimedWait()
+{
+    //wait one
+    MultiLock mlock(2, false);
+    
+    number_ = 0;
+    Thread td(UtilBind(&TestCaseThread::multiLockTimedWaitThread, this, &mlock, true));
+    assertTrue(td.start(), ASSERT_POSITION);
+    msleep(200);
+    assertEquals<int>(0, number_, ASSERT_POSITION);
+    msleep(400);
+    assertEquals<int>(1, number_, ASSERT_POSITION);
+    
+    number_ = 0;
+    Thread td1(UtilBind(&TestCaseThread::multiLockTimedWaitThread, this, &mlock, false));
+    assertTrue(td1.start(), ASSERT_POSITION);
+    msleep(200);
+    assertEquals<int>(0, number_, ASSERT_POSITION);
+    mlock.notify(1);
+    msleep(50);
+    assertEquals<int>(1, number_, ASSERT_POSITION);
+    
+    //wait all
+    MultiLock mlock1(2, true);
+    
+    number_ = 0;
+    Thread td2(UtilBind(&TestCaseThread::multiLockTimedWaitThread, this, &mlock1, true));
+    assertTrue(td2.start(), ASSERT_POSITION);
+    msleep(200);
+    assertEquals<int>(0, number_, ASSERT_POSITION);
+    msleep(400);
+    assertEquals<int>(1, number_, ASSERT_POSITION);
+    
+    number_ = 0;
+    Thread td3(UtilBind(&TestCaseThread::multiLockTimedWaitThread, this, &mlock1, false));
+    assertTrue(td3.start(), ASSERT_POSITION);
+    msleep(200);
+    assertEquals<int>(0, number_, ASSERT_POSITION);
+    mlock1.notify(1);
+    msleep(50);
+    assertEquals<int>(0, number_, ASSERT_POSITION);
+    mlock1.notify(0);
     msleep(50);
     assertEquals<int>(1, number_, ASSERT_POSITION);
 }
