@@ -12,6 +12,7 @@ void TestCaseThread::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseThread, testWorkerThread)
     REGISTER_TEST_FUNCTION(TestCaseThread, testMsgThread)
     REGISTER_TEST_FUNCTION(TestCaseThread, testMutex)
+    REGISTER_TEST_FUNCTION(TestCaseThread, testLock)
 }
 
 void TestCaseThread::setUp()
@@ -141,4 +142,45 @@ void TestCaseThread::testMutex()
     }
     assertTrue(td.join(), ASSERT_POSITION);
     assertEquals<int>(15000, number_, ASSERT_POSITION);
+}
+
+void TestCaseThread::lockThread0()
+{
+    for (int i=0; i<50; ++i)
+    {
+        lock0_.wait();
+        lockStr_ += "0";
+        printLine("0");
+        lock1_.notify();
+    }
+}
+
+void TestCaseThread::lockThread1()
+{
+    for (int i=0; i<50; ++i)
+    {
+        lock1_.wait();
+        lockStr_ += "1";
+        printLine("1");
+        lock0_.notify();
+    }
+}
+
+void TestCaseThread::testLock()
+{
+    lockStr_.clear();
+    Thread td0(UtilBind(&TestCaseThread::lockThread0, this));
+    assertTrue(td0.start(), ASSERT_POSITION);
+    Thread td1(UtilBind(&TestCaseThread::lockThread1, this));
+    assertTrue(td1.start(), ASSERT_POSITION);
+    lock0_.notify();
+    td0.join();
+    td1.join();
+    for (int i=0; i<100; ++i)
+    {
+        if (i%2 == 0)
+            assertEquals<char>('0', lockStr_[i], ASSERT_POSITION);
+        else
+            assertEquals<char>('1', lockStr_[i], ASSERT_POSITION);
+    }
 }
