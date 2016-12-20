@@ -28,7 +28,6 @@ private:
     void lockThread0();
     void lockThread1();
     void lockTimedWaitThread(bool timeout);
-    void multiLockTimedWaitThread(util::MultiLock* pmlock, bool timeout);
 private:
     util::Mutex mutex_;
     util::Lock lock0_;

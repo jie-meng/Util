@@ -54,22 +54,6 @@ private:
     DISALLOW_COPY_AND_ASSIGN(Lock)
 };
 
-class MultiLock
-{
-public:
-    MultiLock(size_t lock_cnt, bool wait_all);
-    ~MultiLock();
-    void wait(bool reset = true);
-    bool timedWait(size_t ms, bool reset = true);
-    void notify(size_t index);
-    void notifyAll();
-private:
-    struct MultiLockData;
-    UtilAutoPtr<MultiLockData> pdata_;
-private:
-    DISALLOW_COPY_AND_ASSIGN(MultiLock)
-};
-
 class Thread
 {
     typedef UtilFunction<void ()> ThreadFunc;

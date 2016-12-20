@@ -14,7 +14,6 @@ void TestCaseThread::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseThread, testMutex)
     REGISTER_TEST_FUNCTION(TestCaseThread, testLock)
     REGISTER_TEST_FUNCTION(TestCaseThread, testLockTimedWait)
-    REGISTER_TEST_FUNCTION(TestCaseThread, testMultiLockTimedWait)
 }
 
 void TestCaseThread::setUp()
@@ -41,33 +40,33 @@ void TestCaseThread::testGetCurrentThreadId()
     assertTrue(util::getCurrentThreadId() > 0, ASSERT_POSITION);
 }
 
-void threadFunc(int* pthreadId)
+void threadFunc(unsigned long* pthreadId)
 {
     *pthreadId = getCurrentThreadId();
 }
 
 void TestCaseThread::testThread()
 {
-    int threadId = 0;
+    unsigned long threadId = 0;
     Thread td(UtilBind(threadFunc, &threadId));
     assertTrue(td.start(), ASSERT_POSITION);
     assertTrue(td.join(), ASSERT_POSITION);
     assertTrue(threadId > 0, ASSERT_POSITION);
-    assertNotEquals<int>(getCurrentThreadId(), threadId, ASSERT_POSITION);
+    assertNotEquals<unsigned long>(getCurrentThreadId(), threadId, ASSERT_POSITION);
 }
 
 class DerivedWorkerThread : public WorkerThread
 {
 public:
     DerivedWorkerThread() : threadId_(0) {}
-    inline int getThreadId() const { return threadId_; }
+    inline unsigned long getThreadId() const { return threadId_; }
 protected:
     virtual void run()
     {
         threadId_ = getCurrentThreadId();
     }
 private:
-    int threadId_ = 0;
+    unsigned long threadId_;
 private:
     DISALLOW_COPY_AND_ASSIGN(DerivedWorkerThread)
 };
@@ -75,11 +74,11 @@ private:
 void TestCaseThread::testWorkerThread()
 {
     DerivedWorkerThread td;
-    assertEquals<int>(0, td.getThreadId(), ASSERT_POSITION);
+    assertEquals<unsigned long>(0, td.getThreadId(), ASSERT_POSITION);
     assertTrue(td.start(), ASSERT_POSITION);
     assertTrue(td.join(), ASSERT_POSITION);
     assertTrue(td.getThreadId() > 0, ASSERT_POSITION);
-    assertNotEquals<int>(getCurrentThreadId(), td.getThreadId(), ASSERT_POSITION);
+    assertNotEquals<unsigned long>(getCurrentThreadId(), td.getThreadId(), ASSERT_POSITION);
 }
 
 class MsgProcessThread : public MsgThread<int>
@@ -190,7 +189,7 @@ void TestCaseThread::testLock()
 
 void TestCaseThread::lockTimedWaitThread(bool timeout)
 {
-    assertNotEquals<bool>(timeout, lock2_.timedWait(500), ASSERT_POSITION);
+    assertNotEquals<bool>(timeout, lock2_.timedWait(2000), ASSERT_POSITION);
     number_ = 1;
 }
 
@@ -199,69 +198,17 @@ void TestCaseThread::testLockTimedWait()
     number_ = 0;
     Thread td(UtilBind(&TestCaseThread::lockTimedWaitThread, this, true));
     assertTrue(td.start(), ASSERT_POSITION);
-    msleep(200);
+    msleep(600);
     assertEquals<int>(0, number_, ASSERT_POSITION);
-    msleep(400);
+    msleep(1800);
     assertEquals<int>(1, number_, ASSERT_POSITION);
     
     number_ = 0;
     Thread td1(UtilBind(&TestCaseThread::lockTimedWaitThread, this, false));
     assertTrue(td1.start(), ASSERT_POSITION);
-    msleep(200);
+    msleep(600);
     assertEquals<int>(0, number_, ASSERT_POSITION);
     lock2_.notify();
-    msleep(50);
-    assertEquals<int>(1, number_, ASSERT_POSITION);
-}
-
-void TestCaseThread::multiLockTimedWaitThread(MultiLock* pmlock, bool timeout)
-{
-    assertNotEquals<bool>(timeout, pmlock->timedWait(500), ASSERT_POSITION);
-    number_ = 1;   
-}
-
-void TestCaseThread::testMultiLockTimedWait()
-{
-    //wait one
-    MultiLock mlock(2, false);
-    
-    number_ = 0;
-    Thread td(UtilBind(&TestCaseThread::multiLockTimedWaitThread, this, &mlock, true));
-    assertTrue(td.start(), ASSERT_POSITION);
-    msleep(200);
-    assertEquals<int>(0, number_, ASSERT_POSITION);
-    msleep(400);
-    assertEquals<int>(1, number_, ASSERT_POSITION);
-    
-    number_ = 0;
-    Thread td1(UtilBind(&TestCaseThread::multiLockTimedWaitThread, this, &mlock, false));
-    assertTrue(td1.start(), ASSERT_POSITION);
-    msleep(200);
-    assertEquals<int>(0, number_, ASSERT_POSITION);
-    mlock.notify(1);
-    msleep(50);
-    assertEquals<int>(1, number_, ASSERT_POSITION);
-    
-    //wait all
-    MultiLock mlock1(2, true);
-    
-    number_ = 0;
-    Thread td2(UtilBind(&TestCaseThread::multiLockTimedWaitThread, this, &mlock1, true));
-    assertTrue(td2.start(), ASSERT_POSITION);
-    msleep(200);
-    assertEquals<int>(0, number_, ASSERT_POSITION);
-    msleep(400);
-    assertEquals<int>(1, number_, ASSERT_POSITION);
-    
-    number_ = 0;
-    Thread td3(UtilBind(&TestCaseThread::multiLockTimedWaitThread, this, &mlock1, false));
-    assertTrue(td3.start(), ASSERT_POSITION);
-    msleep(200);
-    assertEquals<int>(0, number_, ASSERT_POSITION);
-    mlock1.notify(1);
-    msleep(50);
-    assertEquals<int>(0, number_, ASSERT_POSITION);
-    mlock1.notify(0);
-    msleep(50);
+    msleep(300);
     assertEquals<int>(1, number_, ASSERT_POSITION);
 }

@@ -191,68 +191,6 @@ static int lockNotify(lua_State* plua_state)
     return 0;
 }
 
-static int multiLockCreate(lua_State* plua_state)
-{
-    luaAssert(plua_state, 2 == luaGetTop(plua_state), "param \"lock_cnt\" and \"wait_all\" needed");
-    MultiLock* pmlock = new MultiLock(luaGetInteger(plua_state, 1, 1), luaGetBoolean(plua_state, 2, true));
-    LuaHeapRecyclerManager::getInstance().addHeapObject<MultiLock>(plua_state, (void*)pmlock);
-
-    luaPushLightUserData(plua_state, (void*)pmlock);
-
-    return 1;
-}
-
-static int multiLockDestroy(lua_State* plua_state)
-{
-    MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)pmlock);
-
-    if (pmlock)
-        delete pmlock;
-
-    return 0;
-}
-
-static int multiLockWait(lua_State* plua_state)
-{
-    MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibThread, "multiLockWait", pmlock, "null pointer");
-
-    pmlock->wait(luaGetBoolean(plua_state, 2, true));
-
-    return 0;
-}
-
-static int multiLockTimedWait(lua_State* plua_state)
-{
-    MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibThread, "multiLockTimedWait", pmlock, "null pointer");
-
-    luaPushBoolean(plua_state, pmlock->timedWait(luaGetInteger(plua_state, 2, 2000),
-                                                 luaGetBoolean(plua_state, 3, true)));
-    return 1;
-}
-
-static int multiLockNotify(lua_State* plua_state)
-{
-    MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibThread, "multiLockNotify", pmlock, "null pointer");
-
-    pmlock->notify(luaGetInteger(plua_state, 1, 0));
-
-    return 0;
-}
-
-static int multiLockNotifyAll(lua_State* plua_state)
-{
-    MultiLock* pmlock = static_cast<MultiLock*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibThread, "multiLockNotifyAll", pmlock, "null pointer");
-
-    pmlock->notifyAll();
-
-    return 0;
-}
-
 static const u_luaL_Reg thread_lib[] =
 {
     {"create", create},
@@ -273,13 +211,6 @@ static const u_luaL_Reg thread_lib[] =
     {"lockWait", lockWait},
     {"lockTimedWait", lockTimedWait},
     {"lockNotify", lockNotify},
-
-    {"multiLockCreate", multiLockCreate},
-    {"multiLockDestroy", multiLockDestroy},
-    {"multiLockWait", multiLockWait},
-    {"multiLockTimedWait", multiLockTimedWait},
-    {"multiLockNotify", multiLockNotify},
-    {"multiLockNotifyAll", multiLockNotifyAll},
 
     {0, 0}
 };
