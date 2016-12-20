@@ -12,7 +12,6 @@
 #include "util/process.hpp"
 #include "util/regex.hpp"
 #include "util/timer.hpp"
-#include "util/strategy.hpp"
 #include "util/cfg.hpp"
 #include "util/factory.hpp"
 #include "util/unittest.hpp"
