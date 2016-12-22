@@ -1,14 +1,12 @@
 *.obj
 *.o
 *.exe
-*.depend
-*.layout
 
+Util
 tags
 
 Debug/
 Release/
-Util
 
 *.cmake
 Makefile
