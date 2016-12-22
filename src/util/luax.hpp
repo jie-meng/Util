@@ -117,7 +117,6 @@ public:
     void addHeapObject(void* p);
 
     void removeHeapObject(void* p);
-    //bool include(const std::string& file);
     void clear();
     void clear(TypeInfo typeinfo);
 private:

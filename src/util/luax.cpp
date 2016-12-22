@@ -94,9 +94,7 @@ std::vector< std::pair<any, any> > luaGetTable(lua_State* plua_state, int index)
     std::vector< std::pair<any, any> > vec;
 
     if (!lua_istable(plua_state, index))
-    {
         return vec;
-    }
 
     // Process of lua_next:
     // 1) Pop a key from stack
@@ -264,9 +262,6 @@ void luaAssert(lua_State* plua_state, bool assertion, const std::string& str)
     if (!plua_state)
         luaL_error(plua_state, "plua_state is null");
 
-    //if(assertion)
-        //return lua_gettop(plua_state);
-
     if (!assertion)
         luaL_error(plua_state, "%s", str.c_str());
 }
@@ -352,7 +347,6 @@ int luaParseFile(lua_State* plua_state, const std::string& file, std::string& er
 
 //LuaHeapRecycler
 typedef std::map<void*, LuaHeapObjectInfo> HeapMap;
-//typedef std::set<std::string> IncludeSet;
 
 struct LuaHeapRecycler::LuaHeapRecyclerImpl
 {
@@ -360,35 +354,26 @@ struct LuaHeapRecycler::LuaHeapRecyclerImpl
     void removeHeapObject(void* p);
     void clear();
     void clear(TypeInfo typeinfo);
-    //bool include(const std::string& file);
 
     HeapMap heap_map_;
-    //IncludeSet include_set_;
     Mutex mutex_;
 };
 
 void LuaHeapRecycler::LuaHeapRecyclerImpl::addHeapObject(void* p, LuaHeapObjectInfo lua_heap_object_info)
 {
     Synchronize sc(mutex_);
-    if (!p)
-        return;
+    if (!p) return;
     heap_map_.insert(std::make_pair(p, lua_heap_object_info));
 }
 
 void LuaHeapRecycler::LuaHeapRecyclerImpl::removeHeapObject(void* p)
 {
     Synchronize sc(mutex_);
-    if (!p)
-        return;
+    if (!p) return;
     HeapMap::iterator it = heap_map_.find(p);
     if (it != heap_map_.end())
         heap_map_.erase(p);
 }
-
-//bool LuaHeapRecycler::LuaHeapRecyclerImpl::include(const std::string& file)
-//{
-//    return include_set_.insert(file).second;
-//}
 
 void LuaHeapRecycler::LuaHeapRecyclerImpl::clear()
 {
@@ -399,7 +384,6 @@ void LuaHeapRecycler::LuaHeapRecyclerImpl::clear()
         it->second.recycler(it->first);
     }
     heap_map_.clear();
-    //include_set_.clear();
 }
 
 void LuaHeapRecycler::LuaHeapRecyclerImpl::clear(TypeInfo typeinfo)
@@ -435,11 +419,6 @@ void LuaHeapRecycler::removeHeapObject(void* p)
 {
     pimpl_->removeHeapObject(p);
 }
-
-//bool LuaHeapRecycler::include(const std::string& file)
-//{
-//    return pimpl_->include(file);
-//}
 
 void LuaHeapRecycler::clear()
 {
@@ -480,16 +459,6 @@ void LuaHeapRecyclerManager::removeHeapObject(lua_State* plua_state, void* p)
     if (it != pimpl_->state_map_.end())
         (it->second)->removeHeapObject(p);
 }
-
-//bool LuaHeapRecyclerManager::include(lua_State* plua_state, const std::string& file)
-//{
-//    Synchronize sc(pimpl_->lua_heap_recycler_mutex_);
-//    std::map<lua_State*, LuaHeapRecycler*>::iterator it = pimpl_->state_map_.find(plua_state);
-//    if (it != pimpl_->state_map_.end())
-//        return (it->second)->include(file);
-//
-//    return false;
-//}
 
 void LuaHeapRecyclerManager::addState(lua_State* plua_state, LuaHeapRecycler* ph)
 {
