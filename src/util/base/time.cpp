@@ -1,6 +1,7 @@
 #include "time.hpp"
 #include "constants.hpp"
 #include "string.hpp"
+#include "baseclass.hpp"
 
 namespace util
 {
@@ -70,9 +71,14 @@ int DateTime::getSecond() const
     return timet2tm()->tm_sec;
 }
 
-int DateTime::getWeekday() const
+DateTime::Weekday DateTime::getWeekday() const
 { 
-    return timet2tm()->tm_wday;
+    return (DateTime::Weekday)(timet2tm()->tm_wday+1);
+}
+
+int DateTime::getYearday() const
+{
+    return timet2tm()->tm_yday+1;
 }
 
 std::string DateTime::format(const std::string& fmt) const
@@ -109,6 +115,29 @@ tm* DateTime::timet2tm() const
 std::string toString(const DateTime& dt) 
 { 
     return strTrim(dt.format("")); 
+}
+
+std::string toString(DateTime::Weekday weekday)
+{
+    switch (weekday)
+    {
+        case DateTime::Sunday:
+            return "Sun";
+        case DateTime::Monday:
+            return "Mon";
+        case DateTime::Tuesday:
+            return "Tue";
+        case DateTime::Wensday:
+            return "Wen";
+        case DateTime::Thursday:
+            return "Thu";
+        case DateTime::Friday:
+            return "Fri";
+        case DateTime::Saturday:
+            return "Sat";
+        default:
+            throw Exception(strFormat("Invalid Weekday value: %d", (int)weekday));
+    }
 }
 
 } // namespace util

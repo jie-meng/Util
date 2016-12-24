@@ -40,5 +40,9 @@ void TestCaseTime::testDateTime()
     assertEquals<int>(20, dt1.getHour(), ASSERT_POSITION);
     assertEquals<int>(10, dt1.getMinute(), ASSERT_POSITION);
     assertEquals<int>(30, dt1.getSecond(), ASSERT_POSITION);
-    assertEquals<int>(1, dt1.getWeekday(), ASSERT_POSITION);
+    assertEquals<DateTime::Weekday>(DateTime::Monday, dt1.getWeekday(), ASSERT_POSITION);
+    
+    DateTime dt4(2017, 2, 2, 15, 34, 22);
+    assertEquals<DateTime::Weekday>(DateTime::Thursday, dt4.getWeekday(), ASSERT_POSITION);
+    assertEquals<int>(33, dt4.getYearday(), ASSERT_POSITION);
 }

@@ -10,6 +10,17 @@ namespace util
 class DateTime
 {
 public:
+    enum Weekday
+    {
+        Sunday = 1,
+        Monday = 2,
+        Tuesday = 3,
+        Wensday = 4,
+        Thursday = 5,
+        Friday = 6,
+        Saturday = 7
+    };
+
     DateTime();
     explicit DateTime(time_t timet);
     explicit DateTime(const tm& t);
@@ -24,7 +35,8 @@ public:
     int getHour() const;
     int getMinute() const;
     int getSecond() const;
-    int getWeekday() const;
+    DateTime::Weekday getWeekday() const;
+    int getYearday() const;
     
     //specifier     Replaced by	    Example
     //%a	Abbreviated weekday name *	Thu
@@ -77,6 +89,7 @@ private:
 };
 
 std::string toString(const DateTime& dt);
+std::string toString(DateTime::Weekday weekday);
 
 inline bool operator==(const DateTime& lhs, const DateTime& rhs){ return lhs.equals(rhs); }
 inline bool operator!=(const DateTime& lhs, const DateTime& rhs){return !operator==(lhs,rhs);}
