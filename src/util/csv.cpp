@@ -238,6 +238,7 @@ Csv::Csv(const std::string& file,
 
 Csv::~Csv()
 {
+    printLine("~Csv");
 }
 
 bool Csv::read(const std::string& file)

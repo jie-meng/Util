@@ -6,10 +6,44 @@
 namespace util
 {
 
-typedef struct u_luaL_Reg {
+struct u_luaL_Reg {
     const char *name;
     LuaCFunc func;
-} u_luaL_Reg;
+};
+
+struct LuaObject {
+  void* pdata; 
+  LuaCFunc destroy;
+};
+
+void luaCreateMeta(lua_State * plua_state, const std::string& handleName, u_luaL_Reg* lr);
+LuaObject* luaNewEmptyObject(lua_State* plua_state, const std::string& handleName);
+LuaObject* luaGetObject(lua_State* plua_state,  const std::string& handleName);
+int luaObjectGc (lua_State *plua_state, const std::string& handleName);
+int luaFileresult(lua_State* plua_state, bool stat, const std::string& fname = "");
+
+template <typename T>
+T* luaGetObjectHandle(lua_State* plua_state, const std::string& handleName) 
+{
+    LuaObject* p = luaGetObject(plua_state, handleName);
+    if (p->destroy == NULL)
+        luaError(plua_state, "Attempt to use a destoryed object");
+    
+    luaAssert(plua_state, p->pdata, "LuaObject data is NULL");
+    return (T*)(p->pdata);
+}
+
+template <typename T>
+int luaObjectToString (lua_State* plua_state, const std::string& handleName) 
+{
+    LuaObject* p = luaGetObject(plua_state, handleName);
+    std::string typeName = strTrim(strReplaceAll(handleName, "*", ""));
+    if (p->destroy == NULL)
+        luaPushString(plua_state, strFormat("%s (destroyed)", typeName.c_str()));
+    else
+        luaPushString(plua_state, strFormat("%s (%u)", typeName.c_str(), p->pdata));
+    return 1;
+}
 
 //LuaExtender
 class LuaExtender
