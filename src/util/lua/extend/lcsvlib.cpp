@@ -12,12 +12,7 @@ const std::string kCsvHandle = "Csv*";
 
 static int destroy(lua_State* plua_state)
 {
-    printLine("GG");
-    LuaObject* p = luaGetObject(plua_state, kCsvHandle);
-    deleteVoid<Csv>(p->pdata);
-    p->destroy = NULL;
-    
-    return 0;
+    return luaObjectDestory<Csv>(plua_state, kCsvHandle);
 }
 
 static int create(lua_State* plua_state)
@@ -26,17 +21,15 @@ static int create(lua_State* plua_state)
     string delimiter = luaGetString(plua_state, 2, ",");
     string enclosure = luaGetString(plua_state, 3, "\"");
 
-    LuaObject* pluaObj = luaNewEmptyObject(plua_state, kCsvHandle);
-    Csv* pcsv = new Csv(file, delimiter.at(0), enclosure.at(0));
-    pluaObj->pdata = (void*)pcsv;
-    pluaObj->destroy = destroy;
+    LuaObject<Csv>* p = luaNewEmptyObject<Csv>(plua_state, kCsvHandle);
+    p->setData(new Csv(file, delimiter.at(0), enclosure.at(0)));
 
     return 1;
 }
 
 static int read(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
     luaPushBoolean(plua_state, pcsv->read(luaGetString(plua_state, 2, "")));
 
     return 1;
@@ -44,7 +37,7 @@ static int read(lua_State* plua_state)
 
 static int write(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
 
     string file = luaGetString(plua_state, 2, "");
     if (file == "")
@@ -57,7 +50,7 @@ static int write(lua_State* plua_state)
 
 static int empty(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
     luaPushBoolean(plua_state, pcsv->empty());
 
     return 1;
@@ -65,7 +58,7 @@ static int empty(lua_State* plua_state)
 
 static int clear(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
     pcsv->clear();
 
     return 0;
@@ -73,7 +66,7 @@ static int clear(lua_State* plua_state)
 
 static int rows(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
     luaPushInteger(plua_state, pcsv->rows());
 
     return 1;
@@ -81,7 +74,7 @@ static int rows(lua_State* plua_state)
 
 static int cols(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
     luaPushInteger(plua_state, pcsv->cols());
 
     return 1;
@@ -89,7 +82,7 @@ static int cols(lua_State* plua_state)
 
 static int getCellValue(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
     int row = luaGetInteger(plua_state, 2, -1);
     int col = luaGetInteger(plua_state, 3, -1);
 
@@ -101,7 +94,7 @@ static int getCellValue(lua_State* plua_state)
 
 static int setCellValue(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
 
     int row = luaGetInteger(plua_state, 2, -1);
     int col = luaGetInteger(plua_state, 3, -1);
@@ -116,7 +109,7 @@ static int setCellValue(lua_State* plua_state)
 
 static int addRow(lua_State* plua_state)
 {
-    Csv* pcsv = luaGetObjectHandle<Csv>(plua_state, kCsvHandle);
+    Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
     int count = luaGetTop(plua_state);
     if (count > 1)
     {
@@ -134,12 +127,6 @@ static int addRow(lua_State* plua_state)
     return 1;
 }
 
-
-static int gc(lua_State* plua_state)
-{
-    return luaObjectGc(plua_state, kCsvHandle);
-}
-
 static int toString(lua_State* plua_state)
 {
     return luaObjectToString<Csv>(plua_state, kCsvHandle);
@@ -149,7 +136,7 @@ static const u_luaL_Reg csv_lib[] =
 {
     {"create", create},
     
-    {NULL, NULL}
+    {0, 0}
 };
 
 /*
@@ -166,10 +153,10 @@ static const u_luaL_Reg csv_obj_lib[] = {
     {"getCellValue", getCellValue},
     {"setCellValue", setCellValue},
     {"addRow", addRow},
-    {"__gc", gc},
+    {"__gc", destroy},
     {"__tostring", toString},
     
-    {NULL, NULL}
+    {0, 0}
 };
 
 int lualibCsvCreate(lua_State* plua_state)

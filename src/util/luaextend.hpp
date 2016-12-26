@@ -6,42 +6,73 @@
 namespace util
 {
 
-struct u_luaL_Reg {
+struct u_luaL_Reg 
+{
     const char *name;
     LuaCFunc func;
 };
 
-struct LuaObject {
-  void* pdata; 
-  LuaCFunc destroy;
+template <typename T>
+class LuaObject 
+{
+public:
+    LuaObject() : pdata_(0) {}
+    ~LuaObject() { destroy(); }
+
+    inline T* getData() const { return pdata_; }
+    inline void setData(T* pdata) { pdata_ = pdata; }
+    inline void destroy() { safeDelete(pdata_); }
+private:
+  T* pdata_; 
 };
 
 void luaCreateMeta(lua_State * plua_state, const std::string& handleName, u_luaL_Reg* lr);
-LuaObject* luaNewEmptyObject(lua_State* plua_state, const std::string& handleName);
-LuaObject* luaGetObject(lua_State* plua_state,  const std::string& handleName);
-int luaObjectGc (lua_State *plua_state, const std::string& handleName);
-int luaFileresult(lua_State* plua_state, bool stat, const std::string& fname = "");
 
 template <typename T>
-T* luaGetObjectHandle(lua_State* plua_state, const std::string& handleName) 
+LuaObject<T>* luaNewEmptyObject(lua_State* plua_state, const std::string& handleName)
 {
-    LuaObject* p = luaGetObject(plua_state, handleName);
-    if (p->destroy == NULL)
-        luaError(plua_state, "Attempt to use a destoryed object");
-    
-    luaAssert(plua_state, p->pdata, "LuaObject data is NULL");
-    return (T*)(p->pdata);
+    LuaObject<T>* p = (LuaObject<T>*)luaNewUserData(plua_state, sizeof(LuaObject<T>));
+    p->setData(0);
+    luaSetMetaTable(plua_state, handleName);
+    return p;
 }
 
 template <typename T>
-int luaObjectToString (lua_State* plua_state, const std::string& handleName) 
+LuaObject<T>* luaGetObject(lua_State* plua_state,  const std::string& handleName)
 {
-    LuaObject* p = luaGetObject(plua_state, handleName);
+    return (LuaObject<T>*)luaCheckUData(plua_state, 1, handleName);
+}
+
+template <typename T>
+int luaObjectDestory (lua_State *plua_state, const std::string& handleName)
+{
+    luaGetObject<T>(plua_state, handleName)->destroy();
+    return 0;
+}
+
+template <typename T>
+T* luaGetObjectData(lua_State* plua_state, const std::string& handleName) 
+{
+    LuaObject<T>* p = luaGetObject<T>(plua_state, handleName);
+    if (p->getData() == 0)
+    {
+        luaError(plua_state, "Attempt to use a destoryed object");
+        return 0;
+    }
+    
+    return p->getData();
+}
+
+template <typename T>
+int luaObjectToString(lua_State* plua_state, const std::string& handleName) 
+{
+    LuaObject<T>* p = luaGetObject<T>(plua_state, handleName);
     std::string typeName = strTrim(strReplaceAll(handleName, "*", ""));
-    if (p->destroy == NULL)
+    if (p->getData() == 0)
         luaPushString(plua_state, strFormat("%s (destroyed)", typeName.c_str()));
     else
-        luaPushString(plua_state, strFormat("%s (%u)", typeName.c_str(), p->pdata));
+        luaPushString(plua_state, strFormat("%s (%u)", typeName.c_str(), p->getData()));
+    
     return 1;
 }
 

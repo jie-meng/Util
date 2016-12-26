@@ -27,41 +27,6 @@ void luaCreateMeta(lua_State *L, const std::string& handleName, u_luaL_Reg* lr)
     lua_pop(L, 1);  /* pop new metatable */
 }
 
-LuaObject* luaNewEmptyObject(lua_State* plua_state, const std::string& handleName)
-{
-    LuaObject *p = (LuaObject*)lua_newuserdata(plua_state, sizeof(LuaObject));
-    p->destroy = NULL;  /* mark destroy handle as 'destroyed' */
-    luaL_setmetatable(plua_state, handleName.c_str());
-    return p;
-}
-
-LuaObject* luaGetObject(lua_State* plua_state, const std::string& handleName)
-{
-    return (LuaObject *)luaL_checkudata(plua_state, 1, handleName.c_str());
-}
-
-int luaObjectDestory(lua_State* plua_state, LuaObject* pluaObj) 
-{
-    int ret = pluaObj->destroy(plua_state);
-    pluaObj->destroy = NULL;
-    return ret;
-}
-
-int luaObjectGc(lua_State *plua_state, const std::string& handleName) 
-{
-    LuaObject* p = luaGetObject(plua_state, handleName);
-    if (p->destroy != NULL && p->pdata != NULL)
-        luaObjectDestory(plua_state, p);
-    return 0;
-}
-
-int luaFileresult(lua_State* plua_state, bool stat, const std::string& fname)
-{
-    return fname.empty() ?
-        luaL_fileresult(plua_state, stat, NULL) :
-        luaL_fileresult(plua_state, stat, fname.c_str());
-}
-
 //LuaExtender
 void LuaExtender::addLib(const std::string& name, LuaCFunc lib_create_func)
 {
