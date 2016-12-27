@@ -6,10 +6,73 @@
 namespace util
 {
 
-typedef struct u_luaL_Reg {
+struct u_luaL_Reg 
+{
     const char *name;
     LuaCFunc func;
-} u_luaL_Reg;
+};
+
+template <typename T>
+class LuaObject 
+{
+public:
+    //LuaObject does not need constructor & destructor because it would be created by luaNewUserData in lua_State
+    inline T* getData() const { return pdata_; }
+    inline void setData(T* pdata) { pdata_ = pdata; }
+    inline void destroy() { safeDelete(pdata_); }
+private:
+  T* pdata_; 
+};
+
+void luaCreateMeta(lua_State * plua_state, const std::string& handleName, u_luaL_Reg* lr);
+
+template <typename T>
+LuaObject<T>* luaNewEmptyObject(lua_State* plua_state, const std::string& handleName)
+{
+    LuaObject<T>* p = (LuaObject<T>*)luaNewUserData(plua_state, sizeof(LuaObject<T>));
+    p->setData(0);
+    luaSetMetaTable(plua_state, handleName);
+    return p;
+}
+
+template <typename T>
+LuaObject<T>* luaGetObject(lua_State* plua_state,  const std::string& handleName)
+{
+    return (LuaObject<T>*)luaCheckUData(plua_state, 1, handleName);
+}
+
+template <typename T>
+int luaObjectDestroy (lua_State *plua_state, const std::string& handleName)
+{
+    luaGetObject<T>(plua_state, handleName)->destroy();
+    return 0;
+}
+
+template <typename T>
+T* luaGetObjectData(lua_State* plua_state, const std::string& handleName) 
+{
+    LuaObject<T>* p = luaGetObject<T>(plua_state, handleName);
+    if (p->getData() == 0)
+    {
+        luaError(plua_state, "Attempt to use a destoryed object");
+        return 0;
+    }
+    
+    return p->getData();
+}
+
+template <typename T>
+int luaObjectToString(lua_State* plua_state, const std::string& handleName) 
+{
+    LuaObject<T>* p = luaGetObject<T>(plua_state, handleName);
+    std::string typeName = strTrim(strReplaceAll(handleName, "*", ""));
+    if (p->getData() == 0)
+        luaPushString(plua_state, strFormat("%s (destroyed)", typeName.c_str()));
+    else
+        luaPushString(plua_state, strFormat("%s (%u)", typeName.c_str(), p->getData()));
+    
+    return 1;
+}
 
 //LuaExtender
 class LuaExtender

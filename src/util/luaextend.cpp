@@ -18,6 +18,15 @@ using namespace std;
 
 const string kLuaExtendTag = "LuaExtend";
 
+void luaCreateMeta(lua_State* plua_state, const std::string& handleName, u_luaL_Reg* lr)
+{
+    luaL_newmetatable(plua_state, handleName.c_str());  /* create metatable for specified handles */
+    lua_pushvalue(plua_state, -1);  /* push metatable */
+    lua_setfield(plua_state, -2, "__index");  /* metatable.__index = metatable */
+    luaL_setfuncs(plua_state, (luaL_Reg*)lr, 0);  /* add file methods to new metatable */
+    lua_pop(plua_state, 1);  /* pop new metatable */
+}
+
 //LuaExtender
 void LuaExtender::addLib(const std::string& name, LuaCFunc lib_create_func)
 {

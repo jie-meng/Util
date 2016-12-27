@@ -345,6 +345,28 @@ int luaParseFile(lua_State* plua_state, const std::string& file, std::string& er
     return err;
 }
 
+void* luaNewUserData(lua_State* plua_state, size_t sz)
+{
+    return lua_newuserdata(plua_state, sz);
+}
+
+void luaSetMetaTable(lua_State* plua_state, const std::string& tname)
+{
+    luaL_setmetatable(plua_state, tname.c_str());
+}
+
+void* luaCheckUData(lua_State* plua_state, int ud, const std::string& tname)
+{
+    return luaL_checkudata(plua_state, ud, tname.c_str());
+}
+
+int luaFileresult(lua_State* plua_state, bool stat, const std::string& fname)
+{
+    return fname.empty() ?
+        luaL_fileresult(plua_state, stat, NULL) :
+        luaL_fileresult(plua_state, stat, fname.c_str());
+}
+
 //LuaHeapRecycler
 typedef std::map<void*, LuaHeapObjectInfo> HeapMap;
 

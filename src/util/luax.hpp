@@ -91,6 +91,11 @@ std::string luaGetError(lua_State* plua_state, int err);
 int luaParseLine(lua_State* plua_state, const std::string& line, std::string& error_str);
 int luaParseFile(lua_State* plua_state, const std::string& file, std::string& error_str);
 
+void* luaNewUserData(lua_State* plua_state, size_t sz);
+void luaSetMetaTable(lua_State* plua_state, const std::string& tname);
+void* luaCheckUData(lua_State* plua_state, int ud, const std::string& tname);
+int luaFileresult(lua_State* plua_state, bool stat, const std::string& fname);
+
 //LuaHeapRecycler
 typedef void (*RecycleFunc)(void*);
 
