@@ -96,78 +96,6 @@ void luaSetMetaTable(lua_State* plua_state, const std::string& tname);
 void* luaCheckUData(lua_State* plua_state, int ud, const std::string& tname);
 int luaFileresult(lua_State* plua_state, bool stat, const std::string& fname);
 
-//LuaHeapRecycler
-typedef void (*RecycleFunc)(void*);
-
-struct LuaHeapObjectInfo
-{
-    LuaHeapObjectInfo(TypeInfo ti, RecycleFunc r)
-    {
-        typeinfo = ti;
-        recycler = r;
-    }
-    TypeInfo typeinfo;
-    RecycleFunc recycler;
-};
-
-class LuaHeapRecycler
-{
-public:
-    LuaHeapRecycler();
-    ~LuaHeapRecycler();
-
-    void addHeapObject(void* p, LuaHeapObjectInfo lua_heap_object_info);
-
-    template<typename T>
-    void addHeapObject(void* p);
-
-    void removeHeapObject(void* p);
-    void clear();
-    void clear(TypeInfo typeinfo);
-private:
-    struct LuaHeapRecyclerImpl;
-    UtilAutoPtr<LuaHeapRecyclerImpl> pimpl_;
-private:
-    DISALLOW_COPY_AND_ASSIGN(LuaHeapRecycler)
-};
-
-template<typename T>
-void LuaHeapRecycler::addHeapObject(void* p)
-{
-    addHeapObject(p, LuaHeapObjectInfo(typeid(T), deleteVoid<T>));
-}
-
-class LuaHeapRecyclerManager
-{
-public:
-    SINGLETON(LuaHeapRecyclerManager)
-
-    void addHeapObject(lua_State* plua_state, void* p, LuaHeapObjectInfo lua_heap_object_info);
-
-    template<typename T>
-    void addHeapObject(lua_State* plua_state, void* p);
-
-    void removeHeapObject(lua_State* plua_state, void* p);
-    void clear(lua_State* plua_state);
-    void clear(lua_State* plua_state, TypeInfo typeinfo);
-    void addState(lua_State* plua_state, LuaHeapRecycler* ph);
-    void removeState(lua_State* plua_state);
-private:
-    LuaHeapRecyclerManager();
-    ~LuaHeapRecyclerManager();
-private:
-    struct LuaHeapRecyclerManagerImpl;
-    UtilAutoPtr<LuaHeapRecyclerManagerImpl> pimpl_;
-private:
-    DISALLOW_COPY_AND_ASSIGN(LuaHeapRecyclerManager)
-};
-
-template<typename T>
-void LuaHeapRecyclerManager::addHeapObject(lua_State* plua_state, void* p)
-{
-    addHeapObject(plua_state, p, LuaHeapObjectInfo(typeid(T), deleteVoid<T>));
-}
-
 //LuaState
 class LuaState
 {
@@ -179,7 +107,6 @@ public:
     void registerFunction(const std::string& func_name, LuaCFunc lua_reg_func);
     int parseLine(const std::string& line);
     int parseFile(const std::string& file);
-    void clearHeap();
     bool reset();
 private:
     bool init();
@@ -189,7 +116,6 @@ private:
 private:
     lua_State* plua_state_;
     std::string error_str;
-    LuaHeapRecycler lua_heap_recycler_;
 private:
     DISALLOW_COPY_AND_ASSIGN(LuaState)
 };
@@ -203,12 +129,10 @@ public:
     virtual ~LuaCmdLine();
 
     inline lua_State* getState() const { return lua_state_.getState(); }
-
     void registerFunction(const std::string& func_name, LuaCFunc lua_reg_func);
     virtual int parseFile(const std::string& file);
     virtual void process(const std::string& cmd);
     virtual void clear();
-    void clearHeap() { lua_state_.clearHeap(); }
 private:
     LuaState lua_state_;
 private:
