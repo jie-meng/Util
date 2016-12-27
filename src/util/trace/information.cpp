@@ -54,25 +54,7 @@ std::string Information::getLevelStr() const
 
 std::string Information::getWdayStr() const
 {
-    switch (getTime().getWeekday())
-    {
-    case 0:
-        return "SUN";
-    case 1:
-        return "MON";
-    case 2:
-        return "TUE";
-    case 3:
-        return "WEN";
-    case 4:
-        return "THU";
-    case 5:
-        return "FRI";
-    case 6:
-        return "SAT";
-    default:
-        return "UNKNOWN_WDAY";
-    }
+    return toString(getTime().getWeekday());
 }
 
 std::string Information::getFormatedInformation() const
