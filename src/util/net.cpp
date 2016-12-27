@@ -525,18 +525,17 @@ bool Socket::closeSocket()
     return ret;
 }
 
-int Socket::setBlock(unsigned long block)
+int Socket::setBlock(bool block)
 {
 #ifdef _PLATFORM_WINDOWS_
-    unsigned long ublock = block;
+    unsigned long ublock = block ? 0 : 1;
     return ::ioctlsocket(pdata_->socket_, FIONBIO, &ublock);
 #endif
 #ifdef _PLATFORM_UNIX_
     int flags  = fcntl(pdata_->socket_,F_GETFL,0);
-    if (block)
-        return ::fcntl(pdata_->socket_, F_SETFL, flags | O_NONBLOCK);   //set noblock
-    else
-        return ::fcntl(pdata_->socket_, F_SETFL, flags &~ O_NONBLOCK);    //set blockpp
+    return block ?
+        ::fcntl(pdata_->socket_, F_SETFL, flags &~ O_NONBLOCK) :    //set block
+        ::fcntl(pdata_->socket_, F_SETFL, flags | O_NONBLOCK);   //set noblock
 #endif
 }
 

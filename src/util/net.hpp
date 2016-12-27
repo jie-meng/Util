@@ -99,7 +99,7 @@ public:
     bool isOk() const;
     bool bind(const std::string& ip, unsigned short port, unsigned short* pport_out = NULL);
     bool closeSocket();
-    int setBlock(unsigned long block = 0);
+    int setBlock(bool block = true);
     int setSockopt(int level, int optname, const void* optval, int optlen);
     //dgram
     int sendTo(const char* buf, size_t len, const std::string& ip, unsigned short port, int flag = 0);

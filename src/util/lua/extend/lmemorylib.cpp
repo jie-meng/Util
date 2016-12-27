@@ -204,7 +204,7 @@ static int setBytes(lua_State* plua_state)
 
 static const u_luaL_Reg memory_lib[] =
 {
-    {"create", create},
+    {"createMemory", create},
         
     {"offset", offset},
     {"memset", memset},

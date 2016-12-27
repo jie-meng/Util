@@ -93,7 +93,7 @@ static int udpIsOk(lua_State* plua_state)
 static int udpSetBlock(lua_State* plua_state)
 {
     DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
-    luaPushInteger(plua_state, pds->setBlock(luaGetInteger(plua_state, 2, 0)));
+    luaPushInteger(plua_state, pds->setBlock(luaGetBoolean(plua_state, 2, true)));
 
     return 1;
 }
@@ -214,7 +214,7 @@ static int tcpIsOk(lua_State* plua_state)
 static int tcpSetBlock(lua_State* plua_state)
 {
     StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
-    luaPushInteger(plua_state, pss->setBlock(luaGetInteger(plua_state, 2, 0)));
+    luaPushInteger(plua_state, pss->setBlock(luaGetBoolean(plua_state, 2, true)));
 
     return 1;
 }
@@ -394,7 +394,7 @@ static int rawIsOk(lua_State* plua_state)
 static int rawSetBlock(lua_State* plua_state)
 {
     Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
-    luaPushInteger(plua_state, ps->setBlock(luaGetInteger(plua_state, 2, 0)));
+    luaPushInteger(plua_state, ps->setBlock(luaGetBoolean(plua_state, 2, true)));
 
     return 1;
 }
