@@ -4,6 +4,8 @@
 namespace util
 {
 
+const std::string kByteMemoryHandle = "Memory*";
+
 typedef Memory<char> ByteMemory;
 
 static int create(lua_State* plua_state)
@@ -11,31 +13,26 @@ static int create(lua_State* plua_state)
     luaExtendAssert(plua_state, kLuaExtendLibMemory, "create",
         luaGetTop(plua_state) > 0 && LuaNumber == luaGetType(plua_state, 1), "create memory with incorrect size");
 
-    size_t memory_size = luaGetInteger(plua_state, 1);
-    ByteMemory* pmemory = new ByteMemory(memory_size);
-    LuaHeapRecyclerManager::getInstance().addHeapObject<ByteMemory>(plua_state, (void*)pmemory);
-
-    luaPushLightUserData(plua_state, (void*)pmemory);
+    size_t memory_size = luaGetInteger(plua_state, 1);    
+    LuaObject<ByteMemory>* p = luaNewEmptyObject<ByteMemory>(plua_state, kByteMemoryHandle);
+    p->setData(new ByteMemory(memory_size));
 
     return 1;
 }
 
 static int destroy(lua_State* plua_state)
 {
-    ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
-    LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)pmemory);
+    return luaObjectDestroy<ByteMemory>(plua_state, kByteMemoryHandle);
+}
 
-    if (pmemory)
-        delete pmemory;
-
-    return 0;
+static int toString(lua_State* plua_state)
+{
+    return luaObjectToString<ByteMemory>(plua_state, kByteMemoryHandle);
 }
 
 static int size(lua_State* plua_state)
-{
-    ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibMemory, "size", pmemory, "null pointer");
-
+{    
+    ByteMemory* pmemory = luaGetObjectData<ByteMemory>(plua_state, kByteMemoryHandle);
     luaPushInteger(plua_state, pmemory->size());
 
     return 1;
@@ -43,9 +40,7 @@ static int size(lua_State* plua_state)
 
 static int buf(lua_State* plua_state)
 {
-    ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibMemory, "buf", pmemory, "null pointer");
-
+    ByteMemory* pmemory = luaGetObjectData<ByteMemory>(plua_state, kByteMemoryHandle);
     luaPushLightUserData(plua_state, pmemory->buf());
 
     return 1;
@@ -53,9 +48,7 @@ static int buf(lua_State* plua_state)
 
 static int clear(lua_State* plua_state)
 {
-    ByteMemory* pmemory = static_cast<ByteMemory*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibMemory, "clear", pmemory, "null pointer");
-
+    ByteMemory* pmemory = luaGetObjectData<ByteMemory>(plua_state, kByteMemoryHandle);
     pmemory->clear();
 
     return 0;
@@ -212,11 +205,7 @@ static int setBytes(lua_State* plua_state)
 static const u_luaL_Reg memory_lib[] =
 {
     {"create", create},
-    {"destroy", destroy},
-    {"size", size},
-    {"clear", clear},
-    {"buf", buf},
-
+        
     {"offset", offset},
     {"memset", memset},
     {"memcpy", memcpy},
@@ -236,12 +225,21 @@ static const u_luaL_Reg memory_lib[] =
     {0, 0}
 };
 
-/*
-** Open regex library
-*/
-int lualibMemoryCreate(lua_State* plua_state) {
+static const u_luaL_Reg memory_obj_lib[] =
+{
+    {"destroy", destroy},
+    {"size", size},
+    {"clear", clear},
+    {"buf", buf},
+    {"__gc", destroy},
+    {"__tostring", toString},
+    {0, 0}
+};
 
+int lualibMemoryCreate(lua_State* plua_state) 
+{
     luaCreateLib(plua_state, (u_luaL_Reg*)memory_lib);
+    luaCreateMeta(plua_state, kByteMemoryHandle, (u_luaL_Reg*)memory_obj_lib);
     return 1;
 }
 

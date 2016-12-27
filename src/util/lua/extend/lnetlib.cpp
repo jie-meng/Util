@@ -5,9 +5,10 @@
 namespace util
 {
 
-////////////////////////////////////////////////////
-// NET
-////////////////////////////////////////////////////
+const std::string kUdpHandle = "Udp*";
+const std::string kTcpHandle = "Tcp*";
+const std::string kRawHandle = "Raw*";
+
 static int lua_htons(lua_State* plua_state)
 {
     luaPushInteger(plua_state, u_htons((uint16_t)luaGetInteger(plua_state, 1, 0)));
@@ -54,35 +55,20 @@ static int ip_str_to_array(lua_State* plua_state)
 ////////////////////////////////////////////////////
 static int udpCreate(lua_State* plua_state)
 {
-    size_t family = luaGetInteger(plua_state, 1, Family_IPv4);
-
-    DgramSocket* pds = new DgramSocket((Family)family);
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pds, deleteVoid<DgramSocket>);
-    LuaHeapRecyclerManager::getInstance().addHeapObject<DgramSocket>(plua_state, (void*)pds);
-
-    luaPushLightUserData(plua_state, (void*)pds);
+    LuaObject<DgramSocket>* p = luaNewEmptyObject<DgramSocket>(plua_state, kUdpHandle);
+    p->setData(new DgramSocket((Family)luaGetInteger(plua_state, 1, Family_IPv4)));
 
     return 1;
 }
 
 static int udpDestroy(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-
-    LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)pds);
-
-    if (pds)
-        delete pds;
-
-    return 0;
+    return luaObjectDestroy<DgramSocket>(plua_state, kUdpHandle);
 }
 
 static int udpGetSocket(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpGetSocket", pds, "null pointer");
-
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
     luaPushInteger(plua_state, pds->getSocket());
 
     return 1;
@@ -90,9 +76,7 @@ static int udpGetSocket(lua_State* plua_state)
 
 static int udpInit(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpInit", pds, "null pointer");
-
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
     luaPushBoolean(plua_state, pds->init());
 
     return 1;
@@ -100,9 +84,7 @@ static int udpInit(lua_State* plua_state)
 
 static int udpIsOk(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpIsOk", pds, "null pointer");
-
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
     luaPushBoolean(plua_state, pds->isOk());
 
     return 1;
@@ -110,9 +92,7 @@ static int udpIsOk(lua_State* plua_state)
 
 static int udpSetBlock(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpSetBlock", pds, "null pointer");
-
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
     luaPushInteger(plua_state, pds->setBlock(luaGetInteger(plua_state, 2, 0)));
 
     return 1;
@@ -120,18 +100,15 @@ static int udpSetBlock(lua_State* plua_state)
 
 static int udpBind(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpBind", pds, "null pointer");
-
-    luaPushBoolean(plua_state,
-        pds->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
+    luaPushBoolean(plua_state, pds->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
 
 static int udpRecvFrom(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
 
     std::string ip("");
     unsigned short port(0);
@@ -147,8 +124,7 @@ static int udpRecvFrom(lua_State* plua_state)
 
 static int udpSendTo(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpSendTo", pds, "null pointer");
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
 
     if (LuaString == luaGetType(plua_state, 2))
     {
@@ -175,9 +151,7 @@ static int udpSendTo(lua_State* plua_state)
 
 static int udpGetRecvBuf(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpGetRecvBuf", pds, "null pointer");
-
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
     luaPushLightUserData(plua_state, (void*)pds->getRecvBuf());
 
     return 1;
@@ -185,12 +159,15 @@ static int udpGetRecvBuf(lua_State* plua_state)
 
 static int udpClose(lua_State* plua_state)
 {
-    DgramSocket* pds = static_cast<DgramSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpClose", pds, "null pointer");
-
+    DgramSocket* pds = luaGetObjectData<DgramSocket>(plua_state, kUdpHandle);
     luaPushBoolean(plua_state, pds->closeSocket());
 
     return 1;
+}
+
+static int udpToString(lua_State* plua_state)
+{
+    return luaObjectToString<DgramSocket>(plua_state, kUdpHandle);
 }
 
 ////////////////////////////////////////////////////
@@ -198,36 +175,21 @@ static int udpClose(lua_State* plua_state)
 ////////////////////////////////////////////////////
 
 static int tcpCreate(lua_State* plua_state)
-{
-    size_t family = luaGetInteger(plua_state, 1, Family_IPv4);
-
-    StreamSocket* pss = new StreamSocket((Family)family);
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)pss, deleteVoid<StreamSocket>);
-    LuaHeapRecyclerManager::getInstance().addHeapObject<StreamSocket>(plua_state, (void*)pss);
-
-    luaPushLightUserData(plua_state, (void*)pss);
+{    
+    LuaObject<StreamSocket>* p = luaNewEmptyObject<StreamSocket>(plua_state, kTcpHandle);
+    p->setData(new StreamSocket((Family)luaGetInteger(plua_state, 1, Family_IPv4)));
 
     return 1;
 }
 
 static int tcpDestroy(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-
-    LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)pss);
-
-    if (pss)
-        delete pss;
-
-    return 0;
+    return luaObjectDestroy<StreamSocket>(plua_state, kTcpHandle);
 }
 
 static int tcpGetSocket(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpGetSocket", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     luaPushInteger(plua_state, pss->getSocket());
 
     return 1;
@@ -235,9 +197,7 @@ static int tcpGetSocket(lua_State* plua_state)
 
 static int tcpInit(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpInit", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     luaPushBoolean(plua_state, pss->init());
 
     return 1;
@@ -245,9 +205,7 @@ static int tcpInit(lua_State* plua_state)
 
 static int tcpIsOk(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpIsOk", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     luaPushBoolean(plua_state, pss->isOk());
 
     return 1;
@@ -255,9 +213,7 @@ static int tcpIsOk(lua_State* plua_state)
 
 static int tcpSetBlock(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpSetBlock", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     luaPushInteger(plua_state, pss->setBlock(luaGetInteger(plua_state, 2, 0)));
 
     return 1;
@@ -265,20 +221,15 @@ static int tcpSetBlock(lua_State* plua_state)
 
 static int tcpBind(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpBind", pss, "null pointer");
-
-    luaPushBoolean(plua_state,
-        pss->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
+    luaPushBoolean(plua_state, pss->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
 
 static int tcpListen(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpListen", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     luaPushBoolean(plua_state, pss->listen(luaGetInteger(plua_state, 2, 5)));
 
     return 1;
@@ -286,9 +237,7 @@ static int tcpListen(lua_State* plua_state)
 
 static int tcpAccept(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpAccept", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     TIpAddrInfo tipaddrinfo;
     luaPushInteger(plua_state, pss->accept(&tipaddrinfo));
 
@@ -297,20 +246,15 @@ static int tcpAccept(lua_State* plua_state)
 
 static int tcpConnect(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpConnect", pss, "null pointer");
-
-    luaPushBoolean(plua_state,
-        pss->connect(luaGetString(plua_state, 2, "127.0.0.1"), (unsigned short)luaGetInteger(plua_state, 3, 0)));
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
+    luaPushBoolean(plua_state, pss->connect(luaGetString(plua_state, 2, "127.0.0.1"), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
 
 static int tcpClientRecv(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpClientRecv", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     luaPushInteger(plua_state, pss->clientRecv());
 
     return 1;
@@ -318,9 +262,8 @@ static int tcpClientRecv(lua_State* plua_state)
 
 static int tcpClientSend(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpClientSend", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
+    
     if (LuaString == luaGetType(plua_state, 2))
     {
         std::string str = luaGetString(plua_state, 2);
@@ -344,9 +287,8 @@ static int tcpClientSend(lua_State* plua_state)
 
 static int tcpServerRecv(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpServerRecv", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
+    
     int client_sock = luaGetInteger(plua_state, 2, kInvalidSocket);
     if (kInvalidSocket == client_sock)
     {
@@ -360,9 +302,8 @@ static int tcpServerRecv(lua_State* plua_state)
 
 static int tcpServerSend(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpServerSend", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
+    
     int client_sock = luaGetInteger(plua_state, 2, kInvalidSocket);
     luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpServerSend", kInvalidSocket != client_sock, "invalid client socket");
 
@@ -391,9 +332,7 @@ static int tcpServerSend(lua_State* plua_state)
 
 static int tcpGetRecvBuf(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpGetRecvBuf", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     luaPushLightUserData(plua_state, (void*)pss->getRecvBuf());
 
     return 1;
@@ -401,12 +340,15 @@ static int tcpGetRecvBuf(lua_State* plua_state)
 
 static int tcpClose(lua_State* plua_state)
 {
-    StreamSocket* pss = static_cast<StreamSocket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpClose", pss, "null pointer");
-
+    StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     luaPushBoolean(plua_state, pss->closeSocket());
 
     return 1;
+}
+
+static int tcpToString(lua_State* plua_state)
+{
+    return luaObjectToString<StreamSocket>(plua_state, kTcpHandle);
 }
 
 ////////////////////////////////////////////////////
@@ -414,33 +356,20 @@ static int tcpClose(lua_State* plua_state)
 ////////////////////////////////////////////////////
 static int rawCreate(lua_State* plua_state)
 {
-    Socket* ps = new Socket((Family)luaGetInteger(plua_state, 1, Family_IPv4), SockType_Raw, luaGetInteger(plua_state, 2, 0));
-
-    //LuaHeapRecyclerManager::getInstance().addHeapObject(plua_state, (void*)ps, deleteVoid<Socket>);
-    LuaHeapRecyclerManager::getInstance().addHeapObject<Socket>(plua_state, (void*)ps);
-
-    luaPushLightUserData(plua_state, (void*)ps);
+    LuaObject<Socket>* p = luaNewEmptyObject<Socket>(plua_state, kRawHandle);
+    p->setData(new Socket((Family)luaGetInteger(plua_state, 1, Family_IPv4), SockType_Raw, luaGetInteger(plua_state, 2, 0)));
 
     return 1;
 }
 
 static int rawDestroy(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-
-    LuaHeapRecyclerManager::getInstance().removeHeapObject(plua_state, (void*)ps);
-
-    if (ps)
-        delete ps;
-
-    return 0;
+    return luaObjectDestroy<Socket>(plua_state, kRawHandle);
 }
 
 static int rawGetSocket(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawGetSocket", ps, "null pointer");
-
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     luaPushInteger(plua_state, ps->getSocket());
 
     return 1;
@@ -448,9 +377,7 @@ static int rawGetSocket(lua_State* plua_state)
 
 static int rawInit(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawInit", ps, "null pointer");
-
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     luaPushBoolean(plua_state, ps->init());
 
     return 1;
@@ -458,9 +385,7 @@ static int rawInit(lua_State* plua_state)
 
 static int rawIsOk(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawIsOk", ps, "null pointer");
-
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     luaPushBoolean(plua_state, ps->isOk());
 
     return 1;
@@ -468,9 +393,7 @@ static int rawIsOk(lua_State* plua_state)
 
 static int rawSetBlock(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawSetBlock", ps, "null pointer");
-
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     luaPushInteger(plua_state, ps->setBlock(luaGetInteger(plua_state, 2, 0)));
 
     return 1;
@@ -478,18 +401,15 @@ static int rawSetBlock(lua_State* plua_state)
 
 static int rawBind(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawBind", ps, "null pointer");
-
-    luaPushBoolean(plua_state,
-        ps->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
+    luaPushBoolean(plua_state, ps->bind(luaGetString(plua_state, 2, ""), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
 
 static int rawRecvFrom(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     char* buf = static_cast<char*>(luaGetLightUserData(plua_state, 2, 0));
     size_t len = static_cast<size_t>(luaGetInteger(plua_state, 3, 0));
 
@@ -507,9 +427,8 @@ static int rawRecvFrom(lua_State* plua_state)
 
 static int rawSendTo(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawSendTo", ps, "null pointer");
-
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
+    
     if (LuaString == luaGetType(plua_state, 2))
     {
         std::string str = luaGetString(plua_state, 2);
@@ -535,9 +454,7 @@ static int rawSendTo(lua_State* plua_state)
 
 static int rawListen(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawListen", ps, "null pointer");
-
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     luaPushBoolean(plua_state, ps->listen(luaGetInteger(plua_state, 2, 5)));
 
     return 1;
@@ -545,9 +462,8 @@ static int rawListen(lua_State* plua_state)
 
 static int rawAccept(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawAccept", ps, "null pointer");
-
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
+    
     TIpAddrInfo tipaddrinfo;
     luaPushBoolean(plua_state, true);
     std::string ip = ipArrayToStr((Family)tipaddrinfo.taddr.ipaddr_ver,
@@ -562,17 +478,15 @@ static int rawAccept(lua_State* plua_state)
 
 static int rawConnect(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawConnect", ps, "null pointer");
-    luaPushBoolean(plua_state,
-          ps->connect(luaGetString(plua_state, 2, "127.0.0.1"), (unsigned short)luaGetInteger(plua_state, 3, 0)));
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
+    luaPushBoolean(plua_state, ps->connect(luaGetString(plua_state, 2, "127.0.0.1"), (unsigned short)luaGetInteger(plua_state, 3, 0)));
 
     return 1;
 }
 
 static int rawRecv(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     int sock = luaGetInteger(plua_state, 2, kInvalidSocket);
     char* buf = static_cast<char*>(luaGetLightUserData(plua_state, 3, 0));
     size_t len = static_cast<size_t>(luaGetInteger(plua_state, 4, 0));
@@ -588,7 +502,7 @@ static int rawRecv(lua_State* plua_state)
 
 static int rawSend(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     int sock = luaGetInteger(plua_state, 2, kInvalidSocket);
     luaExtendAssert(plua_state, kLuaExtendLibNet, "rawSend", ps, "null pointer");
     luaExtendAssert(plua_state, kLuaExtendLibNet, "rawSend", kInvalidSocket != sock, "invalid socket");
@@ -618,15 +532,16 @@ static int rawSend(lua_State* plua_state)
 
 static int rawClose(lua_State* plua_state)
 {
-    Socket* ps = static_cast<Socket*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawClose", ps, "null pointer");
-
+    Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     luaPushBoolean(plua_state, ps->closeSocket());
 
     return 1;
 }
 
-//close_socket
+static int rawToString(lua_State* plua_state)
+{
+    return luaObjectToString<Socket>(plua_state, kRawHandle);
+}
 
 static int close_socket(lua_State* plua_state)
 {
@@ -639,15 +554,23 @@ static int close_socket(lua_State* plua_state)
 }
 
 static const u_luaL_Reg net_lib[] =
-{
+{    
+    {"udpCreate", udpCreate},
+    {"tcpCreate", tcpCreate},
+    {"rawCreate", rawCreate},
+    
     {"ipArrayToStr", ip_array_to_str},
     {"ipStrToArray", ip_str_to_array},
     {"htons", lua_htons},
     {"ntohs", lua_ntohs},
     {"htonl", lua_htonl},
     {"ntohl", lua_ntohl},
+    {"closeSocket", close_socket},
 
-    {"udpCreate", udpCreate},
+    {0, 0}
+};
+
+static const u_luaL_Reg udp_obj_lib[] = {
     {"udpDestroy", udpDestroy},
     {"udpGetSocket", udpGetSocket},
     {"udpInit", udpInit},
@@ -658,8 +581,13 @@ static const u_luaL_Reg net_lib[] =
     {"udpSendTo", udpSendTo},
     {"udpGetRecvBuf", udpGetRecvBuf},
     {"udpClose", udpClose},
+    {"__gc", udpDestroy},
+    {"__tostring", udpToString},
+    
+    {0, 0}
+};
 
-    {"tcpCreate", tcpCreate},
+static const u_luaL_Reg tcp_obj_lib[] = {
     {"tcpDestroy", tcpDestroy},
     {"tcpGetSocket", tcpGetSocket},
     {"tcpInit", tcpInit},
@@ -675,8 +603,13 @@ static const u_luaL_Reg net_lib[] =
     {"tcpServerSend", tcpServerSend},
     {"tcpGetRecvBuf", tcpGetRecvBuf},
     {"tcpClose", tcpClose},
+    {"__gc", tcpDestroy},
+    {"__tostring", tcpToString},
+    
+    {0, 0}
+};
 
-    {"rawCreate", rawCreate},
+static const u_luaL_Reg raw_obj_lib[] = {
     {"rawDestroy", rawDestroy},
     {"rawGetSocket", rawGetSocket},
     {"rawInit", rawInit},
@@ -691,15 +624,18 @@ static const u_luaL_Reg net_lib[] =
     {"rawConnect", rawConnect},
     {"rawRecv", rawRecv},
     {"rawSend", rawSend},
-
-    {"closeSocket", close_socket},
-
+    {"__gc", rawDestroy},
+    {"__tostring", rawToString},
+    
     {0, 0}
 };
 
 int lualibNetCreate(lua_State* plua_state)
 {
     luaCreateLib(plua_state, (u_luaL_Reg*)net_lib);
+    luaCreateMeta(plua_state, kUdpHandle, (u_luaL_Reg*)udp_obj_lib);    
+    luaCreateMeta(plua_state, kTcpHandle, (u_luaL_Reg*)tcp_obj_lib);
+    luaCreateMeta(plua_state, kRawHandle, (u_luaL_Reg*)raw_obj_lib);
     return 1;
 }
 

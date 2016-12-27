@@ -10,11 +10,6 @@ namespace util
     
 const std::string kCsvHandle = "Csv*";
 
-static int destroy(lua_State* plua_state)
-{
-    return luaObjectDestory<Csv>(plua_state, kCsvHandle);
-}
-
 static int create(lua_State* plua_state)
 {
     string file = luaGetString(plua_state, 1, "");
@@ -25,6 +20,11 @@ static int create(lua_State* plua_state)
     p->setData(new Csv(file, delimiter.at(0), enclosure.at(0)));
 
     return 1;
+}
+
+static int destroy(lua_State* plua_state)
+{
+    return luaObjectDestroy<Csv>(plua_state, kCsvHandle);
 }
 
 static int read(lua_State* plua_state)
@@ -139,9 +139,6 @@ static const u_luaL_Reg csv_lib[] =
     {0, 0}
 };
 
-/*
-** methods for csv handles
-*/
 static const u_luaL_Reg csv_obj_lib[] = {
     {"destroy", destroy},
     {"read", read},

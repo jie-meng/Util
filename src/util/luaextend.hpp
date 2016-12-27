@@ -16,9 +16,7 @@ template <typename T>
 class LuaObject 
 {
 public:
-    LuaObject() : pdata_(0) {}
-    ~LuaObject() { destroy(); }
-
+    //LuaObject does not need constructor & destructor because it would be created by luaNewUserData in lua_State
     inline T* getData() const { return pdata_; }
     inline void setData(T* pdata) { pdata_ = pdata; }
     inline void destroy() { safeDelete(pdata_); }
@@ -44,7 +42,7 @@ LuaObject<T>* luaGetObject(lua_State* plua_state,  const std::string& handleName
 }
 
 template <typename T>
-int luaObjectDestory (lua_State *plua_state, const std::string& handleName)
+int luaObjectDestroy (lua_State *plua_state, const std::string& handleName)
 {
     luaGetObject<T>(plua_state, handleName)->destroy();
     return 0;

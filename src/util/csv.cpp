@@ -233,13 +233,10 @@ Csv::Csv(const std::string& file,
          char delimeter,
          char enclosure) :
     pimpl_(new CsvImpl(file, delimeter, enclosure))
-{
-}
+{}
 
 Csv::~Csv()
-{
-    printLine("~Csv");
-}
+{}
 
 bool Csv::read(const std::string& file)
 {
