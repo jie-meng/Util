@@ -61,7 +61,7 @@ public:
     explicit Thread(ThreadFunc tf);
     ~Thread();
     bool start(size_t stack_size = 0);
-    bool join();
+    void join();
     void kill();
 private:
     static unsigned int threadFunc(void* param);
@@ -80,7 +80,7 @@ public:
     {}
     virtual ~WorkerThread() {}
     inline bool start() { return thread_.start(); }
-    inline bool join() { return thread_.join(); }
+    inline void join() { thread_.join(); }
     inline void kill() { thread_.kill(); }
 protected:
     virtual void run() = 0;

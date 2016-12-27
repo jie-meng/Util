@@ -50,7 +50,7 @@ void TestCaseThread::testThread()
     unsigned long threadId = 0;
     Thread td(UtilBind(threadFunc, &threadId));
     assertTrue(td.start(), ASSERT_POSITION);
-    assertTrue(td.join(), ASSERT_POSITION);
+    td.join();
     assertTrue(threadId > 0, ASSERT_POSITION);
     assertNotEquals<unsigned long>(getCurrentThreadId(), threadId, ASSERT_POSITION);
 }
@@ -76,7 +76,7 @@ void TestCaseThread::testWorkerThread()
     DerivedWorkerThread td;
     assertEquals<unsigned long>(0, td.getThreadId(), ASSERT_POSITION);
     assertTrue(td.start(), ASSERT_POSITION);
-    assertTrue(td.join(), ASSERT_POSITION);
+    td.join();
     assertTrue(td.getThreadId() > 0, ASSERT_POSITION);
     assertNotEquals<unsigned long>(getCurrentThreadId(), td.getThreadId(), ASSERT_POSITION);
 }
@@ -141,7 +141,7 @@ void TestCaseThread::testMutex()
             number_ += step;
         }
     }
-    assertTrue(td.join(), ASSERT_POSITION);
+    td.join();
     assertEquals<int>(15000, number_, ASSERT_POSITION);
 }
 

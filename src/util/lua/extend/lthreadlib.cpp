@@ -73,8 +73,8 @@ static int threadStart(lua_State* plua_state)
 static int threadJoin(lua_State* plua_state)
 {
     Thread* pthread = luaGetObjectData<Thread>(plua_state, kThreadHandle);
-    luaPushBoolean(plua_state, pthread->join());
-    return 1;
+    pthread->join();
+    return 0;
 }
 
 static int threadKill(lua_State* plua_state)

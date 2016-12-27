@@ -132,9 +132,10 @@ bool Thread::start(size_t stack_size)
     return (pdata_->hthread_) ? true : false;
 }
 
-bool Thread::join()
+void Thread::join()
 {
-    return WAIT_OBJECT_0 == ::WaitForSingleObject(pdata_->hthread_, INFINITE) ? true : false;
+    //return WAIT_OBJECT_0 == ::WaitForSingleObject(pdata_->hthread_, INFINITE) ? true : false;
+    ::WaitForSingleObject(pdata_->hthread_, INFINITE);
 }
 
 void Thread::kill()
@@ -370,11 +371,11 @@ bool Thread::start(size_t stack_size)
     return (0 == res) ? true : false;
 }
 
-bool Thread::join()
+void Thread::join()
 {
     void* pthread_result(0);
-    int res = ::pthread_join(pdata_->a_thread_, &pthread_result);
-    return (0 == res) ? true : false;
+    ::pthread_join(pdata_->a_thread_, &pthread_result);
+    //return (0 == res) ? true : false;
 }
 
 void Thread::kill()
