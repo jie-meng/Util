@@ -38,7 +38,7 @@ static void threadFunc(std::string file, std::string func, std::vector<any> args
     luaPop(ls.getState(), -1);
 }
 
-static int create(lua_State* plua_state)
+static int threadCreate(lua_State* plua_state)
 {
     luaExtendAssert(plua_state, kLuaExtendLibThread, "create", luaGetTop(plua_state) >= 2, "file and threadfunc needed");
     luaExtendAssert(plua_state, kLuaExtendLibThread, "create",
@@ -57,12 +57,12 @@ static int create(lua_State* plua_state)
     return 1;
 }
 
-static int destroy(lua_State* plua_state)
+static int threadDestroy(lua_State* plua_state)
 {
     return luaObjectDestroy<Thread>(plua_state, kThreadHandle);
 }
 
-static int start(lua_State* plua_state)
+static int threadStart(lua_State* plua_state)
 {
     Thread* pthread = luaGetObjectData<Thread>(plua_state, kThreadHandle);
     luaPushBoolean(plua_state, pthread->start(luaGetInteger(plua_state, 2, 0)));
@@ -70,21 +70,21 @@ static int start(lua_State* plua_state)
     return 1;
 }
 
-static int join(lua_State* plua_state)
+static int threadJoin(lua_State* plua_state)
 {
     Thread* pthread = luaGetObjectData<Thread>(plua_state, kThreadHandle);
     luaPushBoolean(plua_state, pthread->join());
     return 1;
 }
 
-static int kill(lua_State* plua_state)
+static int threadKill(lua_State* plua_state)
 {
     Thread* pthread = luaGetObjectData<Thread>(plua_state, kThreadHandle);
     pthread->kill();
     return 0;
 }
 
-static int toString(lua_State* plua_state)
+static int threadToString(lua_State* plua_state)
 {
     return luaObjectToString<Thread>(plua_state, kThreadHandle);
 }
@@ -184,9 +184,9 @@ static int lockToString(lua_State* plua_state)
 
 static const u_luaL_Reg thread_lib[] =
 {
-    {"create", create},
-    {"mutexCreate", mutexCreate},
-    {"lockCreate", lockCreate},
+    {"createThread", threadCreate},
+    {"createMutex", mutexCreate},
+    {"createLock", lockCreate},
     
     {"getThreadId", getThreadId},
     {"sleep", sleep},
@@ -196,20 +196,20 @@ static const u_luaL_Reg thread_lib[] =
 };
 
 static const u_luaL_Reg thread_obj_lib[] = {
-    {"destroy", destroy},
-    {"start", start},
-    {"join", join},
-    {"kill", kill},
-    {"__gc", destroy},
-    {"__tostring", toString},
+    {"destroy", threadDestroy},
+    {"start", threadStart},
+    {"join", threadJoin},
+    {"kill", threadKill},
+    {"__gc", threadDestroy},
+    {"__tostring", threadToString},
     
     {0, 0}
 };
 
 static const u_luaL_Reg mutex_obj_lib[] = {
-    {"mutexDestroy", mutexDestroy},
-    {"mutexLock", mutexLock},
-    {"mutexUnlock", mutexUnlock},
+    {"destroy", mutexDestroy},
+    {"lock", mutexLock},
+    {"unlock", mutexUnlock},
     {"__gc", mutexDestroy},
     {"__tostring", mutexToString},
     
@@ -217,10 +217,10 @@ static const u_luaL_Reg mutex_obj_lib[] = {
 };
 
 static const u_luaL_Reg lock_obj_lib[] = {
-    {"lockDestroy", lockDestroy},
-    {"lockWait", lockWait},
-    {"lockTimedWait", lockTimedWait},
-    {"lockNotify", lockNotify},
+    {"destroy", lockDestroy},
+    {"wait", lockWait},
+    {"timedWait", lockTimedWait},
+    {"notify", lockNotify},
     {"__gc", lockDestroy},
     {"__tostring", lockToString},
     
