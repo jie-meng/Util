@@ -141,7 +141,7 @@ struct Csv::CsvImpl
 
     bool write()
     {
-        return (file_name_ == "") ? false : write(file_name_);
+        return file_name_.empty() ? false : write(file_name_);
     }
 
     bool empty() const

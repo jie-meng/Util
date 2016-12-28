@@ -12,10 +12,14 @@ class TextCfg
 {
 public:
     TextCfg() {}
-    explicit TextCfg(const std::string& cfg_file) { load(cfg_file); }
+    explicit TextCfg(const std::string& cfg_file) 
+    { 
+        if (!cfg_file.empty()) 
+            load(cfg_file); 
+    }
     ~TextCfg() {}
 
-    inline std::string cfgFile() const { return cfg_file_; }
+    inline std::string getCfgFile() const { return cfg_file_; }
     void load(const std::string& cfg_file);
     void save(const std::string& cfg_file);
     void save();

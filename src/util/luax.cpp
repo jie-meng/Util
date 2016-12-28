@@ -36,7 +36,7 @@ std::string luaGetString(lua_State* plua_state, int index)
     //return std::string(luaL_checkstring(plua_state, index));
     const char* result = lua_tostring(plua_state, index);
     if (!result)
-        return "";
+        luaError(plua_state, strFormat("luaGetString from index %d failed.", index));
 
     return std::string(lua_tostring(plua_state, index));
 }
