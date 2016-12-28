@@ -3,6 +3,7 @@
 *.exe
 
 Util
+!Util/
 tags
 
 Debug/
