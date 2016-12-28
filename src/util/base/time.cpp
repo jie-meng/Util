@@ -13,13 +13,11 @@ DateTime DateTime::now()
 
 DateTime::DateTime() :
     timet_(time(0))
-{
-}
+{}
 
 DateTime::DateTime(time_t timet) :
     timet_(timet)
-{
-}
+{}
 
 DateTime::DateTime(const tm& t)
 {

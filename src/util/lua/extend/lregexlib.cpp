@@ -94,9 +94,6 @@ static const u_luaL_Reg regex_obj_lib[] = {
     {0, 0}
 };
 
-/*
-** Open regex library
-*/
 int lualibRegexCreate(lua_State* plua_state) 
 {
     luaCreateLib(plua_state, (u_luaL_Reg*)regex_lib);

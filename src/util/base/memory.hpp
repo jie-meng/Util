@@ -6,7 +6,6 @@
 namespace util
 {
 
-//delete
 template <typename T>
 inline void safeDelete(T*& ref_p) { if(ref_p) { delete ref_p; ref_p = 0; } }
 

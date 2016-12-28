@@ -8,12 +8,6 @@
 namespace util
 {
 
-//////////////////////////////////////////////////
-// class name : TextCfg
-// description :
-// author :
-// time : 2013-01-08-19.19
-//////////////////////////////////////////////////
 class TextCfg
 {
 public:
@@ -22,21 +16,20 @@ public:
     ~TextCfg() {}
 
     inline std::string cfgFile() const { return cfg_file_; }
-
     void load(const std::string& cfg_file);
     void save(const std::string& cfg_file);
     void save();
 
+    inline std::string getValue(const std::string& key, const std::string& default_value) 
+        { return getValue<std::string>(key, default_value); }
+
     template <typename T>
     T getValue(const std::string& key, const T& default_value);
-
-    inline std::string getValue(const std::string& key, const std::string& default_value)
-    { return getValue<std::string>(key, default_value); }
 
     template <typename T>
     void setValue(const std::string& key, const T& value);
 private:
-    static inline bool isEmpty(const std::string& line) { return "" == line; }
+    static inline bool isEmpty(const std::string& line) { return line.empty(); }
 private:
     typedef std::map<std::string, std::string> CfgMap;
     CfgMap cfg_map_;
@@ -58,7 +51,7 @@ T TextCfg::getValue(const std::string& key, const T& default_value)
 template <typename T>
 void TextCfg::setValue(const std::string& key, const T& value)
 {
-    if ("" == util::strTrim(key))
+    if (util::strTrim(key).empty())
         return;
     cfg_map_[util::strTrim(key)] = util::strTrim(toString(value));
 }

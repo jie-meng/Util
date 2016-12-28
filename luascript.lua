@@ -1,6 +1,5 @@
 
 function testFile()
-
     local re = regex.create("\\d+")
     if re:search("sbb123gg") then
         print(re:getMatchedGroupByIndex(0))

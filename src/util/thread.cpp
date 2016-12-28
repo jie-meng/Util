@@ -339,8 +339,7 @@ Thread::Thread(ThreadFunc tf) :
 {}
 
 Thread::~Thread()
-{
-}
+{}
 
 bool Thread::start(size_t stack_size)
 {
