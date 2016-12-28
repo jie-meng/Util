@@ -14,6 +14,7 @@ void TestCaseThread::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseThread, testMutex)
     REGISTER_TEST_FUNCTION(TestCaseThread, testLock)
     REGISTER_TEST_FUNCTION(TestCaseThread, testLockTimedWait)
+    REGISTER_TEST_FUNCTION(TestCaseThread, testLockNoReset)
 }
 
 void TestCaseThread::setUp()
@@ -211,4 +212,20 @@ void TestCaseThread::testLockTimedWait()
     lock2_.notify();
     msleep(300);
     assertEquals<int>(1, number_, ASSERT_POSITION);
+}
+
+void TestCaseThread::lockThread2()
+{
+    lock3_.wait(false);
+    number_ = 1;
+}
+
+void TestCaseThread::testLockNoReset()
+{
+    number_ = 0;
+    lock3_.notify();
+    Thread td(UtilBind(&TestCaseThread::lockThread2, this));
+    assertTrue(td.start(), ASSERT_POSITION);
+    msleep(300);
+    assertEquals(1, number_, ASSERT_POSITION);
 }
