@@ -3,14 +3,7 @@
 #include "thread.hpp"
 #include "net.hpp"
 #include "lua/src/lua.hpp"
-#include "lua/extend/lmemorylib.hpp"
-#include "lua/extend/lregexlib.hpp"
-#include "lua/extend/lnetlib.hpp"
-#include "lua/extend/lthreadlib.hpp"
-#include "lua/extend/lfilelib.hpp"
-#include "lua/extend/lprocesslib.hpp"
-#include "lua/extend/lcsvlib.hpp"
-#include "lua/extend/lcfglib.hpp"
+#include "lua/extend/lutillib.hpp"
 
 namespace util
 {
@@ -54,22 +47,6 @@ void LuaExtender::openLibs(lua_State* plua_state)
         luaL_requiref(plua_state, (*it).first.c_str(), (*it).second, 1);
         lua_pop(plua_state, 1);  /* remove lib */
     }
-}
-
-static int lualibUtilCreate(lua_State* plua_state) 
-{
-    extendCfg(plua_state);
-    extendCsv(plua_state);
-    extendFile(plua_state);
-    extendMemory(plua_state);
-    extendNet(plua_state);
-    extendProcess(plua_state);
-    extendRegex(plua_state);
-    extendThread(plua_state);
-    
-    luaCreateLib(plua_state, LuaRegCombUtilLib::getInstance().getRegComb());
-
-    return 1;
 }
 
 class LuaUtilLibsExtender

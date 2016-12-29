@@ -1,4 +1,4 @@
-#include "lregexlib.hpp"
+#include "lregexext.hpp"
 #include "util/luaextend.hpp"
 #include "util/regex.hpp"
 

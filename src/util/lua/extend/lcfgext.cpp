@@ -1,4 +1,4 @@
-#include "lcfglib.hpp"
+#include "lcfgext.hpp"
 #include "util/luaextend.hpp"
 #include "util/cfg.hpp"
 

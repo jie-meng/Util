@@ -1,4 +1,4 @@
-#include "lmemorylib.hpp"
+#include "lmemoryext.hpp"
 #include "util/luaextend.hpp"
 
 namespace util

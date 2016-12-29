@@ -1,4 +1,4 @@
-#include "lnetlib.hpp"
+#include "lnetext.hpp"
 #include "util/luaextend.hpp"
 #include "util/net.hpp"
 
