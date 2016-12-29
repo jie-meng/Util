@@ -5,9 +5,9 @@
 namespace util
 {
 
-const std::string kUdpHandle = "Udp*";
-const std::string kTcpHandle = "Tcp*";
-const std::string kRawHandle = "Raw*";
+const std::string kUdpHandle = "UdpSocket*";
+const std::string kTcpHandle = "TcpSocket*";
+const std::string kRawHandle = "RawSocket*";
 
 static int lua_htons(lua_State* plua_state)
 {
