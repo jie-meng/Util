@@ -112,7 +112,6 @@ private:
     bool init();
     void cleanup();
     bool loadLibs();
-    void extendBasicFunctions();
 private:
     lua_State* plua_state_;
     std::string error_str;

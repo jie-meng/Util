@@ -1,5 +1,8 @@
 
 function testFile()
+
+    print(util.platformInfo())
+    print(util.strContains("sbb134", "324"))
     
     local re = util.createRegex("\\d+");
     if re:search("asdfasf123kxdasf") then
