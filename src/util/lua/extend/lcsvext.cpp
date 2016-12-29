@@ -133,13 +133,13 @@ static int toString(lua_State* plua_state)
 
 static const LuaReg csv_lib[] =
 {
-    {"createCsv", createCsv},
+    {"newCsv", createCsv},
     
     {0, 0}
 };
 
 static const LuaReg csv_obj_lib[] = {
-    {"destroy", destroy},
+    {"delete", destroy},
     {"read", read},
     {"write", write},
     {"empty", empty},

@@ -204,7 +204,7 @@ static int setBytes(lua_State* plua_state)
 
 static const LuaReg memory_lib[] =
 {
-    {"createMemory", createMemory},
+    {"newMemory", createMemory},
         
     {"offset", offset},
     {"memset", memset},
@@ -227,7 +227,7 @@ static const LuaReg memory_lib[] =
 
 static const LuaReg memory_obj_lib[] =
 {
-    {"destroy", destroy},
+    {"delete", destroy},
     {"size", size},
     {"clear", clear},
     {"buf", buf},

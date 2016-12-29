@@ -75,13 +75,13 @@ static int toString(lua_State* plua_state)
 
 static const LuaReg regex_lib[] =
 {
-    {"createRegex", createRegex},
+    {"newRegex", createRegex},
 
     {0, 0}
 };
 
 static const LuaReg regex_obj_lib[] = {
-    {"destroy", destroy},
+    {"delete", destroy},
     {"compile", compile},
     {"match", match},
     {"search", search},

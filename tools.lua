@@ -1,7 +1,7 @@
 local Tools = {}
 
 function Tools.isPlatformWindows()
-    return strContains(platformInfo(), "win", false)
+    return util.strContains(util.platformInfo(), "win", false)
 end
 
 function Tools.getAppName()
@@ -25,11 +25,11 @@ function Tools.make()
 
     print('Make started ...\n')
 
-    file.pathRemove(application)
+    util.pathRemove(application)
     os.execute(cmake_cmd)
     os.execute(make_cmd)
 
-    if not file.isPathFile(application) then
+    if not util.isPathFile(application) then
         print('Make fail.\n')
         return false
     end

@@ -555,9 +555,9 @@ static int close_socket(lua_State* plua_state)
 
 static const LuaReg net_lib[] =
 {    
-    {"createUdp", udpCreate},
-    {"createTcp", tcpCreate},
-    {"createRaw", rawCreate},
+    {"newUdpSocket", udpCreate},
+    {"newTcpSocket", tcpCreate},
+    {"newRawSocket", rawCreate},
     
     {"ipArrayToStr", ip_array_to_str},
     {"ipStrToArray", ip_str_to_array},
@@ -571,7 +571,7 @@ static const LuaReg net_lib[] =
 };
 
 static const LuaReg udp_obj_lib[] = {
-    {"destroy", udpDestroy},
+    {"delete", udpDestroy},
     {"getSocket", udpGetSocket},
     {"init", udpInit},
     {"isOk", udpIsOk},
@@ -588,7 +588,7 @@ static const LuaReg udp_obj_lib[] = {
 };
 
 static const LuaReg tcp_obj_lib[] = {
-    {"destroy", tcpDestroy},
+    {"delete", tcpDestroy},
     {"getSocket", tcpGetSocket},
     {"init", tcpInit},
     {"isOk", tcpIsOk},
@@ -610,7 +610,7 @@ static const LuaReg tcp_obj_lib[] = {
 };
 
 static const LuaReg raw_obj_lib[] = {
-    {"destroy", rawDestroy},
+    {"delete", rawDestroy},
     {"getSocket", rawGetSocket},
     {"init", rawInit},
     {"isOk", rawIsOk},

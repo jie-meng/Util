@@ -184,9 +184,9 @@ static int lockToString(lua_State* plua_state)
 
 static const LuaReg thread_lib[] =
 {
-    {"createThread", threadCreate},
-    {"createMutex", mutexCreate},
-    {"createLock", lockCreate},
+    {"newThread", threadCreate},
+    {"newMutex", mutexCreate},
+    {"newLock", lockCreate},
     
     {"getThreadId", getThreadId},
     {"sleep", sleep},
@@ -196,7 +196,7 @@ static const LuaReg thread_lib[] =
 };
 
 static const LuaReg thread_obj_lib[] = {
-    {"destroy", threadDestroy},
+    {"delete", threadDestroy},
     {"start", threadStart},
     {"join", threadJoin},
     {"kill", threadKill},
@@ -207,7 +207,7 @@ static const LuaReg thread_obj_lib[] = {
 };
 
 static const LuaReg mutex_obj_lib[] = {
-    {"destroy", mutexDestroy},
+    {"delete", mutexDestroy},
     {"lock", mutexLock},
     {"unlock", mutexUnlock},
     {"__gc", mutexDestroy},
@@ -217,7 +217,7 @@ static const LuaReg mutex_obj_lib[] = {
 };
 
 static const LuaReg lock_obj_lib[] = {
-    {"destroy", lockDestroy},
+    {"delete", lockDestroy},
     {"wait", lockWait},
     {"timedWait", lockTimedWait},
     {"notify", lockNotify},

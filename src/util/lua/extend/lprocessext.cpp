@@ -106,7 +106,7 @@ static int toString(lua_State* plua_state)
 
 static const LuaReg process_lib[] =
 {
-    {"createProcess", createProcess},
+    {"newProcess", createProcess},
         
     {"executeProcess", executeProcess},
     {"executeProcessAsyn", executeProcessAsyn},
@@ -115,7 +115,7 @@ static const LuaReg process_lib[] =
 };
 
 static const LuaReg process_obj_lib[] = {
-    {"destroy", destroy},
+    {"delete", destroy},
     {"start", start},
     {"kill", kill},
     {"input", input},

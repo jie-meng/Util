@@ -73,13 +73,13 @@ static int textcfgToString(lua_State* plua_state)
 
 static const LuaReg cfg_lib[] =
 {
-    {"createTextCfg", textcfgCreate},
+    {"newTextCfg", textcfgCreate},
 
     {0, 0}
 };
 
 static const LuaReg textcfg_obj_lib[] = {
-    {"destroy", textcfgDestroy},
+    {"delete", textcfgDestroy},
     {"getCfgFile", textcfgGetCfgFile},
     {"load", textcfgLoad},
     {"save", textcfgSave},
