@@ -71,14 +71,14 @@ static int textcfgToString(lua_State* plua_state)
     return luaObjectToString<TextCfg>(plua_state, kTextCfgHandle);
 }
 
-static const u_luaL_Reg cfg_lib[] =
+static const LuaReg cfg_lib[] =
 {
     {"createTextCfg", textcfgCreate},
 
     {0, 0}
 };
 
-static const u_luaL_Reg textcfg_obj_lib[] = {
+static const LuaReg textcfg_obj_lib[] = {
     {"destroy", textcfgDestroy},
     {"getCfgFile", textcfgGetCfgFile},
     {"load", textcfgLoad},
@@ -91,11 +91,10 @@ static const u_luaL_Reg textcfg_obj_lib[] = {
     {0, 0}
 };
 
-int lualibCfgCreate(lua_State* plua_state) 
+void extendCfg(lua_State* plua_state) 
 {
-    luaCreateLib(plua_state, (u_luaL_Reg*)cfg_lib);
-    luaCreateMeta(plua_state, kTextCfgHandle, (u_luaL_Reg*)textcfg_obj_lib);
-    return 1;
+    LuaRegCombUtilLib::getInstance().addRegArray((LuaReg*)cfg_lib);
+    luaCreateMeta(plua_state, kTextCfgHandle, (LuaReg*)textcfg_obj_lib);
 }
 
 }

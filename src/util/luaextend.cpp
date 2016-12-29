@@ -18,8 +18,20 @@ namespace util
 using namespace std;
 
 const string kLuaExtendTag = "LuaExtend";
+    
+    //LuaRegComb
+void LuaRegComb::addRegArray(LuaReg* reg)
+{
+    lib_reg_comb_.pop_back();
+    while (reg->name != 0)
+    {
+        lib_reg_comb_.push_back(LuaReg(reg->name, reg->func));
+        ++reg;
+    }
+    lib_reg_comb_.push_back(LuaReg());
+}
 
-void luaCreateMeta(lua_State* plua_state, const std::string& handleName, u_luaL_Reg* lr)
+void luaCreateMeta(lua_State* plua_state, const std::string& handleName, LuaReg* lr)
 {
     luaL_newmetatable(plua_state, handleName.c_str());  /* create metatable for specified handles */
     lua_pushvalue(plua_state, -1);  /* push metatable */
@@ -42,6 +54,22 @@ void LuaExtender::openLibs(lua_State* plua_state)
         luaL_requiref(plua_state, (*it).first.c_str(), (*it).second, 1);
         lua_pop(plua_state, 1);  /* remove lib */
     }
+}
+
+static int lualibUtilCreate(lua_State* plua_state) 
+{
+    extendCfg(plua_state);
+    extendCsv(plua_state);
+    extendFile(plua_state);
+    extendMemory(plua_state);
+    extendNet(plua_state);
+    extendProcess(plua_state);
+    extendRegex(plua_state);
+    extendThread(plua_state);
+    
+    luaCreateLib(plua_state, LuaRegCombUtilLib::getInstance().getRegComb());
+
+    return 1;
 }
 
 class LuaUtilLibsExtender
@@ -67,14 +95,7 @@ private:
 
     void addUtilExtendLibs()
     {
-        addLib(kLuaExtendLibMemory, lualibMemoryCreate);
-        addLib(kLuaExtendLibFile, lualibFileCreate);
-        addLib(kLuaExtendLibRegex, lualibRegexCreate);
-        addLib(kLuaExtendLibNet, lualibNetCreate);
-        addLib(kLuaExtendLibThread, lualibThreadCreate);
-        addLib(kLuaExtendLibProcess, lualibProcessCreate);
-        addLib(kLuaExtendLibCsv, lualibCsvCreate);
-        addLib(kLuaExtendLibCfg, lualibCfgCreate);
+        addLib(kLuaExtendLibUtil, lualibUtilCreate);
     }
 private:
     LuaExtender lua_extender_;
@@ -82,7 +103,7 @@ private:
     DISALLOW_COPY_AND_ASSIGN(LuaUtilLibsExtender)
 };
 
-void luaCreateLib(lua_State* plua_state, u_luaL_Reg* lr)
+void luaCreateLib(lua_State* plua_state, LuaReg* lr)
 {
     luaL_newlib(plua_state, (luaL_Reg*)lr);
 }

@@ -8,9 +8,7 @@ struct lua_State;
 namespace util
 {
 
-const std::string kLuaExtendLibThread = "thread";
-
-int lualibThreadCreate(lua_State* plua_state);
+void extendThread(lua_State* plua_state);
 
 }
 

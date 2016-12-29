@@ -8,7 +8,7 @@ namespace util
 
 const std::string kProcessHandle = "Process*";
 
-static int create(lua_State* plua_state)
+static int createProcess(lua_State* plua_state)
 {
     LuaObject<Process>* p = luaNewEmptyObject<Process>(plua_state, kProcessHandle);
     p->setData(new Process());
@@ -104,9 +104,9 @@ static int toString(lua_State* plua_state)
     return luaObjectToString<Process>(plua_state, kProcessHandle);
 }
 
-static const u_luaL_Reg process_lib[] =
+static const LuaReg process_lib[] =
 {
-    {"create", create},
+    {"createProcess", createProcess},
         
     {"executeProcess", executeProcess},
     {"executeProcessAsyn", executeProcessAsyn},
@@ -114,7 +114,7 @@ static const u_luaL_Reg process_lib[] =
     {0, 0}
 };
 
-static const u_luaL_Reg process_obj_lib[] = {
+static const LuaReg process_obj_lib[] = {
     {"destroy", destroy},
     {"start", start},
     {"kill", kill},
@@ -125,11 +125,10 @@ static const u_luaL_Reg process_obj_lib[] = {
     {0, 0}
 };
 
-int lualibProcessCreate(lua_State* plua_state)
+void extendProcess(lua_State* plua_state)
 {
-    luaCreateLib(plua_state, (u_luaL_Reg*)process_lib);
-    luaCreateMeta(plua_state, kProcessHandle, (u_luaL_Reg*)process_obj_lib);
-    return 1;
+    LuaRegCombUtilLib::getInstance().addRegArray((LuaReg*)process_lib);
+    luaCreateMeta(plua_state, kProcessHandle, (LuaReg*)process_obj_lib);
 }
 
 } // namespace util

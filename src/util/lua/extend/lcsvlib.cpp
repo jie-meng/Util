@@ -10,7 +10,7 @@ namespace util
     
 const std::string kCsvHandle = "Csv*";
 
-static int create(lua_State* plua_state)
+static int createCsv(lua_State* plua_state)
 {
     string file = luaGetString(plua_state, 1, "");
     string delimiter = luaGetString(plua_state, 2, ",");
@@ -86,7 +86,7 @@ static int getCellValue(lua_State* plua_state)
     int row = luaGetInteger(plua_state, 2, -1);
     int col = luaGetInteger(plua_state, 3, -1);
 
-    luaExtendAssert(plua_state, kLuaExtendLibCsv, "getCellValue", row>=0 && row<(int)pcsv->rows() && col>=0 && col<(int)pcsv->cols(), "sub-index error");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "getCellValue", row>=0 && row<(int)pcsv->rows() && col>=0 && col<(int)pcsv->cols(), "sub-index error");
     luaPushString(plua_state, pcsv->getCellValue(row, col));
 
     return 1;
@@ -132,14 +132,14 @@ static int toString(lua_State* plua_state)
     return luaObjectToString<Csv>(plua_state, kCsvHandle);
 }
 
-static const u_luaL_Reg csv_lib[] =
+static const LuaReg csv_lib[] =
 {
-    {"create", create},
+    {"createCsv", createCsv},
     
     {0, 0}
 };
 
-static const u_luaL_Reg csv_obj_lib[] = {
+static const LuaReg csv_obj_lib[] = {
     {"destroy", destroy},
     {"read", read},
     {"write", write},
@@ -156,11 +156,10 @@ static const u_luaL_Reg csv_obj_lib[] = {
     {0, 0}
 };
 
-int lualibCsvCreate(lua_State* plua_state)
+void extendCsv(lua_State* plua_state)
 {
-    luaCreateLib(plua_state, (u_luaL_Reg*)csv_lib);
-    luaCreateMeta(plua_state, kCsvHandle, (u_luaL_Reg*)csv_obj_lib);
-    return 1;
+    LuaRegCombUtilLib::getInstance().addRegArray((LuaReg*)csv_lib);
+    luaCreateMeta(plua_state, kCsvHandle, (LuaReg*)csv_obj_lib);
 }
 
 }

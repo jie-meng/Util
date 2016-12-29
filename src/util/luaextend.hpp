@@ -5,11 +5,50 @@
 
 namespace util
 {
+    
+const std::string kLuaExtendLibUtil = "util";
 
-struct u_luaL_Reg 
+struct LuaReg 
 {
-    const char *name;
+    LuaReg(const char* pname, LuaCFunc pfunc) :
+        name(pname), 
+        func(pfunc)
+    {}
+    
+    LuaReg() : 
+        LuaReg(0, 0)
+    {}
+    
+    const char* name;
     LuaCFunc func;
+};
+
+class LuaRegComb
+{
+public:
+    LuaRegComb()
+    {
+        lib_reg_comb_.push_back(LuaReg());
+    }
+    void addRegArray(LuaReg* reg);
+    inline LuaReg* getRegComb() { return &lib_reg_comb_[0]; }
+private:
+    std::vector<LuaReg> lib_reg_comb_;
+};
+
+class LuaRegCombUtilLib
+{
+public:
+    SINGLETON(LuaRegCombUtilLib)
+    inline void addRegArray(LuaReg* lua_reg_array) { lua_reg_comb_.addRegArray(lua_reg_array); }
+    inline LuaReg* getRegComb() { return lua_reg_comb_.getRegComb(); }
+private:
+    LuaRegCombUtilLib() {};
+    ~LuaRegCombUtilLib() {};
+private:
+    LuaRegComb lua_reg_comb_;
+private:
+    DISALLOW_COPY_AND_ASSIGN(LuaRegCombUtilLib)
 };
 
 template <typename T>
@@ -24,7 +63,7 @@ private:
   T* pdata_; 
 };
 
-void luaCreateMeta(lua_State * plua_state, const std::string& handleName, u_luaL_Reg* lr);
+void luaCreateMeta(lua_State * plua_state, const std::string& handleName, LuaReg* lr);
 
 template <typename T>
 LuaObject<T>* luaNewEmptyObject(lua_State* plua_state, const std::string& handleName)
@@ -73,7 +112,7 @@ int luaObjectToString(lua_State* plua_state, const std::string& handleName)
     
     return 1;
 }
-
+    
 //LuaExtender
 class LuaExtender
 {
@@ -90,7 +129,7 @@ private:
     DISALLOW_COPY_AND_ASSIGN(LuaExtender)
 };
 
-void luaCreateLib(lua_State* plua_state, u_luaL_Reg* lr);
+void luaCreateLib(lua_State* plua_state, LuaReg* lr);
 void openUtilExtendLibs(lua_State* plua_state);
 void addUtilExtendLib(const std::string& name, LuaCFunc lib_create_func);
 

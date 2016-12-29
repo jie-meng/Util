@@ -7,7 +7,7 @@ namespace util
 
 const std::string kRegexHandle = "Regex*";
 
-static int create(lua_State* plua_state)
+static int createRegex(lua_State* plua_state)
 {
     LuaObject<Regex>* p = luaNewEmptyObject<Regex>(plua_state, kRegexHandle);
     p->setData(new Regex(luaGetString(plua_state, 1, ""), (Regex::RegexFlag)luaGetInteger(plua_state, 2, 0)));
@@ -73,14 +73,14 @@ static int toString(lua_State* plua_state)
     return luaObjectToString<Regex>(plua_state, kRegexHandle);
 }
 
-static const u_luaL_Reg regex_lib[] =
+static const LuaReg regex_lib[] =
 {
-    {"create", create},
+    {"createRegex", createRegex},
 
     {0, 0}
 };
 
-static const u_luaL_Reg regex_obj_lib[] = {
+static const LuaReg regex_obj_lib[] = {
     {"destroy", destroy},
     {"compile", compile},
     {"match", match},
@@ -94,11 +94,10 @@ static const u_luaL_Reg regex_obj_lib[] = {
     {0, 0}
 };
 
-int lualibRegexCreate(lua_State* plua_state) 
+void extendRegex(lua_State* plua_state) 
 {
-    luaCreateLib(plua_state, (u_luaL_Reg*)regex_lib);
-    luaCreateMeta(plua_state, kRegexHandle, (u_luaL_Reg*)regex_obj_lib);
-    return 1;
+    LuaRegCombUtilLib::getInstance().addRegArray((LuaReg*)regex_lib);
+    luaCreateMeta(plua_state, kRegexHandle, (LuaReg*)regex_obj_lib);
 }
 
 }

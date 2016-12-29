@@ -210,7 +210,7 @@ static int findFilesInDirRecursively(lua_State* plua_state)
     return 1;
 }
 
-static const u_luaL_Reg file_lib[] =
+static const LuaReg file_lib[] =
 {
     {"readTextFile", readTextFile},
     {"writeTextFile", writeTextFile},
@@ -245,10 +245,9 @@ static const u_luaL_Reg file_lib[] =
     {0, 0}
 };
 
-int lualibFileCreate(lua_State* plua_state) {
-
-    luaCreateLib(plua_state, (u_luaL_Reg*)file_lib);
-    return 1;
+void extendFile(lua_State* plua_state) 
+{
+    LuaRegCombUtilLib::getInstance().addRegArray((LuaReg*)file_lib);
 }
 
 }

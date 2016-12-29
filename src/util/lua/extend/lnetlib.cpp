@@ -113,7 +113,7 @@ static int udpRecvFrom(lua_State* plua_state)
     std::string ip("");
     unsigned short port(0);
 
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "udpRecvFrom", pds, "null pointer");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "udpRecvFrom", pds, "null pointer");
 
     luaPushInteger(plua_state, pds->recvFrom(&ip, &port));
     luaPushString(plua_state, ip);
@@ -305,7 +305,7 @@ static int tcpServerSend(lua_State* plua_state)
     StreamSocket* pss = luaGetObjectData<StreamSocket>(plua_state, kTcpHandle);
     
     int client_sock = luaGetInteger(plua_state, 2, kInvalidSocket);
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "tcpServerSend", kInvalidSocket != client_sock, "invalid client socket");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "tcpServerSend", kInvalidSocket != client_sock, "invalid client socket");
 
     if (LuaString == luaGetType(plua_state, 3))
     {
@@ -416,7 +416,7 @@ static int rawRecvFrom(lua_State* plua_state)
     std::string ip("");
     unsigned short port(0);
 
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawRecvFrom", ps, "null pointer");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "rawRecvFrom", ps, "null pointer");
 
     luaPushInteger(plua_state, ps->recvFrom(buf, len, &ip, &port));
     luaPushString(plua_state, ip);
@@ -446,7 +446,7 @@ static int rawSendTo(lua_State* plua_state)
     }
     else
     {
-        luaExtendError(plua_state, kLuaExtendLibNet, "rawSendTo", "parameter 2 is not string or buffer");
+        luaExtendError(plua_state, kLuaExtendLibUtil, "rawSendTo", "parameter 2 is not string or buffer");
     }
 
     return 1;
@@ -491,9 +491,9 @@ static int rawRecv(lua_State* plua_state)
     char* buf = static_cast<char*>(luaGetLightUserData(plua_state, 3, 0));
     size_t len = static_cast<size_t>(luaGetInteger(plua_state, 4, 0));
 
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawRecv", ps, "null pointer");
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawRecv", kInvalidSocket != sock, "invalid socket");
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawRecv", NULL != buf, "buffer is NULL");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "rawRecv", ps, "null pointer");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "rawRecv", kInvalidSocket != sock, "invalid socket");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "rawRecv", NULL != buf, "buffer is NULL");
 
     luaPushInteger(plua_state, ps->recv(sock, buf, len));
 
@@ -504,8 +504,8 @@ static int rawSend(lua_State* plua_state)
 {
     Socket* ps = luaGetObjectData<Socket>(plua_state, kRawHandle);
     int sock = luaGetInteger(plua_state, 2, kInvalidSocket);
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawSend", ps, "null pointer");
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "rawSend", kInvalidSocket != sock, "invalid socket");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "rawSend", ps, "null pointer");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "rawSend", kInvalidSocket != sock, "invalid socket");
 
     if (LuaString == luaGetType(plua_state, 3))
     {
@@ -545,7 +545,7 @@ static int rawToString(lua_State* plua_state)
 
 static int close_socket(lua_State* plua_state)
 {
-    luaExtendAssert(plua_state, kLuaExtendLibNet, "closeSocket",
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "closeSocket",
         luaGetTop(plua_state) == 1 && LuaNumber == luaGetType(plua_state, 1), "invalid socket");
 
     luaPushInteger(plua_state, closeSocket(luaGetInteger(plua_state, 1)));
@@ -553,7 +553,7 @@ static int close_socket(lua_State* plua_state)
     return 1;
 }
 
-static const u_luaL_Reg net_lib[] =
+static const LuaReg net_lib[] =
 {    
     {"createUdp", udpCreate},
     {"createTcp", tcpCreate},
@@ -570,7 +570,7 @@ static const u_luaL_Reg net_lib[] =
     {0, 0}
 };
 
-static const u_luaL_Reg udp_obj_lib[] = {
+static const LuaReg udp_obj_lib[] = {
     {"destroy", udpDestroy},
     {"getSocket", udpGetSocket},
     {"init", udpInit},
@@ -587,7 +587,7 @@ static const u_luaL_Reg udp_obj_lib[] = {
     {0, 0}
 };
 
-static const u_luaL_Reg tcp_obj_lib[] = {
+static const LuaReg tcp_obj_lib[] = {
     {"destroy", tcpDestroy},
     {"getSocket", tcpGetSocket},
     {"init", tcpInit},
@@ -609,7 +609,7 @@ static const u_luaL_Reg tcp_obj_lib[] = {
     {0, 0}
 };
 
-static const u_luaL_Reg raw_obj_lib[] = {
+static const LuaReg raw_obj_lib[] = {
     {"destroy", rawDestroy},
     {"getSocket", rawGetSocket},
     {"init", rawInit},
@@ -630,13 +630,12 @@ static const u_luaL_Reg raw_obj_lib[] = {
     {0, 0}
 };
 
-int lualibNetCreate(lua_State* plua_state)
+void extendNet(lua_State* plua_state)
 {
-    luaCreateLib(plua_state, (u_luaL_Reg*)net_lib);
-    luaCreateMeta(plua_state, kUdpHandle, (u_luaL_Reg*)udp_obj_lib);    
-    luaCreateMeta(plua_state, kTcpHandle, (u_luaL_Reg*)tcp_obj_lib);
-    luaCreateMeta(plua_state, kRawHandle, (u_luaL_Reg*)raw_obj_lib);
-    return 1;
+    LuaRegCombUtilLib::getInstance().addRegArray((LuaReg*)net_lib);
+    luaCreateMeta(plua_state, kUdpHandle, (LuaReg*)udp_obj_lib);    
+    luaCreateMeta(plua_state, kTcpHandle, (LuaReg*)tcp_obj_lib);
+    luaCreateMeta(plua_state, kRawHandle, (LuaReg*)raw_obj_lib);
 }
 
 }

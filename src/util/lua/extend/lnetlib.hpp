@@ -8,9 +8,9 @@ struct lua_State;
 namespace util
 {
 
-const std::string kLuaExtendLibNet = "net";
+//const std::string kLuaExtendLibNet = "net";
 
-int lualibNetCreate(lua_State* plua_state);
+void extendNet(lua_State* plua_state);
 
 }
 
