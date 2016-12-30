@@ -11,7 +11,7 @@ namespace util
 
 PrintFunc print_func = UtilBind(&stdPrint, _1);
 
-std::string memoryStr(char* buf, size_t bytes)
+std::string memContent(char* buf, size_t bytes)
 {
     std::string str("");
     for (size_t i=0; i<bytes; ++i)

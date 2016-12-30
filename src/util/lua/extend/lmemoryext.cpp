@@ -54,32 +54,32 @@ static int clear(lua_State* plua_state)
     return 0;
 }
 
-static int offset(lua_State* plua_state)
+static int memOffset(lua_State* plua_state)
 {
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "offset", p, "address is null");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memOffset", p, "address is null");
 
     luaPushLightUserData(plua_state, (void*)(p + luaGetInteger(plua_state, 2, 0)));
 
     return 1;
 }
 
-static int memstr(lua_State* plua_state)
+static int mem_content(lua_State* plua_state)
 {
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memstr", luaGetTop(plua_state) == 2,
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memContent", luaGetTop(plua_state) == 2,
         "parameter count should be 2");
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memstr", p, "address is null");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memContent", p, "address is null");
 
-    luaPushString(plua_state, memoryStr(p, luaGetInteger(plua_state, 2)));
+    luaPushString(plua_state, memContent(p, luaGetInteger(plua_state, 2)));
 
     return 1;
 }
 
-static int tostring(lua_State* plua_state)
+static int memToString(lua_State* plua_state)
 {
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "tostring", p, "c-string address is null");
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memToString", p, "c-string address is null");
 
     luaPushString(plua_state, toString(p));
 
@@ -156,12 +156,12 @@ static int strcpy(lua_State* plua_state)
 }
 
 template <typename T>
-static int setUInt(lua_State* plua_state)
+static int memSetUInt(lua_State* plua_state)
 {
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "setUnit", 2 == luaGetTop(plua_state),
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memSetUnit", 2 == luaGetTop(plua_state),
         "parameter count should be 2");
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "setUnit", p,
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memSetUnit", p,
         "address is null");
 
     *(T*)p = luaGetInteger(plua_state, 2);
@@ -170,12 +170,12 @@ static int setUInt(lua_State* plua_state)
 }
 
 template <typename T>
-static int getUInt(lua_State* plua_state)
+static int memGetUInt(lua_State* plua_state)
 {
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "getUnit", 1 == luaGetTop(plua_state),
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memGetUnit", 1 == luaGetTop(plua_state),
         "parameter count should be 1");
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1));
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "getUnit", p,
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memGetUnit", p,
         "address is null");
 
     luaPushInteger(plua_state, *(T*)p);
@@ -183,17 +183,17 @@ static int getUInt(lua_State* plua_state)
     return 1;
 }
 
-static int setBytes(lua_State* plua_state)
+static int memSetBytes(lua_State* plua_state)
 {
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "setBytes", luaGetTop(plua_state) > 1,
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memSetBytes", luaGetTop(plua_state) > 1,
         "parameter count should not less than 2");
     char* p = static_cast<char*>(luaGetLightUserData(plua_state, 1, 0));
-    luaExtendAssert(plua_state, kLuaExtendLibUtil, "setBytes", p,
+    luaExtendAssert(plua_state, kLuaExtendLibUtil, "memSetBytes", p,
         "address is null");
 
     for (size_t i=2; i<=(size_t)luaGetTop(plua_state); ++i)
     {
-        luaExtendAssert(plua_state, kLuaExtendLibUtil, "setBytes", luaGetInteger(plua_state, i) <= 255,
+        luaExtendAssert(plua_state, kLuaExtendLibUtil, "memSetBytes", luaGetInteger(plua_state, i) <= 255,
             "byte value should not be more than 255");
         char* p1 = p + (i-2);
         *(uint8_t*)(p1) = luaGetInteger(plua_state, i);
@@ -206,21 +206,21 @@ static const LuaReg memory_lib[] =
 {
     {"newMemory", createMemory},
         
-    {"offset", offset},
     {"memset", memset},
     {"memcpy", memcpy},
     {"memmove", memmove},
     {"strcpy", strcpy},
-    {"memstr", memstr},
-    {"tostring", tostring},
 
-    {"setUInt8", setUInt<uint8_t>},
-    {"setUInt16", setUInt<uint16_t>},
-    {"setUInt32", setUInt<uint32_t>},
-    {"getUInt8", getUInt<uint8_t>},
-    {"getUInt16", getUInt<uint16_t>},
-    {"getUInt32", getUInt<uint32_t>},
-    {"setBytes", setBytes},
+    {"memOffset", memOffset},
+    {"memContent", mem_content},
+    {"memToString", memToString},
+    {"memSetUInt8", memSetUInt<uint8_t>},
+    {"memSetUInt16", memSetUInt<uint16_t>},
+    {"memSetUInt32", memSetUInt<uint32_t>},
+    {"memGetUInt8", memGetUInt<uint8_t>},
+    {"memGetUInt16", memGetUInt<uint16_t>},
+    {"memGetUInt32", memGetUInt<uint32_t>},
+    {"memSetBytes", memSetBytes},
 
     {0, 0}
 };

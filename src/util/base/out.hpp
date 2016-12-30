@@ -27,8 +27,8 @@ inline void printLine(const T& t) { print_func(toString(t) + "\n"); }
 void print(const char* fmt, ...);
 void printLine(const char* fmt, ...);
 //memory
-std::string memoryStr(char* buf, size_t bytes);
-inline void printMemory(char* buf, size_t bytes) { printLine(memoryStr(buf, bytes)); }
+std::string memContent(char* buf, size_t bytes);
+inline void printMemory(char* buf, size_t bytes) { printLine(memContent(buf, bytes)); }
 
 //standard version
 inline void stdPrint(const std::string& str) { std::cout<<str<<std::flush; }
