@@ -13,8 +13,6 @@ function testFile()
     cfg:delete()
     print(cfg)
     
-    local p = util.newProcess()
-    print(p)
 end
 
 testFile()

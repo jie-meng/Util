@@ -23,9 +23,9 @@ int lualibUtilCreate(lua_State* plua_state)
     extendFile(plua_state);
     extendMemory(plua_state);
     extendNet(plua_state);
-    extendProcess(plua_state);
     extendRegex(plua_state);
     extendThread(plua_state);
+    //extendProcess(plua_state);
     
     luaCreateLib(plua_state, LuaRegCombUtilLib::getInstance().getRegComb());
     

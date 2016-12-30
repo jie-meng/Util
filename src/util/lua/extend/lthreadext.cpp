@@ -11,6 +11,24 @@ const std::string kThreadHandle = "Thread*";
 const std::string kMutexHandle = "Mutex*";
 const std::string kLockHandle = "Lock*";
 
+static int sleep(lua_State* plua_state)
+{
+    util::sleep(luaGetInteger(plua_state, 1, 0));
+    return 0;
+}
+
+static int msleep(lua_State* plua_state)
+{
+    util::msleep(luaGetInteger(plua_state, 1, 0));
+    return 0;
+}
+
+static int getThreadId(lua_State* plua_state)
+{
+    luaPushInteger(plua_state, getCurrentThreadId());
+    return 1;
+}
+
 static void threadFunc(std::string file, std::string func, std::vector<any> args)
 {
     LuaState ls;
@@ -87,24 +105,6 @@ static int threadKill(lua_State* plua_state)
 static int threadToString(lua_State* plua_state)
 {
     return luaObjectToString<Thread>(plua_state, kThreadHandle);
-}
-
-static int getThreadId(lua_State* plua_state)
-{
-    luaPushInteger(plua_state, getCurrentThreadId());
-    return 1;
-}
-
-static int sleep(lua_State* plua_state)
-{
-    util::sleep(luaGetInteger(plua_state, 1, 0));
-    return 0;
-}
-
-static int msleep(lua_State* plua_state)
-{
-    util::msleep(luaGetInteger(plua_state, 1, 0));
-    return 0;
 }
 
 static int mutexCreate(lua_State* plua_state)
@@ -184,11 +184,11 @@ static int lockToString(lua_State* plua_state)
 
 static const LuaReg thread_lib[] =
 {
-    {"newThread", threadCreate},
-    {"newMutex", mutexCreate},
-    {"newLock", lockCreate},
+    //{"newThread", threadCreate},
+    //{"newMutex", mutexCreate},
+    //{"newLock", lockCreate},
     
-    {"getThreadId", getThreadId},
+    //{"getThreadId", getThreadId},
     {"sleep", sleep},
     {"msleep", msleep},
 
@@ -230,9 +230,9 @@ static const LuaReg lock_obj_lib[] = {
 void extendThread(lua_State* plua_state) 
 {
     LuaRegCombUtilLib::getInstance().addRegArray((LuaReg*)thread_lib);
-    luaCreateMeta(plua_state, kThreadHandle, (LuaReg*)thread_obj_lib);
-    luaCreateMeta(plua_state, kMutexHandle, (LuaReg*)mutex_obj_lib);
-    luaCreateMeta(plua_state, kLockHandle, (LuaReg*)lock_obj_lib);
+    //luaCreateMeta(plua_state, kThreadHandle, (LuaReg*)thread_obj_lib);
+    //luaCreateMeta(plua_state, kMutexHandle, (LuaReg*)mutex_obj_lib);
+    //luaCreateMeta(plua_state, kLockHandle, (LuaReg*)lock_obj_lib);
 }
 
 } // namespace util
