@@ -23,7 +23,7 @@ namespace util
         const std::type_info& get() const;
         // Compatibility functions
         bool before(const TypeInfo& rhs) const;
-        const char* name() const;
+        std::string name() const;
 
     private:
         const std::type_info* pInfo_;
@@ -54,7 +54,7 @@ namespace util
         return *pInfo_;
     }
 
-    inline const char* TypeInfo::name() const
+    inline std::string TypeInfo::name() const
     {
         assert(pInfo_);
         return pInfo_->name();
@@ -79,6 +79,8 @@ namespace util
 
     inline bool operator>=(const TypeInfo& lhs, const TypeInfo& rhs)
     { return !(lhs < rhs); }
+    
+    inline std::string toString(const TypeInfo& ti) { return toString(ti.name()); }
 
 } // namespace util
 
