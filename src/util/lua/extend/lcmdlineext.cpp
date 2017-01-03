@@ -7,7 +7,6 @@ namespace util
 
 using namespace std;
 
-//const std::string kCmdLineHandle = "CmdLine*";
 const std::string kCmdLineParserHandle = "CmdLineParser*";
 const std::string kCmdLineMakerHandle = "CmdLineMaker*";
 
