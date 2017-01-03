@@ -4,7 +4,6 @@ function gogo(cmd)
 end
 
 function testFile()
-
     print(util.platformInfo())
     print(util.strContains("sbb134", "324"))
     
@@ -18,14 +17,16 @@ function testFile()
     cfg:delete()
     print(cfg)
     
---        local cmdline = util.newCmdLine(gogo)
---        print(cmdline)
---        cmdline:start()
---        cmdline:delete()
---        print(cmdline)
-    
     local parser = util.newCmdLineParser()
     print(parser:parse('iperf -c -ip 192.168.0.1 -port 33 -t'))
+    
+    local maker = util.newCmdLineMaker()
+    maker:setCmd('ping')
+    maker:addKeyValue('t', '30')
+    maker:addKeyValue('b', '2.5')
+    print(maker:getCmdLine())
+    maker:sort('b')
+    print(maker:getCmdLine())
 end
 
 testFile()

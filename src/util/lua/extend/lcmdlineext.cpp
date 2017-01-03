@@ -10,7 +10,8 @@ using namespace std;
 //const std::string kCmdLineHandle = "CmdLine*";
 const std::string kCmdLineParserHandle = "CmdLineParser*";
 const std::string kCmdLineMakerHandle = "CmdLineMaker*";
-    
+
+// CmdLineParser    
 static int cmdLineParserCreate(lua_State* plua_state)
 {
     LuaObject<CmdLineParser>* p = luaNewEmptyObject<CmdLineParser>(plua_state, kCmdLineParserHandle);
@@ -108,13 +109,97 @@ static int cmdLineParserGetValue(lua_State* plua_state)
     return 1;
 }
 
+// CmdLineMaker
+static int cmdLineMakerCreate(lua_State* plua_state)
+{
+    LuaObject<CmdLineMaker>* p = luaNewEmptyObject<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+    p->setData(
+        new CmdLineMaker(
+            luaGetBoolean(plua_state, 1, false),
+            luaGetString(plua_state, 2, " -"),
+            luaGetString(plua_state, 3, " ")));
+
+    return 1;
+}
+
+static int cmdLineMakerDestroy(lua_State* plua_state)
+{
+    return luaObjectDestroy<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+}
+
+static int cmdLineMakerToString(lua_State* plua_state)
+{
+    return luaObjectToString<CmdLineMaker>(plua_state, kCmdLineMakerHandle);    
+}
+
+static int cmdLineMakerIsCaseSensitive(lua_State* plua_state)
+{
+    CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+    luaPushBoolean(plua_state, pcmdline_maker->isCaseSensitive());
+    
+    return 1;
+}
+
+static int cmdLineMakerGetCmd(lua_State* plua_state)
+{
+    CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+    luaPushString(plua_state, pcmdline_maker->getCmd());
+    
+    return 1;
+}
+
+static int cmdLineMakerSetCmd(lua_State* plua_state)
+{
+    CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+    pcmdline_maker->setCmd(luaGetString(plua_state, 2));
+    
+    return 0;
+}
+
+static int cmdLineMakerGetCmdLine(lua_State* plua_state)
+{
+    CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+    luaPushString(plua_state, pcmdline_maker->getCmdLine());
+    
+    return 1;
+}
+
+static int cmdLineMakerRemoveKey(lua_State* plua_state)
+{
+    CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+    pcmdline_maker->removeKey(luaGetString(plua_state, 2));
+    
+    return 0;
+}
+
+static int cmdLineMakerSort(lua_State* plua_state)
+{
+    CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+    
+    std::vector<string> args;
+    for (int i=2; i<=luaGetTop(plua_state); ++i)
+        args.push_back(luaGetString(plua_state, i));
+    
+    pcmdline_maker->sort(args.begin(), args.end());
+    
+    return 0;
+}
+
+static int cmdLineMakerAddKeyValue(lua_State* plua_state)
+{
+    CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
+    pcmdline_maker->addKeyValue(luaGetString(plua_state, 2), luaGetString(plua_state, 3));
+    
+    return 0;
+}
+
 static const LuaReg cmdline_lib[] =
 {
     {"newCmdLineParser", cmdLineParserCreate},
+    {"newCmdLineMaker", cmdLineMakerCreate},
 
     {0, 0}
 };
-
 
 static const LuaReg cmdlineparser_obj_lib[] = {
     {"delete", cmdLineParserDestroy},
@@ -133,10 +218,26 @@ static const LuaReg cmdlineparser_obj_lib[] = {
     {0, 0}
 };
 
+static const LuaReg cmdlinemaker_obj_lib[] = {
+    {"delete", cmdLineMakerDestroy},
+    {"isCaseSensitive", cmdLineMakerIsCaseSensitive},
+    {"getCmd", cmdLineMakerGetCmd},
+    {"setCmd", cmdLineMakerSetCmd},
+    {"getCmdLine", cmdLineMakerGetCmdLine},
+    {"removeKey", cmdLineMakerRemoveKey},
+    {"addKeyValue", cmdLineMakerAddKeyValue},
+    {"sort", cmdLineMakerSort},
+    {"__gc", cmdLineMakerDestroy},
+    {"__tostring", cmdLineMakerToString},
+    
+    {0, 0}
+};
+
 void extendCmdLine(lua_State* plua_state) 
 {
     LuaRegCombUtilLib::getInstance().addRegArray((LuaReg*)cmdline_lib);
     luaCreateMeta(plua_state, kCmdLineParserHandle, (LuaReg*)cmdlineparser_obj_lib);
+    luaCreateMeta(plua_state, kCmdLineMakerHandle, (LuaReg*)cmdlinemaker_obj_lib);
 }
     
 } //util
