@@ -20,17 +20,17 @@ static int createMemory(lua_State* plua_state)
     return 1;
 }
 
-static int destroy(lua_State* plua_state)
+static int memoryDestroy(lua_State* plua_state)
 {
     return luaObjectDestroy<ByteMemory>(plua_state, kByteMemoryHandle);
 }
 
-static int toString(lua_State* plua_state)
+static int memoryToString(lua_State* plua_state)
 {
     return luaObjectToString<ByteMemory>(plua_state, kByteMemoryHandle);
 }
 
-static int size(lua_State* plua_state)
+static int memorySize(lua_State* plua_state)
 {    
     ByteMemory* pmemory = luaGetObjectData<ByteMemory>(plua_state, kByteMemoryHandle);
     luaPushInteger(plua_state, pmemory->size());
@@ -38,7 +38,7 @@ static int size(lua_State* plua_state)
     return 1;
 }
 
-static int buf(lua_State* plua_state)
+static int memoryBuf(lua_State* plua_state)
 {
     ByteMemory* pmemory = luaGetObjectData<ByteMemory>(plua_state, kByteMemoryHandle);
     luaPushLightUserData(plua_state, pmemory->buf());
@@ -46,7 +46,7 @@ static int buf(lua_State* plua_state)
     return 1;
 }
 
-static int clear(lua_State* plua_state)
+static int memoryClear(lua_State* plua_state)
 {
     ByteMemory* pmemory = luaGetObjectData<ByteMemory>(plua_state, kByteMemoryHandle);
     pmemory->clear();
@@ -227,12 +227,12 @@ static const LuaReg memory_lib[] =
 
 static const LuaReg memory_obj_lib[] =
 {
-    {"delete", destroy},
-    {"size", size},
-    {"clear", clear},
-    {"buf", buf},
-    {"__gc", destroy},
-    {"__tostring", toString},
+    {"delete", memoryDestroy},
+    {"size", memorySize},
+    {"clear", memoryClear},
+    {"buf", memoryBuf},
+    {"__gc", memoryDestroy},
+    {"__tostring", memoryToString},
     {0, 0}
 };
 
