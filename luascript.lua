@@ -27,6 +27,11 @@ function testFile()
     print(maker:getCmdLine())
     maker:sort('b')
     print(maker:getCmdLine())
+    
+    local m = util.newMemory(20);
+    util.strcpy(m:buf(), 'ABC')
+    print(util.memContent(m:buf(), m:size()))
+    print(util.memToString(m:buf()))
 end
 
 testFile()

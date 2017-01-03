@@ -69,4 +69,8 @@ void TestCaseMemory::testMemory()
     assertEquals<double>(3.1415926, mem2[2], ASSERT_POSITION);
     mem2.clear();
     assertEquals<double>(0, mem2[2], ASSERT_POSITION);
+        
+    Memory<char> mem3(128);
+    strcpy(mem3.buf(), "This is a test string.");
+    assertEquals<string>("This is a test string.", string(mem3.buf()), ASSERT_POSITION);
 }
