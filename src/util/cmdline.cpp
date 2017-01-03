@@ -104,7 +104,7 @@ std::string CmdLineParser::getValue(const std::string& key) const
     return pos != key_value_map_.end() ? pos->second : "";
 }
 
-std::string CmdLineParser::content() const
+std::string CmdLineParser::getContent() const
 {
     std::string content = "cmd[" + cmd_ + "]";
     KeyValueMap::const_iterator it;

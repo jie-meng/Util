@@ -496,9 +496,3 @@ LUAMOD_API int luaopen_base (lua_State *L) {
   lua_setfield(L, -2, "_VERSION");
   return 1;
 }
-
-//joshua
-int lua_dofile_export (lua_State *L)
-{
-    return luaB_dofile(L);
-}

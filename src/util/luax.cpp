@@ -7,6 +7,37 @@
 
 namespace util
 {
+    
+std::string toString(LuaType lua_type)
+{
+    switch (lua_type)
+    {
+        case LuaNone:
+            return "LuaNone";
+        case LuaNil:
+            return "LuaNil";
+        case LuaBoolean:
+            return "LuaBoolean";
+        case LuaLightUserData:
+            return "LuaLightUserData";
+        case LuaNumber:
+            return "LuaNumber";
+        case LuaString:
+            return "LuaString";
+        case LuaTable:
+            return "LuaTable";
+        case LuaFunction:
+            return "LuaFunction";
+        case LuaUserData:
+            return "LuaUserData";
+        case LuaThread:
+            return "LuaThread";
+        case LuaNumTags:
+            return "LuaNumTags";
+        default:
+            throw Exception(strFormat("Invalid LuaType value: %d", (int)lua_type));
+    }
+}
 
 //get operate
 double luaGetDouble(lua_State* plua_state, int index)
@@ -64,6 +95,16 @@ void* luaGetLightUserData(lua_State* plua_state, int index)
 void* luaGetLightUserData(lua_State* plua_state, int index, void* default_data)
 {
     return lua_isuserdata(plua_state, index) ? luaGetLightUserData(plua_state, index) : default_data;
+}
+
+LuaCFunc luaGetFunction(lua_State* plua_state, int index)
+{
+    return (LuaCFunc)lua_tocfunction(plua_state, index);
+}
+
+LuaCFunc luaGetFunction(lua_State* plua_state, int index, LuaCFunc default_function)
+{
+    return lua_isfunction(plua_state, index) ? luaGetFunction(plua_state, index) : default_function;
 }
 
 any luaGetAny(lua_State* plua_state, int index)
@@ -237,9 +278,9 @@ std::string luaGetTypeName(lua_State* plua_state, LuaType type)
     return lua_typename(plua_state, type);
 }
 
-void luaPop(lua_State* plua_state, int index)
+void luaPop(lua_State* plua_state, int count)
 {
-    lua_pop(plua_state, index);
+    lua_pop(plua_state, count);
 }
 
 int luaGetTop(lua_State* plua_state)

@@ -5,11 +5,11 @@
 #include "lmemoryext.hpp"
 #include "lregexext.hpp"
 #include "lnetext.hpp"
-#include "lthreadext.hpp"
 #include "lfileext.hpp"
-#include "lprocessext.hpp"
 #include "lcsvext.hpp"
 #include "lcfgext.hpp"
+#include "lcmdlineext.hpp"
+#include "lthreadext.hpp"
 
 namespace util
 {
@@ -22,10 +22,10 @@ int lualibUtilCreate(lua_State* plua_state)
     extendCsv(plua_state);
     extendFile(plua_state);
     extendMemory(plua_state);
-    extendNet(plua_state);
     extendRegex(plua_state);
+    extendCmdLine(plua_state);
+    extendNet(plua_state);
     extendThread(plua_state);
-    //extendProcess(plua_state);
     
     luaCreateLib(plua_state, LuaRegCombUtilLib::getInstance().getRegComb());
     

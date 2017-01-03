@@ -26,7 +26,7 @@ void TestCaseCmdLine::testCmdLineParser1()
     string cmdline = "iperf -u -c 192.168.1.1 -b 5M -P 30 -t 60";
     CmdLineParser clp(true);
     assertTrue(clp.parse(cmdline), ASSERT_POSITION);
-    assertFalse(clp.content().empty(), ASSERT_POSITION);
+    assertFalse(clp.getContent().empty(), ASSERT_POSITION);
     assertEquals<string>(cmdline, clp.getCmdLine(), ASSERT_POSITION);
     assertEquals<string>("iperf", clp.getCmd(), ASSERT_POSITION);
     assertEquals<string>("192.168.1.1", clp.getValue("c"), ASSERT_POSITION);
@@ -51,7 +51,7 @@ void TestCaseCmdLine::testCmdLineParser2()
     string cmdline = "servicecmd -scmd \"iperf -u -c 192.168.1.1 -b 5M -P 30 -t 60\" -ip 192.168.1.12 -port 9001";
     CmdLineParser clp;
     assertTrue(clp.parse(cmdline), ASSERT_POSITION);
-    assertFalse(clp.content().empty(), ASSERT_POSITION);
+    assertFalse(clp.getContent().empty(), ASSERT_POSITION);
     assertEquals<string>(cmdline, clp.getCmdLine(), ASSERT_POSITION);
     assertEquals<string>("servicecmd", clp.getCmd(), ASSERT_POSITION);
     assertEquals<string>("192.168.1.12", clp.getValue("ip"), ASSERT_POSITION);

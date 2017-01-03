@@ -96,13 +96,13 @@ public:
     inline bool isCaseSensitive() const { return is_case_sensitive_; }
     inline std::string getCmd() const { return isCaseSensitive() ? cmd_ : util::strToLower(cmd_); }
     inline std::string getCmdLine() const { return raw_cmdline_; }
-    inline void removeKey(const std::string& key) { key_value_map_.erase(getFilterKeyWithCaseSensitive(key)); }
-    inline bool hasKey(const std::string& key) const { return (key_value_map_.find(getFilterKeyWithCaseSensitive(key)) != key_value_map_.end()) ? true : false; }
     inline std::string getRet() const { return ret_; }
-
+    std::string getContent() const;
+    
     bool parse(const std::string& cmdline);
-
-    std::string content() const;
+    
+    inline bool hasKey(const std::string& key) const { return (key_value_map_.find(getFilterKeyWithCaseSensitive(key)) != key_value_map_.end()) ? true : false; }
+    inline void removeKey(const std::string& key) { key_value_map_.erase(getFilterKeyWithCaseSensitive(key)); }
 
     std::string getValue(const std::string& key) const;
 
