@@ -46,33 +46,13 @@ private:
     DISALLOW_COPY_AND_ASSIGN(Timer)
 };
 
-template <class TimerTask>
-class TaskObjTimer : Timer
-{
-public:
-    explicit TaskObjTimer(UtilAutoPtr<TimerTask> ptimer_task) :
-        ptimer_task_(ptimer_task)
-        {}
-    ~TaskObjTimer() { stop(); }
-protected:
-    virtual void runTask()
-    {
-        if (ptimer_task_.get())
-            ptimer_task_->run();
-    }
-private:
-    UtilAutoPtr<TimerTask> ptimer_task_;
-private:
-    DISALLOW_COPY_AND_ASSIGN(TaskObjTimer)
-};
-
-class TaskFuncTimer : public Timer
+class FuncTimer : public Timer
 {
     typedef UtilFunction<void ()> TimerTask;
 public:
-    explicit TaskFuncTimer(TimerTask timer_task) :
+    explicit FuncTimer(TimerTask timer_task) :
         timer_task_(timer_task) {}
-    ~TaskFuncTimer() { stop(); }
+    ~FuncTimer() { stop(); }
 protected:
     virtual void runTask()
     {
@@ -82,7 +62,7 @@ protected:
 private:
     TimerTask timer_task_;
 private:
-    DISALLOW_COPY_AND_ASSIGN(TaskFuncTimer)
+    DISALLOW_COPY_AND_ASSIGN(FuncTimer)
 };
 
 } // namespace util

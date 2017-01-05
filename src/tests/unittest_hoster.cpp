@@ -8,6 +8,7 @@
 #include "testcase_csv.hpp"
 #include "testcase_cmdline.hpp"
 #include  "testcase_thread.hpp"
+#include "testcase_timer.hpp"
 
 using namespace std;
 using namespace util;
@@ -29,6 +30,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseCsv("TestCaseCsv"));
     suit.addTestSuite(TestCaseCmdLine("TestCaseCmdLine"));
     suit.addTestSuite(TestCaseThread("TestCaseThread"));
+    suit.addTestSuite(TestCaseTimer("TestCaseTimer"));
 
     TestRunner runner;
     runner.run(suit);
