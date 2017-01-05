@@ -52,7 +52,7 @@ static int strReplace(lua_State* plua_state)
     return 1;
 }
 
-static int strRelaceAll(lua_State* plua_state)
+static int strReplaceAll(lua_State* plua_state)
 {
     luaPushString(plua_state,
             util::strReplaceAll(
@@ -167,7 +167,7 @@ static const LuaReg string_lib[] =
     {"strTrimLeftEx", strTrimLeftEx},
     {"strTrimRightEx", strTrimRightEx},
     {"strReplace", strReplace},
-    {"strRelaceAll", strRelaceAll},
+    {"strReplaceAll", strReplaceAll},
     {"strLeft", strLeft},
     {"strRight", strRight},
     {"strMid", strMid},
