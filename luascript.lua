@@ -31,7 +31,7 @@ function testFile()
     local m = util.newMemory(20);
     util.strcpy(m:buf(), 'ABC')
     print(util.memContent(m:buf(), m:size()))
-    print(util.memToString(m:buf()))
+    print(util.memToString(m:buf(-19)))
 end
 
 testFile()

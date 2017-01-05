@@ -8,6 +8,7 @@ void TestCaseMemory::registerTestFunctions()
 {
     REGISTER_TEST_FUNCTION(TestCaseMemory, testDelete)
     REGISTER_TEST_FUNCTION(TestCaseMemory, testMemory)
+    REGISTER_TEST_FUNCTION(TestCaseMemory, testMemoryBuf)
 }
 
 void TestCaseMemory::setUp()
@@ -73,4 +74,62 @@ void TestCaseMemory::testMemory()
     Memory<char> mem3(128);
     strcpy(mem3.buf(), "This is a test string.");
     assertEquals<string>("This is a test string.", string(mem3.buf()), ASSERT_POSITION);
+}
+
+void TestCaseMemory::testMemoryBuf()
+{
+    Memory<char> mem(5);
+    strcpy(mem.buf(), "test");
+    assertEquals<size_t>(5, mem.count(), ASSERT_POSITION);
+    assertEquals<char>('t', *mem.buf(), ASSERT_POSITION);
+    assertEquals<char>('t', *mem.buf(0), ASSERT_POSITION);
+    assertEquals<char>('e', *mem.buf(1), ASSERT_POSITION);
+    assertEquals<char>('s', *mem.buf(2), ASSERT_POSITION);
+    assertEquals<char>('t', *mem.buf(3), ASSERT_POSITION);
+    assertEquals<char>('\0', *mem.buf(4), ASSERT_POSITION);
+    assertEquals<char>('t', *mem.buf(-5), ASSERT_POSITION);
+    assertEquals<char>('e', *mem.buf(-4), ASSERT_POSITION);
+    assertEquals<char>('s', *mem.buf(-3), ASSERT_POSITION);
+    assertEquals<char>('t', *mem.buf(-2), ASSERT_POSITION);
+    assertEquals<char>('\0', *mem.buf(-1), ASSERT_POSITION);
+    bool exception = false;
+    try
+    {
+        mem.buf(-6);
+    }
+    catch (Exception& e)
+    {
+        exception = true;
+    }
+    assertTrue(exception, ASSERT_POSITION);
+    
+    Memory<int> mem2(5);
+    int* p = mem2.buf();
+    for (int i=0; i<5; ++i)
+    {
+        *p = i;
+        ++p;
+    }
+    assertEquals<size_t>(5, mem2.count(), ASSERT_POSITION);
+    assertEquals<int>(0, *mem2.buf(), ASSERT_POSITION);
+    assertEquals<int>(0, *mem2.buf(0), ASSERT_POSITION);
+    assertEquals<int>(1, *mem2.buf(1), ASSERT_POSITION);
+    assertEquals<int>(2, *mem2.buf(2), ASSERT_POSITION);
+    assertEquals<int>(3, *mem2.buf(3), ASSERT_POSITION);
+    assertEquals<int>(4, *mem2.buf(4), ASSERT_POSITION);
+    assertEquals<int>(0, *mem2.buf(-5), ASSERT_POSITION);
+    assertEquals<int>(1, *mem2.buf(-4), ASSERT_POSITION);
+    assertEquals<int>(2, *mem2.buf(-3), ASSERT_POSITION);
+    assertEquals<int>(3, *mem2.buf(-2), ASSERT_POSITION);
+    assertEquals<int>(4, *mem2.buf(-1), ASSERT_POSITION);
+    exception = false;
+    try
+    {
+        mem2.buf(-6);
+    }
+    catch (Exception& e)
+    {
+        exception = true;
+    }
+    assertTrue(exception, ASSERT_POSITION);
 }

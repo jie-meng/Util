@@ -41,7 +41,7 @@ static int memorySize(lua_State* plua_state)
 static int memoryBuf(lua_State* plua_state)
 {
     ByteMemory* pmemory = luaGetObjectData<ByteMemory>(plua_state, kByteMemoryHandle);
-    luaPushLightUserData(plua_state, pmemory->buf());
+    luaPushLightUserData(plua_state, pmemory->buf(luaGetInteger(plua_state, 2, 0)));
 
     return 1;
 }
