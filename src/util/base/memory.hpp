@@ -2,6 +2,7 @@
 #define UTIL_BASE_MEMORY_HPP
 
 #include <cstdlib>
+#include "baseclass.hpp"
 
 namespace util
 {
@@ -33,7 +34,16 @@ public:
         return buf_;
     }
 
-    T* buf() const { return buf_; }
+    T* buf(int index = 0) const 
+    {
+        if (abs(index) > count())
+            throw Exception("Memory.buf() Index Out of range.");
+        
+        if (index >= 0)
+            return buf_ + index;
+        else
+            return buf_ + (count() + index);
+    }
     
     T& operator[](size_t i)
     {

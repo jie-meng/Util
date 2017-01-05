@@ -12,6 +12,7 @@ public:
     //Tests
     void testDelete();
     void testMemory();
+    void testMemoryBuf();
 protected:
     virtual void setUp();
     virtual void tearDown();
