@@ -13,7 +13,7 @@ public:
         delay_(0),
         period_(1000),
         run_(false) {}
-    virtual ~Timer() { stop(); }
+    virtual ~Timer() { run_ = false; }
     inline bool start(size_t delay, size_t period)
     {
         if (isRunning())
@@ -22,7 +22,7 @@ public:
         period_ = period;
         return WorkerThread::start();
     }
-    inline void stop() { run_ = false; WorkerThread::join(); }
+    inline void stop() { run_ = false; join(); }
     inline size_t getPeriod() { return period_; }
     inline void setPeriod(size_t period) { period_ = period; }
     inline bool isRunning() const { return run_; }
@@ -52,7 +52,7 @@ class FuncTimer : public Timer
 public:
     explicit FuncTimer(TimerTask timer_task) :
         timer_task_(timer_task) {}
-    ~FuncTimer() { stop(); }
+    virtual ~FuncTimer() {}
 protected:
     virtual void runTask()
     {

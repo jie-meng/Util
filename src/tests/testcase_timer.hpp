@@ -15,6 +15,9 @@ public:
 protected:
     virtual void setUp();
     virtual void tearDown();
+private:
+    void bindFunc();
+    int count_;
 };
 
 #endif //TESTS_TESTCASETIMER

@@ -340,7 +340,7 @@ int main(int argc, char* argv[])
     else
     {
         if (argc == 1)
-            printLine("---------------------------------\nluaexec (version: 1.0.8.20170105)\n---------------------------------");
+            printLine("---------------------------------\nluaexec (version: 1.0.8.1.20170106)\n---------------------------------");
         
         luaExecutor(argc, argv);
     }
