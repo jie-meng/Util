@@ -9,6 +9,7 @@
 #include "testcase_cmdline.hpp"
 #include "testcase_factory.hpp"
 #include "testcase_regex.hpp"
+#include "testcase_iterator.hpp"
 #include  "testcase_thread.hpp"
 #include "testcase_timer.hpp"
 
@@ -32,6 +33,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseCmdLine("TestCaseCmdLine"));
     suit.addTestSuite(TestCaseFactory("TestCaseFactory"));
     suit.addTestSuite(TestCaseRegex("TestCaseRegex"));
+    suit.addTestSuite(TestCaseIterator("TestCaseIterator"));
     suit.addTestSuite(TestCaseThread("TestCaseThread"));
     suit.addTestSuite(TestCaseTimer("TestCaseTimer"));
 
