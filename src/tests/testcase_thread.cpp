@@ -201,7 +201,7 @@ void TestCaseThread::testLockTimedWait()
     assertTrue(td.start(), ASSERT_POSITION);
     msleep(600);
     assertEquals<int>(0, number_, ASSERT_POSITION);
-    msleep(1800);
+    msleep(2200);
     assertEquals<int>(1, number_, ASSERT_POSITION);
     
     number_ = 0;

@@ -8,6 +8,7 @@
 #include "testcase_csv.hpp"
 #include "testcase_cmdline.hpp"
 #include "testcase_factory.hpp"
+#include "testcase_regex.hpp"
 #include  "testcase_thread.hpp"
 #include "testcase_timer.hpp"
 
@@ -15,8 +16,7 @@ using namespace std;
 using namespace util;
 
 UnitTestHoster::UnitTestHoster()
-{
-}
+{}
 
 void UnitTestHoster::run()
 {
@@ -31,6 +31,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseCsv("TestCaseCsv"));
     suit.addTestSuite(TestCaseCmdLine("TestCaseCmdLine"));
     suit.addTestSuite(TestCaseFactory("TestCaseFactory"));
+    suit.addTestSuite(TestCaseRegex("TestCaseRegex"));
     suit.addTestSuite(TestCaseThread("TestCaseThread"));
     suit.addTestSuite(TestCaseTimer("TestCaseTimer"));
 
