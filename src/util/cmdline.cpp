@@ -1,6 +1,5 @@
 #include "cmdline.hpp"
 #include <vector>
-#include "collection.hpp"
 #include "regex.hpp"
 
 namespace util

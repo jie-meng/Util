@@ -7,7 +7,6 @@
 #include "util/file.hpp"
 #include "util/net.hpp"
 #include "util/iterator.hpp"
-#include "util/collection.hpp"
 #include "util/cmdline.hpp"
 #include "util/process.hpp"
 #include "util/regex.hpp"
@@ -340,7 +339,7 @@ int main(int argc, char* argv[])
     else
     {
         if (argc == 1)
-            printLine("---------------------------------\nluaexec (version: 1.0.8.1.20170106)\n---------------------------------");
+            printLine("---------------------------------\nluaexec (version: 1.0.8.2.20170107)\n---------------------------------");
         
         luaExecutor(argc, argv);
     }

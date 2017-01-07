@@ -39,10 +39,7 @@ public:
         if (abs(index) > count())
             throw Exception("Memory.buf() Index Out of range.");
         
-        if (index >= 0)
-            return buf_ + index;
-        else
-            return buf_ + (count() + index);
+        return index < 0 ? buf_ + (count() + index) : buf_ + index;
     }
     
     T& operator[](size_t i)

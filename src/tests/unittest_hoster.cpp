@@ -7,6 +7,7 @@
 #include "testcase_lexicalcast.hpp"
 #include "testcase_csv.hpp"
 #include "testcase_cmdline.hpp"
+#include "testcase_factory.hpp"
 #include  "testcase_thread.hpp"
 #include "testcase_timer.hpp"
 
@@ -29,6 +30,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseLexicalCast("TestCaseLexicalCast"));
     suit.addTestSuite(TestCaseCsv("TestCaseCsv"));
     suit.addTestSuite(TestCaseCmdLine("TestCaseCmdLine"));
+    suit.addTestSuite(TestCaseFactory("TestCaseFactory"));
     suit.addTestSuite(TestCaseThread("TestCaseThread"));
     suit.addTestSuite(TestCaseTimer("TestCaseTimer"));
 

@@ -16,14 +16,9 @@ namespace util
 template <typename IdentifierType, class AbstractProduct>
 struct DefaultFactoryError
 {
-    struct Exception : public std::exception
-    {
-        const char* what() const throw() { return "Unknown Type"; }
-    };
-
     static AbstractProduct* onUnknownType(IdentifierType)
     {
-        throw Exception();
+        throw Exception("Unknown Type");
     }
 };
 
@@ -36,7 +31,9 @@ template <typename IdentifierType, class AbstractProduct>
 struct FactoryCreateFail
 {
     static AbstractProduct* onUnknownType(IdentifierType)
-    { return 0; }
+    { 
+        return 0; 
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,18 +66,15 @@ public:
 
     AbstractProduct* createObject(const IdentifierType& id)
     {
-        ProductCreator creator = creator(id);
-        if (creator)
-            return creator();
-        else
-            FactoryErrorPolicy<IdentifierType, AbstractProduct>::onUnknownType(id);
+        ProductCreator product_creator = creator(id);
+        return product_creator ? product_creator() : FactoryErrorPolicy<IdentifierType, AbstractProduct>::onUnknownType(id);
     }
-
+private:
     ProductCreator creator(const IdentifierType& id)
     {
         typename IdToProductMap::const_iterator i = associations_.find(id);
         if (i != associations_.end())
-            return i->second;
+            return i->second;        
 
         return ProductCreator();
     }
@@ -98,7 +92,7 @@ private:
 template
 <
     class AbstractProduct,
-    class ProductCreator = UtilFunction<AbstractProduct* (const AbstractProduct*)>,
+    class ProductCreator = UtilFunction<AbstractProduct* (AbstractProduct*)>,
     template<typename, class>
         class FactoryErrorPolicy = FactoryCreateFail
 >
@@ -117,16 +111,16 @@ public:
         return associations_.erase(id) == 1;
     }
 
-    AbstractProduct* createObject(const AbstractProduct* model)
+    AbstractProduct* createObject(AbstractProduct* model)
     {
         if (model == 0) return 0;
 
-        typename IdToProductMap::const_iterator i =
-            associations_.find(typeid(*model));
+        typename IdToProductMap::iterator i =
+            associations_.find(TypeInfo(typeid(*model)));
+        
         if (i != associations_.end())
-        {
             return (i->second)(model);
-        }
+        
         return FactoryErrorPolicy<TypeInfo, AbstractProduct>::onUnknownType(typeid(*model));
     }
 
