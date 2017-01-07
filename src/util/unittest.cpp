@@ -148,13 +148,13 @@ void TestSuite::cleanup()
 void TestSuite::addTestSuite(const TestCase& test_case)
 {
     TestCase& tc = const_cast<TestCase&>(test_case);
-    TestFunctionMapIterator test_function_map_it = tc.testFunctionMapIterator();
-    if (!test_function_map_it.hasNext())
+    auto sptest_function_map_it = tc.testFunctionMapIterator();
+    if (!sptest_function_map_it->hasNext())
         return;
 
     TestSuite* p = new TestSuite();
-    while (test_function_map_it.hasNext())
-        p->addTest(tc.create(test_function_map_it.nextKeyValue().first));
+    while (sptest_function_map_it->hasNext())
+        p->addTest(tc.create(sptest_function_map_it->nextKeyValue().first));
 
     this->addTest(p);
 }
@@ -274,14 +274,14 @@ void ResultPrinter::printHeader(unsigned long run_time)
 
 void ResultPrinter::printErrors(TestResult* presult)
 {
-    FailuresIterator it = presult->errorsIterator();
-    printDefects(it, presult->errorCount(), "error");
+    auto spit = presult->errorsIterator();
+    printDefects(*spit, presult->errorCount(), "error");
 }
 
 void ResultPrinter::printFailures(TestResult* presult)
 {
-    FailuresIterator it = presult->failuresIterator();
-    printDefects(it, presult->failureCount(), "failure");
+    auto spit = presult->failuresIterator();
+    printDefects(*spit, presult->failureCount(), "failure");
 }
 
 void ResultPrinter::printDefects(Iterator<TestFailure*>& it, size_t count, const std::string& type)

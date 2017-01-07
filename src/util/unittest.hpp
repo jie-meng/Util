@@ -168,8 +168,8 @@ public:
     inline size_t errorCount() const { return errors_.size(); }
     inline TestFailure* getFailure(size_t index) const { return failures_.at(index); }
     inline TestFailure* getError(size_t index) const { return errors_.at(index); }
-    inline FailuresIterator failuresIterator() const { return FailuresIterator(failures_); }
-    inline FailuresIterator errorsIterator() const { return FailuresIterator(errors_); }
+    inline UtilSharedPtr< Iterator<TestFailure*> > failuresIterator() const { return UtilSharedPtr< Iterator<TestFailure*> >(new FailuresIterator(failures_)); }
+    inline UtilSharedPtr< Iterator<TestFailure*> > errorsIterator() const { return UtilSharedPtr< Iterator<TestFailure*> >(new FailuresIterator(errors_)); }
     inline bool isSuccess() const { return failures_.empty() && errors_.empty(); }
     inline void addListener(TestListener* plistener) { listeners_.push_back(plistener); }
 private:
@@ -236,7 +236,7 @@ public:
     inline std::string getCaseName() const { return case_name_; }
     inline std::string getName() const { return name_; }
     inline void setName(const std::string& name) { name_ = name; }
-    inline TestFunctionMapIterator testFunctionMapIterator() { return TestFunctionMapIterator(test_function_map_); }
+    inline UtilSharedPtr< MapIterator<std::string, TestFunction> > testFunctionMapIterator() { return UtilSharedPtr< MapIterator<std::string, TestFunction> >(new TestFunctionMapIterator(test_function_map_)); }
 
     void runBare();
     size_t registeredTestFunctionCount() const { return test_function_map_.size(); }
