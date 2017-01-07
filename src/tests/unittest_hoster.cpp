@@ -2,6 +2,7 @@
 #include "testcase_string.hpp"
 #include "testcase_memory.hpp"
 #include "testcase_time.hpp"
+#include "testcase_any.hpp"
 #include  "testcase_typeinfo.hpp"
 #include "testcase_file.hpp"
 #include "testcase_lexicalcast.hpp"
@@ -26,6 +27,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseString("TestCaseString"));
     suit.addTestSuite(TestCaseMemory("TestCaseMemory"));
     suit.addTestSuite(TestCaseTime("TestCaseTime"));
+    suit.addTestSuite(TestCaseAny("TestCaseAny"));
     suit.addTestSuite(TestCaseTypeInfo("TestCaseTypeInfo"));
     suit.addTestSuite(TestCaseFile("TestCaseFile"));
     suit.addTestSuite(TestCaseLexicalCast("TestCaseLexicalCast"));

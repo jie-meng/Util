@@ -34,6 +34,6 @@ Build luaexec:
 
 1. Build Util
 
-2. rename Util to luaexec
+2. Rename Util to luaexec
 
 luaexec is a lua script executor which contains basic lua & extensions (file, memory, net, process, regex, thread, csv)
