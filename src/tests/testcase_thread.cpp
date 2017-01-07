@@ -190,7 +190,7 @@ void TestCaseThread::testLock()
 
 void TestCaseThread::lockTimedWaitThread(bool timeout)
 {
-    assertNotEquals<bool>(timeout, lock2_.timedWait(2000), ASSERT_POSITION);
+    assertNotEquals<bool>(timeout, lock2_.timedWait(1500), ASSERT_POSITION);
     number_ = 1;
 }
 

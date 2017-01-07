@@ -11,7 +11,10 @@ public:
     
     //Tests
     void testRegex();
+    void testRegexIgnoreCase();
+    void testRegexRightToLeft();
     void testRegexSingleLine();
+    void testRegexMultiLine();
 protected:
     virtual void setUp();
     virtual void tearDown();
