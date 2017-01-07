@@ -147,7 +147,6 @@ class TestListener;
 
 typedef std::vector<TestFailure*> TestFailureVector;
 typedef std::vector<TestListener*> TestListenerVector;
-typedef CollectionIterator<TestFailure*, TestFailureVector> FailuresIterator;
 
 class TestResult
 {
@@ -168,8 +167,8 @@ public:
     inline size_t errorCount() const { return errors_.size(); }
     inline TestFailure* getFailure(size_t index) const { return failures_.at(index); }
     inline TestFailure* getError(size_t index) const { return errors_.at(index); }
-    inline UtilSharedPtr< Iterator<TestFailure*> > failuresIterator() const { return UtilSharedPtr< Iterator<TestFailure*> >(new FailuresIterator(failures_)); }
-    inline UtilSharedPtr< Iterator<TestFailure*> > errorsIterator() const { return UtilSharedPtr< Iterator<TestFailure*> >(new FailuresIterator(errors_)); }
+    inline Iterator<TestFailure*> failuresIterator() const { return createIterator<TestFailure*>(failures_); }
+    inline Iterator<TestFailure*> errorsIterator() const { return createIterator<TestFailure*>(errors_); }
     inline bool isSuccess() const { return failures_.empty() && errors_.empty(); }
     inline void addListener(TestListener* plistener) { listeners_.push_back(plistener); }
 private:
@@ -218,7 +217,6 @@ private:
 
 typedef UtilFunction<void ()> TestFunction;
 typedef std::map<std::string, TestFunction> TestFunctionMap;
-typedef MapCollectionIterator<std::string, TestFunction, TestFunctionMap> TestFunctionMapIterator;
 
 #define TESTCASE_DECLARE(className) \
     className(const std::string& case_name) : TestCase(case_name) { registerTestFunctions(); } \
@@ -236,7 +234,7 @@ public:
     inline std::string getCaseName() const { return case_name_; }
     inline std::string getName() const { return name_; }
     inline void setName(const std::string& name) { name_ = name; }
-    inline UtilSharedPtr< MapIterator<std::string, TestFunction> > testFunctionMapIterator() { return UtilSharedPtr< MapIterator<std::string, TestFunction> >(new TestFunctionMapIterator(test_function_map_)); }
+    inline Iterator< std::pair<std::string, TestFunction> > testFunctionMapIterator() { return createIterator< std::pair<std::string, TestFunction> >(test_function_map_); }
 
     void runBare();
     size_t registeredTestFunctionCount() const { return test_function_map_.size(); }

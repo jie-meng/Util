@@ -7,50 +7,82 @@ namespace util
 {
 
 template <typename T>
-class Iterator : public Interface
+class Iterator
 {
 public:
-    virtual bool hasNext() = 0;
-    virtual T& next() = 0;
+    template <class Collection>
+    Iterator(Collection& coll, int extra) :
+        pimpl_(new Impl<Collection>(coll))
+    {}
+    
+    Iterator(const Iterator<T>& other) :
+        pimpl_(other.pimpl_->clone())
+    {}
+
+    Iterator<T> & operator=(const Iterator<T>& rhs)
+    {
+        pimpl_.reset(rhs.pimpl_->clone());
+        return *this;
+    }
+
+    bool hasNext()
+    {
+        return pimpl_->hasNext();
+    }
+    
+    T next()
+    {
+        return pimpl_->next();
+    }
+private:
+    template <typename U>
+    class ImplBase
+    {
+    public:
+        virtual ~ImplBase() {}
+        virtual bool hasNext() = 0;
+        virtual U next() = 0;
+        virtual ImplBase<U>* clone() = 0;
+    };
+
+    template <class Collection>
+    class Impl : public ImplBase<T>
+    {
+    public:
+        explicit Impl(Collection& coll) :
+            coll_(coll),
+            it_(coll.begin())
+        {} 
+        
+        virtual bool hasNext()
+        {
+            return it_ != coll_.end();
+        }
+        
+        virtual T next()
+        {
+            return *it_++;
+        }
+        
+        virtual ImplBase<T>* clone()
+        {
+            auto p = new Impl<Collection>(coll_);
+            p->it_ = it_;
+            return p;
+        }
+    private:
+        Collection& coll_;
+        typename Collection::iterator it_;
+    };
+private:
+    UtilAutoPtr< ImplBase<T> > pimpl_;
 };
 
 template <typename T, class Collection>
-class CollectionIterator : public Iterator<T>
+inline Iterator<T> createIterator(Collection& coll)
 {
-public:
-    explicit CollectionIterator(Collection& coll) :
-        coll_(coll),
-        it_(coll.begin())
-    {}
-    virtual bool hasNext() { return it_ != coll_.end(); }
-    virtual T& next() { return *it_++; }
-private:
-    Collection& coll_;
-    typename Collection::iterator it_;
-};
-
-template <typename K, typename V>
-class MapIterator : public Interface
-{
-public:
-    virtual bool hasNext() = 0;
-    virtual std::pair<K, V> nextKeyValue() = 0;
-};
-
-template <typename K, typename V, class Map>
-class MapCollectionIterator : public MapIterator<K, V>
-{
-public:
-    explicit MapCollectionIterator(Map& map) :
-        map_(map),
-        it_(map.begin())
-    {}
-    virtual bool hasNext() { return it_ != map_.end(); }
-    virtual std::pair<K, V> nextKeyValue() { return *it_++; }
-private:
-    Map& map_;
-    typename Map::iterator it_;
-};
+    return Iterator<T>(coll, 0);
+}
 
 } // namespace util
 

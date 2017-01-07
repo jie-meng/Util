@@ -27,14 +27,23 @@ void TestCaseIterator::testIterator()
     vec.push_back(3);
     vec.push_back(4);
     
-    typedef CollectionIterator< int, vector<int> > IntVecIter;
-    IntVecIter iv(vec);
-    Iterator<int>* piter = &iv;
+    Iterator<int> it = createIterator<int>(vec);
+    Iterator<int> it2(it);
+    auto it3 = it;
     
     int i = 0;
-    while (piter->hasNext())
-        assertEquals<int>(i++, piter->next(), ASSERT_POSITION);
+    while (it.hasNext())
+        assertEquals<int>(i++, it.next(), ASSERT_POSITION);
+    assertEquals<int>(i, vec.size(), ASSERT_POSITION);
     
+    i = 0;
+    while (it2.hasNext())
+        assertEquals<int>(i++, it2.next(), ASSERT_POSITION);
+    assertEquals<int>(i, vec.size(), ASSERT_POSITION);
+    
+    i = 0;
+    while (it3.hasNext())
+        assertEquals<int>(i++, it3.next(), ASSERT_POSITION);
     assertEquals<int>(i, vec.size(), ASSERT_POSITION);
 }
 
@@ -45,14 +54,12 @@ void TestCaseIterator::testMapIterator()
     mp["b"] = 1;
     mp["c"] = 2;
 
-    typedef MapCollectionIterator< string, int, map<string, int> > MpIter;
-    MpIter mi(mp);
-    MapIterator<string, int>* piter = &mi;
+    Iterator< pair<string, int> > it = createIterator< pair<string, int> >(mp);
     
     int i = 0;
-    while (piter->hasNext())
+    while (it.hasNext())
     {
-        auto kv = piter->nextKeyValue();
+        auto kv = it.next();
         if (kv.first == "a")
             assertEquals<int>(0, kv.second, ASSERT_POSITION);
         else if (kv.first == "b")
