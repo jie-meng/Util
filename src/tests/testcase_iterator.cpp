@@ -55,11 +55,49 @@ void TestCaseIterator::testMapIterator()
     mp["c"] = 2;
 
     Iterator< pair<string, int> > it = createIterator< pair<string, int> >(mp);
+    auto it2(it);
+    auto it3 = it;
     
     int i = 0;
     while (it.hasNext())
     {
         auto kv = it.next();
+        if (kv.first == "a")
+            assertEquals<int>(0, kv.second, ASSERT_POSITION);
+        else if (kv.first == "b")
+            assertEquals<int>(1, kv.second, ASSERT_POSITION);
+        else if (kv.first == "c")
+            assertEquals<int>(2, kv.second, ASSERT_POSITION);
+        else
+            break;
+        
+        ++i;
+    }
+    
+    assertEquals<int>(i, mp.size(), ASSERT_POSITION);
+    
+    i = 0;
+    while (it2.hasNext())
+    {
+        auto kv = it2.next();
+        if (kv.first == "a")
+            assertEquals<int>(0, kv.second, ASSERT_POSITION);
+        else if (kv.first == "b")
+            assertEquals<int>(1, kv.second, ASSERT_POSITION);
+        else if (kv.first == "c")
+            assertEquals<int>(2, kv.second, ASSERT_POSITION);
+        else
+            break;
+        
+        ++i;
+    }
+    
+    assertEquals<int>(i, mp.size(), ASSERT_POSITION);
+    
+    i = 0;
+    while (it3.hasNext())
+    {
+        auto kv = it3.next();
         if (kv.first == "a")
             assertEquals<int>(0, kv.second, ASSERT_POSITION);
         else if (kv.first == "b")

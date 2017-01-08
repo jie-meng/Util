@@ -26,7 +26,7 @@ public:
         return *this;
     }
 
-    bool hasNext()
+    bool hasNext() const
     {
         return pimpl_->hasNext();
     }
@@ -41,7 +41,7 @@ private:
     {
     public:
         virtual ~ImplBase() {}
-        virtual bool hasNext() = 0;
+        virtual bool hasNext() const = 0;
         virtual U next() = 0;
         virtual ImplBase<U>* clone() const = 0;
     };
@@ -55,7 +55,7 @@ private:
             it_(coll.begin())
         {} 
         
-        virtual bool hasNext()
+        virtual bool hasNext() const
         {
             return it_ != coll_.end();
         }
