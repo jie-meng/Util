@@ -19,9 +19,10 @@ public:
         pimpl_(other.pimpl_->clone())
     {}
 
-    Iterator<T> & operator=(const Iterator<T>& rhs)
+    Iterator<T>& operator=(const Iterator<T>& rhs)
     {
-        pimpl_.reset(rhs.pimpl_->clone());
+    	if (this != &rhs)
+            pimpl_.reset(rhs.pimpl_->clone());
         return *this;
     }
 
@@ -42,7 +43,7 @@ private:
         virtual ~ImplBase() {}
         virtual bool hasNext() = 0;
         virtual U next() = 0;
-        virtual ImplBase<U>* clone() = 0;
+        virtual ImplBase<U>* clone() const = 0;
     };
 
     template <class Collection>
@@ -64,7 +65,7 @@ private:
             return *it_++;
         }
         
-        virtual ImplBase<T>* clone()
+        virtual ImplBase<T>* clone() const
         {
             auto p = new Impl<Collection>(coll_);
             p->it_ = it_;
