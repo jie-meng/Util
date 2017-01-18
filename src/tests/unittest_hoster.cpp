@@ -13,6 +13,7 @@
 #include "testcase_iterator.hpp"
 #include  "testcase_thread.hpp"
 #include "testcase_timer.hpp"
+#include "testcase_net.hpp"
 
 using namespace std;
 using namespace util;
@@ -38,6 +39,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseIterator("TestCaseIterator"));
     suit.addTestSuite(TestCaseThread("TestCaseThread"));
     suit.addTestSuite(TestCaseTimer("TestCaseTimer"));
+    suit.addTestSuite(TestCaseNet("TestCaseNet"));
 
     TestRunner runner;
     runner.run(suit);
