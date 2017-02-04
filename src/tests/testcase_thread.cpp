@@ -199,7 +199,7 @@ void TestCaseThread::testLockTimedWait()
     number_ = 0;
     Thread td(UtilBind(&TestCaseThread::lockTimedWaitThread, this, true));
     assertTrue(td.start(), ASSERT_POSITION);
-    msleep(600);
+    msleep(400);
     assertEquals<int>(0, number_, ASSERT_POSITION);
     msleep(2200);
     assertEquals<int>(1, number_, ASSERT_POSITION);

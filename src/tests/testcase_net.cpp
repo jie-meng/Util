@@ -28,7 +28,6 @@ void TestCaseNet::testIpArrayToStrFail()
     //ipv4
     assertTrue(ipArrayToStr(Family_IPv4, 0, 4).empty(), ASSERT_POSITION);
     assertTrue(ipArrayToStr(Family_IPv4, buf, 3).empty(), ASSERT_POSITION);
-    
 }
 
 void TestCaseNet::testIpArrayToStrSuccess()
@@ -87,9 +86,28 @@ void TestCaseNet::testIpArrayToStrSuccess()
 
 void TestCaseNet::testIpStrToArrayFail()
 {
-
+    //ipv4
+    unsigned char buf[20];
+    memset(buf, 0, sizeof(buf));
+    assertNull(ipStrToArray(Family_IPv4, "abcdefg", buf, 4), ASSERT_POSITION);
+    assertNull(ipStrToArray(Family_IPv4, "10.1.0.12.33", buf, 4), ASSERT_POSITION);
+    
+    //ipv6
+    assertNull(ipStrToArray(Family_IPv6, "abcdefg", buf, 4), ASSERT_POSITION);
+    assertNull(ipStrToArray(Family_IPv6, "2001:0000:3238:DFE1:63", buf, 20), ASSERT_POSITION);
 }
 
 void TestCaseNet::testIpStrToArraySuccess()
 {
+    //ipv4
+    unsigned char buf[20];
+    memset(buf, 0, sizeof(buf));
+    assertNotNull(ipStrToArray(Family_IPv4, "10.1.0.12", buf, 4), ASSERT_POSITION);
+    assertEquals<int>(10, (int)buf[0], ASSERT_POSITION);
+    assertEquals<int>(1, (int)buf[1], ASSERT_POSITION);
+    assertEquals<int>(0, (int)buf[2], ASSERT_POSITION);
+    assertEquals<int>(12, (int)buf[3], ASSERT_POSITION);
+    
+    //ipv6
+    assertNotNull(ipStrToArray(Family_IPv6, "2001:0000:3238:DFE1::63", buf, 20), ASSERT_POSITION);
 }
