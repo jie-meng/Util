@@ -14,6 +14,9 @@ public:
     void testIpArrayToStrSuccess();
     void testIpStrToArrayFail();
     void testIpStrToArraySuccess();
+    void testNtohsAndHtons();
+    void testNtohlAndHtonl();
+    void testNtohllAndHtonll();
 protected:
     virtual void setUp();
     virtual void tearDown();

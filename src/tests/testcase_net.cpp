@@ -10,6 +10,9 @@ void TestCaseNet::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseNet, testIpArrayToStrSuccess)
     REGISTER_TEST_FUNCTION(TestCaseNet, testIpStrToArrayFail)
     REGISTER_TEST_FUNCTION(TestCaseNet, testIpStrToArraySuccess)
+    REGISTER_TEST_FUNCTION(TestCaseNet, testNtohsAndHtons)
+    REGISTER_TEST_FUNCTION(TestCaseNet, testNtohlAndHtonl)
+    REGISTER_TEST_FUNCTION(TestCaseNet, testNtohllAndHtonll)
 }
 
 void TestCaseNet::setUp()
@@ -110,4 +113,25 @@ void TestCaseNet::testIpStrToArraySuccess()
     
     //ipv6
     assertNotNull(ipStrToArray(Family_IPv6, "2001:0000:3238:DFE1::63", buf, 20), ASSERT_POSITION);
+}
+
+void TestCaseNet::testNtohsAndHtons()
+{
+    uint16_t data = 0xab12;
+    assertEquals<uint16_t>(0x12ab, u_ntohs(data), ASSERT_POSITION);
+    assertEquals<uint16_t>(0x12ab, u_htons(data), ASSERT_POSITION);
+}
+
+void TestCaseNet::testNtohlAndHtonl()
+{
+    uint32_t data = 0xfe070034;
+    assertEquals<uint32_t>(0x340007fe, u_ntohl(data), ASSERT_POSITION);
+    assertEquals<uint32_t>(0x340007fe, u_htonl(data), ASSERT_POSITION);
+}
+
+void TestCaseNet::testNtohllAndHtonll()
+{
+    uint64_t data = 0x0011223344556677;
+    assertEquals<uint64_t>(0x7766554433221100, u_ntohll(data), ASSERT_POSITION);
+    assertEquals<uint64_t>(0x7766554433221100, u_htonll(data), ASSERT_POSITION);
 }
