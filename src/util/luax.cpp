@@ -323,22 +323,22 @@ std::string luaGetError(lua_State* plua_state, int err)
     switch (err)
     {
         case LUA_ERRSYNTAX: //compile-time error
-            err_type = strFormat("syntax error during pre-compilation");
+            err_type = "syntax error during pre-compilation";
             break;
         case LUA_ERRMEM: //memory error
-            err_type = strFormat("memory allocation error");
+            err_type = "memory allocation error";
             break;
         case LUA_ERRRUN: //runtime-time error
-            err_type = strFormat("runtime error");
+            err_type = "runtime error";
             break;
         case LUA_YIELD: //thread suspend error
-            err_type = strFormat("thread has been suspended");
+            err_type = "thread has been suspended";
             break;
         case LUA_ERRERR: //error while running
-            err_type = strFormat("error while running the error handler function");
+            err_type = "error while running the error handler function";
             break;
         default:
-            err_type = strFormat("unknown");
+            err_type = "unknown";
             break;
     }
 
@@ -427,7 +427,6 @@ bool LuaState::init()
 
     plua_state_ = luaL_newstate();
     loadLibs();
-    //extendBasicFunctions();
 
     return true;
 }
