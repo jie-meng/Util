@@ -408,13 +408,6 @@ int luaFileresult(lua_State* plua_state, bool stat, const std::string& fname)
         luaL_fileresult(plua_state, stat, fname.c_str());
 }
 
-//extend basic functions
-static int platformInfo(lua_State* plua_state)
-{
-    luaPushString(plua_state, util::platformInfo());
-    return 1;
-}
-
 //LuaState
 LuaState::LuaState() :
     plua_state_(0)
