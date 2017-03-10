@@ -39,10 +39,9 @@ std::string toString(LuaType lua_type)
     }
 }
 
-//get operate
+//get operations
 double luaGetDouble(lua_State* plua_state, int index)
 {
-    //return luaL_checknumber(plua_state, index);
     return lua_tonumber(plua_state, index);
 }
 
@@ -53,7 +52,6 @@ double luaGetDouble(lua_State* plua_state, int index, double default_num)
 
 int luaGetInteger(lua_State* plua_state, int index)
 {
-    //return luaL_checkinteger(plua_state, index);
     return lua_tointeger(plua_state, index);
 }
 
@@ -64,7 +62,6 @@ int luaGetInteger(lua_State* plua_state, int index, int default_int)
 
 std::string luaGetString(lua_State* plua_state, int index)
 {
-    //return std::string(luaL_checkstring(plua_state, index));
     const char* result = lua_tostring(plua_state, index);
     if (!result)
         luaError(plua_state, strFormat("luaGetString from index %d failed.", index));
@@ -155,7 +152,7 @@ std::vector< std::pair<any, any> > luaGetTable(lua_State* plua_state, int index)
     return vec;
 }
 
-//push operate
+//push operations
 void luaPushDouble(lua_State* plua_state, double double_val)
 {
     lua_pushnumber(plua_state, double_val);
@@ -267,7 +264,7 @@ void luaPushTable(lua_State* plua_state, const std::vector<any>& vec)
     }
 }
 
-//other operate
+//other operations
 LuaType luaGetType(lua_State* plua_state, int index)
 {
     return (LuaType)lua_type(plua_state, index);
