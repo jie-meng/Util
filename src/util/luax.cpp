@@ -293,6 +293,11 @@ void luaGetGlobal(lua_State* plua_state, const std::string& name)
     lua_getglobal(plua_state, name.c_str());
 }
 
+void luaSetGlobal(lua_State* plua_state, const std::string& name)
+{
+    lua_setglobal(plua_state, name.c_str());
+}
+
 int luaCallFunc(lua_State* plua_state, int nargs, int nrets)
 {
     return lua_pcall(plua_state, nargs, nrets, 0);

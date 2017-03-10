@@ -83,6 +83,7 @@ std::string luaGetTypeName(lua_State* plua_state, LuaType type);
 void luaPop(lua_State* plua_state, int index);
 int luaGetTop(lua_State* plua_state);
 void luaGetGlobal(lua_State* plua_state, const std::string& name);
+void luaSetGlobal(lua_State* plua_state, const std::string& name);
 int luaCallFunc(lua_State* plua_state, int nargs, int nrets);
 void luaAssert(lua_State* plua_state, bool assertion, const std::string& str);
 void luaError(lua_State* plua_state, const std::string& str);

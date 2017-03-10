@@ -14,6 +14,7 @@
 #include  "testcase_thread.hpp"
 #include "testcase_timer.hpp"
 #include "testcase_net.hpp"
+#include "testcase_lua.hpp"
 
 using namespace std;
 using namespace util;
@@ -40,6 +41,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseThread("TestCaseThread"));
     suit.addTestSuite(TestCaseTimer("TestCaseTimer"));
     suit.addTestSuite(TestCaseNet("TestCaseNet"));
+    suit.addTestSuite(TestCaseLua("TestCaseLua"));
 
     TestRunner runner;
     runner.run(suit);
