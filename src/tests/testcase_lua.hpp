@@ -12,6 +12,8 @@ public:
     //Tests
     void testLuaStateGetGlobal();
     void testLuaStateSetGlobal();
+    void testLuaStateGetGlobalNew();
+    void testLuaStateSetGlobalNew();
 protected:
     virtual void setUp();
     virtual void tearDown();

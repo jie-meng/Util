@@ -109,6 +109,46 @@ public:
     int parseLine(const std::string& line);
     int parseFile(const std::string& file);
     bool reset();
+    //get operate
+    inline double getDouble(int index) { return luaGetDouble(getState(), index); }
+    inline double getDouble(int index, double default_num) { return luaGetDouble(getState(), index, default_num); }
+    inline int getInteger(int index) { return luaGetInteger(getState(), index); }
+    inline int getInteger(int index, int default_int) { return luaGetInteger(getState(), index, default_int); }
+    inline std::string getString(int index) { return luaGetString(getState(), index); }
+    inline std::string getString(int index, const std::string& default_str) { return luaGetString(getState(), index, default_str); }
+    inline bool getBoolean(int index) { return luaGetBoolean(getState(), index); }
+    inline bool getBoolean(int index, bool default_bool) { return luaGetBoolean(getState(), index, default_bool); }
+    inline void* getLightUserData(int index) { return luaGetLightUserData(getState(), index); }
+    inline void* getLightUserData(int index, void* default_data) { return luaGetLightUserData(getState(), index, default_data); }
+    inline any getAny(int index) { return luaGetAny(getState(), index); }
+    inline std::vector< std::pair<any, any> > getTable(int index) { return luaGetTable(getState(), index); }
+    //push operate
+    inline void pushDouble(double double_val) { luaPushDouble(getState(), double_val); }
+    inline void pushInteger(int int_val) { luaPushInteger(getState(), int_val); }
+    inline void pushString(const std::string& str_val) { luaPushString(getState(), str_val); }
+    inline void pushNil() { luaPushNil(getState()); }
+    inline void pushBoolean(bool boolean) { luaPushBoolean(getState(), boolean); }
+    inline void pushLightUserData(void* p) { luaPushLightUserData(getState(), p); }
+    inline void pushAny(const any& a) { luaPushAny(getState(), a); }
+    inline void pushTable(const std::vector< std::pair<any, any> >& key_value_vec) { luaPushTable(getState(), key_value_vec); }
+    inline void pushTable(const std::vector<any>& vec) { luaPushTable(getState(), vec); }
+    //other operate
+    inline LuaType getType(int index) { return luaGetType(getState(), index); }
+    inline std::string getTypeName(LuaType type) { return luaGetTypeName(getState(), type); }
+    inline void pop(int index) { luaPop(getState(), index); }
+    inline int getTop() { return luaGetTop(getState()); }
+    inline void getGlobal(const std::string& name) { luaGetGlobal(getState(), name); }
+    inline void setGlobal(const std::string& name) { luaSetGlobal(getState(), name); }
+    inline int callFunc(int nargs, int nrets) { return luaCallFunc(getState(), nargs, nrets); }
+    //inline void assert(bool assertion, const std::string& str) { luaAssert(getState(), assertion, str); }
+    inline void error(const std::string& str) { luaError(getState(), str); }
+    inline std::string getError(int err) { return luaGetError(getState(), err); }
+    inline int parseLine(const std::string& line, std::string& error_str) { return luaParseLine(getState(), line, error_str); }
+    inline int parseFile(const std::string& file, std::string& error_str) { return luaParseFile(getState(), file, error_str); }
+    inline void* newUserData(size_t sz) { return luaNewUserData(getState(), sz); }
+    inline void setMetaTable(const std::string& tname) { luaSetMetaTable(getState(), tname); }
+    inline void* checkUData(int ud, const std::string& tname) { return luaCheckUData(getState(), ud, tname); }
+    inline int fileresult(bool stat, const std::string& fname) { return luaFileresult(getState(), stat, fname); }
 private:
     bool init();
     void cleanup();
