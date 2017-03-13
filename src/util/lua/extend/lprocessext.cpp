@@ -55,15 +55,15 @@ static int start(lua_State* plua_state)
 
     std::vector<any> args;
     for (int i=8; i<=luaGetTop(plua_state); ++i)
-        args.push_back(luaGetAny(plua_state, i));
+        args.push_back(luaToAny(plua_state, i));
 
-    luaPushBoolean(plua_state, pprocess->create(luaGetString(plua_state, 2, ""),
-                                                luaGetString(plua_state, 3, ""),
-                                                luaGetBoolean(plua_state, 4, false),
-                                                luaGetBoolean(plua_state, 5, false),
+    luaPushBoolean(plua_state, pprocess->create(luaToString(plua_state, 2, ""),
+                                                luaToString(plua_state, 3, ""),
+                                                luaToBoolean(plua_state, 4, false),
+                                                luaToBoolean(plua_state, 5, false),
                                                 UtilBind(outputFunc,
-                                                        luaGetString(plua_state, 6, ""),
-                                                        luaGetString(plua_state, 7, ""),
+                                                        luaToString(plua_state, 6, ""),
+                                                        luaToString(plua_state, 7, ""),
                                                         _1,
                                                         args
                                                         )
@@ -81,21 +81,21 @@ static int kill(lua_State* plua_state)
 static int input(lua_State* plua_state)
 {
     Process* pprocess = luaGetObjectData<Process>(plua_state, kProcessHandle);
-    luaPushBoolean(plua_state, pprocess->input(luaGetString(plua_state, 2, "")));
+    luaPushBoolean(plua_state, pprocess->input(luaToString(plua_state, 2, "")));
     return 1;
 }
 
 //execute process and wait it end, returns process exit_code (fail : -1)
 static int executeProcess(lua_State* plua_state)
 {
-    luaPushInteger(plua_state, executeProcess(luaGetString(plua_state, 1, ""), luaGetString(plua_state, 2, "")));
+    luaPushInteger(plua_state, executeProcess(luaToString(plua_state, 1, ""), luaToString(plua_state, 2, "")));
     return 1;
 }
 
 //execute process and do not wait, returns immidiately.
 static int executeProcessAsyn(lua_State* plua_state)
 {
-    luaPushBoolean(plua_state, executeProcessAsyn(luaGetString(plua_state, 1, ""), luaGetString(plua_state, 2, "")));
+    luaPushBoolean(plua_state, executeProcessAsyn(luaToString(plua_state, 1, ""), luaToString(plua_state, 2, "")));
     return 1;
 }
 

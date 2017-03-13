@@ -16,12 +16,12 @@ static int cmdLineParserCreate(lua_State* plua_state)
     LuaObject<CmdLineParser>* p = luaNewEmptyObject<CmdLineParser>(plua_state, kCmdLineParserHandle);
     p->setData(
         new CmdLineParser(
-            luaGetBoolean(plua_state, 1, false),
-            luaGetString(plua_state, 2, " -"),
-            luaGetString(plua_state, 3, " "),
-            luaGetString(plua_state, 4, "\""),
-            luaGetString(plua_state, 5, "\""),
-            luaGetBoolean(plua_state, 6, true)));
+            luaToBoolean(plua_state, 1, false),
+            luaToString(plua_state, 2, " -"),
+            luaToString(plua_state, 3, " "),
+            luaToString(plua_state, 4, "\""),
+            luaToString(plua_state, 5, "\""),
+            luaToBoolean(plua_state, 6, true)));
 
     return 1;
 }
@@ -79,7 +79,7 @@ static int cmdLineParserGetContent(lua_State* plua_state)
 static int cmdLineParserParse(lua_State* plua_state)
 {
     CmdLineParser* pcmdline_parser = luaGetObjectData<CmdLineParser>(plua_state, kCmdLineParserHandle);
-    luaPushBoolean(plua_state, pcmdline_parser->parse(luaGetString(plua_state, 2)));
+    luaPushBoolean(plua_state, pcmdline_parser->parse(luaToString(plua_state, 2)));
     
     return 1;
 }
@@ -87,7 +87,7 @@ static int cmdLineParserParse(lua_State* plua_state)
 static int cmdLineParserHasKey(lua_State* plua_state)
 {
     CmdLineParser* pcmdline_parser = luaGetObjectData<CmdLineParser>(plua_state, kCmdLineParserHandle);
-    luaPushBoolean(plua_state, pcmdline_parser->hasKey(luaGetString(plua_state, 2)));
+    luaPushBoolean(plua_state, pcmdline_parser->hasKey(luaToString(plua_state, 2)));
     
     return 1;
 }
@@ -95,7 +95,7 @@ static int cmdLineParserHasKey(lua_State* plua_state)
 static int cmdLineParserRemoveKey(lua_State* plua_state)
 {
     CmdLineParser* pcmdline_parser = luaGetObjectData<CmdLineParser>(plua_state, kCmdLineParserHandle);
-    pcmdline_parser->removeKey(luaGetString(plua_state, 2));
+    pcmdline_parser->removeKey(luaToString(plua_state, 2));
     
     return 0;
 }
@@ -103,7 +103,7 @@ static int cmdLineParserRemoveKey(lua_State* plua_state)
 static int cmdLineParserGetValue(lua_State* plua_state)
 {
     CmdLineParser* pcmdline_parser = luaGetObjectData<CmdLineParser>(plua_state, kCmdLineParserHandle);
-    luaPushString(plua_state, pcmdline_parser->getValue(luaGetString(plua_state, 2), luaGetString(plua_state, 3, "")));
+    luaPushString(plua_state, pcmdline_parser->getValue(luaToString(plua_state, 2), luaToString(plua_state, 3, "")));
     
     return 1;
 }
@@ -114,9 +114,9 @@ static int cmdLineMakerCreate(lua_State* plua_state)
     LuaObject<CmdLineMaker>* p = luaNewEmptyObject<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
     p->setData(
         new CmdLineMaker(
-            luaGetBoolean(plua_state, 1, false),
-            luaGetString(plua_state, 2, " -"),
-            luaGetString(plua_state, 3, " ")));
+            luaToBoolean(plua_state, 1, false),
+            luaToString(plua_state, 2, " -"),
+            luaToString(plua_state, 3, " ")));
 
     return 1;
 }
@@ -150,7 +150,7 @@ static int cmdLineMakerGetCmd(lua_State* plua_state)
 static int cmdLineMakerSetCmd(lua_State* plua_state)
 {
     CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
-    pcmdline_maker->setCmd(luaGetString(plua_state, 2));
+    pcmdline_maker->setCmd(luaToString(plua_state, 2));
     
     return 0;
 }
@@ -166,7 +166,7 @@ static int cmdLineMakerGetCmdLine(lua_State* plua_state)
 static int cmdLineMakerRemoveKey(lua_State* plua_state)
 {
     CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
-    pcmdline_maker->removeKey(luaGetString(plua_state, 2));
+    pcmdline_maker->removeKey(luaToString(plua_state, 2));
     
     return 0;
 }
@@ -177,7 +177,7 @@ static int cmdLineMakerSort(lua_State* plua_state)
     
     std::vector<string> args;
     for (int i=2; i<=luaGetTop(plua_state); ++i)
-        args.push_back(luaGetString(plua_state, i));
+        args.push_back(luaToString(plua_state, i));
     
     pcmdline_maker->sort(args.begin(), args.end());
     
@@ -187,7 +187,7 @@ static int cmdLineMakerSort(lua_State* plua_state)
 static int cmdLineMakerAddKeyValue(lua_State* plua_state)
 {
     CmdLineMaker* pcmdline_maker = luaGetObjectData<CmdLineMaker>(plua_state, kCmdLineMakerHandle);
-    pcmdline_maker->addKeyValue(luaGetString(plua_state, 2), luaGetString(plua_state, 3));
+    pcmdline_maker->addKeyValue(luaToString(plua_state, 2), luaToString(plua_state, 3));
     
     return 0;
 }

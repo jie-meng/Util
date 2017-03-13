@@ -40,14 +40,14 @@ std::string toString(LuaType lua_type)
 }
 
 //get operations
-double luaGetDouble(lua_State* plua_state, int index)
+double luaToDouble(lua_State* plua_state, int index)
 {
     return lua_tonumber(plua_state, index);
 }
 
-double luaGetDouble(lua_State* plua_state, int index, double default_num)
+double luaToDouble(lua_State* plua_state, int index, double default_num)
 {
-    return lua_isnumber(plua_state, index) ? luaGetDouble(plua_state, index) : default_num;
+    return lua_isnumber(plua_state, index) ? luaToDouble(plua_state, index) : default_num;
 }
 
 bool luaIsInteger(lua_State* plua_state, int index)
@@ -55,77 +55,77 @@ bool luaIsInteger(lua_State* plua_state, int index)
     return lua_isinteger(plua_state, index);
 }
 
-int luaGetInteger(lua_State* plua_state, int index)
+int luaToInteger(lua_State* plua_state, int index)
 {
     return lua_tointeger(plua_state, index);
 }
 
-int luaGetInteger(lua_State* plua_state, int index, int default_int)
+int luaToInteger(lua_State* plua_state, int index, int default_int)
 {
-    return lua_isinteger(plua_state, index) ? luaGetInteger(plua_state, index) : default_int;
+    return lua_isinteger(plua_state, index) ? luaToInteger(plua_state, index) : default_int;
 }
 
-std::string luaGetString(lua_State* plua_state, int index)
+std::string luaToString(lua_State* plua_state, int index)
 {
     const char* result = lua_tostring(plua_state, index);
     if (!result)
-        luaError(plua_state, strFormat("luaGetString from index %d failed.", index));
+        luaError(plua_state, strFormat("luaToString from index %d failed.", index));
 
     return std::string(lua_tostring(plua_state, index));
 }
 
-std::string luaGetString(lua_State* plua_state, int index, const std::string& default_str)
+std::string luaToString(lua_State* plua_state, int index, const std::string& default_str)
 {
-    return lua_isstring(plua_state, index) ? luaGetString(plua_state, index) : default_str.c_str();
+    return lua_isstring(plua_state, index) ? luaToString(plua_state, index) : default_str.c_str();
 }
 
-bool luaGetBoolean(lua_State* plua_state, int index)
+bool luaToBoolean(lua_State* plua_state, int index)
 {
     return (bool)lua_toboolean(plua_state, index);
 }
 
-bool luaGetBoolean(lua_State* plua_state, int index, bool default_bool)
+bool luaToBoolean(lua_State* plua_state, int index, bool default_bool)
 {
-    return lua_isboolean(plua_state, index) ? luaGetBoolean(plua_state, index) : default_bool;
+    return lua_isboolean(plua_state, index) ? luaToBoolean(plua_state, index) : default_bool;
 }
 
-void* luaGetLightUserData(lua_State* plua_state, int index)
+void* luaToLightUserData(lua_State* plua_state, int index)
 {
     return lua_touserdata(plua_state, index);
 }
 
-void* luaGetLightUserData(lua_State* plua_state, int index, void* default_data)
+void* luaToLightUserData(lua_State* plua_state, int index, void* default_data)
 {
-    return lua_isuserdata(plua_state, index) ? luaGetLightUserData(plua_state, index) : default_data;
+    return lua_isuserdata(plua_state, index) ? luaToLightUserData(plua_state, index) : default_data;
 }
 
-LuaCFunc luaGetFunction(lua_State* plua_state, int index)
+LuaCFunc luaToFunction(lua_State* plua_state, int index)
 {
     return (LuaCFunc)lua_tocfunction(plua_state, index);
 }
 
-LuaCFunc luaGetFunction(lua_State* plua_state, int index, LuaCFunc default_function)
+LuaCFunc luaToFunction(lua_State* plua_state, int index, LuaCFunc default_function)
 {
-    return lua_isfunction(plua_state, index) ? luaGetFunction(plua_state, index) : default_function;
+    return lua_isfunction(plua_state, index) ? luaToFunction(plua_state, index) : default_function;
 }
 
-any luaGetAny(lua_State* plua_state, int index)
+any luaToAny(lua_State* plua_state, int index)
 {
     any a;
     LuaType type = luaGetType(plua_state, index);
     switch (type)
     {
         case LuaBoolean:
-            a = luaGetBoolean(plua_state, index);
+            a = luaToBoolean(plua_state, index);
             break;
         case LuaLightUserData:
-            a = luaGetLightUserData(plua_state, index);
+            a = luaToLightUserData(plua_state, index);
             break;
         case LuaNumber:
-            a = luaIsInteger(plua_state, index) ? luaGetInteger(plua_state, index) : luaGetDouble(plua_state, index);
+            a = luaIsInteger(plua_state, index) ? luaToInteger(plua_state, index) : luaToDouble(plua_state, index);
             break;
         case LuaString:
-            a = luaGetString(plua_state, index);
+            a = luaToString(plua_state, index);
             break;
         default:
             throw Exception(strFormat("value type (%d) cannot convert to any type", type));
@@ -134,7 +134,7 @@ any luaGetAny(lua_State* plua_state, int index)
     return a;
 }
 
-std::vector< std::pair<any, any> > luaGetTable(lua_State* plua_state, int index)
+std::vector< std::pair<any, any> > luaToTable(lua_State* plua_state, int index)
 {
     std::vector< std::pair<any, any> > vec;
 
@@ -151,7 +151,7 @@ std::vector< std::pair<any, any> > luaGetTable(lua_State* plua_state, int index)
     while(0 != lua_next(plua_state, index))
     {
         //Now value is at (-1), key is at (-2)
-        vec.push_back(std::make_pair(luaGetAny(plua_state, -2), luaGetAny(plua_state, -1)));
+        vec.push_back(std::make_pair(luaToAny(plua_state, -2), luaToAny(plua_state, -1)));
         //remove value from stack, make the key to the top in order to keep on enumerating
         lua_pop(plua_state, 1);
     }

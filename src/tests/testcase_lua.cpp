@@ -27,7 +27,7 @@ void TestCaseLua::testLuaStateGetGlobal()
     assertEquals<int>(0, luaGetTop(ls.getState()), ASSERT_POSITION);
     luaGetGlobal(ls.getState(), "a");
     assertEquals<int>(1, luaGetTop(ls.getState()), ASSERT_POSITION);
-    assertEquals<int>(3, luaGetInteger(ls.getState(), 1), ASSERT_POSITION);
+    assertEquals<int>(3, luaToInteger(ls.getState(), 1), ASSERT_POSITION);
     assertEquals<int>(1, luaGetTop(ls.getState()), ASSERT_POSITION);
     luaPop(ls.getState(), -1);
     assertEquals<int>(0, luaGetTop(ls.getState()), ASSERT_POSITION);
@@ -39,7 +39,7 @@ void TestCaseLua::testLuaStateSetGlobal()
     assertEquals<int>(0, luaGetTop(ls.getState()), ASSERT_POSITION);
     luaGetGlobal(ls.getState(), "a");
     assertEquals<int>(1, luaGetTop(ls.getState()), ASSERT_POSITION);
-    assertEquals<int>(0, luaGetInteger(ls.getState(), 1, 0), ASSERT_POSITION);
+    assertEquals<int>(0, luaToInteger(ls.getState(), 1, 0), ASSERT_POSITION);
     luaPop(ls.getState(), -1);
     assertEquals<int>(0, luaGetTop(ls.getState()), ASSERT_POSITION);
     
@@ -49,7 +49,7 @@ void TestCaseLua::testLuaStateSetGlobal()
     assertEquals<int>(0, luaGetTop(ls.getState()), ASSERT_POSITION);
     luaGetGlobal(ls.getState(), "a");
     assertEquals<int>(1, luaGetTop(ls.getState()), ASSERT_POSITION);
-    assertEquals<string>("test", luaGetString(ls.getState(), 1, ""), ASSERT_POSITION);
+    assertEquals<string>("test", luaToString(ls.getState(), 1, ""), ASSERT_POSITION);
     luaPop(ls.getState(), -1);
     assertEquals<int>(0, luaGetTop(ls.getState()), ASSERT_POSITION);
 }
@@ -61,7 +61,7 @@ void TestCaseLua::testLuaStateGetGlobalNew()
     assertEquals<int>(0, ls.getTop(), ASSERT_POSITION);
     ls.getGlobal("a");
     assertEquals<int>(1, ls.getTop(), ASSERT_POSITION);
-    assertEquals<int>(3, ls.getInteger(1), ASSERT_POSITION);
+    assertEquals<int>(3, ls.toInteger(1), ASSERT_POSITION);
     assertEquals<int>(1, ls.getTop(), ASSERT_POSITION);
     ls.pop(-1);
     assertEquals<int>(0, ls.getTop(), ASSERT_POSITION);
@@ -73,7 +73,7 @@ void TestCaseLua::testLuaStateSetGlobalNew()
     assertEquals<int>(0, ls.getTop(), ASSERT_POSITION);
     ls.getGlobal("a");
     assertEquals<int>(1, ls.getTop(), ASSERT_POSITION);
-    assertEquals<int>(0, ls.getInteger(1, 0), ASSERT_POSITION);
+    assertEquals<int>(0, ls.toInteger(1, 0), ASSERT_POSITION);
     ls.pop(-1);
     assertEquals<int>(0, ls.getTop(), ASSERT_POSITION);
     
@@ -83,7 +83,7 @@ void TestCaseLua::testLuaStateSetGlobalNew()
     assertEquals<int>(0, ls.getTop(), ASSERT_POSITION);
     ls.getGlobal("a");
     assertEquals<int>(1, ls.getTop(), ASSERT_POSITION);
-    assertEquals<string>("test", ls.getString(1, ""), ASSERT_POSITION);
+    assertEquals<string>("test", ls.toString(1, ""), ASSERT_POSITION);
     ls.pop(-1);
     assertEquals<int>(0, ls.getTop(), ASSERT_POSITION);
 }

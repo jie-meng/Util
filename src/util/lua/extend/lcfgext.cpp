@@ -12,7 +12,7 @@ const std::string kTextCfgHandle = "TextCfg*";
 static int textcfgCreate(lua_State* plua_state)
 {
     LuaObject<TextCfg>* p = luaNewEmptyObject<TextCfg>(plua_state, kTextCfgHandle);
-    p->setData(new TextCfg(luaGetString(plua_state, 1, "")));
+    p->setData(new TextCfg(luaToString(plua_state, 1, "")));
 
     return 1;
 }
@@ -33,7 +33,7 @@ static int textcfgGetCfgFile(lua_State* plua_state)
 static int textcfgLoad(lua_State* plua_state)
 {
     TextCfg* ptextcfg = luaGetObjectData<TextCfg>(plua_state, kTextCfgHandle);
-    ptextcfg->load(luaGetString(plua_state, 2));
+    ptextcfg->load(luaToString(plua_state, 2));
     
     return 0;
 }
@@ -41,7 +41,7 @@ static int textcfgLoad(lua_State* plua_state)
 static int textcfgSave(lua_State* plua_state)
 {
     TextCfg* ptextcfg = luaGetObjectData<TextCfg>(plua_state, kTextCfgHandle);
-    string save_file = luaGetString(plua_state, 2, "");
+    string save_file = luaToString(plua_state, 2, "");
     if (save_file.empty())
         ptextcfg->save();
     else
@@ -53,7 +53,7 @@ static int textcfgSave(lua_State* plua_state)
 static int textcfgGetValue(lua_State* plua_state)
 {
     TextCfg* ptextcfg = luaGetObjectData<TextCfg>(plua_state, kTextCfgHandle);
-    luaPushString(plua_state, ptextcfg->getValue(luaGetString(plua_state, 2), luaGetString(plua_state, 3)));
+    luaPushString(plua_state, ptextcfg->getValue(luaToString(plua_state, 2), luaToString(plua_state, 3)));
     
     return 1;
 }
@@ -61,7 +61,7 @@ static int textcfgGetValue(lua_State* plua_state)
 static int textcfgSetValue(lua_State* plua_state)
 {
     TextCfg* ptextcfg = luaGetObjectData<TextCfg>(plua_state, kTextCfgHandle);
-    ptextcfg->setValue(luaGetString(plua_state, 2), luaGetString(plua_state, 3));
+    ptextcfg->setValue(luaToString(plua_state, 2), luaToString(plua_state, 3));
     
     return 0;
 }

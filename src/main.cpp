@@ -144,14 +144,14 @@ void testBind()
 
 int create(lua_State* plua_state)
 {
-    luaPushLightUserData(plua_state, (void*)new int(luaGetInteger(plua_state, 1, 100)));
+    luaPushLightUserData(plua_state, (void*)new int(luaToInteger(plua_state, 1, 100)));
 
     return 1;
 }
 
 int destroy(lua_State* plua_state)
 {
-    int* pdata = (int*)luaGetLightUserData(plua_state, 1);
+    int* pdata = (int*)luaToLightUserData(plua_state, 1);
     if (pdata)
     {
         printLine(*pdata);
@@ -281,19 +281,19 @@ int testCppCallLuaFunc()
 
     int ret_cnt = luaGetTop(luaState.getState());
     printLine(ret_cnt);
-    printLine(luaGetInteger(luaState.getState(), 1));
+    printLine(luaToInteger(luaState.getState(), 1));
 
     if (luaGetType(luaState.getState(), 2) == LuaType::LuaTable)
     {
         printLine("table elements:");
-        auto vec = luaGetTable(luaState.getState(), 2);
+        auto vec = luaToTable(luaState.getState(), 2);
         for (auto x : vec)
         {
             printLine("key: %s, value: %s", x.first.toString().c_str(), x.second.toString().c_str());
         }
     }
 
-    printLine(luaGetString(luaState.getState(), 3));
+    printLine(luaToString(luaState.getState(), 3));
 
     return 0;
 }

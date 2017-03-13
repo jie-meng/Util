@@ -13,13 +13,13 @@ const std::string kLockHandle = "Lock*";
 
 static int sleep(lua_State* plua_state)
 {
-    util::sleep(luaGetInteger(plua_state, 1, 0));
+    util::sleep(luaToInteger(plua_state, 1, 0));
     return 0;
 }
 
 static int msleep(lua_State* plua_state)
 {
-    util::msleep(luaGetInteger(plua_state, 1, 0));
+    util::msleep(luaToInteger(plua_state, 1, 0));
     return 0;
 }
 
@@ -62,12 +62,12 @@ static int threadCreate(lua_State* plua_state)
     luaExtendAssert(plua_state, kLuaExtendLibUtil, "create",
         LuaString == luaGetType(plua_state, 1) && LuaString == luaGetType(plua_state, 2), "file and threadfunc must be string type");
 
-    std::string file = luaGetString(plua_state, 1, "");
-    std::string func = luaGetString(plua_state, 2, "");
+    std::string file = luaToString(plua_state, 1, "");
+    std::string func = luaToString(plua_state, 2, "");
 
     std::vector<any> args;
     for (int i=3; i<=luaGetTop(plua_state); ++i)
-        args.push_back(luaGetAny(plua_state, i));
+        args.push_back(luaToAny(plua_state, i));
     
     LuaObject<Thread>* p = luaNewEmptyObject<Thread>(plua_state, kThreadHandle);
     p->setData(new Thread(UtilBind(threadFunc, file, func, args)));
@@ -83,7 +83,7 @@ static int threadDestroy(lua_State* plua_state)
 static int threadStart(lua_State* plua_state)
 {
     Thread* pthread = luaGetObjectData<Thread>(plua_state, kThreadHandle);
-    luaPushBoolean(plua_state, pthread->start(luaGetInteger(plua_state, 2, 0)));
+    luaPushBoolean(plua_state, pthread->start(luaToInteger(plua_state, 2, 0)));
 
     return 1;
 }
@@ -156,7 +156,7 @@ static int lockDestroy(lua_State* plua_state)
 static int lockWait(lua_State* plua_state)
 {
     Lock* plock = luaGetObjectData<Lock>(plua_state, kLockHandle);   
-    plock->wait(luaGetBoolean(plua_state, 2, true));
+    plock->wait(luaToBoolean(plua_state, 2, true));
 
     return 0;
 }
@@ -164,8 +164,8 @@ static int lockWait(lua_State* plua_state)
 static int lockTimedWait(lua_State* plua_state)
 {
     Lock* plock = luaGetObjectData<Lock>(plua_state, kLockHandle);
-    luaPushBoolean(plua_state, plock->timedWait(luaGetInteger(plua_state, 2, 2000),
-                                                 luaGetBoolean(plua_state, 3, true)));
+    luaPushBoolean(plua_state, plock->timedWait(luaToInteger(plua_state, 2, 2000),
+                                                 luaToBoolean(plua_state, 3, true)));
     return 1;
 }
 

@@ -11,9 +11,9 @@ const std::string kCsvHandle = "Csv*";
 
 static int createCsv(lua_State* plua_state)
 {
-    string file = luaGetString(plua_state, 1, "");
-    string delimiter = luaGetString(plua_state, 2, ",");
-    string enclosure = luaGetString(plua_state, 3, "\"");
+    string file = luaToString(plua_state, 1, "");
+    string delimiter = luaToString(plua_state, 2, ",");
+    string enclosure = luaToString(plua_state, 3, "\"");
 
     LuaObject<Csv>* p = luaNewEmptyObject<Csv>(plua_state, kCsvHandle);
     p->setData(new Csv(file, delimiter.at(0), enclosure.at(0)));
@@ -29,7 +29,7 @@ static int destroy(lua_State* plua_state)
 static int read(lua_State* plua_state)
 {
     Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
-    luaPushBoolean(plua_state, pcsv->read(luaGetString(plua_state, 2, "")));
+    luaPushBoolean(plua_state, pcsv->read(luaToString(plua_state, 2, "")));
 
     return 1;
 }
@@ -38,7 +38,7 @@ static int write(lua_State* plua_state)
 {
     Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
 
-    string file = luaGetString(plua_state, 2, "");
+    string file = luaToString(plua_state, 2, "");
     if (file == "")
         luaPushBoolean(plua_state, pcsv->write());
     else
@@ -82,8 +82,8 @@ static int cols(lua_State* plua_state)
 static int getCellValue(lua_State* plua_state)
 {
     Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
-    int row = luaGetInteger(plua_state, 2, -1);
-    int col = luaGetInteger(plua_state, 3, -1);
+    int row = luaToInteger(plua_state, 2, -1);
+    int col = luaToInteger(plua_state, 3, -1);
 
     luaExtendAssert(plua_state, kLuaExtendLibUtil, "getCellValue", row>=0 && row<(int)pcsv->rows() && col>=0 && col<(int)pcsv->cols(), "sub-index error");
     luaPushString(plua_state, pcsv->getCellValue(row, col));
@@ -95,11 +95,11 @@ static int setCellValue(lua_State* plua_state)
 {
     Csv* pcsv = luaGetObjectData<Csv>(plua_state, kCsvHandle);
 
-    int row = luaGetInteger(plua_state, 2, -1);
-    int col = luaGetInteger(plua_state, 3, -1);
+    int row = luaToInteger(plua_state, 2, -1);
+    int col = luaToInteger(plua_state, 3, -1);
 
     if (row>=0 && row<(int)pcsv->rows() && col>=0 && col<(int)pcsv->cols())
-        luaPushBoolean(plua_state, pcsv->setCellValue(row, col, luaGetString(plua_state, 4, "")));
+        luaPushBoolean(plua_state, pcsv->setCellValue(row, col, luaToString(plua_state, 4, "")));
     else
         luaPushBoolean(plua_state, false);
 
@@ -114,7 +114,7 @@ static int addRow(lua_State* plua_state)
     {
         vector<string> vec;
         for (int i=2; i<=count; ++i)
-            vec.push_back(luaGetString(plua_state, i, ""));
+            vec.push_back(luaToString(plua_state, i, ""));
 
         luaPushBoolean(plua_state, pcsv->addRow(vec));
     }

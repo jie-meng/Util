@@ -43,19 +43,19 @@ enum LuaType
 //#define LUA_NUMTAGS		9
 
 //get operations
-double luaGetDouble(lua_State* plua_state, int index);
-double luaGetDouble(lua_State* plua_state, int index, double default_num);
+double luaToDouble(lua_State* plua_state, int index);
+double luaToDouble(lua_State* plua_state, int index, double default_num);
 bool luaIsInteger(lua_State* plua_state, int index);
-int luaGetInteger(lua_State* plua_state, int index);
-int luaGetInteger(lua_State* plua_state, int index, int default_int);
-std::string luaGetString(lua_State* plua_state, int index);
-std::string luaGetString(lua_State* plua_state, int index, const std::string& default_str);
-bool luaGetBoolean(lua_State* plua_state, int index);
-bool luaGetBoolean(lua_State* plua_state, int index, bool default_bool);
-void* luaGetLightUserData(lua_State* plua_state, int index);
-void* luaGetLightUserData(lua_State* plua_state, int index, void* default_data);
-any luaGetAny(lua_State* plua_state, int index);
-std::vector< std::pair<any, any> > luaGetTable(lua_State* plua_state, int index);
+int luaToInteger(lua_State* plua_state, int index);
+int luaToInteger(lua_State* plua_state, int index, int default_int);
+std::string luaToString(lua_State* plua_state, int index);
+std::string luaToString(lua_State* plua_state, int index, const std::string& default_str);
+bool luaToBoolean(lua_State* plua_state, int index);
+bool luaToBoolean(lua_State* plua_state, int index, bool default_bool);
+void* luaToLightUserData(lua_State* plua_state, int index);
+void* luaToLightUserData(lua_State* plua_state, int index, void* default_data);
+any luaToAny(lua_State* plua_state, int index);
+std::vector< std::pair<any, any> > luaToTable(lua_State* plua_state, int index);
 
 //push operations
 void luaPushDouble(lua_State* plua_state, double double_val);
@@ -111,19 +111,19 @@ public:
     int parseFile(const std::string& file);
     bool reset();
     //get operations
+    inline double toDouble(int index) { return luaToDouble(getState(), index); }
+    inline double toDouble(int index, double default_num) { return luaToDouble(getState(), index, default_num); }
     inline bool isInteger(int index) { return luaIsInteger(getState(), index); }
-    inline double getDouble(int index) { return luaGetDouble(getState(), index); }
-    inline double getDouble(int index, double default_num) { return luaGetDouble(getState(), index, default_num); }
-    inline int getInteger(int index) { return luaGetInteger(getState(), index); }
-    inline int getInteger(int index, int default_int) { return luaGetInteger(getState(), index, default_int); }
-    inline std::string getString(int index) { return luaGetString(getState(), index); }
-    inline std::string getString(int index, const std::string& default_str) { return luaGetString(getState(), index, default_str); }
-    inline bool getBoolean(int index) { return luaGetBoolean(getState(), index); }
-    inline bool getBoolean(int index, bool default_bool) { return luaGetBoolean(getState(), index, default_bool); }
-    inline void* getLightUserData(int index) { return luaGetLightUserData(getState(), index); }
-    inline void* getLightUserData(int index, void* default_data) { return luaGetLightUserData(getState(), index, default_data); }
-    inline any getAny(int index) { return luaGetAny(getState(), index); }
-    inline std::vector< std::pair<any, any> > getTable(int index) { return luaGetTable(getState(), index); }
+    inline int toInteger(int index) { return luaToInteger(getState(), index); }
+    inline int toInteger(int index, int default_int) { return luaToInteger(getState(), index, default_int); }
+    inline std::string toString(int index) { return luaToString(getState(), index); }
+    inline std::string toString(int index, const std::string& default_str) { return luaToString(getState(), index, default_str); }
+    inline bool toBoolean(int index) { return luaToBoolean(getState(), index); }
+    inline bool toBoolean(int index, bool default_bool) { return luaToBoolean(getState(), index, default_bool); }
+    inline void* toLightUserData(int index) { return luaToLightUserData(getState(), index); }
+    inline void* toLightUserData(int index, void* default_data) { return luaToLightUserData(getState(), index, default_data); }
+    inline any toAny(int index) { return luaToAny(getState(), index); }
+    inline std::vector< std::pair<any, any> > toTable(int index) { return luaToTable(getState(), index); }
     //push operations
     inline void pushDouble(double double_val) { luaPushDouble(getState(), double_val); }
     inline void pushInteger(int int_val) { luaPushInteger(getState(), int_val); }
@@ -171,30 +171,6 @@ private:
 private:
     DISALLOW_COPY_AND_ASSIGN(LuaCmdLine)
 };
-
-// C++ cal lua function
-//int main(int argc, char* argv[])
-//{
-//    LuaState ls;
-//    ls.parseFile("base.lua");
-//    luaGetGlobal(ls.getState(), "add");
-//    luaSetInteger(ls.getState(), 6);
-//    luaSetInteger(ls.getState(), 9);
-//    int err = luaCallFunc(ls.getState(), 2, 1);
-//    if (err != 0)
-//    {
-//        printLine(luaGetError(ls.getState(), err));
-//        return -1;
-//    }
-//
-//    printLine("");
-//    printLine("cnt = %d", luaGetTop(ls.getState()));
-//    for(int i = 1; i<=luaGetTop(ls.getState()); ++i)
-//    {
-//        printLine(luaGetInteger(ls.getState(), i));
-//    }
-//    luaPop(ls.getState(), -1);
-//}
 
 } // namespace util
 

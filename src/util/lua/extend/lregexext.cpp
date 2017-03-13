@@ -10,7 +10,7 @@ const std::string kRegexHandle = "Regex*";
 static int createRegex(lua_State* plua_state)
 {
     LuaObject<Regex>* p = luaNewEmptyObject<Regex>(plua_state, kRegexHandle);
-    p->setData(new Regex(luaGetString(plua_state, 1, ""), (Regex::RegexFlag)luaGetInteger(plua_state, 2, 0)));
+    p->setData(new Regex(luaToString(plua_state, 1, ""), (Regex::RegexFlag)luaToInteger(plua_state, 2, 0)));
 
     return 1;
 }
@@ -23,7 +23,7 @@ static int destroy(lua_State* plua_state)
 static int compile(lua_State* plua_state)
 {
     Regex* pregexer = luaGetObjectData<Regex>(plua_state, kRegexHandle);
-    pregexer->compile(luaGetString(plua_state, 2));
+    pregexer->compile(luaToString(plua_state, 2));
 
     return 0;
 }
@@ -31,7 +31,7 @@ static int compile(lua_State* plua_state)
 static int match(lua_State* plua_state)
 {
     Regex* pregexer = luaGetObjectData<Regex>(plua_state, kRegexHandle);
-    luaPushBoolean(plua_state, pregexer->match(luaGetString(plua_state, 2)));
+    luaPushBoolean(plua_state, pregexer->match(luaToString(plua_state, 2)));
 
     return 1;
 }
@@ -39,7 +39,7 @@ static int match(lua_State* plua_state)
 static int search(lua_State* plua_state)
 {
     Regex* pregexer = luaGetObjectData<Regex>(plua_state, kRegexHandle);
-    luaPushBoolean(plua_state, pregexer->search(luaGetString(plua_state, 2)));
+    luaPushBoolean(plua_state, pregexer->search(luaToString(plua_state, 2)));
 
     return 1;
 }
@@ -55,7 +55,7 @@ static int getMatchedGroupCnt(lua_State* plua_state)
 static int getMatchedGroupByIndex(lua_State* plua_state)
 {
     Regex* pregexer = luaGetObjectData<Regex>(plua_state, kRegexHandle);
-    luaPushString(plua_state, pregexer->getMatchedGroup(luaGetInteger(plua_state, 2)));
+    luaPushString(plua_state, pregexer->getMatchedGroup(luaToInteger(plua_state, 2)));
 
     return 1;
 }
@@ -63,7 +63,7 @@ static int getMatchedGroupByIndex(lua_State* plua_state)
 static int getMatchedGroupByName(lua_State* plua_state)
 {
     Regex* pregexer = luaGetObjectData<Regex>(plua_state, kRegexHandle);
-    luaPushString(plua_state, pregexer->getMatchedGroup(luaGetString(plua_state, 2)));
+    luaPushString(plua_state, pregexer->getMatchedGroup(luaToString(plua_state, 2)));
 
     return 1;
 }
