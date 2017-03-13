@@ -45,6 +45,7 @@ enum LuaType
 //get operations
 double luaGetDouble(lua_State* plua_state, int index);
 double luaGetDouble(lua_State* plua_state, int index, double default_num);
+bool luaIsInteger(lua_State* plua_state, int index);
 int luaGetInteger(lua_State* plua_state, int index);
 int luaGetInteger(lua_State* plua_state, int index, int default_int);
 std::string luaGetString(lua_State* plua_state, int index);
@@ -110,6 +111,7 @@ public:
     int parseFile(const std::string& file);
     bool reset();
     //get operations
+    inline bool isInteger(int index) { return luaIsInteger(getState(), index); }
     inline double getDouble(int index) { return luaGetDouble(getState(), index); }
     inline double getDouble(int index, double default_num) { return luaGetDouble(getState(), index, default_num); }
     inline int getInteger(int index) { return luaGetInteger(getState(), index); }

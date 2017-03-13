@@ -50,6 +50,11 @@ double luaGetDouble(lua_State* plua_state, int index, double default_num)
     return lua_isnumber(plua_state, index) ? luaGetDouble(plua_state, index) : default_num;
 }
 
+bool luaIsInteger(lua_State* plua_state, int index)
+{
+    return lua_isinteger(plua_state, index);
+}
+
 int luaGetInteger(lua_State* plua_state, int index)
 {
     return lua_tointeger(plua_state, index);
@@ -57,7 +62,7 @@ int luaGetInteger(lua_State* plua_state, int index)
 
 int luaGetInteger(lua_State* plua_state, int index, int default_int)
 {
-    return lua_isnumber(plua_state, index) ? luaGetInteger(plua_state, index) : default_int;
+    return lua_isinteger(plua_state, index) ? luaGetInteger(plua_state, index) : default_int;
 }
 
 std::string luaGetString(lua_State* plua_state, int index)
@@ -76,7 +81,7 @@ std::string luaGetString(lua_State* plua_state, int index, const std::string& de
 
 bool luaGetBoolean(lua_State* plua_state, int index)
 {
-    return bool(lua_toboolean(plua_state, index));
+    return (bool)lua_toboolean(plua_state, index);
 }
 
 bool luaGetBoolean(lua_State* plua_state, int index, bool default_bool)
@@ -107,7 +112,8 @@ LuaCFunc luaGetFunction(lua_State* plua_state, int index, LuaCFunc default_funct
 any luaGetAny(lua_State* plua_state, int index)
 {
     any a;
-    switch (luaGetType(plua_state, index))
+    LuaType type = luaGetType(plua_state, index);
+    switch (type)
     {
         case LuaBoolean:
             a = luaGetBoolean(plua_state, index);
@@ -116,12 +122,13 @@ any luaGetAny(lua_State* plua_state, int index)
             a = luaGetLightUserData(plua_state, index);
             break;
         case LuaNumber:
-            a = luaGetDouble(plua_state, index);
+            a = luaIsInteger(plua_state, index) ? luaGetInteger(plua_state, index) : luaGetDouble(plua_state, index);
             break;
         case LuaString:
             a = luaGetString(plua_state, index);
             break;
         default:
+            throw Exception(strFormat("value type (%d) cannot convert to any type", type));
             break;
     }
     return a;
