@@ -1,3 +1,5 @@
+--[[If you are using windows, please run this script in a bash shell (Mingw/Cygwin)]]
+
 print('Start install luaexeclib ...')
 
 local idx = string.find(package.path, ';')

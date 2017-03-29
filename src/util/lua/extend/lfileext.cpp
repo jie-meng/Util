@@ -82,6 +82,12 @@ static int fileBaseName(lua_State* plua_state)
     return 1;
 }
 
+static int isTextFile(lua_State* plua_state)
+{
+    luaPushBoolean(plua_state, isTextFile(luaToString(plua_state, 1, "")));
+    return 1;
+}
+
 static int pathRename(lua_State* plua_state)
 {
     luaPushBoolean(plua_state, pathRename(luaToString(plua_state, 1, ""), luaToString(plua_state, 2, "")));
@@ -218,11 +224,12 @@ static const LuaReg file_lib[] =
     {"readBinaryFile", readBinaryFile},
     {"writeBinaryFile", writeBinaryFile},
     {"overwriteBinaryFile", overwriteBinaryFile},
-
+    {"fileCopy", fileCopy},
+        
     {"fileSize", fileSize},
     {"fileExtension", fileExtension},
     {"fileBaseName", fileBaseName},
-    {"fileCopy", fileCopy},
+    {"isTextFile", isTextFile},
 
     {"appPath", appPath},
     {"currentPath", currentPath},

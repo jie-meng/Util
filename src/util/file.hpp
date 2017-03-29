@@ -22,6 +22,7 @@ bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fa
 uint64_t fileSize(const std::string& file);
 std::string fileExtension(const std::string& file);
 std::string fileBaseName(const std::string& file);
+bool isTextFile(const std::string& file);
 
 enum E_FileTime
 {

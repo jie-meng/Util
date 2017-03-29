@@ -199,6 +199,26 @@ std::string fileBaseName(const std::string& file)
         return str.substr(0, found);
 }
 
+bool isTextFile(const std::string& file)
+{
+    if (!isPathFile(file))
+        return false;
+    
+    FILE *fp = fopen(file.c_str(), "rb");  
+    long white_list_char_count = 0;  
+    int read_len;  
+    unsigned char byte;  
+    while ((read_len = fread(&byte, 1, 1, fp)) > 0)  
+    {  
+        if (byte == 9 || byte == 10 || byte == 13 || (byte >= 32 && byte <= 255))  
+            white_list_char_count++;  
+        else if ((byte <= 6) || (byte >= 14 && byte <= 31))  
+            return 0;  
+    }  
+    fclose(fp);  
+    return (white_list_char_count >= 1) ? 1 : 0;
+}
+
 std::pair<std::string, std::string> splitPathname(const std::string& str)
 {
     size_t found = str.find_last_of("/\\");

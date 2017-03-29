@@ -14,6 +14,7 @@ void TestCaseFile::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseFile, testFileInfo)
     REGISTER_TEST_FUNCTION(TestCaseFile, testPath)
     REGISTER_TEST_FUNCTION(TestCaseFile, testListFile)
+    REGISTER_TEST_FUNCTION(TestCaseFile, testIsTextFile)
 }
 
 void TestCaseFile::setUp()
@@ -224,4 +225,13 @@ void TestCaseFile::testListFile()
     assertTrue(vec.size() > 20, ASSERT_POSITION);
     for (vector<string>::iterator it = vec.begin(); it != vec.end(); ++it)
         assertTrue(strEndWith(*it, ".hpp"), ASSERT_POSITION);
+}
+
+void TestCaseFile::testIsTextFile()
+{
+    assertFalse(isTextFile(""), ASSERT_POSITION);
+    assertTrue(isTextFile("Makefile"), ASSERT_POSITION);
+    assertTrue(isTextFile("CMakeLists.txt"), ASSERT_POSITION);
+    assertTrue(isTextFile("make.py"), ASSERT_POSITION);
+    assertFalse(isTextFile(".Util"), ASSERT_POSITION);
 }
