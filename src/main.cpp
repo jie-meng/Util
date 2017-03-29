@@ -286,7 +286,7 @@ int testCppCallLuaFunc()
     if (luaGetType(luaState.getState(), 2) == LuaType::LuaTable)
     {
         printLine("table elements:");
-        auto vec = luaToTable(luaState.getState(), 2);
+        auto vec = luaToArray(luaState.getState(), 2);
         for (auto x : vec)
         {
             printLine("key: %s, value: %s", x.first.toString().c_str(), x.second.toString().c_str());
@@ -339,7 +339,7 @@ int main(int argc, char* argv[])
     else
     {
         if (argc == 1)
-            printLine("---------------------------------\nluaexec (version: 1.1.1.2.20170329)\n---------------------------------");
+            printLine("---------------------------------\nluaexec (version: 1.1.2.2.20170329)\n---------------------------------");
         
         luaExecutor(argc, argv);
     }

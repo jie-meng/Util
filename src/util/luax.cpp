@@ -134,7 +134,7 @@ any luaToAny(lua_State* plua_state, int index)
     return a;
 }
 
-std::vector< std::pair<any, any> > luaToTable(lua_State* plua_state, int index)
+std::vector< std::pair<any, any> > luaToArray(lua_State* plua_state, int index)
 {
     std::vector< std::pair<any, any> > vec;
 
@@ -246,7 +246,7 @@ void luaPushAny(lua_State* plua_state, const any& a)
     }
 }
 
-void luaPushTable(lua_State* plua_state, const std::vector< std::pair<any, any> >& key_value_vec)
+void luaPushArray(lua_State* plua_state, const std::vector< std::pair<any, any> >& key_value_vec)
 {
     lua_newtable(plua_state);
 
@@ -259,7 +259,7 @@ void luaPushTable(lua_State* plua_state, const std::vector< std::pair<any, any> 
     }
 }
 
-void luaPushTable(lua_State* plua_state, const std::vector<any>& vec)
+void luaPushArray(lua_State* plua_state, const std::vector<any>& vec)
 {
     lua_newtable(plua_state);
 

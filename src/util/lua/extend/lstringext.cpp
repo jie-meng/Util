@@ -114,7 +114,7 @@ static int strCompare(lua_State* plua_state)
 
 static int strJoin(lua_State* plua_state)
 {
-    std::vector< std::pair<any, any> > vec = luaToTable(plua_state, 1);
+    std::vector< std::pair<any, any> > vec = luaToArray(plua_state, 1);
     if (!vec.empty())
     {
         std::vector<std::string> str_vec;
@@ -138,7 +138,7 @@ static int strSplit(lua_State* plua_state)
              vec,
              luaToInteger(plua_state, 3, 0));
 
-    luaPushTable(plua_state, vec);
+    luaPushArray(plua_state, vec);
 
     return 1;
 }
@@ -153,7 +153,7 @@ static int strSplitEx(lua_State* plua_state)
              vec,
              luaToInteger(plua_state, 5, 0));
 
-    luaPushTable(plua_state, vec);
+    luaPushArray(plua_state, vec);
 
     return 1;
 }

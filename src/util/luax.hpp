@@ -55,7 +55,7 @@ bool luaToBoolean(lua_State* plua_state, int index, bool default_bool);
 void* luaToLightUserData(lua_State* plua_state, int index);
 void* luaToLightUserData(lua_State* plua_state, int index, void* default_data);
 any luaToAny(lua_State* plua_state, int index);
-std::vector< std::pair<any, any> > luaToTable(lua_State* plua_state, int index);
+std::vector< std::pair<any, any> > luaToArray(lua_State* plua_state, int index);
 
 //push operations
 void luaPushDouble(lua_State* plua_state, double double_val);
@@ -65,17 +65,17 @@ void luaPushNil(lua_State* plua_state);
 void luaPushBoolean(lua_State* plua_state, bool boolean);
 void luaPushLightUserData(lua_State* plua_state, void* p);
 void luaPushAny(lua_State* plua_state, const any& a);
-void luaPushTable(lua_State* plua_state, const std::vector< std::pair<any, any> >& key_value_vec);
-void luaPushTable(lua_State* plua_state, const std::vector<any>& vec);
+void luaPushArray(lua_State* plua_state, const std::vector< std::pair<any, any> >& key_value_vec);
+void luaPushArray(lua_State* plua_state, const std::vector<any>& vec);
 
 template <typename Coll>
-void luaPushTable(lua_State* plua_state, const Coll& coll)
+void luaPushArray(lua_State* plua_state, const Coll& coll)
 {
     std::vector<any> any_vec;
     typename Coll::const_iterator it;
     for (it = coll.begin(); it != coll.end(); ++it)
         any_vec.push_back(any(*it));
-    luaPushTable(plua_state, any_vec);
+    luaPushArray(plua_state, any_vec);
 }
 
 //other operations
@@ -123,7 +123,7 @@ public:
     inline void* toLightUserData(int index) { return luaToLightUserData(getState(), index); }
     inline void* toLightUserData(int index, void* default_data) { return luaToLightUserData(getState(), index, default_data); }
     inline any toAny(int index) { return luaToAny(getState(), index); }
-    inline std::vector< std::pair<any, any> > toTable(int index) { return luaToTable(getState(), index); }
+    inline std::vector< std::pair<any, any> > toArray(int index) { return luaToArray(getState(), index); }
     //push operations
     inline void pushDouble(double double_val) { luaPushDouble(getState(), double_val); }
     inline void pushInteger(int int_val) { luaPushInteger(getState(), int_val); }
@@ -132,8 +132,8 @@ public:
     inline void pushBoolean(bool boolean) { luaPushBoolean(getState(), boolean); }
     inline void pushLightUserData(void* p) { luaPushLightUserData(getState(), p); }
     inline void pushAny(const any& a) { luaPushAny(getState(), a); }
-    inline void pushTable(const std::vector< std::pair<any, any> >& key_value_vec) { luaPushTable(getState(), key_value_vec); }
-    inline void pushTable(const std::vector<any>& vec) { luaPushTable(getState(), vec); }
+    inline void pushArray(const std::vector< std::pair<any, any> >& key_value_vec) { luaPushArray(getState(), key_value_vec); }
+    inline void pushArray(const std::vector<any>& vec) { luaPushArray(getState(), vec); }
     //other operations
     inline LuaType getType(int index) { return luaGetType(getState(), index); }
     inline std::string getTypeName(LuaType type) { return luaGetTypeName(getState(), type); }

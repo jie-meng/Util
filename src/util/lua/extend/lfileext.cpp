@@ -188,7 +188,7 @@ static int findFilesInDir(lua_State* plua_state)
     for (int i=0; i<(int)coll.size(); ++i)
         vec.push_back(std::make_pair(any(i+1), any(coll[i])));
 
-    luaPushTable(plua_state, vec);
+    luaPushArray(plua_state, vec);
     return 1;
 }
 
@@ -200,7 +200,7 @@ static int findPathInDir(lua_State* plua_state)
     for (int i=0; i<(int)coll.size(); ++i)
         vec.push_back(std::make_pair(any(i+1), any(coll[i])));
 
-    luaPushTable(plua_state, vec);
+    luaPushArray(plua_state, vec);
     return 1;
 }
 
@@ -212,7 +212,7 @@ static int findFilesInDirRecursively(lua_State* plua_state)
     for (int i=0; i<(int)coll.size(); ++i)
         vec.push_back(std::make_pair(any(i+1), any(coll[i])));
 
-    luaPushTable(plua_state, vec);
+    luaPushArray(plua_state, vec);
     return 1;
 }
 
