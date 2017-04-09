@@ -8,6 +8,7 @@ tags
 
 Debug/
 Release/
+.vscode/
 
 *.cmake
 Makefile
