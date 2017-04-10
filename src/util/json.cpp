@@ -25,13 +25,14 @@ Json::Json(const std::string& jstr) :
 
 Json Json::get(const std::string& key) const
 {
-    // return Json(pdata_->js_[key]);
-    return Json();
+    Json js;
+    js.pdata_->js_ = pdata_->js_[key];
+    return js;
 }
 
 void Json::set(const std::string&key, const Json& json)
 {
-    //pdata_->js_[key] = json;
+    pdata_->js_[key] = json.pdata_->js_;
 }
 
 void Json::set(const std::string&key, int value)
@@ -84,10 +85,14 @@ void Json::set(const std::string&key, const vector<std::string>& value)
     pdata_->js_[key] = value;
 }
 
-void Json::set(const std::string&key, const vector<Json>& value)
-{
-    // pdata_->js_[key] = value;
-}
+// void Json::set(const std::string&key, const vector<Json>& value)
+// {
+//     vector<json> vec;
+//     for (const Json& j : value)
+//         vec.push_back(j.pdata_->js_);
+    
+//     pdata_->js_[key] = json::parse(vec.begin(), vec.end());
+// }
 
 string Json::toString() const
 {

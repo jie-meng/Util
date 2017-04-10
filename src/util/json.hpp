@@ -15,19 +15,19 @@ public:
     
     Json get(const std::string& key) const;
 
-    void set(const std::string&key, const Json& json);
-    void set(const std::string&key, int value);
-    void set(const std::string&key, size_t value);
-    void set(const std::string&key, float value);
-    void set(const std::string&key, double value);
-    void set(const std::string&key, const std::string& value);
-
-    void set(const std::string&key, const std::vector<int>& value);
-    void set(const std::string&key, const std::vector<size_t>& value);
-    void set(const std::string&key, const std::vector<float>& value);
-    void set(const std::string&key, const std::vector<double>& value);
-    void set(const std::string&key, const std::vector<std::string>& value);
-    void set(const std::string&key, const std::vector<Json>& value);
+    void set(const std::string& key, const Json& json);
+    void set(const std::string& key, int value);
+    void set(const std::string& key, size_t value);
+    void set(const std::string& key, float value);
+    void set(const std::string& key, double value);
+    void set(const std::string& key, const std::string& value);
+ 
+    void set(const std::string& key, const std::vector<int>& value);
+    void set(const std::string& key, const std::vector<size_t>& value);
+    void set(const std::string& key, const std::vector<float>& value);
+    void set(const std::string& key, const std::vector<double>& value);
+    void set(const std::string& key, const std::vector<std::string>& value);
+    // void set(const std::string& key, const std::vector<Json>& value);
 
     std::string toString() const;
 public:
