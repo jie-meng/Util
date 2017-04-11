@@ -13,14 +13,43 @@ struct Json::JsonData
 };
 
 Json::Json() :
-    pdata_(new JsonData())
+   pdata_(new JsonData())
 {
 }
 
-Json::Json(const std::string& jstr) :
+Json::~Json()
+{
+}
+
+Json Json::parse(const std::string& jstr)
+{
+    Json json;
+    json.pdata_->js_ = json::parse(jstr);
+    return json;
+}
+
+Json::Json(const Json& js) :
     pdata_(new JsonData())
 {
-    pdata_->js_ = json::parse(jstr);
+    pdata_->js_ = js.pdata_->js_;
+}
+
+Json& Json::operator=(const Json& js)
+{
+    if (&js != this)
+    {
+        pdata_->js_ = js.pdata_->js_;    
+    }
+    
+    return *this;
+}
+
+Json Json::operator[](const std::string& key)
+{
+    Json json;
+    json.pdata_->js_ = pdata_->js_[key];
+
+    return json;
 }
 
 Json Json::get(const std::string& key) const
@@ -30,69 +59,49 @@ Json Json::get(const std::string& key) const
     return js;
 }
 
-void Json::set(const std::string&key, const Json& json)
-{
-    pdata_->js_[key] = json.pdata_->js_;
-}
-
-void Json::set(const std::string&key, int value)
+void Json::set(const std::string& key, int value)
 {
     pdata_->js_[key] = value;
 }
 
-void Json::set(const std::string&key, size_t value)
-{
-    pdata_->js_[key] = value;
-}
-
-void Json::set(const std::string&key, float value)
-{
-    pdata_->js_[key] = value;
-}
-
-void Json::set(const std::string&key, double value)
+void Json::set(const std::string& key, double value)
 {
    pdata_->js_[key] = value; 
 }
 
-void Json::set(const std::string&key, const std::string& value)
+void Json::set(const std::string& key, const std::string& value)
 {
     pdata_->js_[key] = value;
 }
 
-void Json::set(const std::string&key, const vector<int>& value)
+void Json::set(const std::string& key, const Json& json)
 {
-    pdata_->js_[key] = value;
+    pdata_->js_[key] = json.pdata_->js_;
 }
 
-void Json::set(const std::string&key, const vector<size_t>& value)
+void Json::set(const std::string& key, const vector<int>& values)
 {
-    pdata_->js_[key] = value;
+    pdata_->js_[key] = values;
 }
 
-void Json::set(const std::string&key, const vector<float>& value)
+void Json::set(const std::string& key, const vector<double>& values)
 {
-    pdata_->js_[key] = value;
+    pdata_->js_[key] = values;
 }
 
-void Json::set(const std::string&key, const vector<double>& value)
+void Json::set(const std::string& key, const vector<std::string>& values)
 {
-    pdata_->js_[key] = value;
+    pdata_->js_[key] = values;
 }
 
-void Json::set(const std::string&key, const vector<std::string>& value)
+void Json::set(const std::string& key, const vector<Json>& values)
 {
-    pdata_->js_[key] = value;
-}
-
-// void Json::set(const std::string&key, const vector<Json>& value)
-// {
-//     vector<json> vec;
-//     for (const Json& j : value)
-//         vec.push_back(j.pdata_->js_);
+    vector<json> vec;
+    for (const Json& j : values)
+        vec.push_back(j.pdata_->js_);
     
-//     pdata_->js_[key] = json::parse(vec.begin(), vec.end());
-// }
+    pdata_->js_[key] = vec;
+}
 
 string Json::toString() const
 {

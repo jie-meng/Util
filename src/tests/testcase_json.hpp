@@ -10,7 +10,8 @@ public:
     virtual void registerTestFunctions();
     
     //Tests
-    void testJson();
+    void testJsonToString();
+    void testStringToJson();
 protected:
     virtual void setUp();
     virtual void tearDown();
