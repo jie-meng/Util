@@ -1,15 +1,15 @@
 
 -- declare local variables
---// exportstring( string )
+--// exportstring(string)
 --// returns a "Lua" portable version of the string
-local function exportstring( s )
+local function exportstring(s)
     return string.format("%q", s)
 end
 
 local table_ext = {}
 
 --// The Save Function
-function table_ext.save(  tbl,filename )
+function table_ext.save(tbl, filename)
     local charS,charE = "   ","\n"
     local file,err = io.open( filename, "wb" )
     if err then return err end
@@ -83,8 +83,8 @@ function table_ext.save(  tbl,filename )
 end
 
 --// The Load Function
-function table_ext.load( sfile )
-    local ftables,err = loadfile( sfile )
+function table_ext.load(sfile)
+    local ftables,err = loadfile(sfile)
     if err then return _,err end
     local tables = ftables()
     for idx = 1,#tables do
