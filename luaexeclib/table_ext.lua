@@ -136,4 +136,10 @@ function table_ext.deepCopy(orig)
     return copy
 end
 
+function table_ext.foreach(tb, func)
+    for k, v in pairs(tb) do
+        func(k, v)
+    end
+end
+
 return table_ext
