@@ -5,7 +5,7 @@ function file_ext.findFilesInDir(dir, func)
     local paths = util.findFilesInDir(dir)
     local ret = {}
     for _, v in ipairs(paths) do
-        if func(v) then
+        if not func or func(v) then
             table.insert(ret, v)
         end
     end
@@ -16,7 +16,7 @@ function file_ext.findPathInDir(dir, func)
     local paths = util.findPathInDir(dir)
     local ret = {}
     for _, v in ipairs(paths) do
-        if func(v) then
+        if not func or func(v) then
             table.insert(ret, v)
         end    
     end
@@ -27,7 +27,7 @@ function file_ext.findFilesInDirRecursively(dir, func)
     local paths = util.findFilesInDirRecursively(dir)
     local ret = {}
     for _, v in ipairs(paths) do
-        if func(v) then
+        if not func or func(v) then
             table.insert(ret, v)
         end
     end
