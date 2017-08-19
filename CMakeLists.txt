@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(APP_NAME Util)
+set(APP_NAME luaexec)
 project(${APP_NAME})
 
 include_directories(

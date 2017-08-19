@@ -28,12 +28,11 @@ Currently can run on MacOS/Linux/Windows.
 - Install python3.x or python2.x (On windows)
 - Install mingw (On windows)
 
-Build Util: Go to directory of Util, execute command: python make.py
+Build luaexec: execute command "python make.py" on terminal
 
-Build luaexec: 
+luaexec is an extended lua script executor which contains basic lua & util extensions (platform, string-ext, file, memory, net, regex, csv, config, cmdline) which is provided by Util lib.
 
-1. Build Util
+### How to get or extend  more useful lib written by lua ###
 
-2. Rename Util to luaexec
+Run "./luaexec install_luaexeclib.lua" on terminal, it will install the libs in luaexeclib to lua system searching path. Then you can use the libs with "require". e.g.```local json = require('json')```, which is really easy to use and extend.
 
-luaexec is a lua script executor which contains basic lua & util extensions (platform, string-ext, file, memory, net, regex, csv, config, cmdline)

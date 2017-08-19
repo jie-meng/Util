@@ -3,8 +3,9 @@
 *.exe
 
 Util
+luaexec
 !Util/
-tags
+!luaexec/
 
 Debug/
 Release/
