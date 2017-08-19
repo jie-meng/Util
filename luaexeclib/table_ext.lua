@@ -138,7 +138,7 @@ end
 
 function table_ext.foreach(tb, func)
     for k, v in pairs(tb) do
-        func(k, v)
+        func(v, k)
     end
 end
 
