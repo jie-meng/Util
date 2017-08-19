@@ -105,7 +105,7 @@ function table_ext.load(sfile)
     return tables[1]
 end
 
-function table_ext.shallowCopy(orig)
+function table_ext.copy(orig)
     local orig_type = type(orig)
     local copy
     if orig_type == 'table' then
@@ -120,15 +120,15 @@ function table_ext.shallowCopy(orig)
     return copy
 end
 
-function table_ext.deepCopy(orig)
+function table_ext.clone(orig)
     local orig_type = type(orig)
     local copy
     if orig_type == 'table' then
         copy = {}
         for orig_key, orig_value in next, orig, nil do
-            copy[table_ext.deepCopy(orig_key)] = table_ext.deepCopy(orig_value)
+            copy[table_ext.clone(orig_key)] = table_ext.clone(orig_value)
         end
-        setmetatable(copy, table_ext.deepCopy(getmetatable(orig)))
+        setmetatable(copy, table_ext.clone(getmetatable(orig)))
     else -- number, string, boolean, etc
         copy = orig
     end
