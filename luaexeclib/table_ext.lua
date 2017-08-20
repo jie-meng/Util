@@ -120,20 +120,42 @@ function table_ext.copy(orig)
     return copy
 end
 
-function table_ext.clone(orig)
-    local orig_type = type(orig)
-    local copy
-    if orig_type == 'table' then
-        copy = {}
-        for orig_key, orig_value in next, orig, nil do
-            copy[table_ext.clone(orig_key)] = table_ext.clone(orig_value)
+function table_ext.filterCopy(orig, fn)
+    local o = {}
+    for k, v in pairs(orig) do
+        if fn(v, k) then
+            o[k] = v
         end
-        setmetatable(copy, table_ext.clone(getmetatable(orig)))
-    else -- number, string, boolean, etc
-        copy = orig
+    end
+    
+    return o
+end
+
+function table_ext.mapCopy(orig, fn)
+    local o = {}
+    for k, v in pairs(orig) do
+        o[k] = fn(v, k)
     end
 
-    return copy
+    return o
+end
+
+function table_ext.clone(orig)
+    local lookup_table = {}
+    local function _copy(object)
+        if type(object) ~= "table" then
+            return object
+        elseif lookup_table[object] then
+            return lookup_table[object]
+        end
+        local newObject = {}
+        lookup_table[object] = newObject
+        for key, value in pairs(object) do
+            newObject[_copy(key)] = _copy(value)
+        end
+        return setmetatable(newObject, getmetatable(object))
+    end
+    return _copy(object)
 end
 
 function table_ext.foreach(tb, func)
