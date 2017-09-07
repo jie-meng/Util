@@ -6,19 +6,19 @@ end
 
 function Tools.getAppName()
     if Tools.isPlatformWindows() then
-        return "Util.exe"
+        return "luaexec.exe"
     else
-        return "./Util"
+        return "./luaexec"
     end
 end
 
 function Tools.make()
-    local application = './Util'
+    local application = './luaexec'
     local cmake_cmd = 'cmake .'
     local make_cmd = 'make'
 
     if Tools.isPlatformWindows() then
-        application = 'Util.exe'
+        application = 'luaexec.exe'
         cmake_cmd = 'cmake -G "MinGW Makefiles'
         make_cmd = 'mingw32-make'
     end
