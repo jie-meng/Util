@@ -29,20 +29,20 @@ public:
     ~Json();
     Json(const Json& js);
     Json& operator=(const Json& js);
-    Json operator[](const std::string& key);
 
     JsonType getType();
     bool isNull() const;
-    bool isBoolean() const;
+    bool isBool() const;
     bool isNumber() const;
-    bool isNumberInteger() const;
-    bool isNumberFloat() const;
+    bool isInt() const;
+    bool isFloat() const;
     bool isObject() const;
     bool isArray() const;
     bool isString() const;
 
     Json get(const std::string& key) const;
 
+    void setNull(const std::string& key);
     void set(const std::string& key, int value);
     void set(const std::string& key, double value);
     void set(const std::string& key, bool value);
@@ -56,7 +56,11 @@ public:
     void set(const std::string& key, const std::vector<std::string>& values);
     void set(const std::string& key, const std::vector<Json>& values);
 
+    int toInt() const;
+    double toFloat() const;
+    bool toBool() const;
     std::string toString() const;
+    std::vector<Json> toArray() const;
 private:
     struct JsonData;
     UtilAutoPtr<JsonData> pdata_;

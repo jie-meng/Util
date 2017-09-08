@@ -58,14 +58,6 @@ Json& Json::operator=(const Json& js)
     return *this;
 }
 
-Json Json::operator[](const std::string& key)
-{
-    Json json;
-    json.pdata_->js_ = pdata_->js_[key];
-
-    return json;
-}
-
 Json::JsonType Json::getType()
 {
     return (JsonType)pdata_->js_.type();
@@ -76,7 +68,7 @@ bool Json::isNull() const
     return pdata_->js_.is_null();
 }
 
-bool Json::isBoolean() const
+bool Json::isBool() const
 {
     return pdata_->js_.is_boolean();
 }
@@ -86,12 +78,12 @@ bool Json::isNumber() const
     return pdata_->js_.is_number();
 }
 
-bool Json::isNumberInteger() const
+bool Json::isInt() const
 {
     return pdata_->js_.is_number_integer();
 }
 
-bool Json::isNumberFloat() const
+bool Json::isFloat() const
 {
     return pdata_->js_.is_number_float();
 }
@@ -116,6 +108,11 @@ Json Json::get(const std::string& key) const
     Json js;
     js.pdata_->js_ = pdata_->js_[key];
     return js;
+}
+
+void Json::setNull(const std::string& key)
+{
+    pdata_->js_[key] = nullptr;
 }
 
 void Json::set(const std::string& key, int value)
@@ -177,9 +174,41 @@ void Json::set(const std::string& key, const vector<Json>& values)
     pdata_->js_[key] = vec;
 }
 
+int Json::toInt() const
+{
+    return (int)pdata_->js_;
+}
+
+double Json::toFloat() const
+{
+    return (double)pdata_->js_;
+}
+
+bool Json::toBool() const
+{
+    return (bool)pdata_->js_;
+}
+
 string Json::toString() const
 {
-    return util::toString(pdata_->js_);
+    auto s = util::toString(pdata_->js_);
+    if (s.size() >= 2 && s[0] == '"' && s[s.size() -1] == '"')
+    {
+        s = s.substr(1, s.size() - 2);
+    }
+    return s;
+}
+
+vector<Json> Json::toArray() const
+{
+    vector<Json> vec;
+    for (auto it = pdata_->js_.begin(); it != pdata_->js_.end(); ++it)
+    {
+        Json json;
+        json.pdata_->js_ = *it;
+        vec.push_back(json);
+    }
+    return vec;
 }
 
 } //namespace util
