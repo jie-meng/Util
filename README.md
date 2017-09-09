@@ -18,6 +18,7 @@ Currently can run on MacOS/Linux/Windows.
 - csv
 - process
 - regex
+- json
 - trace
 - lua extension
 - unittest
@@ -25,7 +26,6 @@ Currently can run on MacOS/Linux/Windows.
 ### How to build ###
 
 - Install cmake
-- Install python3.x or python2.x (On windows)
 - Install mingw (On windows)
 
 Build luaexec: execute command "python make.py" on terminal
