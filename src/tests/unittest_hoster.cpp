@@ -16,6 +16,7 @@
 #include "testcase_net.hpp"
 #include "testcase_lua.hpp"
 #include "testcase_json.hpp"
+#include "testcase_trace.hpp"
 
 using namespace std;
 using namespace util;
@@ -44,6 +45,7 @@ void UnitTestHoster::run()
     suit.addTestSuite(TestCaseNet("TestCaseNet"));
     suit.addTestSuite(TestCaseLua("TestCaseLua"));
     suit.addTestSuite(TestCaseJson("TestCaseJson"));
+    suit.addTestSuite(TestCaseTrace("TestCaseTrace"));
 
     TestRunner runner;
     runner.run(suit);
