@@ -1,6 +1,7 @@
 #include "luaextend.hpp"
 #include "lexicalcast.hpp"
 #include "thread.hpp"
+#include "file.hpp"
 #include "net.hpp"
 #include "lua/src/lua.hpp"
 #include "lua/extend/lutillib.hpp"
@@ -147,7 +148,14 @@ void luaExecutor(int argc, char* argv[])
     {
         LuaState ls;
         openUtilExtendLibs(ls.getState());
-        int ret = ls.parseFile(argv[1]);
+
+        int ret = -1;
+        if (isPathFile(argv[1])) {
+            ret = ls.parseFile(argv[1]);    
+        } else {
+            ret = ls.parseLine(argv[1]);
+        }
+
         if (0 != ret)
             printLine(ls.getError());
     }

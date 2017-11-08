@@ -4,7 +4,7 @@
 using namespace std;
 using namespace util;
 
-const string kVersion = "1.2.1.20171004";
+const string kVersion = "1.2.2.20171108";
 
 int main(int argc, char* argv[])
 {
