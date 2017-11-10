@@ -27,9 +27,11 @@ endif()
 
 if (UNIX)
     add_definitions(-D_PLATFORM_UNIX_)
+    add_definitions(-DLUA_USE_POSIX)
     target_link_libraries(${APP_NAME} pthread)
 elseif (WIN32)
     add_definitions(-D_PLATFORM_WINDOWS_)
+    add_definitions(-DLUA_USE_WINDOWS)
     target_link_libraries(${APP_NAME} ws2_32 Shlwapi)
 endif()
 
