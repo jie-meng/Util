@@ -34,6 +34,33 @@ function file_ext.findFilesInDirRecursively(dir, func)
     return ret
 end
 
+function findFilesFlatRecursively(path_deque, path_filter, file_filter, output, limit)
+    if #path_deque > 0 then
+        local dir = table.remove(path_deque, 1)
+        local files = file_ext.findFilesInDir(dir, file_filter)
+        for _, v in ipairs(files) do
+            table.insert(output, v)
+            if limit and #output >= limit then
+                return
+            end
+        end
+        local dirs = file_ext.findPathInDir(dir, path_filter)
+        for _, v in ipairs(dirs) do
+            table.insert(path_deque, v)
+        end
+        
+        findFilesFlatRecursively(path_deque, path_filter, file_filter, output, limit)
+    end
+end
+
+function file_ext.findFilesFlat(dir, path_filter, file_filter, limit)
+    local output = {}
+    local deque = {}
+    table.insert(deque, dir)
+    findFilesFlatRecursively(deque, path_filter, file_filter, output, limit)
+    return output
+end
+
 function file_ext.readLines(filename)
     local lines = {}
     local f = io.open(filename, "r")

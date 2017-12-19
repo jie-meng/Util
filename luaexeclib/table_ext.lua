@@ -164,4 +164,10 @@ function table_ext.foreach(tb, func)
     end
 end
 
+function table_ext.arrayAddAll(tb1, tb2)
+    for _, v in ipairs(tb2) do
+        table.insert(tb1, v)
+    end
+end
+
 return table_ext
