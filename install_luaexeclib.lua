@@ -1,4 +1,10 @@
---[[If you are using windows, please run this script in a bash shell (Mingw/Cygwin)]]
+function forceCopyFile(src, dst)
+    local path, _ = util.splitPathname(dst)
+    if not util.isPathDir(path) then
+        util.mkDir(path)
+    end
+    util.fileCopy(src, dst, false)
+end
 
 print('Start install luaexeclib ...')
 
@@ -18,7 +24,7 @@ local files = util.findFilesInDirRecursively(util.currentPath() .. '/luaexeclib'
 for _, v in ipairs(files) do
     local dest = util.strReplace(v, util.currentPath() .. '/luaexeclib', first_dir)
     print(string.format('Copy "%s"  ---->  "%s"', v, dest))
-    util.fileCopy(v, dest, false)
+    forceCopyFile(v, dest)
 end
 
 print('Install luaexeclib finished')
