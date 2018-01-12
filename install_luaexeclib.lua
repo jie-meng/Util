@@ -1,9 +1,11 @@
 function forceCopyFile(src, dst)
     local path, _ = util.splitPathname(dst)
-    if not util.isPathDir(path) then
-        util.mkDir(path)
+    if not (util.strEndWith(path, '.svn') or util.strEndWith(path, '.git')) then
+        if not util.isPathDir(path) then
+            util.mkDir(path)
+        end
+        util.fileCopy(src, dst, false)    
     end
-    util.fileCopy(src, dst, false)
 end
 
 print('Start install luaexeclib ...')
