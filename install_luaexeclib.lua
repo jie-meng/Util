@@ -14,7 +14,6 @@ util.pathRemoveAll(first_dir)
 util.mkDir(first_dir)
 
 print('Copy new luaexeclib files to path: ' .. first_dir)
-os.execute('cp -r luaexeclib/. ' .. first_dir)
 local files = util.findFilesInDirRecursively(util.currentPath() .. '/luaexeclib')
 for _, v in ipairs(files) do
     local dest = util.strReplace(v, util.currentPath() .. '/luaexeclib', first_dir)
