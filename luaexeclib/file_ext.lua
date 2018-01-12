@@ -97,7 +97,7 @@ function file_ext.makeDirRecursively(dir)
     if not util.isPathDir(dir) then
         if not util.mkDir(dir) then
             local parent_path, _ = util.splitPathname(dir)
-            makeDirRecursively(parent_path)
+            file_ext.makeDirRecursively(parent_path)
             util.mkDir(dir)
         end
     end
