@@ -1,5 +1,9 @@
 language: cpp
 compiler:
-  - gcc
-  - clang
+    - gcc
+    - clang
+python:
+    - "3.6"
+gcc:
+    - "4.9"
 script: python make_and_test.py
