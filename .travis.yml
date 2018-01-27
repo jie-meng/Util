@@ -2,4 +2,4 @@ language: cpp
 compiler:
   - gcc
   - clang
-script: python make.py
+script: python make_and_test.py

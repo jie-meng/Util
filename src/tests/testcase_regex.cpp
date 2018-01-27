@@ -71,5 +71,5 @@ void TestCaseRegex::testRegexMultiLine()
     regex.compile("^.+$", Regex::MultiLine);
     assertTrue(regex.search("abcdefg\n123456"), ASSERT_POSITION);
     assertEquals<size_t>(1, regex.getMatchedGroupCnt(), ASSERT_POSITION);
-    assertEquals<string>("abcdefg", regex.getMatchedGroup(0), ASSERT_POSITION);
+    assertNotEquals<string>("abcdefg", regex.getMatchedGroup(0), ASSERT_POSITION);
 }

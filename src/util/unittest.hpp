@@ -351,6 +351,7 @@ public:
     { result_.cleanup(); result_.addListener(&printer_); }
     ~TestRunner() {};
 public:
+    inline bool isSuccess() { return result_.isSuccess(); }
     inline void setPrinter(UtilAutoPtr<Printer> printer) { printer_.setPrinter(printer); }
     inline void run(Test& test) { doRun(test); }
     inline void doRun(Test& test) { doRun(test, false); }

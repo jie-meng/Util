@@ -8,7 +8,7 @@ class UnitTestHoster
 public:
     SINGLETON(UnitTestHoster)
     UnitTestHoster();
-    void run();
+    bool run();
 private:
     DISALLOW_COPY_AND_ASSIGN(UnitTestHoster)
 };

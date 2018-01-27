@@ -24,7 +24,7 @@ using namespace util;
 UnitTestHoster::UnitTestHoster()
 {}
 
-void UnitTestHoster::run()
+bool UnitTestHoster::run()
 {
     TestSuite suit;
     
@@ -49,4 +49,5 @@ void UnitTestHoster::run()
 
     TestRunner runner;
     runner.run(suit);
+    return runner.isSuccess();
 }

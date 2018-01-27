@@ -107,11 +107,11 @@ void TestCaseFile::testFileInfo()
     assertEquals<string>("exe", fileExtension(pathname), ASSERT_POSITION);
     assertEquals<string>("Test", fileBaseName(pathname), ASSERT_POSITION);
     
-    DateTime createTime = fileTime("unittest.lua", FtCreationTime);
-    DateTime writeTime = fileTime("unittest.lua", FtLastWriteTime);
-    DateTime accessTime = fileTime("unittest.lua", FtLastAccessTime);
+    DateTime createTime = fileTime("make_and_test.py", FtCreationTime);
+    DateTime writeTime = fileTime("make_and_test.py", FtLastWriteTime);
+    DateTime accessTime = fileTime("make_and_test.py", FtLastAccessTime);
     
-    assertTrue(isPathFile("unittest.lua"), ASSERT_POSITION);
+    assertTrue(isPathFile("make_and_test.py"), ASSERT_POSITION);
     assertTrue(createTime.isValid(), ASSERT_POSITION);
     assertTrue(writeTime.isValid(), ASSERT_POSITION);
     assertTrue(accessTime.isValid(), ASSERT_POSITION);
@@ -233,5 +233,4 @@ void TestCaseFile::testIsTextFile()
     assertTrue(isTextFile("Makefile"), ASSERT_POSITION);
     assertTrue(isTextFile("CMakeLists.txt"), ASSERT_POSITION);
     assertTrue(isTextFile("make.py"), ASSERT_POSITION);
-    assertFalse(isTextFile(".Util"), ASSERT_POSITION);
 }

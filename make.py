@@ -1,12 +1,19 @@
 import os
+import sys
 import shutil
 import platform
 
-if platform.system().lower().find('windows') >= 0:
-    os.system('cmake -G "MinGW Makefiles"')
-    os.system('mingw32-make')
-else:
-    os.system("cmake .")
-    os.system("make")
+def make():
+    ret = -1
+    if platform.system().lower().find('windows') >= 0:
+        os.system('cmake -G "MinGW Makefiles"')
+        ret = os.system('mingw32-make')
 
-print("Make ok.")
+    else:
+        os.system("cmake .")
+        ret = os.system("make")
+
+    return ret
+
+if __name__ == "__main__":
+    sys.exit(make())
