@@ -1,5 +1,7 @@
 ## Util ##
 
+[![Build Status](https://travis-ci.org/jie-meng/Util.svg?branch=master)](https://travis-ci.org/jie-meng/Util)
+
 A ligthweight cross-platform C++ library. 
 
 Support Unix & Windows. 
