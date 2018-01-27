@@ -22,4 +22,7 @@ if __name__ == "__main__":
     if make.make() != 0:
         sys.exit(-1)
 
-    sys.exit(unittest())
+    if unittest() != 0:
+        sys.exit(-1)
+
+    sys.exit(0)

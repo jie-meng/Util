@@ -16,4 +16,7 @@ def make():
     return ret
 
 if __name__ == "__main__":
-    sys.exit(make())
+    if make() != 0:
+        sys.exit(-1)
+
+    sys.exit(0)
