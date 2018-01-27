@@ -2,8 +2,13 @@ language: cpp
 compiler:
     - gcc
     - clang
-python:
-    - "3.6"
-gcc:
-    - "4.9"
+before_install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
 script: python make_and_test.py
