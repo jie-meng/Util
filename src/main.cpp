@@ -15,9 +15,10 @@ int main(int argc, char* argv[])
     else
     {
         if (argc == 1)
+        {
             printLine("---------------------------------\nluaexec (version: " + kVersion + ")\n---------------------------------");
+        }
         
-        luaExecutor(argc, argv);
-        return 0;
+        return luaExecutor(argc, argv);
     }
 }

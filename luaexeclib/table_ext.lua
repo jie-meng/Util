@@ -170,4 +170,10 @@ function table_ext.arrayAddAll(tb1, tb2)
     end
 end
 
+function table_ext.clear(t)
+    for k, _ in pairs(t) do 
+        t[k]=nil
+    end
+end
+
 return table_ext

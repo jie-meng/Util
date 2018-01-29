@@ -137,12 +137,13 @@ void luaExecuteCmder(DgramSocket* pds, const std::string& ip, unsigned short por
     pds->sendTo(cmd.c_str(), cmd.length(), ip, port);
 }
 
-void luaExecutor(int argc, char* argv[])
+int luaExecutor(int argc, char* argv[])
 {
     if (1 == argc)
     {
         LuaExtendCmdLine lc;
         lc.start();
+        return 0;
     }
     else if (2 == argc)
     {
@@ -150,14 +151,21 @@ void luaExecutor(int argc, char* argv[])
         openUtilExtendLibs(ls.getState());
 
         int ret = -1;
-        if (isPathFile(argv[1])) {
+        if (isPathFile(argv[1])) 
+        {
             ret = ls.parseFile(argv[1]);    
-        } else {
+        } 
+        else 
+        {
             ret = ls.parseLine(argv[1]);
         }
 
         if (0 != ret)
+        {
             printLine(ls.getError());
+        }
+        
+        return ret;
     }
     else
     {
@@ -165,7 +173,9 @@ void luaExecutor(int argc, char* argv[])
         std::string exit_cmd = "exit";
 
         if (argc > 3)
+        {
             exit_cmd = argv[3];
+        }
 
         DgramSocket ds(Family_IPv4);
 
@@ -176,6 +186,7 @@ void luaExecutor(int argc, char* argv[])
         cl.start();
 
         td.kill();
+        return 0;
     }
 }
 

@@ -146,7 +146,7 @@ private:
     DISALLOW_COPY_AND_ASSIGN(LuaExtendCmdLine)
 };
 
-void luaExecutor(int argc, char* argv[]);
+int luaExecutor(int argc, char* argv[]);
 
 void luaExtendError(lua_State* plua_state, const std::string& lib, const std::string& func, const std::string& msg);
 
