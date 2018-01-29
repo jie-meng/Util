@@ -10,6 +10,7 @@ function FileSpec:run()
             util.pathRemoveAll('testdir')
             self:assertTrue(util.mkFullDir('testdir/a/b/c'))
             self:assertTrue(util.isPathDir('testdir/a/b/c'))
+            util.pathRemoveAll('testdir')
         end)       
     end)
 end
