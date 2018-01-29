@@ -175,9 +175,16 @@ static int pathRemove(lua_State* plua_state)
 
 static int mkDir(lua_State* plua_state)
 {
-    luaPushBoolean(plua_state, mkDir(luaToString(plua_state, 1, "")));
+    luaPushBoolean(plua_state, mkDir(luaToString(plua_state, 1, ""), luaToBoolean(plua_state, 1, true)));
     return 1;
 }
+
+static int mkFullDir(lua_State* plua_state)
+{
+    luaPushBoolean(plua_state, mkFullDir(luaToString(plua_state, 1, "")));
+    return 1;
+}
+
 
 //dir
 static int findFilesInDir(lua_State* plua_state)
@@ -244,6 +251,7 @@ static const LuaReg file_lib[] =
     {"pathRename", pathRename},
     {"splitPathname", splitPathname},
     {"mkDir", mkDir},
+    {"mkFullDir", mkFullDir},
 
     {"findFilesInDir", findFilesInDir},
     {"findPathInDir", findPathInDir},

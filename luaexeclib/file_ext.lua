@@ -93,14 +93,4 @@ function file_ext.foreachLine(filename, func)
     end
 end
 
-function file_ext.makeDirRecursively(dir)
-    if not util.isPathDir(dir) then
-        if not util.mkDir(dir) then
-            local parent_path, _ = util.splitPathname(dir)
-            file_ext.makeDirRecursively(parent_path)
-            util.mkDir(dir)
-        end
-    end
-end
-
 return file_ext

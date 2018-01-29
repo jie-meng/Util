@@ -5,6 +5,7 @@ using namespace std;
 using namespace util;
 
 const string kTempFileName = "temp_file";
+const string kTempDirName = "temp_dir";
 
 void TestCaseFile::registerTestFunctions()
 {
@@ -15,6 +16,7 @@ void TestCaseFile::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseFile, testPath)
     REGISTER_TEST_FUNCTION(TestCaseFile, testListFile)
     REGISTER_TEST_FUNCTION(TestCaseFile, testIsTextFile)
+    REGISTER_TEST_FUNCTION(TestCaseFile, testMkDir)
 }
 
 void TestCaseFile::setUp()
@@ -25,6 +27,9 @@ void TestCaseFile::tearDown()
 {
     if (isPathFile(kTempFileName))
         pathRemove(kTempFileName);
+
+    if (isPathDir(kTempDirName))
+        pathRemoveAll(kTempDirName);
 }
 
 void TestCaseFile::testReadWrite()
@@ -106,11 +111,11 @@ void TestCaseFile::testFileInfo()
     pathname = "C:\\Program Files\\Microsoft\\Temp\\Test.exe";
     assertEquals<string>("exe", fileExtension(pathname), ASSERT_POSITION);
     assertEquals<string>("Test", fileBaseName(pathname), ASSERT_POSITION);
-    
+
     DateTime createTime = fileTime("make_and_test.py", FtCreationTime);
     DateTime writeTime = fileTime("make_and_test.py", FtLastWriteTime);
     DateTime accessTime = fileTime("make_and_test.py", FtLastAccessTime);
-    
+
     assertTrue(isPathFile("make_and_test.py"), ASSERT_POSITION);
     assertTrue(createTime.isValid(), ASSERT_POSITION);
     assertTrue(writeTime.isValid(), ASSERT_POSITION);
@@ -162,25 +167,25 @@ void TestCaseFile::testPath()
     assertFalse(isPathEmpty(currentPath() + "/src"), ASSERT_POSITION);
     assertFalse(isPathEmpty("src/main.cpp"), ASSERT_POSITION);
     assertFalse(isPathEmpty(currentPath() + "/src/main.cpp"), ASSERT_POSITION);
-    assertTrue(mkDir("test_mkdir"), ASSERT_POSITION);
-    assertTrue(isPathEmpty("test_mkdir"), ASSERT_POSITION);
-    assertTrue(writeTextFile("test_mkdir/testfile", "content"), ASSERT_POSITION);
-    assertFalse(isPathEmpty("test_mkdir"), ASSERT_POSITION);
-    assertFalse(pathRemove("test_mkdir"), ASSERT_POSITION);
-    assertTrue(pathRemove("test_mkdir/testfile"), ASSERT_POSITION);
-    assertTrue(pathRemove("test_mkdir"), ASSERT_POSITION);
-    assertTrue(mkDir("test_mkdir"), ASSERT_POSITION);
-    assertTrue(isPathEmpty("test_mkdir"), ASSERT_POSITION);
-    assertTrue(writeTextFile("test_mkdir/testfile0", "content"), ASSERT_POSITION);
-    assertTrue(writeTextFile("test_mkdir/testfile1", "content"), ASSERT_POSITION);
-    assertTrue(writeTextFile("test_mkdir/testfile2", "content"), ASSERT_POSITION);
-    pathRemoveAll("test_mkdir");
-    assertFalse(isPathExists("test_mkdir"), ASSERT_POSITION);
-    
-    assertTrue(mkDir("test_mkdir"), ASSERT_POSITION);
-    assertTrue(writeTextFile("test_mkdir/testfile", "content"), ASSERT_POSITION);
+    assertTrue(mkDir(kTempDirName), ASSERT_POSITION);
+    assertTrue(isPathEmpty(kTempDirName), ASSERT_POSITION);
+    assertTrue(writeTextFile(kTempDirName + "/testfile", "content"), ASSERT_POSITION);
+    assertFalse(isPathEmpty(kTempDirName), ASSERT_POSITION);
+    assertFalse(pathRemove(kTempDirName), ASSERT_POSITION);
+    assertTrue(pathRemove(kTempDirName + "/testfile"), ASSERT_POSITION);
+    assertTrue(pathRemove(kTempDirName), ASSERT_POSITION);
+    assertTrue(mkDir(kTempDirName), ASSERT_POSITION);
+    assertTrue(isPathEmpty(kTempDirName), ASSERT_POSITION);
+    assertTrue(writeTextFile(kTempDirName + "/testfile0", "content"), ASSERT_POSITION);
+    assertTrue(writeTextFile(kTempDirName + "/testfile1", "content"), ASSERT_POSITION);
+    assertTrue(writeTextFile(kTempDirName + "/testfile2", "content"), ASSERT_POSITION);
+    pathRemoveAll(kTempDirName);
+    assertFalse(isPathExists(kTempDirName), ASSERT_POSITION);
+
+    assertTrue(mkDir(kTempDirName), ASSERT_POSITION);
+    assertTrue(writeTextFile(kTempDirName + "/testfile", "content"), ASSERT_POSITION);
     assertFalse(isPathDir("test2_mkdir"), ASSERT_POSITION);
-    assertTrue(pathRename("test_mkdir", "test2_mkdir"), ASSERT_POSITION);
+    assertTrue(pathRename(kTempDirName, "test2_mkdir"), ASSERT_POSITION);
     assertTrue(isPathDir("test2_mkdir"), ASSERT_POSITION);
     assertFalse(isPathFile("test2_mkdir/testfile2"), ASSERT_POSITION);
     assertTrue(pathRename(currentPath() + "/test2_mkdir/testfile", "test2_mkdir/testfile2"), ASSERT_POSITION);
@@ -233,4 +238,17 @@ void TestCaseFile::testIsTextFile()
     assertTrue(isTextFile("Makefile"), ASSERT_POSITION);
     assertTrue(isTextFile("CMakeLists.txt"), ASSERT_POSITION);
     assertTrue(isTextFile("make.py"), ASSERT_POSITION);
+}
+
+void TestCaseFile::testMkDir()
+{
+    assertTrue(mkDir(kTempDirName), ASSERT_POSITION);
+    assertFalse(mkDir(kTempDirName), ASSERT_POSITION);
+    assertTrue(mkDir(kTempDirName, false), ASSERT_POSITION);
+
+    assertTrue(mkFullDir(kTempDirName + "/test/a/b/c"), ASSERT_POSITION);
+    assertTrue(isPathDir(kTempDirName + "/test"), ASSERT_POSITION);
+    assertTrue(isPathDir(kTempDirName + "/test/a"), ASSERT_POSITION);
+    assertTrue(isPathDir(kTempDirName + "/test/a/b"), ASSERT_POSITION);
+    assertTrue(isPathDir(kTempDirName + "/test/a/b/c"), ASSERT_POSITION);
 }

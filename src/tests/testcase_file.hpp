@@ -17,6 +17,7 @@ public:
     void testPath();
     void testListFile();
     void testIsTextFile();
+    void testMkDir();
 protected:
     virtual void setUp();
     virtual void tearDown();
