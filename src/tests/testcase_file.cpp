@@ -248,7 +248,6 @@ void TestCaseFile::testMkDir()
     
     pathRemoveAll(kTempDirName);
     assertTrue(mkFullDir(kTempDirName + "/test/a/b/c"), ASSERT_POSITION);
-    printLine("Check: " + kTempDirName + "/test");
     assertTrue(isPathDir(kTempDirName + "/test"), ASSERT_POSITION);
     assertTrue(isPathDir(kTempDirName + "/test/a"), ASSERT_POSITION);
     assertTrue(isPathDir(kTempDirName + "/test/a/b"), ASSERT_POSITION);
