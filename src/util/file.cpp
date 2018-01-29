@@ -486,31 +486,14 @@ bool mkFullDir(const std::string& path)
     {
         if (mkDir(path, false))
         {
-            printLine("MakeDir0: " + path);
             return true;
         }
         else
         {
             auto path_name = splitPathname(path);
-            printLine("to do: " + path_name.first);
             if (path_name.first != path)
             {
-                if (mkFullDir(path_name.first))
-                {
-                    if (mkDir(path, false))
-                    {
-                        printLine("MakeDir1: " + path);
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
+                return mkFullDir(path_name.first) ? mkDir(path, false) : false;
             }
             else
             {
