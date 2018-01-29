@@ -245,7 +245,8 @@ void TestCaseFile::testMkDir()
     assertTrue(mkDir(kTempDirName), ASSERT_POSITION);
     assertFalse(mkDir(kTempDirName), ASSERT_POSITION);
     assertTrue(mkDir(kTempDirName, false), ASSERT_POSITION);
-
+    
+    pathRemoveAll(kTempDirName);
     assertTrue(mkFullDir(kTempDirName + "/test/a/b/c"), ASSERT_POSITION);
     assertTrue(isPathDir(kTempDirName + "/test"), ASSERT_POSITION);
     assertTrue(isPathDir(kTempDirName + "/test/a"), ASSERT_POSITION);
