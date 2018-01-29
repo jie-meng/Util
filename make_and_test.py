@@ -14,6 +14,9 @@ def unittest():
     print("UnitTest started ...\n")
     return os.system(getAppName() + " $")
 
+def installLuaexeclib():
+    return os.system(getAppName() + " install_luaexeclib.lua")
+
 def luatest():
     return os.system(getAppName() + " lua_test/lua_test.lua")
 
@@ -26,6 +29,9 @@ if __name__ == "__main__":
         sys.exit(-1)
 
     if unittest() != 0:
+        sys.exit(-1)
+
+    if installLuaexeclib() != 0:
         sys.exit(-1)
         
     if luatest() != 0:
