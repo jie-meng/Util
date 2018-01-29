@@ -11,4 +11,4 @@ addons:
     packages:
       - gcc-4.9
       - g++-4.9
-script: python make_and_test.py
+script: python make_and_test.py ci
