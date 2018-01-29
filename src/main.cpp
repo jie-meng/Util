@@ -7,7 +7,7 @@ using namespace util;
 const string kVersion = "1.3.0";
 
 int main(int argc, char* argv[])
-{
+{    
     if (argc > 1 && strAreEqual("$", argv[1]))
     {
         return UnitTestHoster::getInstance().run() ? 0 : -1;

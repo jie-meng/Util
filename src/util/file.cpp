@@ -478,26 +478,24 @@ bool mkDir(const std::string& path, bool fail_if_exist)
 
 bool mkFullDir(const std::string& path)
 {
-    string path_format = strReplaceAll(path, "\\", "/");
-    if (isPathDir(path_format))
+    if (isPathDir(path))
     {
         return true;
     }
     else
     {
-        if (mkDir(path_format, false))
+        if (mkDir(path, false))
         {
             return true;
         }
         else
         {
-            auto path_name = splitPathname(path_format);
-            size_t pos = path_name.first.find_last_of("/");
-            if (pos != string::npos && pos != 0)
+            auto path_name = splitPathname(path);
+            if (path_name.first != path)
             {
                 if (mkFullDir(path_name.first))
                 {
-                    return mkDir(path_format, false);
+                    return mkDir(path, false);
                 }
                 else
                 {

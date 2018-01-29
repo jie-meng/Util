@@ -14,6 +14,9 @@ def unittest():
     print("UnitTest started ...\n")
     return os.system(getAppName() + " $")
 
+def luatest():
+    return os.system(getAppName() + " lua_test/lua_test.lua")
+
 if __name__ == "__main__":
     if os.path.isfile(getAppName()):
         print('Delete ' + getAppName())
@@ -23,6 +26,9 @@ if __name__ == "__main__":
         sys.exit(-1)
 
     if unittest() != 0:
+        sys.exit(-1)
+        
+    if luatest() != 0:
         sys.exit(-1)
 
     sys.exit(0)
