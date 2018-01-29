@@ -1,21 +1,12 @@
-function makeDirRecursively(dir)
-    if not util.isPathDir(dir) then
-        if not util.mkDir(dir) then
-            local parent_path, _ = util.splitPathname(dir)
-            makeDirRecursively(parent_path)
-            util.mkDir(dir)
-        end
-    end
-end
-
 function forceCopyFile(src, dst)
     local path, _ = util.splitPathname(dst)
     if not (util.strEndWith(path, '.svn') or util.strEndWith(path, '.git')) then
-        if not util.isPathDir(path) then
-            makeDirRecursively(path)
+        if util.mkFullDir(path) then
+            return util.fileCopy(src, dst, false)
         end
-        util.fileCopy(src, dst, false)    
     end
+    
+    return false
 end
 
 print('Start install luaexeclib ...')
@@ -29,14 +20,14 @@ end
 local first_dir = util.splitPathname(string.sub(package.path, 1, idx-1))
 print('Remove old luaexeclib files from path: ' .. first_dir)
 util.pathRemoveAll(first_dir)
-util.mkDir(first_dir)
 
 print('Copy new luaexeclib files to path: ' .. first_dir)
 local files = util.findFilesInDirRecursively(util.currentPath() .. '/luaexeclib')
 for _, v in ipairs(files) do
     local dest = util.strReplace(v, util.currentPath() .. '/luaexeclib', first_dir)
-    print(string.format('Copy "%s"  ---->  "%s"', v, dest))
-    forceCopyFile(v, dest)
+    if forceCopyFile(v, dest) then
+        print(string.format('Copy "%s"  ---->  "%s"', v, dest))
+    end
 end
 
 print('Install luaexeclib finished')

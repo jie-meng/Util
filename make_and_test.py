@@ -34,7 +34,7 @@ if __name__ == "__main__":
     if installLuaexeclib() != 0:
         sys.exit(-1)
 
-    print('ls lua')
+    print('ls /usr/local/share/lua/5.3')
     os.system('ls /usr/local/share/lua/5.3')
         
     if luatest() != 0:
