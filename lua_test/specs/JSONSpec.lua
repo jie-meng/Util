@@ -1,0 +1,43 @@
+require('modulization')
+local json = import('json')
+local Spec = import('spec.Spec')
+
+local JSONSpec = class('JSONSpec', Spec)
+
+function JSONSpec:run()
+    self:describe('JSONSpec', function ()
+        self:describe('util.mkFullDir', function ()
+            self:it('should return table with correct data when json.decode() json str', function ()
+                local data = json.decode([[{
+                                "id": "0001",
+                                "type": "donut",
+                                "name": "Cake",
+                                "ppu": 0.55,
+                                "batters":
+                                    {
+                                        "batter":
+                                            [
+                                                { "id": "1001", "type": "Regular" },
+                                                { "id": "1002", "type": "Chocolate" },
+                                                { "id": "1003", "type": "Blueberry" },
+                                                { "id": "1004", "type": "Devil's Food" }
+                                            ]
+                                    },
+                                "topping":
+                                    [
+                                        { "id": "5001", "type": "None" },
+                                        { "id": "5002", "type": "Glazed" },
+                                        { "id": "5005", "type": "Sugar" },
+                                        { "id": "5007", "type": "Powdered Sugar" },
+                                        { "id": "5006", "type": "Chocolate with Sprinkles" },
+                                        { "id": "5003", "type": "Chocolate" },
+                                        { "id": "5004", "type": "Maple" }
+                                    ]
+                            }]])
+                self:assertEquals('Glazed', data.topping[2].type)
+            end)
+        end)
+    end)
+end
+
+return JSONSpec
