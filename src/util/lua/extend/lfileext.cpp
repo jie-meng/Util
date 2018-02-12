@@ -103,6 +103,23 @@ static int fileCopy(lua_State* plua_state)
     return 1;
 }
 
+static int fileCopyFullPath(lua_State* plua_state)
+{
+    luaPushBoolean(plua_state, fileCopyFullPath(luaToString(plua_state, 1, ""),
+                                                  luaToString(plua_state, 2, ""),
+                                                  luaToBoolean(plua_state, 3, true)
+                                                  ));
+    return 1;
+}
+
+static int copyTree(lua_State* plua_state)
+{
+    copyTree(luaToString(plua_state, 1, ""),
+              luaToString(plua_state, 2, ""),
+              luaToBoolean(plua_state, 3, true));
+    return 0;
+}
+
 static int splitPathname(lua_State* plua_state)
 {
     std::pair<std::string, std::string> ret = splitPathname(luaToString(plua_state, 1, ""));
@@ -232,6 +249,8 @@ static const LuaReg file_lib[] =
     {"writeBinaryFile", writeBinaryFile},
     {"overwriteBinaryFile", overwriteBinaryFile},
     {"fileCopy", fileCopy},
+    {"fileCopyFullPath", fileCopyFullPath},
+    {"copyTree", copyTree},
         
     {"fileSize", fileSize},
     {"fileExtension", fileExtension},

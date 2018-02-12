@@ -18,6 +18,8 @@ public:
     void testListFile();
     void testIsTextFile();
     void testMkDir();
+    void testCopyFullPath();
+    void testCopyTree();
 protected:
     virtual void setUp();
     virtual void tearDown();

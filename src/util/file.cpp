@@ -152,15 +152,15 @@ bool overwriteBinaryFile(const std::string& file, char* pbuf, size_t write_len, 
     }
 }
 
-bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exist)
+bool fileCopy(const std::string& src, const std::string& dst, bool fail_if_exist)
 {
-    if (fail_if_exist && isPathExists(dest_path)) return false;
+    if (fail_if_exist && isPathExists(dst)) return false;
 
-    std::ifstream ifs(src_path.c_str(), std::ios::binary);
+    std::ifstream ifs(src.c_str(), std::ios::binary);
     if (!ifs.is_open()) return false;
 
     char buf[kBufSize];
-    std::ofstream ofs(dest_path.c_str(), std::ios::binary);
+    std::ofstream ofs(dst.c_str(), std::ios::binary);
 
     while (!ifs.eof())
     {
@@ -169,6 +169,56 @@ bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fa
     }
 
     return true;
+}
+
+bool fileCopyFullPath(const std::string& src, const std::string& dst, bool fail_if_exist)
+{
+    auto path_name = splitPathname(dst);
+    if (!isPathDir(path_name.first) && !mkFullDir(path_name.first))
+    {
+        return false;
+    }
+    
+    return fileCopy(src, dst, fail_if_exist);
+}
+
+void copyTree(const std::string& src, const std::string& dst, bool overwrite_exist_file)
+{
+    if (isPathFile(src))
+    {
+        fileCopyFullPath(src, dst, !overwrite_exist_file);
+        return;
+    }
+    
+    auto formatted_src = strReplaceAll(src, "\\", "/");
+    auto formatted_dst = strReplaceAll(dst, "\\", "/");
+    
+    if (strEndWith(formatted_src, "/"))
+    {
+        formatted_src = strLeft(formatted_src, formatted_src.length() - 1);
+    }
+    
+    if (strEndWith(formatted_dst, "/"))
+    {
+        formatted_dst = strLeft(formatted_dst, formatted_dst.length() - 1);
+    }
+    
+    vector<string> out_vec;
+    PathFilterRecursive< vector<string> > pfr(out_vec);
+    listFiles(formatted_src, out_vec, &pfr);
+    
+    for (auto it = out_vec.begin(); it != out_vec.end(); ++it)
+    {
+        auto relative_path = strReplace(*it, formatted_src, "");
+        if (isPathFile(*it))
+        {
+            fileCopyFullPath(*it, formatted_dst + relative_path, !overwrite_exist_file);
+        }
+        else if (isPathDir(*it))
+        {
+            mkFullDir(formatted_dst + relative_path);
+        }
+    }
 }
 
 uint64_t fileSize(const std::string& file)

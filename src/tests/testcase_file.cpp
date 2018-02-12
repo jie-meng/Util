@@ -17,6 +17,8 @@ void TestCaseFile::registerTestFunctions()
     REGISTER_TEST_FUNCTION(TestCaseFile, testListFile)
     REGISTER_TEST_FUNCTION(TestCaseFile, testIsTextFile)
     REGISTER_TEST_FUNCTION(TestCaseFile, testMkDir)
+    REGISTER_TEST_FUNCTION(TestCaseFile, testCopyFullPath)
+    REGISTER_TEST_FUNCTION(TestCaseFile, testCopyTree)
 }
 
 void TestCaseFile::setUp()
@@ -252,4 +254,28 @@ void TestCaseFile::testMkDir()
     assertTrue(isPathDir(kTempDirName + "/test/a"), ASSERT_POSITION);
     assertTrue(isPathDir(kTempDirName + "/test/a/b"), ASSERT_POSITION);
     assertTrue(isPathDir(kTempDirName + "/test/a/b/c"), ASSERT_POSITION);
+}
+
+void TestCaseFile::testCopyFullPath()
+{
+    assertTrue(fileCopyFullPath("run.lua", kTempDirName + "/test/abc/x.lua", true), ASSERT_POSITION);
+    assertTrue(isPathFile(kTempDirName + "/test/abc/x.lua"), ASSERT_POSITION);
+    assertEquals(readTextFile("run.lua"), readTextFile(kTempDirName + "/test/abc/x.lua"), ASSERT_POSITION);
+    assertFalse(fileCopyFullPath("run.lua", kTempDirName + "/test/abc/x.lua", true), ASSERT_POSITION);
+    assertTrue(fileCopyFullPath("run.lua", kTempDirName + "/test/abc/x.lua", false), ASSERT_POSITION);
+    assertEquals(readTextFile("run.lua"), readTextFile(kTempDirName + "/test/abc/x.lua"), ASSERT_POSITION);
+}
+
+void TestCaseFile::testCopyTree()
+{
+    //copy single file
+    copyTree("run.lua", kTempDirName + "/test/abc/x.lua");
+    assertTrue(isPathFile(kTempDirName + "/test/abc/x.lua"), ASSERT_POSITION);
+    assertEquals(readTextFile("run.lua"), readTextFile(kTempDirName + "/test/abc/x.lua"), ASSERT_POSITION);
+    
+    //copy tree
+    copyTree("src", currentPath() + "/" + kTempDirName + "/cpsrc");
+    assertTrue(isPathDir(currentPath() + "/" + kTempDirName + "/cpsrc"), ASSERT_POSITION);
+    assertTrue(isPathFile(currentPath() + "/" + kTempDirName + "/cpsrc/main.cpp"), ASSERT_POSITION);
+    assertTrue(isPathFile(currentPath() + "/" + kTempDirName + "/cpsrc/util/base.hpp"), ASSERT_POSITION);
 }

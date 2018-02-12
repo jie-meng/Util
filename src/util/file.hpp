@@ -16,7 +16,9 @@ bool createBinaryFile(const std::string& file, uint64_t file_size = 0, char defa
 bool readBinaryFile(const std::string& file, char* pout_buf, size_t read_len, std::streamoff offset = 0, std::ios::seekdir pos = std::ios_base::beg);
 bool writeBinaryFile(const std::string& file, char* pbuf, size_t write_len, bool append = false);
 bool overwriteBinaryFile(const std::string& file, char* pbuf, size_t write_len, std::streamoff offset = 0, std::ios::seekdir pos = std::ios_base::beg);
-bool fileCopy(const std::string& src_path, const std::string& dest_path, bool fail_if_exist = true);
+bool fileCopy(const std::string& src, const std::string& dst, bool fail_if_exist = true);
+bool fileCopyFullPath(const std::string& src, const std::string& dst, bool fail_if_exist = true);
+void copyTree(const std::string& src, const std::string& dst, bool overwrite_exist_file = true);
     
 //file info
 uint64_t fileSize(const std::string& file);
@@ -129,6 +131,27 @@ public:
 private:
     Coll& coll_;
     std::string ext_;
+};
+
+template <class Coll>
+class PathFilterRecursive : public PathFilter
+{
+public:
+    explicit PathFilterRecursive(Coll& c) :
+        coll_(c)
+    {}
+
+    virtual bool filter(const std::string& path)
+    {
+        if (isPathDir(path))
+        {
+            listFiles(path, coll_, this);
+        }
+
+        return true;
+    }
+private:
+    Coll& coll_;
 };
 
 size_t listFiles(const std::string& path, std::vector<std::string>& out_vec, PathFilter* pfilter  = 0);
