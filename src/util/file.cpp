@@ -174,11 +174,12 @@ bool fileCopy(const std::string& src, const std::string& dst, bool fail_if_exist
 bool fileCopyFullPath(const std::string& src, const std::string& dst, bool fail_if_exist)
 {
     auto path_name = splitPathname(dst);
-    if (!isPathDir(path_name.first) && !mkFullDir(path_name.first))
+    if (!isPathDir(path_name.first))
     {
-        return false;
+         if (!mkFullDir(path_name.first))
+            return false;
     }
-    
+
     return fileCopy(src, dst, fail_if_exist);
 }
 
@@ -434,8 +435,10 @@ bool isPathDir(const std::string& path)
 #endif
 #ifdef _PLATFORM_UNIX_
     struct stat info;
-    stat(path.c_str(), &info);
-    if(S_ISDIR(info.st_mode))
+    if (0 != stat(path.c_str(), &info))
+        return false;
+
+    if (S_ISDIR(info.st_mode))
         return true;
     else
         return false;
