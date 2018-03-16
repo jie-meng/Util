@@ -174,13 +174,7 @@ bool fileCopy(const std::string& src, const std::string& dst, bool fail_if_exist
 bool fileCopyFullPath(const std::string& src, const std::string& dst, bool fail_if_exist)
 {
     auto path_name = splitPathname(dst);
-    if (!isPathDir(path_name.first))
-    {
-         if (!mkFullDir(path_name.first))
-            return false;
-    }
-
-    return fileCopy(src, dst, fail_if_exist);
+    return (isPathDir(path_name.first) || mkFullDir(path_name.first)) ? fileCopy(src, dst, fail_if_exist) : false;
 }
 
 void copyTree(const std::string& src, const std::string& dst, bool overwrite_exist_file)
@@ -190,24 +184,24 @@ void copyTree(const std::string& src, const std::string& dst, bool overwrite_exi
         fileCopyFullPath(src, dst, !overwrite_exist_file);
         return;
     }
-    
+
     auto formatted_src = strReplaceAll(src, "\\", "/");
     auto formatted_dst = strReplaceAll(dst, "\\", "/");
-    
+
     if (strEndWith(formatted_src, "/"))
     {
         formatted_src = strLeft(formatted_src, formatted_src.length() - 1);
     }
-    
+
     if (strEndWith(formatted_dst, "/"))
     {
         formatted_dst = strLeft(formatted_dst, formatted_dst.length() - 1);
     }
-    
+
     vector<string> out_vec;
     PathFilterRecursive< vector<string> > pfr(out_vec);
     listFiles(formatted_src, out_vec, &pfr);
-    
+
     for (auto it = out_vec.begin(); it != out_vec.end(); ++it)
     {
         auto relative_path = strReplace(*it, formatted_src, "");
@@ -226,7 +220,7 @@ uint64_t fileSize(const std::string& file)
 {
     if (!isPathFile(file))
         return (uint64_t)(-1);
-    
+
     std::ifstream in(file.c_str(), std::ifstream::ate | std::ifstream::binary);
     return in.tellg();
 }
@@ -254,7 +248,7 @@ bool isTextFile(const std::string& file)
 {
     if (!isPathFile(file))
         return false;
-    
+
     FILE *fp = fopen(file.c_str(), "rb");  
     long white_list_char_count = 0;  
     int read_len;  
@@ -344,7 +338,7 @@ DateTime fileTime(const std::string& file, E_FileTime ft)
             timet = 0;
             break;
     }
-    
+
     return DateTime(timet);
 #endif // _PLATFORM_UNIX_
 }
@@ -438,10 +432,7 @@ bool isPathDir(const std::string& path)
     if (0 != stat(path.c_str(), &info))
         return false;
 
-    if (S_ISDIR(info.st_mode))
-        return true;
-    else
-        return false;
+    return S_ISDIR(info.st_mode);
 #endif
 }
 
@@ -499,9 +490,7 @@ bool pathRemove(const std::string& path)
         return false;
 
     if (isPathFile(path))
-    {
         return 0 == ::remove(path.c_str());
-    }
 
     if (isPathDir(path))
         return 0 == ::rmdir(path.c_str());
