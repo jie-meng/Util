@@ -56,5 +56,5 @@ void TestCaseTime::testGetCurrentMiliseconds()
     uint64_t second = getCurrentMiliseconds();
 
     int deviation = (second - first) - 255;
-    assertTrue(deviation < 10 && deviation > -10, ASSERT_POSITION);
+    assertTrue(deviation < 30 && deviation > -30, ASSERT_POSITION);
 }
