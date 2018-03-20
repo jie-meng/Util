@@ -118,7 +118,7 @@ void TestCaseThread::testMsgThread()
     assertEquals<int>(2, td.vec[1], ASSERT_POSITION);
     assertEquals<int>(3, td.vec[2], ASSERT_POSITION);
 }
-    
+
 void TestCaseThread::synchronizeMethod()
 {
     Synchronize sc(mutex_);
@@ -203,7 +203,7 @@ void TestCaseThread::testLockTimedWait()
     assertEquals<int>(0, number_, ASSERT_POSITION);
     msleep(2200);
     assertEquals<int>(1, number_, ASSERT_POSITION);
-    
+
     number_ = 0;
     Thread td1(UtilBind(&TestCaseThread::lockTimedWaitThread, this, false));
     assertTrue(td1.start(), ASSERT_POSITION);
@@ -212,6 +212,10 @@ void TestCaseThread::testLockTimedWait()
     lock2_.notify();
     msleep(300);
     assertEquals<int>(1, number_, ASSERT_POSITION);
+
+    //printLine("\n>>>>> " + toString(getCurrentMiliseconds()));
+    //lock0_.timedWait(1000);
+    //printLine("\n<<<<< " + toString(getCurrentMiliseconds()));
 }
 
 void TestCaseThread::lockThread2()

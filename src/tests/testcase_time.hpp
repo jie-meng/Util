@@ -8,9 +8,10 @@ class TestCaseTime : public util::TestCase
 public:
     TESTCASE_DECLARE(TestCaseTime)
     virtual void registerTestFunctions();
-    
+
     //Tests
     void testDateTime();
+    void testGetCurrentMiliseconds();
 protected:
     virtual void setUp();
     virtual void tearDown();

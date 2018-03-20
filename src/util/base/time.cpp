@@ -2,6 +2,12 @@
 #include "constants.hpp"
 #include "string.hpp"
 #include "baseclass.hpp"
+#ifdef _PLATFORM_UNIX_
+#include <sys/time.h>
+#endif _PLATFORM_UNIX_
+#ifdef _PLATFORM_WINDOWS_
+#include <windows.h>
+#endif
 
 namespace util
 {
@@ -35,7 +41,7 @@ DateTime::DateTime(int year, int month, int day, int hour, int minute, int secon
     t.tm_min = minute;
     t.tm_sec = second;
     t.tm_isdst = 0;
-    
+
     timet_ = mktime(&t);
 }
 
@@ -83,10 +89,10 @@ std::string DateTime::format(const std::string& fmt) const
 {
     if (fmt.empty())
         return std::string(ctime(&timet_));
-    
+
     char buf[kBufSize];
     strftime(buf, kBufSize, fmt.c_str(), timet2tm());
-    
+
     return std::string(buf);
 }
 
@@ -136,6 +142,21 @@ std::string toString(DateTime::Weekday weekday)
         default:
             throw Exception(strFormat("Invalid Weekday value: %d", (int)weekday));
     }
+}
+
+uint64_t getCurrentMiliseconds()
+{
+#ifdef _PLATFORM_UNIX_
+    struct timeval tp;
+    gettimeofday(&tp, NULL);
+    return (uint64_t) tp.tv_sec * 1000L + tp.tv_usec / 1000;
+#endif _PLATFORM_UNIX_
+
+#ifdef _PLATFORM_WINDOWS_
+    SYSTEMTIME time;
+    GetSystemTime(&time);
+    return (uint64_t)((time.wSecond * 1000) + time.wMilliseconds);
+#endif
 }
 
 } // namespace util

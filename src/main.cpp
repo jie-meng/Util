@@ -4,7 +4,7 @@
 using namespace std;
 using namespace util;
 
-const string kVersion = "1.4.0";
+const string kVersion = "1.5.0";
 
 int main(int argc, char* argv[])
 {    
@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         {
             printLine("---------------------------------\nluaexec (version: " + kVersion + ")\n---------------------------------");
         }
-        
+
         return luaExecutor(argc, argv);
     }
 }

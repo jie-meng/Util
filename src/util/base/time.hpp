@@ -37,7 +37,7 @@ public:
     int getSecond() const;
     DateTime::Weekday getWeekday() const;
     int getYearday() const;
-    
+
     //specifier     Replaced by	    Example
     //%a	Abbreviated weekday name *	Thu
     //%A	Full weekday name *	Thursday
@@ -97,6 +97,8 @@ inline bool operator< (const DateTime& lhs, const DateTime& rhs){ return lhs.ear
 inline bool operator> (const DateTime& lhs, const DateTime& rhs){return  operator< (rhs,lhs);}
 inline bool operator<=(const DateTime& lhs, const DateTime& rhs){return !operator> (lhs,rhs);}
 inline bool operator>=(const DateTime& lhs, const DateTime& rhs){return !operator< (lhs,rhs);}
+
+uint64_t getCurrentMiliseconds();
 
 } // namespace util
 

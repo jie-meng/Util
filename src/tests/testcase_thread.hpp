@@ -9,7 +9,7 @@ class TestCaseThread : public util::TestCase
 public:
     TESTCASE_DECLARE(TestCaseThread)
     virtual void registerTestFunctions();
-    
+
     //Tests
     void testSleep();
     void testGetCurrentThreadId();
