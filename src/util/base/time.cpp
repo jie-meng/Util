@@ -150,7 +150,7 @@ uint64_t getCurrentMiliseconds()
     struct timeval tp;
     gettimeofday(&tp, NULL);
     return (uint64_t) tp.tv_sec * 1000L + tp.tv_usec / 1000;
-#endif _PLATFORM_UNIX_
+#endif
 
 #ifdef _PLATFORM_WINDOWS_
     SYSTEMTIME time;
