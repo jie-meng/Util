@@ -4,7 +4,7 @@
 #include "baseclass.hpp"
 #ifdef _PLATFORM_UNIX_
 #include <sys/time.h>
-#endif _PLATFORM_UNIX_
+#endif
 #ifdef _PLATFORM_WINDOWS_
 #include <windows.h>
 #endif
