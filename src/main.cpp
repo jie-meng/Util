@@ -4,10 +4,10 @@
 using namespace std;
 using namespace util;
 
-const string kVersion = "1.5.0";
+const string kVersion = "1.5.1";
 
 int main(int argc, char* argv[])
-{    
+{
     if (argc > 1 && strAreEqual("$", argv[1]))
     {
         return UnitTestHoster::getInstance().run() ? 0 : -1;
